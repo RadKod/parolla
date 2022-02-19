@@ -58,7 +58,10 @@ module.exports = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [
+    // https://mint-ui.github.io
+    { src: '@/plugins/mint-ui', mode: 'client' }
+  ],
 
   /*
    ** Auto import components

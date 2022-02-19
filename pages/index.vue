@@ -1,6 +1,7 @@
 <template lang="pug">
 .page.home-page
   h1 Parolla
+  mt-button(type="primary") Button
 </template>
 
 <script>

@@ -46,6 +46,7 @@
     "@nuxtjs/composition-api": "^0.24.7",
     "cross-env": "^5.2.0",
     "express": "^4.17.1",
+    "mint-ui": "^2.2.13",
     "nuxt": "2.15.2"
   },
   "devDependencies": {
