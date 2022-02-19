@@ -1,0 +1,48 @@
+// General
+@charset "UTF-8";
+
+/*
+
+UI Developer
+
+--------
+
+Developer : Selim Doyranlı
+
+Developer Website : selimdoyranli.com
+
+Github : @selimdoyranli
+___________
+
+
+TEAM : RadKod ✪
+
+TEAM WEBSITE : www.RadKod.com
+
+*/
+
+::-moz-selection {
+  color: #fff;
+  background: #444;
+}
+
+::selection {
+  color: #fff;
+  background: #444;
+}
+
+a,
+button,
+input {
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--color-ui-01);
+  @include roboto-regular;
+}

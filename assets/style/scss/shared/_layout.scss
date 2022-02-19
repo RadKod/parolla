@@ -1,0 +1,9 @@
+.layout {
+  position: relative;
+
+  main.router-view-wrapper {
+    min-height: 100vh;
+    padding-top: calc(var(--header-height) + 20px);
+    overflow: hidden;
+  }
+}

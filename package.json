@@ -1,0 +1,76 @@
+{
+  "name": "parolla",
+  "version": "0.0.1",
+  "description": "Günlük bilgi oyunu.",
+  "private": false,
+  "keywords": [
+    "oyun",
+    "bilgi oyunu",
+    "bulmaca",
+    "passaparola"
+  ],
+  "author": "selimdoyranli",
+  "contributors": [
+    "Selim Doyranlı <selim@radkod.com> (https://selimdoyranli.com)"
+  ],
+  "bugs": "selim@radkod.com",
+  "homepage": "https://github.com/RadKod/parolla",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RadKod/parolla"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development && nuxt --port 3000",
+    "prod": "cross-env NODE_ENV=production && nuxt start --port 3000",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate",
+    "lint:eslint": "eslint --ext .js,.vue,.pug --ignore-path .gitignore --ignore-path .eslintignore .",
+    "lint:eslint:fix": "eslint --fix --ext .js,.vue,.pug --ignore-path .gitignore --ignore-path .eslintignore .",
+    "lint:stylelint": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\"",
+    "lint:stylelint:fix": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\" --fix",
+    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{js,json,css,scss,vue,html,pug}\""
+  },
+  "lint-staged": {
+    "*.{js,vue,json}": [
+      "npm run lint:eslint",
+      "npm run prettier"
+    ],
+    "{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}": [
+      "npm run lint:stylelint",
+      "npm run prettier"
+    ]
+  },
+  "dependencies": {
+    "@nuxtjs/composition-api": "^0.24.7",
+    "cross-env": "^5.2.0",
+    "express": "^4.17.1",
+    "nuxt": "2.15.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-module": "^3.0.0",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "@nuxtjs/stylelint-module": "^4.0.0",
+    "@prettier/plugin-pug": "^1.10.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^7.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "node-sass": "^4.12.0",
+    "prettier": "^2.1.2",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
+    "sass-loader": "^10.1.1",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.18.0"
+  }
+}
