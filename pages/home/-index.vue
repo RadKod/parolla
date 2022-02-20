@@ -1,19 +1,19 @@
 <template lang="pug">
 .page.home-page
-  h1 Parolla
-  mt-button(type="primary") Button
+  // Game Scene
+  GameScene
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { GameScene } from '@/components/Scene'
 
 export default defineComponent({
+  components: {
+    GameScene
+  },
   setup() {}
 })
 </script>
 
-<style lang="scss">
-.home-page {
-  position: relative;
-}
-</style>
+<style lang="scss" src="./Home.page.scss"></style>

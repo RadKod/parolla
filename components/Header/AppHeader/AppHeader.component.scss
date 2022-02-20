@@ -1,0 +1,9 @@
+.app-header {
+  position: relative;
+  position: var(--header-position);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--color-border-01);
+}

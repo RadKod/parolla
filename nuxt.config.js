@@ -34,7 +34,6 @@ module.exports = {
   styleResources: {
     scss: [
       // Plugins
-      '~/assets/style/scss/plugins/_browserhack.scss', // Doc: https://github.com/selimdoyranli/browser-hack-sass-mixins
       '~/assets/style/scss/plugins/_breakpoint.scss',
       '~/assets/style/scss/plugins/_mq.scss', // Doc: https://github.com/sass-mq/sass-mq
       // Functions
@@ -58,6 +57,20 @@ module.exports = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'home',
+        path: '/',
+        component: resolve(__dirname, 'pages/home/-index.vue')
+      })
+    }
+  },
+
+  /*
+   ** Plugins to load before mounting the App
+   ** https://nuxtjs.org/guide/plugins
+   */
   plugins: [
     // https://mint-ui.github.io
     { src: '@/plugins/mint-ui', mode: 'client' }
@@ -67,7 +80,7 @@ module.exports = {
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
    */
-  components: [{ path: '~/components', pathPrefix: false }],
+  components: false,
 
   /*
    ** Nuxt.js dev-modules

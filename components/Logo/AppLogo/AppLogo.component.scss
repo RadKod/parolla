@@ -1,0 +1,25 @@
+.app-logo {
+  position: relative;
+  height: 100%;
+
+  &__link {
+    position: relative;
+    height: 100%;
+    color: var(--color-brand-01);
+    font-size: var(--font-size-text-1);
+    letter-spacing: 0.08em;
+
+    &::before {
+      position: absolute;
+      top: 16px;
+      left: calc(-12px * 2);
+      width: 16px;
+      height: 16px;
+      background-color: var(--color-brand-01);
+      border-radius: 100%;
+      content: '';
+    }
+
+    @include font-weight-bold;
+  }
+}
