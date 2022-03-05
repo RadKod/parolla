@@ -1,0 +1,48 @@
+{
+  "questions": {
+    "data": [
+      {
+        "question": "Türkiyenin başkenti neresidir?",
+        "letter": "A",
+        "answer": {
+          "correct": "Ankara"
+        }
+      },
+      {
+        "question": "Türkiyenin başkenti 2 neresidir?",
+        "letter": "B",
+        "answer": {
+          "correct": "Bursa"
+        }
+      },
+      {
+        "question": "Türkiyenin başkenti 3 neresidir?",
+        "letter": "C",
+        "answer": {
+          "correct": "Cizre"
+        }
+      },
+      {
+        "question": "Türkiyenin başkenti 4 neresidir?",
+        "letter": "Ç",
+        "answer": {
+          "correct": "Çaça"
+        }
+      },
+      {
+        "question": "Türkiyenin başkenti 5 neresidir?",
+        "letter": "D",
+        "answer": {
+          "correct": "Digor"
+        }
+      },
+      {
+        "question": "Türkiyenin başkenti 6 neresidir?",
+        "letter": "E",
+        "answer": {
+          "correct": "Efes"
+        }
+      }
+    ]
+  }
+}

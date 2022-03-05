@@ -1,5 +1,3 @@
 :root {
-  --game-scene-width: 100%;
-  --game-scene-max-width: var(--tablet);
-  --game-scene-height: 100vh;
+  /* Scene Variables */
 }

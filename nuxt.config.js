@@ -38,10 +38,8 @@ module.exports = {
       '~/assets/style/scss/plugins/_mq.scss', // Doc: https://github.com/sass-mq/sass-mq
       // Functions
       '~/assets/style/scss/functions/_center.scss',
-      '~/assets/style/scss/functions/_triangle.scss',
       // Mixins
-      '~/assets/style/scss/mixins/_font.scss',
-      '~/assets/style/scss/mixins/_gradient.scss'
+      '~/assets/style/scss/mixins/_font.scss'
     ]
   },
 
@@ -71,10 +69,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [
-    // https://mint-ui.github.io
-    { src: '@/plugins/mint-ui', mode: 'client' }
-  ],
+  plugins: [],
 
   /*
    ** Auto import components
@@ -104,6 +99,15 @@ module.exports = {
         // stylelint module options
         files: ['{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}']
       }
+    ],
+    // https://www.npmjs.com/package/nuxt-font-loader
+    [
+      'nuxt-font-loader',
+      {
+        url: 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap',
+        prefetch: true,
+        preconnect: true
+      }
     ]
   ],
 
@@ -117,7 +121,19 @@ module.exports = {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
-    extractCSS: process.env.NODE_ENV === 'production'
+    extractCSS: process.env.NODE_ENV === 'production',
+    babel: {
+      plugins: [
+        [
+          'import',
+          {
+            libraryName: 'vant',
+            libraryDirectory: 'es',
+            style: true
+          }
+        ]
+      ]
+    }
   },
 
   /*

@@ -1,10 +1,26 @@
 <template lang="pug">
 .layout.default-layout
-  nuxt
+  // Inner
+  .layout__inner
+    // App Header
+    AppHeader
+
+    // Layout Main
+    main.layout__main
+      // Router View
+      nuxt.router-view
 </template>
 
 <script>
-export default {}
+import { defineComponent } from '@nuxtjs/composition-api'
+import { AppHeader } from '@/components/Header'
+
+export default defineComponent({
+  components: {
+    AppHeader
+  },
+  setup() {}
+})
 </script>
 
 <style lang="scss">
