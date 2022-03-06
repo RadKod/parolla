@@ -1,7 +1,4 @@
 export default {
-  hasStarted(state) {
-    return state.hasStarted
-  },
   isGameOver(state) {
     return state.isGameOver
   },

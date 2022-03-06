@@ -1,5 +1,4 @@
 export default () => ({
-  hasStarted: false,
   isGameOver: false,
   alphabet: {
     activeIndex: 0,
@@ -170,7 +169,7 @@ export default () => ({
   },
   questions: [],
   countdown: {
-    time: 60 * 4 * 1000 // 4min
+    time: 60 * 140 // 4min
   },
   isActiveSound: true
 })
