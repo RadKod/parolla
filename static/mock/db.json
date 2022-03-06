@@ -2,45 +2,45 @@
   "questions": {
     "data": [
       {
-        "question": "Türkiyenin başkenti neresidir?",
+        "question": "Türkiyenin başkenti?",
         "letter": "A",
         "answer": {
           "correct": "Ankara"
         }
       },
       {
-        "question": "Türkiyenin başkenti 2 neresidir?",
+        "question": "Suda yüzen en popüler hayvan?",
         "letter": "B",
         "answer": {
-          "correct": "Bursa"
+          "correct": "Balık"
         }
       },
       {
-        "question": "Türkiyenin başkenti 3 neresidir?",
+        "question": "Korkunç yaratık?",
         "letter": "C",
         "answer": {
-          "correct": "Cizre"
+          "correct": "Canavar"
         }
       },
       {
-        "question": "Türkiyenin başkenti 4 neresidir?",
+        "question": "Kedigillerden dünyanın en hızlı hayvanı?",
         "letter": "Ç",
         "answer": {
-          "correct": "Çaça"
+          "correct": "Çita"
         }
       },
       {
-        "question": "Türkiyenin başkenti 5 neresidir?",
+        "question": "Simgesi FE olan kimyasal element?",
         "letter": "D",
         "answer": {
-          "correct": "Digor"
+          "correct": "Demir"
         }
       },
       {
-        "question": "Türkiyenin başkenti 6 neresidir?",
+        "question": "Okullarda mukavva kağıt gibi şeylerle yapılan çalışmalar?",
         "letter": "E",
         "answer": {
-          "correct": "Efes"
+          "correct": "El işi"
         }
       }
     ]

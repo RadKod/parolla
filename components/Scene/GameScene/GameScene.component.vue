@@ -60,6 +60,8 @@ import { StatsDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
+// Howler
+import { Howl, Howler } from 'howler'
 
 export default defineComponent({
   components: {
@@ -189,6 +191,7 @@ export default defineComponent({
       alphabet.value.items[alphabet.value.activeIndex].isPassed = true
       alphabet.value.activeIndex = nextLetter()
 
+      soundFx.pass.play()
       carousels.alphabet.slideTo(alphabet.value.activeIndex)
       resetAnswer()
     }
@@ -200,10 +203,15 @@ export default defineComponent({
 
       item.isPassed = false
 
-      if (answer.field.toLocaleLowerCase('tr') === questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr')) {
+      if (
+        answer.field.toLocaleLowerCase('tr').trim() ===
+        questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim()
+      ) {
         item.isCorrect = true
+        soundFx.correct.play()
       } else {
         item.isWrong = true
+        soundFx.wrong.play()
       }
 
       resetAnswer()
@@ -233,6 +241,35 @@ export default defineComponent({
       carousels.alphabet = alphabetCarousel
     }
 
+    const soundFx = reactive({
+      start: null,
+      correct: null,
+      wrong: null,
+      pass: null,
+      halfTime: null
+    })
+
+    const correctSoundFx = new Howl({
+      src: ['/sound/fx/correct.wav']
+    })
+
+    const wrongSoundFx = new Howl({
+      src: ['/sound/fx/wrong.wav']
+    })
+
+    const passSoundFx = new Howl({
+      src: ['/sound/fx/pass.ogg']
+    })
+
+    const halfTimeSoundFx = new Howl({
+      src: ['/sound/fx/half-time.wav']
+    })
+
+    soundFx.correct = correctSoundFx
+    soundFx.wrong = wrongSoundFx
+    soundFx.pass = passSoundFx
+    soundFx.halfTime = halfTimeSoundFx
+
     const startGame = async () => {
       await nextTick()
 
@@ -260,6 +297,7 @@ export default defineComponent({
       await countdownTimerRef.value.start()
 
       if (timeData.minutes === 2 && timeData.seconds === 0) {
+        halfTimeSoundFx.play()
         Notify({
           message: 'Sürenin yarısı doldu',
           color: 'var(--color-text-04)',

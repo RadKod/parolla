@@ -47,6 +47,7 @@
     "@nuxtjs/composition-api": "^0.24.7",
     "cross-env": "^5.2.0",
     "express": "^4.17.1",
+    "howler": "^2.2.3",
     "nuxt": "2.15.2",
     "swiper": "^8.0.6",
     "vant": "^2.12.44",

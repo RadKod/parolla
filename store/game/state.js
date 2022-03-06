@@ -169,7 +169,14 @@ export default () => ({
   },
   questions: [],
   countdown: {
-    time: 60 * 140 // 4min
+    time: 60 * 4 * 1000 // 4min
+  },
+  stats: {
+    daily: {
+      correct: 12,
+      wrong: 8,
+      pass: 4
+    }
   },
   isActiveSound: true
 })
