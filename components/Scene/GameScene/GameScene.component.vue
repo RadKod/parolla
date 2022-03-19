@@ -203,10 +203,10 @@ export default defineComponent({
 
       item.isPassed = false
 
-      if (
-        answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') ===
-        questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
-      ) {
+      const answerField = answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+      const correctAnswer = questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+
+      if (answerField === correctAnswer) {
         item.isCorrect = true
         soundFx.correct.play()
       } else {
