@@ -204,8 +204,8 @@ export default defineComponent({
       item.isPassed = false
 
       if (
-        answer.field.toLocaleLowerCase('tr').trim() ===
-        questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim()
+        answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') ===
+        questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
       ) {
         item.isCorrect = true
         soundFx.correct.play()
