@@ -131,6 +131,12 @@ export default () => ({
         isCorrect: false
       },
       {
+        letter: 'Ş',
+        isPassed: false,
+        isWrong: false,
+        isCorrect: false
+      },
+      {
         letter: 'T',
         isPassed: false,
         isWrong: false,

@@ -3,8 +3,21 @@ module.exports = {
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
-  target: 'server',
+  target: 'static',
+
+  /*
+   ** Nuxt ssr
+   ** See https://nuxtjs.org/docs/configuration-glossary/configuration-ssr
+   */
   ssr: false,
+
+  /*
+   ** Nuxt environments
+   ** See https://nuxtjs.org/docs/configuration-glossary/configuration-env
+   */
+  env: {
+    API: process.env.API
+  },
 
   /*
    ** Headers of the page
@@ -139,7 +152,8 @@ module.exports = {
           }
         ]
       ]
-    }
+    },
+    transpile: ['vant']
   },
 
   /*

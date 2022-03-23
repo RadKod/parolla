@@ -1,10 +1,10 @@
 export default {
   async fetchQuestions({ commit }) {
-    const questionsResponse = await fetch(`http://192.168.1.35:3004/questions`)
+    const questionsResponse = await fetch(`${process.env.API}/questions`)
     const questionsResult = await questionsResponse.json()
 
     commit('SET_QUESTIONS', {
-      questions: questionsResult.data
+      questions: questionsResult.data.questions
     })
   }
 }

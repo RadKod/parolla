@@ -215,7 +215,7 @@ export default defineComponent({
       item.isPassed = false
 
       const answerField = answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
-      const correctAnswer = questions.value[alphabet.value.activeIndex].answer.correct.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+      const correctAnswer = questions.value[alphabet.value.activeIndex].answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
 
       if (answerField === correctAnswer) {
         item.isCorrect = true
