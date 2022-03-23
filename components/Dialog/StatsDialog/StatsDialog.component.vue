@@ -5,7 +5,7 @@ Dialog.stats-dialog(
   cancel-button-text="Kapat"
   :show-confirm-button="false"
   :show-cancel-button="true"
-  :close-on-click-overlay="true"
+  :close-on-click-overlay="false"
 )
   // Scoreboard
   .scoreboard

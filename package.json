@@ -31,7 +31,7 @@
     "lint:stylelint": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\"",
     "lint:stylelint:fix": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\" --fix",
     "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{js,json,css,scss,vue,html,pug}\"",
-    "json:server": "json-server --watch ./static/mock/db.json --port 3004 --read-only --delay 1000"
+    "json:server": "json-server --watch ./static/mock/db.json --host 192.168.1.35 --port 3004 --read-only --delay 1000"
   },
   "lint-staged": {
     "*.{js,vue,json}": [
@@ -49,6 +49,7 @@
     "express": "^4.17.1",
     "howler": "^2.2.3",
     "nuxt": "2.15.2",
+    "simple-keyboard": "^3.4.65",
     "swiper": "^8.0.6",
     "vant": "^2.12.44",
     "vuex-persist": "^3.1.3"

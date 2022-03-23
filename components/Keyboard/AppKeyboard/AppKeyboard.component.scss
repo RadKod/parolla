@@ -1,0 +1,42 @@
+.app-keyboard {
+  position: relative;
+
+  .hg-rows {
+    position: relative;
+  }
+
+  .hg-row {
+    margin: calc(var(--base-m-y) / 1.6) 0;
+
+    &:nth-child(2) {
+      padding: 0 calc(var(--base-p-x) / 4);
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .hg-button {
+    text-transform: uppercase;
+
+    &-pass {
+      color: var(--color-text-04);
+      background-color: var(--color-warning-01);
+    }
+
+    &-space {
+      flex: 50%;
+    }
+
+    &[disabled='true'] {
+      background-color: var(--color-disabled-01);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}

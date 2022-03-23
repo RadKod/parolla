@@ -34,20 +34,29 @@
         .question(v-for="(question, index) in questions")
           strong.question__title(v-if="index === alphabet.activeIndex") {{ question.question }}
 
-      // Pass Button
-      Button.pass-button(color="var(--color-warning-01)" size="small" plain round @click="pass") Pas
+      // Field Section
+      section.game-scene__fieldSection
+        // Answer Field
+        Field#answerField.answer-field(
+          v-model="answer.field"
+          type="text"
+          placeholder="Cevabını yaz"
+          spellcheck="false"
+          maxlength="28"
+          @keypress.enter="handleAnswer"
+        )
+          template(#button)
+            Button.answer-field__button(
+              color="var(--color-brand-02)"
+              icon="guide-o"
+              size="small"
+              round
+              :disabled="answer.field <= 0"
+              @click="handleAnswer"
+            )
 
-      // Answer Field
-      Field.answer-field(v-model="answer.field" type="text" placeholder="Cevabını yaz" spellcheck="false" @keypress.enter="handleAnswer")
-        template(#button)
-          Button.answer-field__button(
-            color="var(--color-brand-02)"
-            icon="guide-o"
-            size="small"
-            round
-            :disabled="answer.field <= 0"
-            @click="handleAnswer"
-          )
+        // Keyboard
+        AppKeyboard(:input="answer.field" @onChange="handleKeyboardOnChange" @onKeyPress="handleKeyboardOnKeyPress")
 
   // Stats Dialog
   StatsDialog(:isOpen="dialog.stats.isOpen")
@@ -56,12 +65,13 @@
 <script>
 import { defineComponent, useStore, useFetch, ref, reactive, computed, onMounted, nextTick, watch } from '@nuxtjs/composition-api'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
+import { AppKeyboard } from '@/components/Keyboard'
 import { StatsDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 // Howler
-import { Howl, Howler } from 'howler'
+import { Howl } from 'howler'
 
 export default defineComponent({
   components: {
@@ -70,6 +80,7 @@ export default defineComponent({
     Empty,
     CountDown,
     Icon,
+    AppKeyboard,
     StatsDialog
   },
   setup() {
@@ -240,7 +251,6 @@ export default defineComponent({
 
       carousels.alphabet = alphabetCarousel
     }
-
     const soundFx = reactive({
       start: null,
       correct: null,
@@ -269,6 +279,20 @@ export default defineComponent({
     soundFx.wrong = wrongSoundFx
     soundFx.pass = passSoundFx
     soundFx.halfTime = halfTimeSoundFx
+
+    const handleKeyboardOnChange = input => {
+      answer.field = input
+    }
+
+    const handleKeyboardOnKeyPress = button => {
+      if (button === '{enter}') {
+        handleAnswer()
+      }
+
+      if (button === '{pass}') {
+        pass()
+      }
+    }
 
     const startGame = async () => {
       await nextTick()
@@ -339,6 +363,8 @@ export default defineComponent({
       pass,
       handleAnswer,
       resetAnswer,
+      handleKeyboardOnChange,
+      handleKeyboardOnKeyPress,
       listenCountdown,
       handleCountdownFinish
     }

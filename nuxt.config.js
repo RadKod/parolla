@@ -11,6 +11,9 @@ module.exports = {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
+    htmlAttrs: {
+      lang: 'tr'
+    },
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },

@@ -5,7 +5,8 @@ export default ({ store }) => {
     reducer: state => ({
       game: {
         isGameOver: state.game.isGameOver,
-        questions: state.game.questions
+        questions: state.game.questions,
+        currentDate: state.game.currentDate
         // alphabet: state.game.alphabet,
         // countdown: state.game.countdown
       }

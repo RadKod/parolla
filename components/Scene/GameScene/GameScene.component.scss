@@ -137,27 +137,40 @@
     }
   }
 
-  // Pass Button
-  .pass-button {
-    position: relative;
-    width: 150px;
+  // Field Section
+  &__fieldSection {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: var(--layout-max-width);
     margin: 0 auto;
+
+    @include center(true, false);
   }
 
   // Answer Field
   .answer-field {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
 
     input {
+      text-transform: uppercase;
+      user-select: none;
+      pointer-events: none;
+      -webkit-user-drag: none;
+
       @include font-weight-bold;
 
       &::placeholder {
+        text-transform: capitalize;
         @include font-weight-regular;
       }
     }
+  }
+
+  // App Keyboard
+  .app-keyboard {
+    position: relative;
   }
 
   // Carousels

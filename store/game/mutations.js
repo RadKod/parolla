@@ -6,7 +6,6 @@ export default {
     state.questions = questions
   },
   SET_ALPHABET_ACTIVE_INDEX(state, index) {
-    console.log(index)
     state.alphabet.activeIndex = index
   },
   UPDATE_COUNTDOWN_TIMER(state, ms) {

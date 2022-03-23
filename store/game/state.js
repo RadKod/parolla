@@ -1,5 +1,6 @@
 export default () => ({
   isGameOver: false,
+  currentDate: new Date().toLocaleDateString('tr'),
   alphabet: {
     activeIndex: 0,
     items: [
