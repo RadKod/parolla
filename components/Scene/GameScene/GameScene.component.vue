@@ -1,5 +1,5 @@
 <template lang="pug">
-.scene.game-scene(:class="{ 'game-scene--gameOver': isGameOver }")
+.scene.game-scene(ref="rootRef" :class="{ 'game-scene--gameOver': isGameOver }")
   // Scene Inner
   .scene__inner.game-scene__inner
     // Alphabet
@@ -31,8 +31,12 @@
     template(v-else)
       // Questions
       .questions
-        .question(v-for="(question, index) in questions")
-          strong.question__title(v-if="index === alphabet.activeIndex") {{ question.question }}
+        .question(
+          v-for="(question, index) in questions"
+          v-show="index === alphabet.activeIndex"
+          :class="{ 'question--active': index === alphabet.activeIndex }"
+        )
+          strong.question__title {{ question.question }}
 
       // Field Section
       section.game-scene__fieldSection
@@ -63,7 +67,18 @@
 </template>
 
 <script>
-import { defineComponent, useStore, useFetch, ref, reactive, computed, onMounted, nextTick, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useStore,
+  useFetch,
+  ref,
+  reactive,
+  computed,
+  onMounted,
+  nextTick,
+  watch,
+  onUnmounted
+} from '@nuxtjs/composition-api'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { AppKeyboard } from '@/components/Keyboard'
 import { StatsDialog } from '@/components/Dialog'
@@ -72,6 +87,8 @@ import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 // Howler
 import { Howl } from 'howler'
+// Textfit
+import textfit from 'textfit'
 
 export default defineComponent({
   components: {
@@ -85,6 +102,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const rootRef = ref(null)
 
     const isGameOver = computed(() => store.getters['game/isGameOver'])
 
@@ -105,10 +123,10 @@ export default defineComponent({
     )
 
     const questions = computed(() => store.getters['game/questions'])
-    watch(questions, async value => {
+    watch(questions, value => {
       if (value.length > 0) {
         if (!isGameOver.value) {
-          await startGame()
+          startGame()
         }
       }
     })
@@ -204,7 +222,9 @@ export default defineComponent({
 
       soundFx.pass.play()
       carousels.alphabet.slideTo(alphabet.value.activeIndex)
+
       resetAnswer()
+      questionFitText()
     }
 
     const handleAnswer = () => {
@@ -225,10 +245,11 @@ export default defineComponent({
         soundFx.wrong.play()
       }
 
-      resetAnswer()
-
       alphabet.value.activeIndex = nextLetter()
       carousels.alphabet.slideTo(alphabet.value.activeIndex)
+
+      resetAnswer()
+      questionFitText()
     }
 
     const resetAnswer = () => {
@@ -298,6 +319,10 @@ export default defineComponent({
       await nextTick()
 
       setTimeout(() => {
+        questionFitText()
+      }, 0)
+
+      setTimeout(() => {
         countdownTimerRef.value.start()
       }, 1000) // 1second sleep
     }
@@ -340,6 +365,15 @@ export default defineComponent({
       })
     }
 
+    const questionFitText = async () => {
+      await nextTick()
+
+      textfit(rootRef.value.querySelectorAll('.question--active')[0], {
+        minFontSize: 14,
+        maxFontSize: 30
+      })
+    }
+
     onMounted(() => {
       initCarousels()
 
@@ -347,9 +381,16 @@ export default defineComponent({
       if (isGameOver.value) {
         endGame()
       }
+
+      window.addEventListener('resize', questionFitText)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', questionFitText)
     })
 
     return {
+      rootRef,
       fetch,
       fetchState,
       isGameOver,

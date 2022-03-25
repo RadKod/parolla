@@ -47,7 +47,7 @@
     position: relative;
     width: var(--alphabet-width);
     height: var(--alphabet-height);
-    margin-bottom: calc(var(--base-m-y) * 4);
+    margin-bottom: calc(var(--base-m-y) * 2);
     padding: var(--base-p-y) 0;
 
     &__inner {
@@ -123,23 +123,35 @@
     position: relative;
     padding: calc(var(--base-p-y) * 2) var(--base-p-x);
     text-align: center;
+
+    @include mq($from: tablet) {
+      padding: calc(var(--base-p-y) * 2) calc(var(--base-p-x) * 4);
+    }
   }
 
   // Question
   .question {
     position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 30vh;
+    margin: 0 auto;
+    font-size: var(--font-size-text-1);
+    letter-spacing: 0.02em;
+
+    @include mq($until: mobile) {
+      height: 150px;
+    }
 
     &__title {
-      font-size: var(--font-size-text-1);
-      letter-spacing: 0.02em;
-
       @include font-weight-bold;
     }
   }
 
   // Field Section
   &__fieldSection {
-    position: fixed !important;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -180,10 +192,14 @@
       height: calc(100px - var(--base-p-y));
       aspect-ratio: 1/1;
 
-      @include mq($until: tablet) {
+      @include mq($until: desktop) {
         width: calc(72px - var(--base-p-y));
         height: calc(72px - var(--base-p-x));
-        aspect-ratio: 1/1;
+      }
+
+      @include mq($until: tablet) {
+        width: calc(64px - var(--base-p-y));
+        height: calc(64px - var(--base-p-x));
       }
     }
   }

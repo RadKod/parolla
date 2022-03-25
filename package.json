@@ -51,6 +51,7 @@
     "nuxt": "2.15.2",
     "simple-keyboard": "^3.4.65",
     "swiper": "^8.0.6",
+    "textfit": "^2.4.0",
     "vant": "^2.12.44",
     "vuex-persist": "^3.1.3"
   },
