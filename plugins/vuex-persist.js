@@ -2,13 +2,12 @@ import VuexPersistence from 'vuex-persist'
 
 export default ({ store }) => {
   new VuexPersistence({
+    key: 'persistStore',
     reducer: state => ({
       game: {
         isGameOver: state.game.isGameOver,
-        questions: state.game.questions,
-        currentDate: state.game.currentDate
-        // alphabet: state.game.alphabet,
-        // countdown: state.game.countdown
+        currentDate: state.game.currentDate,
+        questions: state.game.questions
       }
     })
   }).plugin(store)

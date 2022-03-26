@@ -1,6 +1,6 @@
 export default () => ({
   isGameOver: false,
-  currentDate: new Date().toLocaleDateString('tr'),
+  currentDate: new Date().toISOString().slice(0, 10),
   alphabet: {
     activeIndex: 0,
     items: [
@@ -176,7 +176,7 @@ export default () => ({
   },
   questions: [],
   countdown: {
-    time: 60 * 4 * 1000 // 4min
+    time: 60 * 1 * 100 // 4min
   },
   stats: {
     daily: {
@@ -184,6 +184,5 @@ export default () => ({
       wrong: 8,
       pass: 4
     }
-  },
-  isActiveSound: true
+  }
 })

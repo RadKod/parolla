@@ -101,12 +101,22 @@ export default defineComponent({
     StatsDialog
   },
   setup() {
-    const store = useStore()
     const rootRef = ref(null)
+
+    const store = useStore()
+    const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
+
+    const day = new Date().toISOString().slice(0, 10)
+    const storedDay = persistStore && persistStore.game.currentDate
+
+    if (day !== storedDay) {
+      store.commit('game/SET_IS_GAME_OVER', {
+        isGameOver: false
+      })
+    }
 
     const isGameOver = computed(() => store.getters['game/isGameOver'])
 
-    // When game is over
     watch(isGameOver, async value => {
       if (value) {
         await nextTick()
@@ -115,6 +125,7 @@ export default defineComponent({
     })
 
     const alphabet = computed(() => store.getters['game/alphabet'])
+
     watch(
       () => alphabet.value.activeIndex,
       async value => {
@@ -123,6 +134,7 @@ export default defineComponent({
     )
 
     const questions = computed(() => store.getters['game/questions'])
+
     watch(questions, value => {
       if (value.length > 0) {
         if (!isGameOver.value) {
@@ -149,22 +161,16 @@ export default defineComponent({
       alphabet: {}
     })
 
+    // Fetch Questions
     const { fetch, fetchState } = useFetch(async () => {
-      if (process.client) {
-        const persistStore = JSON.parse(window.localStorage.getItem('vuex'))
-
-        const day = 2
-        const storeDay = 1
-
-        if (day === storeDay) {
-          await console.log('From localstorage')
-          await store.commit('game/SET_QUESTIONS', {
-            questions: persistStore.game.questions
-          })
-        } else {
-          await console.log('From api')
-          await store.dispatch('game/fetchQuestions')
-        }
+      if (day === storedDay) {
+        await console.log('From localstorage')
+        await store.commit('game/SET_QUESTIONS', {
+          questions: persistStore.game.questions
+        })
+      } else {
+        await console.log('From api')
+        await store.dispatch('game/fetchQuestions')
       }
     })
 
@@ -324,12 +330,15 @@ export default defineComponent({
 
       setTimeout(() => {
         countdownTimerRef.value.start()
-      }, 1000) // 1second sleep
+      }, 1000) // 1 second sleep
     }
 
     const endGame = async () => {
       await nextTick()
 
+      store.commit('game/SET_IS_GAME_OVER', {
+        isGameOver: true
+      })
       dialog.stats.isOpen = true
     }
 
@@ -360,9 +369,7 @@ export default defineComponent({
         message: 'Süre Doldu',
         position: 'bottom'
       })
-      await store.commit('game/SET_IS_GAME_OVER', {
-        isGameOver: true
-      })
+      await endGame()
     }
 
     const questionFitText = async () => {
