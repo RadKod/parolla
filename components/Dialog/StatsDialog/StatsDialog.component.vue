@@ -7,35 +7,43 @@ Dialog.stats-dialog(
   :show-cancel-button="true"
   :close-on-click-overlay="false"
 )
-  // Scoreboard
-  .scoreboard
-    h3.scoreboard__title Skor Dağılımı
-    .score
-      span.score__icon 🟩
-      span.score__count 12
-      span.score__title Doğru
+  // Tabs
+  Tabs.stats-dialog__tabs(v-model="activeTab")
+    // Score Tab
+    Tab(name="score" title="Skor")
+      // Scoreboard
+      .scoreboard
+        h3.scoreboard__title Skor Dağılımı
+        .score
+          span.score__icon 🟩
+          span.score__count {{ correctAnswers.length }}
+          span.score__title Doğru
 
-    .score
-      span.score__icon 🟥
-      span.score__count 8
-      span.score__title Yanlış
+        .score
+          span.score__icon 🟥
+          span.score__count {{ wrongAnswers.length }}
+          span.score__title Yanlış
 
-    .score
-      span.score__icon 🟨
-      span.score__count 4
-      span.score__title Pas
+        .score
+          span.score__icon 🟨
+          span.score__count {{ passedAnswers.length }}
+          span.score__title Pas
 
-  // Actions
-  .stats-dialog__actions
-    // Next Game Countdown
-    .countdown.stats-dialog__countdown
-      span.countdown__title Sonraki Oyun
-      Icon.countdown__icon(name="clock-o")
-      CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="9960000")
+      // Actions
+      .stats-dialog__actions
+        // Next Game Countdown
+        .countdown.stats-dialog__countdown
+          span.countdown__title Sonraki Oyun
+          Icon.countdown__icon(name="clock-o")
+          CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="9960000")
 
-    // Result Sharer
-    .result-sharer
-      Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
+        // Result Sharer
+        .result-sharer
+          Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
+    Tab(name="answers" title="Cevap Anahtarı")
+      .answers
+        CellGroup.answers__inner
+          Cell.answers__answer(v-for="question in questions" :key="question.letter" :value="question.letter" :title="question.answer")
 
   // Footer
   footer.stats-dialog__footer
@@ -45,16 +53,20 @@ Dialog.stats-dialog(
 </template>
 
 <script>
-import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
-import { Dialog, Icon, CountDown, Button, Toast } from 'vant'
+import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
+import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, CellGroup, Cell } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
+    Tabs,
+    Tab,
     Icon,
     CountDown,
     Button,
+    CellGroup,
+    Cell,
     RadKodLogo
   },
   props: {
@@ -65,6 +77,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const store = useStore()
+
     const state = reactive({
       isOpen: props.isOpen
     })
@@ -73,16 +87,31 @@ export default defineComponent({
       () => props.isOpen,
       value => {
         state.isOpen = value
+        setAnswers()
       }
     )
+
+    const activeTab = ref('score')
+
+    const questions = computed(() => store.getters['game/questions'])
+
+    const correctAnswers = ref([])
+    const wrongAnswers = ref([])
+    const passedAnswers = ref([])
+
+    const setAnswers = () => {
+      correctAnswers.value = JSON.parse(window.localStorage.getItem('correctAnswers')) || []
+      wrongAnswers.value = JSON.parse(window.localStorage.getItem('wrongAnswers')) || []
+      passedAnswers.value = JSON.parse(window.localStorage.getItem('passedAnswers')) || []
+    }
 
     const shareResults = async () => {
       const shareText = `
         Parolla - Günlük bilgi oyunu.
 
-        🟩 12 Doğru
-        🟥 8 Yanlış
-        🟨 4 Pas
+        🟩 ${correctAnswers.value.length} Doğru
+        🟥 ${wrongAnswers.value.length} Yanlış
+        🟨 ${passedAnswers.value.length} Pas
 
         https://parolla.app
       `
@@ -106,7 +135,7 @@ export default defineComponent({
       }
     }
 
-    return { state, shareResults }
+    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, questions }
   }
 })
 </script>

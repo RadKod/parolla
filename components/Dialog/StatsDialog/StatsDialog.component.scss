@@ -10,6 +10,17 @@
     }
   }
 
+  $van-tabs: '.van-tabs';
+  #{$van-tabs} {
+    &__wrap {
+      height: 36px;
+    }
+
+    &__line {
+      background-color: var(--color-highlight-01);
+    }
+  }
+
   .score {
     position: relative;
 
@@ -72,6 +83,35 @@
 
         @include mq($until: mobile) {
           font-size: var(--font-size-text-8) !important;
+        }
+      }
+    }
+  }
+
+  .answers {
+    position: relative;
+    max-height: 40vh;
+    padding: var(--base-p-y) 0;
+    overflow: auto;
+
+    &__inner {
+      position: relative;
+    }
+
+    $van-cell: '.van-cell';
+
+    &__answer {
+      padding: calc(var(--base-p-y) / 2) 0;
+      padding-right: var(--base-p-x);
+
+      &::after {
+        right: 0;
+        left: 0;
+      }
+
+      #{$van-cell} {
+        &__title {
+          text-transform: uppercase;
         }
       }
     }

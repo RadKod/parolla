@@ -176,13 +176,6 @@ export default () => ({
   },
   questions: [],
   countdown: {
-    time: 60 * 1 * 100 // 4min
-  },
-  stats: {
-    daily: {
-      correct: 12,
-      wrong: 8,
-      pass: 4
-    }
+    time: 60 * 4 * 1000 // 4min
   }
 })

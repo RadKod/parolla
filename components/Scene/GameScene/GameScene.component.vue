@@ -124,12 +124,28 @@ export default defineComponent({
       }
     })
 
+    const calculateStatsOfToday = async () => {
+      const correctAnswers = await store.getters['game/correctAnswers']
+      const wrongAnswers = await store.getters['game/wrongAnswers']
+      const passedAnswers = await store.getters['game/passedAnswers']
+
+      window.localStorage.setItem('correctAnswers', JSON.stringify(correctAnswers))
+      window.localStorage.setItem('wrongAnswers', JSON.stringify(wrongAnswers))
+      window.localStorage.setItem('passedAnswers', JSON.stringify(passedAnswers))
+    }
+
     const alphabet = computed(() => store.getters['game/alphabet'])
 
     watch(
       () => alphabet.value.activeIndex,
       async value => {
         await store.commit('game/SET_ALPHABET_ACTIVE_INDEX', value)
+
+        calculateStatsOfToday()
+
+        carousels.alphabet.slideTo(value)
+        resetAnswer()
+        questionFitText()
       }
     )
 
@@ -164,12 +180,10 @@ export default defineComponent({
     // Fetch Questions
     const { fetch, fetchState } = useFetch(async () => {
       if (day === storedDay) {
-        await console.log('From localstorage')
         await store.commit('game/SET_QUESTIONS', {
           questions: persistStore.game.questions
         })
       } else {
-        await console.log('From api')
         await store.dispatch('game/fetchQuestions')
       }
     })
@@ -227,10 +241,6 @@ export default defineComponent({
       alphabet.value.activeIndex = nextLetter()
 
       soundFx.pass.play()
-      carousels.alphabet.slideTo(alphabet.value.activeIndex)
-
-      resetAnswer()
-      questionFitText()
     }
 
     const handleAnswer = () => {
@@ -252,10 +262,6 @@ export default defineComponent({
       }
 
       alphabet.value.activeIndex = nextLetter()
-      carousels.alphabet.slideTo(alphabet.value.activeIndex)
-
-      resetAnswer()
-      questionFitText()
     }
 
     const resetAnswer = () => {
@@ -330,6 +336,10 @@ export default defineComponent({
 
       setTimeout(() => {
         countdownTimerRef.value.start()
+
+        window.localStorage.setItem('correctAnswers', JSON.stringify([]))
+        window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
+        window.localStorage.setItem('passedAnswers', JSON.stringify([]))
       }, 1000) // 1 second sleep
     }
 
@@ -339,6 +349,7 @@ export default defineComponent({
       store.commit('game/SET_IS_GAME_OVER', {
         isGameOver: true
       })
+      countdownTimerRef.value.pause()
       dialog.stats.isOpen = true
     }
 
