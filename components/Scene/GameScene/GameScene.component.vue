@@ -1,5 +1,5 @@
 <template lang="pug">
-.scene.game-scene(ref="rootRef" :class="{ 'game-scene--gameOver': isGameOver }")
+.scene.game-scene(ref="rootRef" :class="{ 'game-scene--isMobileDevice': isMobileDevice, 'game-scene--gameOver': isGameOver }")
   // Scene Inner
   .scene__inner.game-scene__inner
     // Alphabet
@@ -79,6 +79,7 @@ import {
   watch,
   onUnmounted
 } from '@nuxtjs/composition-api'
+import { useUa } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { AppKeyboard } from '@/components/Keyboard'
 import { StatsDialog } from '@/components/Dialog'
@@ -102,6 +103,7 @@ export default defineComponent({
   },
   setup() {
     const rootRef = ref(null)
+    const { isMobileDevice } = useUa()
 
     const store = useStore()
     const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
@@ -244,7 +246,7 @@ export default defineComponent({
     }
 
     const handleAnswer = () => {
-      if (isGameOver.value) return false
+      if (isGameOver.value || answer.field.trim().length <= 0) return false
 
       const item = alphabet.value.items[alphabet.value.activeIndex]
 
@@ -409,6 +411,7 @@ export default defineComponent({
 
     return {
       rootRef,
+      isMobileDevice,
       fetch,
       fetchState,
       isGameOver,

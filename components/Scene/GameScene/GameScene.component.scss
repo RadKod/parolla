@@ -166,16 +166,21 @@
   .answer-field {
     width: 100%;
 
-    input {
-      text-transform: uppercase;
+    @mixin readonly {
       user-select: none;
       pointer-events: none;
       -webkit-user-drag: none;
+    }
+
+    input {
+      text-transform: uppercase;
 
       @include font-weight-bold;
+      @include readonly;
 
       &::placeholder {
         text-transform: capitalize;
+
         @include font-weight-regular;
       }
     }

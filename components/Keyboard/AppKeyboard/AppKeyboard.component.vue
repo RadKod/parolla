@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, nextTick, onMounted, watch } from '@vue/composition-api'
+import { defineComponent, ref, nextTick, onMounted, watch, onUnmounted } from '@vue/composition-api'
 // Simple Keyboard
 import Keyboard from 'simple-keyboard'
 import 'simple-keyboard/build/css/index.css'
@@ -27,7 +27,8 @@ export default defineComponent({
         physicalKeyboardHighlightPress: true,
         layoutName: 'default',
         layout: {
-          default: ['q w e r t y u ı o p ğ ü', 'a s d f g h j k l ş i', 'z x c v b n m ö ç {backspace}', '{pass} {space} {enter}']
+          default: ['q w e r t y u ı o p ğ ü', 'a s d f g h j k l ş i', 'z x c v b n m ö ç {backspace}', '{pass} {space} {enter}'],
+          shift: ['Q W E R T Y U I O P Ğ Ü', 'A S D F G H J K L Ş İ', 'Z X C V B N M Ö Ç {backspace}', '{pass} {space} {enter}']
         },
         display: {
           '{space}': 'BOŞLUK',
@@ -55,6 +56,10 @@ export default defineComponent({
       })
     }
 
+    const destroyKeyboard = () => {
+      keyboard.value.destroy()
+    }
+
     const disableKey = key => {
       keyboard.value.setOptions({
         buttonAttributes: [
@@ -79,8 +84,39 @@ export default defineComponent({
       })
     }
 
+    const handleCapsLock = async event => {
+      let initialLayoutName = keyboard.value.options.layoutName
+      let layoutName = initialLayoutName === 'default' ? 'shift' : 'default'
+
+      if (event && event.getModifierState('CapsLock')) {
+        await keyboard.value.setOptions({
+          layoutName: 'shift'
+        })
+      }
+
+      if (event.code === 'CapsLock') {
+        await keyboard.value.setOptions({
+          layoutName: layoutName
+        })
+      }
+    }
+
+    const registerHandleCapsLock = () => {
+      document.addEventListener('keyup', event => handleCapsLock(event))
+    }
+
+    const destroyHandleCapsLock = () => {
+      document.removeEventListener('keyup', handleCapsLock)
+    }
+
     onMounted(() => {
       initKeyboard()
+      registerHandleCapsLock()
+    })
+
+    onUnmounted(() => {
+      destroyHandleCapsLock()
+      destroyKeyboard()
     })
 
     watch(
@@ -88,7 +124,7 @@ export default defineComponent({
       value => {
         keyboard.value.setInput(value)
 
-        if (value.length > 0) {
+        if (value.trim().length > 0) {
           enableKey('{enter}')
         } else {
           disableKey('{enter}')
