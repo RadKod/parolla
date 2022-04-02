@@ -4,6 +4,7 @@
 
 <script>
 import { defineComponent, ref, nextTick, onMounted, watch, onUnmounted } from '@vue/composition-api'
+import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 // Simple Keyboard
 import Keyboard from 'simple-keyboard'
 import 'simple-keyboard/build/css/index.css'
@@ -45,7 +46,7 @@ export default defineComponent({
         ],
         inputName: 'answerField',
         maxLength: {
-          answerField: 28
+          answerField: ANSWER_CHAR_LENGTH
         },
         onChange: input => {
           emit('onChange', input)

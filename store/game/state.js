@@ -1,3 +1,5 @@
+import { GAME_TIME_LIMIT } from '@/system/constant'
+
 export default () => ({
   isGameOver: false,
   currentDate: new Date().toISOString().slice(0, 10),
@@ -176,6 +178,6 @@ export default () => ({
   },
   questions: [],
   countdown: {
-    time: 60 * 4 * 1000 // 4min
+    time: GAME_TIME_LIMIT
   }
 })

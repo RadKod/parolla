@@ -46,7 +46,7 @@
           type="text"
           placeholder="Cevabını yaz"
           spellcheck="false"
-          maxlength="28"
+          :maxlength="ANSWER_CHAR_LENGTH"
           @keypress.enter="handleAnswer"
         )
           template(#button)
@@ -79,6 +79,7 @@ import {
   watch,
   onUnmounted
 } from '@nuxtjs/composition-api'
+import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useUa } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { AppKeyboard } from '@/components/Keyboard'
@@ -417,6 +418,7 @@ export default defineComponent({
     return {
       rootRef,
       isMobileDevice,
+      ANSWER_CHAR_LENGTH,
       fetch,
       fetchState,
       isGameOver,
