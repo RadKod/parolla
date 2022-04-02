@@ -142,8 +142,13 @@ export default defineComponent({
       () => alphabet.value.activeIndex,
       async value => {
         await store.commit('game/SET_ALPHABET_ACTIVE_INDEX', value)
+        await calculateStatsOfToday()
 
-        calculateStatsOfToday()
+        if (value === -1) {
+          endGame()
+
+          return false
+        }
 
         carousels.alphabet.slideTo(value)
         resetAnswer()
