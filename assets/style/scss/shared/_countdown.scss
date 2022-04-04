@@ -1,0 +1,16 @@
+.countdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  font-size: var(--font-size-text-4);
+
+  &__icon {
+    margin-right: calc(var(--base-m-x) / 2) !important;
+  }
+
+  &__timer {
+    font-size: var(--font-size-text-6) !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+}

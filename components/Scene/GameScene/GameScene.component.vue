@@ -62,6 +62,8 @@
         // Keyboard
         AppKeyboard(:input="answer.field" @onChange="handleKeyboardOnChange" @onKeyPress="handleKeyboardOnKeyPress")
 
+  // How To Play Dialog
+  HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
   StatsDialog(:isOpen="dialog.stats.isOpen")
 </template>
@@ -83,7 +85,7 @@ import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useUa } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { AppKeyboard } from '@/components/Keyboard'
-import { StatsDialog } from '@/components/Dialog'
+import { HowToPlayDialog, StatsDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -100,6 +102,7 @@ export default defineComponent({
     CountDown,
     Icon,
     AppKeyboard,
+    HowToPlayDialog,
     StatsDialog
   },
   setup() {
@@ -162,7 +165,7 @@ export default defineComponent({
     watch(questions, value => {
       if (value.length > 0) {
         if (!isGameOver.value) {
-          startGame()
+          // startGame()
         }
       }
     })
@@ -176,6 +179,9 @@ export default defineComponent({
     })
 
     const dialog = reactive({
+      howToPlay: {
+        isOpen: true
+      },
       stats: {
         isOpen: false
       }
@@ -338,6 +344,8 @@ export default defineComponent({
     const startGame = async () => {
       await nextTick()
 
+      if (isGameOver.value) return false
+
       setTimeout(() => {
         questionFitText()
       }, 0)
@@ -434,6 +442,7 @@ export default defineComponent({
       resetAnswer,
       handleKeyboardOnChange,
       handleKeyboardOnKeyPress,
+      startGame,
       listenCountdown,
       handleCountdownFinish
     }

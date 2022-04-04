@@ -6,6 +6,7 @@ Dialog.stats-dialog(
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
+  @closed="$emit('closed')"
 )
   // Tabs
   Tabs.stats-dialog__tabs(v-model="activeTab")
