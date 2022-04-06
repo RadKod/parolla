@@ -108,6 +108,7 @@
     }
 
     $van-cell: '.van-cell';
+    $van-collapse-item: '.van-collapse-item';
 
     &__answer {
       padding: calc(var(--base-p-y) / 2) 0;
@@ -119,8 +120,26 @@
       }
 
       #{$van-cell} {
+        padding: calc(var(--base-p-y) / 4) 0;
+
+        &:active {
+          background-color: transparent;
+        }
+
+        &.van-collapse-item__title--expanded {
+          &::after {
+            visibility: hidden;
+          }
+        }
+
         &__title {
           text-transform: uppercase;
+        }
+      }
+
+      #{$van-collapse-item} {
+        &__content {
+          padding: 0;
         }
       }
     }

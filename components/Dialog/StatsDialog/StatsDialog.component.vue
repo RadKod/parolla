@@ -46,8 +46,15 @@ Dialog.stats-dialog(
             Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
       Tab(name="answers" title="Cevap Anahtarı")
         .answers
-          CellGroup.answers__inner
-            Cell.answers__answer(v-for="question in questions" :key="question.letter" :value="question.letter" :title="question.answer")
+          Collapse.answers__inner(v-model="toggledAnswer" accordion)
+            CollapseItem.answers__answer(
+              v-for="question in questions"
+              :key="question.letter"
+              :value="question.letter"
+              :name="question.letter"
+              :title="question.answer"
+            )
+              p {{ question.question }}
 
     // Footer
     footer.stats-dialog__footer
@@ -62,7 +69,7 @@ Dialog.stats-dialog(
 
 <script>
 import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
-import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, CellGroup, Cell, Empty } from 'vant'
+import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
 export default defineComponent({
@@ -73,8 +80,8 @@ export default defineComponent({
     Icon,
     CountDown,
     Button,
-    CellGroup,
-    Cell,
+    Collapse,
+    CollapseItem,
     Empty,
     RadKodLogo
   },
@@ -101,6 +108,7 @@ export default defineComponent({
     )
 
     const activeTab = ref('score')
+    const toggledAnswer = ref(['A'])
 
     const isGameOver = computed(() => store.getters['game/isGameOver'])
 
@@ -171,6 +179,7 @@ export default defineComponent({
     return {
       state,
       activeTab,
+      toggledAnswer,
       remainTime,
       shareResults,
       correctAnswers,
