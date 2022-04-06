@@ -353,7 +353,7 @@ export default defineComponent({
 
       setTimeout(() => {
         questionFitText()
-      }, 0)
+      }, 0) // DOM Bypass
 
       startSoundFx.play()
       setTimeout(() => {
