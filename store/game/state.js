@@ -2,7 +2,7 @@ import { GAME_TIME_LIMIT } from '@/system/constant'
 
 export default () => ({
   isGameOver: false,
-  currentDate: new Date().toISOString().slice(0, 10),
+  currentDate: new Date().toLocaleDateString('tr').slice(0, 10),
   alphabet: {
     activeIndex: 0,
     items: [

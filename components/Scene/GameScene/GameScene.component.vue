@@ -112,7 +112,7 @@ export default defineComponent({
     const store = useStore()
     const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
 
-    const day = new Date().toISOString().slice(0, 10)
+    const day = new Date().toLocaleDateString('tr').slice(0, 10)
     const storedDay = persistStore && persistStore.game.currentDate
 
     if (day !== storedDay) {
