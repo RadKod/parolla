@@ -70,11 +70,7 @@ export default defineComponent({
     }
 
     const openSharer = async () => {
-      const shareText = `
-        parolla - Günlük bilgi oyunu.
-
-        https://parolla.app
-      `
+      const shareText = `parolla - Günlük bilgi oyunu. \n\nhttps://parolla.app`
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({

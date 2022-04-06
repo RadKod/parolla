@@ -133,19 +133,7 @@ export default defineComponent({
     const today = new Date().toLocaleDateString('tr').slice(0, 10)
 
     const shareResults = async () => {
-      const shareText = `
-        parolla - Günlük bilgi oyunu.
-
-        ${today}
-
-        🟩 ${correctAnswers.value.length} Doğru
-        🟥 ${wrongAnswers.value.length} Yanlış
-        🟨 ${passedAnswers.value.length} Pas
-
-        Kalan Süre: ${remainTime.value}
-
-        https://parolla.app
-      `
+      const shareText = `parolla - Günlük bilgi oyunu. \n\n${today} \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
