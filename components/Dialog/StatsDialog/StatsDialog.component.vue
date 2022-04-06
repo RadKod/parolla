@@ -146,8 +146,7 @@ export default defineComponent({
         })
         await navigator.share({
           title: 'parolla',
-          text: shareText,
-          url: window.location
+          text: shareText
         })
       } catch {
         await navigator.clipboard.writeText(shareText)
