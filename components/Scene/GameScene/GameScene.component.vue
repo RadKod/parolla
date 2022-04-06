@@ -385,6 +385,7 @@ export default defineComponent({
       let remainTime = days + hours + minutes + seconds + milliseconds
 
       await store.commit('game/UPDATE_COUNTDOWN_TIMER', remainTime)
+      await window.localStorage.setItem('remainTime', `${timeData.minutes}:${timeData.seconds}`)
       await countdownTimerRef.value.start()
 
       if (timeData.minutes === 2 && timeData.seconds === 0) {

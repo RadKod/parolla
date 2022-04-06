@@ -12,10 +12,10 @@ Dialog.stats-dialog(
     // Tabs
     Tabs.stats-dialog__tabs(v-model="activeTab")
       // Score Tab
-      Tab(name="score" title="Skor")
+      Tab(name="score" title="Skor Dağılımı")
+        br
         // Scoreboard
         .scoreboard
-          h3.scoreboard__title Skor Dağılımı
           .score
             span.score__icon 🟩
             span.score__count {{ correctAnswers.length }}
@@ -30,6 +30,8 @@ Dialog.stats-dialog(
             span.score__icon 🟨
             span.score__count {{ passedAnswers.length }}
             span.score__title Pas
+
+          p Kalan Süre: <strong>{{ remainTime }}</strong>
 
         // Actions
         .stats-dialog__actions
@@ -114,13 +116,25 @@ export default defineComponent({
       passedAnswers.value = JSON.parse(window.localStorage.getItem('passedAnswers')) || []
     }
 
+    const remainTime = computed(() => {
+      if (isGameOver.value) {
+        return window.localStorage.getItem('remainTime')
+      }
+    })
+
+    const today = new Date().toLocaleDateString('tr').slice(0, 10)
+
     const shareResults = async () => {
       const shareText = `
         parolla - Günlük bilgi oyunu.
 
+        ${today}
+
         🟩 ${correctAnswers.value.length} Doğru
         🟥 ${wrongAnswers.value.length} Yanlış
         🟨 ${passedAnswers.value.length} Pas
+
+        Kalan Süre: ${remainTime.value}
 
         https://parolla.app
       `
@@ -155,7 +169,18 @@ export default defineComponent({
       return midnight.getTime() - new Date().getTime()
     })
 
-    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, isGameOver, questions, nextGameDateMs }
+    return {
+      state,
+      activeTab,
+      remainTime,
+      shareResults,
+      correctAnswers,
+      wrongAnswers,
+      passedAnswers,
+      isGameOver,
+      questions,
+      nextGameDateMs
+    }
   }
 })
 </script>
