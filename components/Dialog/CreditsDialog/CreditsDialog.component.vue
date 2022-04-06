@@ -1,0 +1,62 @@
+<template lang="pug">
+Dialog.credits-dialog(
+  v-model="state.isOpen"
+  title="Yapımcılar"
+  :cancel-button-text="cancelButtonText"
+  :show-confirm-button="false"
+  :show-cancel-button="true"
+  :close-on-click-overlay="false"
+  @closed="$emit('closed')"
+  @opened="$emit('opened')"
+)
+  span.credits-dialog__person
+    | Arkaplan ve Veri Tabanı
+    a(href="https://twitter.com/apo_bozdag" target="_blank") @apo_bozdag
+
+  span.credits-dialog__person
+    | Algoritma
+    a(href="https://twitter.com/erayaydi" target="_blank") @erayaydi
+
+  span.credits-dialog__person
+    | Planlama ve Arayüz
+    a(href="https://twitter.com/selimdoyranli" target="_blank") @selimdoyranli
+</template>
+
+<script>
+import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
+import { Dialog } from 'vant'
+
+export default defineComponent({
+  components: {
+    Dialog: Dialog.Component
+  },
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    cancelButtonText: {
+      type: String,
+      required: false,
+      default: 'Kapat'
+    }
+  },
+  setup(props) {
+    const state = reactive({
+      isOpen: props.isOpen
+    })
+
+    watch(
+      () => props.isOpen,
+      value => {
+        state.isOpen = value
+      }
+    )
+
+    return { state }
+  }
+})
+</script>
+
+<style lang="scss" src="./CreditsDialog.component.scss"></style>

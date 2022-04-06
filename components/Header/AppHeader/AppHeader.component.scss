@@ -29,9 +29,12 @@
     list-style: none;
 
     &__item {
+      display: flex;
+      align-items: center;
       margin-left: calc(var(--base-m-x) / 2);
       color: var(--color-icon-01);
       font-size: var(--font-size-text-5);
+      cursor: pointer;
     }
   }
 }

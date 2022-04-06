@@ -1,0 +1,46 @@
+.app-preloader {
+  @keyframes pulse {
+    25% {
+      transform: scale(0.9);
+    }
+
+    75% {
+      transform: scale(1.1);
+    }
+  }
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-ui-03);
+
+  &__inner {
+    position: relative;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .app-logo {
+    height: auto;
+    animation: pulse 2.4s linear infinite;
+    pointer-events: none;
+  }
+
+  &__loadingText {
+    display: block;
+    margin: calc(var(--base-m-y) * 2) 0;
+    color: var(--color-text-01);
+    font-size: var(--font-size-text-6);
+    letter-spacing: 0;
+    text-align: center;
+
+    @include font-weight-semi-bold;
+  }
+}

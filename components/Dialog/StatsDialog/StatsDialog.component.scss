@@ -6,7 +6,16 @@
 
   #{$van-dialog} {
     &__content {
-      padding: 2rem;
+      padding: var(--base-p-y) calc(var(--base-p-x) * 1.5);
+    }
+  }
+
+  &-empty {
+    padding: 0;
+
+    &__title {
+      padding: 0;
+      text-align: center;
     }
   }
 

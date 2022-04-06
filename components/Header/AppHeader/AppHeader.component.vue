@@ -1,31 +1,51 @@
 <template lang="pug">
 .app-header
-  AppLogo(:letter-size="16" :width="34" :height="34")
   AppLogo(type="title")
   nav.app-header-nav
-    li.app-header-nav__item.cursor-pointer(@click="toggleStatsDialog")
-      Icon(name="todo-list")
-    li.app-header-nav__item.cursor-pointer(@click="toggleHowToPlayDialog")
-      Icon(name="info")
+    li.app-header-nav__item(@click="toggleHowToPlayDialog")
+      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
+    li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
+      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+    li.app-header-nav__item(@click="toggleMenuDialog")
+      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
 
   // How To Play Dialog
   HowToPlayDialog(cancel-button-text="Kapat" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
   // Stats Dialog
   StatsDialog(:isOpen="dialog.stats.isOpen" @closed="dialog.stats.isOpen = false")
+  // Menu Dialog
+  MenuDialog(
+    :isOpen="dialog.menu.isOpen"
+    @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
+    @clickedCredits="toggleCreditsDialog"
+    @clickedContact="toggleContactDialog"
+    @closed="dialog.menu.isOpen = false"
+  )
+
+  // How To Calculate Stats Dialog
+  HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
+  // Credits Dialog
+  CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
+  // Contact Dialog
+  ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
 </template>
 
 <script>
 import { defineComponent, reactive } from '@nuxtjs/composition-api'
 import { Icon } from 'vant'
 import { AppLogo } from '@/components/Logo'
-import { StatsDialog, HowToPlayDialog } from '@/components/Dialog'
+import { StatsDialog, HowToPlayDialog, MenuDialog, HowToCalculateStatsDialog, CreditsDialog, ContactDialog } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
     Icon,
     AppLogo,
     StatsDialog,
-    HowToPlayDialog
+    HowToPlayDialog,
+    MenuDialog,
+    HowToCalculateStatsDialog,
+    CreditsDialog,
+    ContactDialog
   },
   setup() {
     const dialog = reactive({
@@ -33,6 +53,18 @@ export default defineComponent({
         isOpen: false
       },
       howToPlay: {
+        isOpen: false
+      },
+      menu: {
+        isOpen: false
+      },
+      howToCalculateStats: {
+        isOpen: false
+      },
+      credits: {
+        isOpen: false
+      },
+      contact: {
         isOpen: false
       }
     })
@@ -45,7 +77,31 @@ export default defineComponent({
       dialog.howToPlay.isOpen = !dialog.howToPlay.isOpen
     }
 
-    return { dialog, toggleStatsDialog, toggleHowToPlayDialog }
+    const toggleMenuDialog = () => {
+      dialog.menu.isOpen = !dialog.menu.isOpen
+    }
+
+    const toggleHowToCalculateStatsDialog = () => {
+      dialog.howToCalculateStats.isOpen = !dialog.howToCalculateStats.isOpen
+    }
+
+    const toggleCreditsDialog = () => {
+      dialog.credits.isOpen = !dialog.credits.isOpen
+    }
+
+    const toggleContactDialog = () => {
+      dialog.contact.isOpen = !dialog.contact.isOpen
+    }
+
+    return {
+      dialog,
+      toggleStatsDialog,
+      toggleHowToPlayDialog,
+      toggleMenuDialog,
+      toggleHowToCalculateStatsDialog,
+      toggleCreditsDialog,
+      toggleContactDialog
+    }
   }
 })
 </script>

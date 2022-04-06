@@ -306,6 +306,10 @@ export default defineComponent({
       halfTime: null
     })
 
+    const startSoundFx = new Howl({
+      src: ['/sound/fx/start.wav']
+    })
+
     const correctSoundFx = new Howl({
       src: ['/sound/fx/correct.wav']
     })
@@ -322,6 +326,7 @@ export default defineComponent({
       src: ['/sound/fx/half-time.wav']
     })
 
+    soundFx.start = startSoundFx
     soundFx.correct = correctSoundFx
     soundFx.wrong = wrongSoundFx
     soundFx.pass = passSoundFx
@@ -350,6 +355,7 @@ export default defineComponent({
         questionFitText()
       }, 0)
 
+      startSoundFx.play()
       setTimeout(() => {
         countdownTimerRef.value.start()
 

@@ -1,0 +1,13 @@
+.menu-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--tablet);
+
+  #{$van-dialog} {
+    &__content {
+      position: relative;
+      padding: calc(var(--base-p-y) * 2) var(--base-p-y);
+    }
+  }
+}

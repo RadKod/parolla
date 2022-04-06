@@ -1,61 +1,66 @@
 <template lang="pug">
 Dialog.stats-dialog(
   v-model="state.isOpen"
-  title="İstatistikler"
+  title="Bugünün İstatistiği"
   cancel-button-text="Kapat"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
 )
-  // Tabs
-  Tabs.stats-dialog__tabs(v-model="activeTab")
-    // Score Tab
-    Tab(name="score" title="Skor")
-      // Scoreboard
-      .scoreboard
-        h3.scoreboard__title Skor Dağılımı
-        .score
-          span.score__icon 🟩
-          span.score__count {{ correctAnswers.length }}
-          span.score__title Doğru
+  template(v-if="isGameOver")
+    // Tabs
+    Tabs.stats-dialog__tabs(v-model="activeTab")
+      // Score Tab
+      Tab(name="score" title="Skor")
+        // Scoreboard
+        .scoreboard
+          h3.scoreboard__title Skor Dağılımı
+          .score
+            span.score__icon 🟩
+            span.score__count {{ correctAnswers.length }}
+            span.score__title Doğru
 
-        .score
-          span.score__icon 🟥
-          span.score__count {{ wrongAnswers.length }}
-          span.score__title Yanlış
+          .score
+            span.score__icon 🟥
+            span.score__count {{ wrongAnswers.length }}
+            span.score__title Yanlış
 
-        .score
-          span.score__icon 🟨
-          span.score__count {{ passedAnswers.length }}
-          span.score__title Pas
+          .score
+            span.score__icon 🟨
+            span.score__count {{ passedAnswers.length }}
+            span.score__title Pas
 
-      // Actions
-      .stats-dialog__actions
-        // Next Game Countdown
-        .countdown.stats-dialog__countdown
-          span.countdown__title Sonraki Oyun
-          Icon.countdown__icon(name="clock-o")
-          CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="9960000")
+        // Actions
+        .stats-dialog__actions
+          // Next Game Countdown
+          .countdown.stats-dialog__countdown
+            span.countdown__title Sonraki Oyun
+            Icon.countdown__icon(name="clock-o")
+            CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="9960000")
 
-        // Result Sharer
-        .result-sharer
-          Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
-    Tab(name="answers" title="Cevap Anahtarı")
-      .answers
-        CellGroup.answers__inner
-          Cell.answers__answer(v-for="question in questions" :key="question.letter" :value="question.letter" :title="question.answer")
+          // Result Sharer
+          .result-sharer
+            Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
+      Tab(name="answers" title="Cevap Anahtarı")
+        .answers
+          CellGroup.answers__inner
+            Cell.answers__answer(v-for="question in questions" :key="question.letter" :value="question.letter" :title="question.answer")
 
-  // Footer
-  footer.stats-dialog__footer
-    .d-flex
-      RadKodLogo(:width="80" height="auto")
-      span &nbsp;tarafından.
+    // Footer
+    footer.stats-dialog__footer
+      .d-flex
+        RadKodLogo(:width="80" height="auto")
+        span &nbsp;tarafından.
+
+  template(v-else)
+    Empty.stats-dialog-empty
+      p.stats-dialog-empty__title Oyun bittiğinde <br> istatistik burada görünecek.
 </template>
 
 <script>
 import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
-import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, CellGroup, Cell } from 'vant'
+import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, CellGroup, Cell, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
 export default defineComponent({
@@ -68,6 +73,7 @@ export default defineComponent({
     Button,
     CellGroup,
     Cell,
+    Empty,
     RadKodLogo
   },
   props: {
@@ -94,6 +100,8 @@ export default defineComponent({
 
     const activeTab = ref('score')
 
+    const isGameOver = computed(() => store.getters['game/isGameOver'])
+
     const questions = computed(() => store.getters['game/questions'])
 
     const correctAnswers = ref([])
@@ -108,7 +116,7 @@ export default defineComponent({
 
     const shareResults = async () => {
       const shareText = `
-        Parolla - Günlük bilgi oyunu.
+        parolla - Günlük bilgi oyunu.
 
         🟩 ${correctAnswers.value.length} Doğru
         🟥 ${wrongAnswers.value.length} Yanlış
@@ -123,7 +131,7 @@ export default defineComponent({
           position: 'bottom'
         })
         await navigator.share({
-          title: 'Parolla',
+          title: 'parolla',
           text: shareText,
           url: window.location
         })
@@ -136,7 +144,7 @@ export default defineComponent({
       }
     }
 
-    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, questions }
+    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, isGameOver, questions }
   }
 })
 </script>
