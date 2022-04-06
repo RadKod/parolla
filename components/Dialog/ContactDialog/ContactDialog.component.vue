@@ -10,7 +10,7 @@ Dialog.contact-dialog(
   @opened="$emit('opened')"
 )
   p.contact-dialog__description Öneri, şikayet ya da işbirliği için; <br><br>
-    | info@radkod.com <br> veya <br>
+    | <a href="mailto:info@radkod.com?subject=parolla_contact">info@radkod.com</a> <br> veya <br>
     a(href="https://twitter.com/parollaapp" target="_blank") @parollaapp <br>
     | twitter hesabımızdan ulaşabilirsin.
 </template>
