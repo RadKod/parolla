@@ -78,7 +78,7 @@ export default defineComponent({
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Ayrıca panoya kopyalandı',
+          message: 'Panoya kopyalandı',
           position: 'bottom'
         })
         await navigator.share({
@@ -88,7 +88,7 @@ export default defineComponent({
       } catch {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Ayrıca panoya kopyalandı',
+          message: 'Panoya kopyalandı',
           position: 'bottom'
         })
       }
