@@ -37,7 +37,7 @@ Dialog.stats-dialog(
           .countdown.stats-dialog__countdown
             span.countdown__title Sonraki Oyun
             Icon.countdown__icon(name="clock-o")
-            CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="9960000")
+            CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="nextGameDateMs")
 
           // Result Sharer
           .result-sharer
@@ -144,7 +144,18 @@ export default defineComponent({
       }
     }
 
-    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, isGameOver, questions }
+    const nextGameDateMs = computed(() => {
+      const midnight = new Date()
+
+      midnight.setHours(24)
+      midnight.setMinutes(0)
+      midnight.setSeconds(0)
+      midnight.setMilliseconds(0)
+
+      return midnight.getTime() - new Date().getTime()
+    })
+
+    return { state, activeTab, shareResults, correctAnswers, wrongAnswers, passedAnswers, isGameOver, questions, nextGameDateMs }
   }
 })
 </script>
