@@ -165,14 +165,6 @@ export default defineComponent({
 
     const questions = computed(() => store.getters['game/questions'])
 
-    watch(questions, value => {
-      if (value.length > 0) {
-        if (!isGameOver.value) {
-          // startGame()
-        }
-      }
-    })
-
     const countdown = computed(() => store.getters['game/countdown'])
 
     const countdownTimerRef = ref(false)
