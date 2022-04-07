@@ -1,5 +1,7 @@
 .app-keyboard {
   position: relative;
+  z-index: var(--z-index-sticky);
+  overflow: visible;
 
   .hg-rows {
     position: relative;
@@ -37,6 +39,42 @@
       background-color: var(--color-disabled-01);
       opacity: 0.5;
       pointer-events: none;
+    }
+
+    &.hg-standardBtn {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        bottom: calc(100% + 20px);
+        left: -5px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(100% + 10px);
+        height: 50px;
+        font-size: var(--font-size-text-9);
+        background-color: var(--color-ui-01);
+        border-radius: var(--border-radius-01);
+        box-shadow: var(--box-shadow-01);
+        transform: scale(1.3);
+        visibility: hidden;
+        opacity: 0;
+        transition-delay: 0.1s;
+        content: attr(data-skbtn);
+
+        @include font-weight-semi-bold;
+      }
+
+      &:active {
+        &::before {
+          transform: scale(1.5);
+          visibility: visible;
+          opacity: 1;
+          transition: 0.1s ease-in;
+        }
+      }
     }
   }
 }
