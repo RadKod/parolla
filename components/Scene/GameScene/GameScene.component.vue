@@ -39,7 +39,7 @@
           strong.question__title {{ question.question }}
 
       // Field Section
-      section.game-scene__fieldSection
+      section.game-scene__fieldSection(:class="{ 'game-scene__fieldSection--disabled': !isGameStarted }")
         // Answer Field
         Field#answerField.answer-field(
           v-model="answer.field"
@@ -120,6 +120,8 @@ export default defineComponent({
         isGameOver: false
       })
     }
+
+    const isGameStarted = ref(false)
 
     const isGameOver = computed(() => store.getters['game/isGameOver'])
 
@@ -341,10 +343,14 @@ export default defineComponent({
     soundFx.halfTime = halfTimeSoundFx
 
     const handleKeyboardOnChange = input => {
+      if (!isGameStarted.value) return false
+
       answer.field = input
     }
 
     const handleKeyboardOnKeyPress = button => {
+      if (!isGameStarted.value) return false
+
       if (button === '{enter}') {
         handleAnswer()
       }
@@ -366,6 +372,7 @@ export default defineComponent({
       startSoundFx.play()
       setTimeout(() => {
         countdownTimerRef.value.start()
+        isGameStarted.value = true
 
         window.localStorage.setItem('correctAnswers', JSON.stringify([]))
         window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
@@ -445,6 +452,7 @@ export default defineComponent({
       ANSWER_CHAR_LENGTH,
       fetch,
       fetchState,
+      isGameStarted,
       isGameOver,
       alphabet,
       questions,
