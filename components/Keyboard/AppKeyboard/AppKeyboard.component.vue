@@ -1,5 +1,5 @@
 <template lang="pug">
-.keyboard.app-keyboard
+.keyboard.app-keyboard(ref="rootRef")
 </template>
 
 <script>
@@ -17,6 +17,7 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
+    const rootRef = ref(null)
     const keyboard = ref(null)
 
     const initKeyboard = async () => {
@@ -37,13 +38,6 @@ export default defineComponent({
           '{backspace}': '⌫',
           '{enter}': 'GÖNDER'
         },
-        buttonAttributes: [
-          {
-            attribute: 'disabled',
-            value: 'true',
-            buttons: '{enter}'
-          }
-        ],
         inputName: 'answerField',
         maxLength: {
           answerField: ANSWER_CHAR_LENGTH
@@ -53,8 +47,38 @@ export default defineComponent({
         },
         onKeyPress: button => {
           emit('onKeyPress', button)
+
+          setLetterTooltip(button)
         }
       })
+
+      disableKey('{enter}') // Initial disable key
+    }
+
+    const setLetterTooltip = button => {
+      switch (button) {
+        case '{backspace}':
+          break
+
+        case '{space}':
+          break
+
+        case '{pass}':
+          break
+
+        case '{enter}':
+          break
+
+        default:
+          rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--visibility', 'visible')
+          rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--opacity', '1')
+
+          setTimeout(() => {
+            rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--visibility', 'hidden')
+            rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--opacity', '0')
+          }, 220)
+          break
+      }
     }
 
     const destroyKeyboard = () => {
@@ -62,27 +86,11 @@ export default defineComponent({
     }
 
     const disableKey = key => {
-      keyboard.value.setOptions({
-        buttonAttributes: [
-          {
-            attribute: 'disabled',
-            value: 'true',
-            buttons: key
-          }
-        ]
-      })
+      rootRef.value.querySelector(`.hg-button[data-skbtn="${key}"]`).classList.add('disabled')
     }
 
     const enableKey = key => {
-      keyboard.value.setOptions({
-        buttonAttributes: [
-          {
-            attribute: 'disabled',
-            value: 'false',
-            buttons: key
-          }
-        ]
-      })
+      rootRef.value.querySelector(`.hg-button[data-skbtn="${key}"]`).classList.remove('disabled')
     }
 
     const handleCapsLock = async event => {
@@ -132,6 +140,8 @@ export default defineComponent({
         }
       }
     )
+
+    return { rootRef }
   }
 })
 </script>
