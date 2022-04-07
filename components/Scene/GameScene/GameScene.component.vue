@@ -140,6 +140,7 @@ export default defineComponent({
       window.localStorage.setItem('passedAnswers', JSON.stringify(passedAnswers))
     }
 
+    const myAnswers = ref([])
     const alphabet = computed(() => store.getters['game/alphabet'])
 
     watch(
@@ -252,6 +253,10 @@ export default defineComponent({
       if (isGameOver.value) return false
 
       alphabet.value.items[alphabet.value.activeIndex].isPassed = true
+
+      myAnswers.value.push({ ...alphabet.value.items[alphabet.value.activeIndex], field: answer.field })
+      window.localStorage.setItem('myAnswers', JSON.stringify(myAnswers.value))
+
       alphabet.value.activeIndex = nextLetter()
 
       soundFx.pass.play()
@@ -274,6 +279,9 @@ export default defineComponent({
         item.isWrong = true
         soundFx.wrong.play()
       }
+
+      myAnswers.value.push({ ...alphabet.value.items[alphabet.value.activeIndex], field: answer.field })
+      window.localStorage.setItem('myAnswers', JSON.stringify(myAnswers.value))
 
       alphabet.value.activeIndex = nextLetter()
     }
@@ -362,6 +370,7 @@ export default defineComponent({
         window.localStorage.setItem('correctAnswers', JSON.stringify([]))
         window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
         window.localStorage.setItem('passedAnswers', JSON.stringify([]))
+        window.localStorage.setItem('myAnswers', JSON.stringify([]))
       }, 1000) // 1 second sleep
     }
 

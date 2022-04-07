@@ -45,16 +45,28 @@ Dialog.stats-dialog(
           .result-sharer
             Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
       Tab(name="answers" title="Cevap Anahtarı")
+        // Answers
         .answers
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
-            CollapseItem.answers__answer(
+            // Answer
+            CollapseItem.answer(
               v-for="question in questions"
               :key="question.letter"
               :value="question.letter"
+              :class="[answerClasses(question)]"
               :name="question.letter"
               :title="question.answer"
             )
-              p {{ question.question }}
+              p.answer__question
+                strong Soru:
+                span &nbsp;{{ question.question }}
+              p.answer__correctAnswer
+                strong Doğru cevap:
+                span &nbsp;{{ question.answer }}
+              p.answer__myAnswer
+                strong Senin cevabın:
+                span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field }}
+                span(v-else) &nbsp;-
 
     // Footer
     footer.stats-dialog__footer
@@ -164,6 +176,36 @@ export default defineComponent({
       return midnight.getTime() - new Date().getTime()
     })
 
+    const answerClasses = question => {
+      const correct = correctAnswers.value.some(item => question.letter === item.letter)
+      const wrong = wrongAnswers.value.some(item => question.letter === item.letter)
+      const passed = passedAnswers.value.some(item => question.letter === item.letter)
+
+      if (correct) {
+        return 'answer--correct'
+      }
+
+      if (wrong) {
+        return 'answer--wrong'
+      }
+
+      if (passed) {
+        return 'answer--passed'
+      }
+    }
+
+    const myAnswer = question => {
+      const storedAnswers = JSON.parse(window.localStorage.getItem('myAnswers'))
+
+      if (storedAnswers && storedAnswers.length > 0) {
+        return storedAnswers.filter(item => question.letter === item.letter).reverse()[0]
+      } else {
+        return {
+          field: '-'
+        }
+      }
+    }
+
     return {
       state,
       activeTab,
@@ -175,7 +217,9 @@ export default defineComponent({
       passedAnswers,
       isGameOver,
       questions,
-      nextGameDateMs
+      nextGameDateMs,
+      answerClasses,
+      myAnswer
     }
   }
 })
