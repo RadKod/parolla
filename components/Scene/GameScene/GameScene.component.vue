@@ -26,7 +26,7 @@
 
     template(v-else-if="fetchState.error")
       Empty(image="error" description="Veriler alınırken hata oluştu.")
-        Button(@click="fetch()") Tekrar Dene
+        Button(@click="reFetch") Tekrar Dene
 
     template(v-else)
       // Questions
@@ -197,6 +197,14 @@ export default defineComponent({
       }
     })
 
+    const reFetch = async () => {
+      await fetch()
+
+      if (questions.value.length > 0) {
+        startGame()
+      }
+    }
+
     const alphabetItemClasses = (item, index) => {
       if (index === alphabet.value.activeIndex) {
         return `alphabet__item--selected`
@@ -355,6 +363,8 @@ export default defineComponent({
     const startGame = async () => {
       await nextTick()
 
+      if (questions.value.length <= 0) return false
+
       if (isGameOver.value) return false
 
       setTimeout(() => {
@@ -453,6 +463,7 @@ export default defineComponent({
       ANSWER_CHAR_LENGTH,
       fetch,
       fetchState,
+      reFetch,
       isGameStarted,
       isGameOver,
       alphabet,
