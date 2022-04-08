@@ -30,8 +30,7 @@
     "lint:eslint:fix": "eslint --fix --ext .js,.vue,.pug --ignore-path .gitignore --ignore-path .eslintignore .",
     "lint:stylelint": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\"",
     "lint:stylelint:fix": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\" --fix",
-    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{js,json,css,scss,vue,html,pug}\"",
-    "json:server": "json-server --watch ./static/mock/db.json --host 192.168.1.35 --port 3004 --read-only --delay 1000"
+    "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{js,json,css,scss,vue,html,pug}\""
   },
   "lint-staged": {
     "*.{js,vue,json}": [
@@ -68,7 +67,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.1.0",
     "husky": "^4.2.5",
-    "json-server": "^0.17.0",
     "lint-staged": "^10.2.11",
     "node-sass": "^4.12.0",
     "nuxt-font-loader": "^1.1.3",

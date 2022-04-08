@@ -12,6 +12,7 @@ export default defineComponent({
   components: {
     GameScene
   },
+  layout: 'Default/Default.layout',
   setup() {}
 })
 </script>

@@ -28,8 +28,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-.default-layout {
-  position: relative;
-}
-</style>
+<style lang="scss" src="./Default.layout.scss"></style>
