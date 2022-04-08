@@ -27,7 +27,7 @@ module.exports = {
     htmlAttrs: {
       lang: 'tr'
     },
-    title: process.env.npm_package_name || '',
+    title: process.env.npm_package_name || 'parolla',
     meta: [
       { charset: 'utf-8' },
       {
@@ -37,10 +37,43 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: process.env.npm_package_description || 'Günlük bilgi oyunu.'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/meta/preview/og.jpg'
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: `Günlük bilgi oyunu.`
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: `parolla.app`
+      },
+      {
+        hid: 'twitter:card',
+        property: 'twitter:card',
+        content: `summary_large_image`
+      },
+      {
+        hid: 'twitter:creator',
+        property: 'twitter:creator',
+        content: `@parollaapp`
+      },
+      {
+        hid: 'Publisher',
+        property: 'Publisher',
+        content: `RadKod`
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
+      { rel: 'dns-prefetch', href: '//api.radkod.com' }
+    ]
   },
 
   /*
