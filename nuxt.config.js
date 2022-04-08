@@ -171,7 +171,17 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    // https://www.npmjs.com/package/@nuxtjs/gtm
+    [
+      '@nuxtjs/gtm',
+      {
+        enabled: process.env.NODE_ENV === 'production' ? true : false,
+        debug: false,
+        id: 'GTM-W87WBTN'
+      }
+    ]
+  ],
 
   /*
    ** Build configuration
