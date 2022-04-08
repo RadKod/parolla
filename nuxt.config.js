@@ -68,11 +68,16 @@ module.exports = {
         hid: 'Publisher',
         property: 'Publisher',
         content: `RadKod`
+      },
+      {
+        name: 'theme-color',
+        content: '#eeeeee'
       }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
-      { rel: 'dns-prefetch', href: '//api.radkod.com' }
+      { rel: 'dns-prefetch', href: '//api.radkod.com' },
+      { rel: 'manifest', href: '/manifest.json' }
     ]
   },
 
