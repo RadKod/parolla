@@ -423,6 +423,13 @@ export default defineComponent({
       })
     }
 
+    const handleBeforeUnload = event => {
+      if (isGameStarted.value && !isGameOver.value) {
+        event.preventDefault()
+        event.returnValue = ''
+      }
+    }
+
     onMounted(() => {
       initCarousels()
 
@@ -432,10 +439,12 @@ export default defineComponent({
       }
 
       window.addEventListener('resize', questionFitText)
+      window.addEventListener('beforeunload', event => handleBeforeUnload(event))
     })
 
     onUnmounted(() => {
       window.removeEventListener('resize', questionFitText)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     })
 
     return {
