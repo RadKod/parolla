@@ -27,6 +27,7 @@ export default defineComponent({
         mergeDisplay: true,
         physicalKeyboardHighlight: true,
         physicalKeyboardHighlightPress: true,
+        useButtonTag: true,
         layoutName: 'default',
         layout: {
           default: ['q w e r t y u ı o p ğ ü', 'a s d f g h j k l ş i', 'z x c v b n m ö ç {backspace}', '{pass} {space} {enter}'],
@@ -76,7 +77,7 @@ export default defineComponent({
           setTimeout(() => {
             rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--visibility', 'hidden')
             rootRef.value.querySelector(`.hg-standardBtn[data-skbtn="${button}"]`).style.setProperty('--opacity', '0')
-          }, 220)
+          }, 160)
           break
       }
     }
