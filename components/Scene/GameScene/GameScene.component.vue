@@ -272,12 +272,18 @@ export default defineComponent({
       item.isPassed = false
 
       const answerField = answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
-      const correctAnswer = questions.value[alphabet.value.activeIndex].answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+      const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
-      if (answerField === correctAnswer) {
-        item.isCorrect = true
-        soundFx.correct.play()
-      } else {
+      const isCorrect = correctAnswers.some(answer => {
+        if (answerField === answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+          item.isCorrect = true
+          soundFx.correct.play()
+
+          return true
+        }
+      })
+
+      if (!isCorrect) {
         item.isWrong = true
         soundFx.wrong.play()
       }
