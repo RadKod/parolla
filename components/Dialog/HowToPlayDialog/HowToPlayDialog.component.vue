@@ -15,7 +15,7 @@ Dialog.how-to-play-dialog(
       | butonuna basıp daha sonra o soruya dönebilirsin. Paslanmış soruları süren bitene kadar cevaplayabilirsin.
       | <br><br> Oyunun toplam süresi <strong>4 dakika</strong>'dır.
       | <br><small>Eğer sayfayı yenilersen oyun en baştan başlar</small>
-      | <br><br> <strong>parolla</strong> oyunu <strong>28</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.
+      | <br><br> <strong>parolla</strong> oyunu <strong>{{ ALPHABET_LENGTH }}</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.
 
   // Footer
   footer.how-to-play-dialog__footer
@@ -26,6 +26,7 @@ Dialog.how-to-play-dialog(
 
 <script>
 import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
+import { ALPHABET_LENGTH } from '@/system/constant'
 import { Dialog } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
@@ -58,7 +59,7 @@ export default defineComponent({
       }
     )
 
-    return { state }
+    return { ALPHABET_LENGTH, state }
   }
 })
 </script>

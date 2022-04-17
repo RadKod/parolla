@@ -61,19 +61,7 @@ export default () => ({
         isCorrect: false
       },
       {
-        letter: 'I',
-        isPassed: false,
-        isWrong: false,
-        isCorrect: false
-      },
-      {
         letter: 'İ',
-        isPassed: false,
-        isWrong: false,
-        isCorrect: false
-      },
-      {
-        letter: 'J',
         isPassed: false,
         isWrong: false,
         isCorrect: false
