@@ -412,7 +412,7 @@ export default defineComponent({
       await window.localStorage.setItem('remainTime', `${timeData.minutes}:${timeData.seconds}`)
       await countdownTimerRef.value.start()
 
-      if (timeData.minutes === 2 && timeData.seconds === 0) {
+      if (timeData.minutes === 2 && timeData.seconds === 30) {
         halfTimeSoundFx.play()
         Notify({
           message: 'Sürenin yarısı doldu',

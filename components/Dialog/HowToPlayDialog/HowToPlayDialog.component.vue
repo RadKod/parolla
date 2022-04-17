@@ -13,7 +13,7 @@ Dialog.how-to-play-dialog(
       | Örneğin: <strong>Bal yapan hayvan?</strong> sorusunda aktif harf <strong>A</strong> ve bunun cevabı <strong>Arı</strong>'dır gibi.<br><br>
       | Cevabın <strong>🟩 Doğru</strong> ya da <strong>🟥 Yanlış</strong> olabilir. <br> Eğer cevabı bilmiyorsan klavyedeki <strong>🟨 PAS</strong>
       | butonuna basıp daha sonra o soruya dönebilirsin. Paslanmış soruları süren bitene kadar cevaplayabilirsin.
-      | <br><br> Oyunun toplam süresi <strong>4 dakika</strong>'dır.
+      | <br><br> Oyunun toplam süresi <strong>5 dakika</strong>'dır.
       | <br><small>Eğer sayfayı yenilersen oyun en baştan başlar</small>
       | <br><br> <strong>parolla</strong> oyunu <strong>{{ ALPHABET_LENGTH }}</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.
 
