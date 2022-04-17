@@ -27,8 +27,8 @@
     text-transform: uppercase;
 
     &-pass {
-      color: var(--color-text-04);
-      background-color: var(--color-warning-01);
+      color: var(--color-text-04) !important;
+      background-color: var(--color-warning-01) !important;
     }
 
     &-space {
