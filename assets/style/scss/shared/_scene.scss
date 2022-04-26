@@ -1,0 +1,8 @@
+.scene {
+  position: relative;
+
+  &__inner {
+    height: calc(100vh - var(--header-height) - 1px);
+    padding: 0 var(--base-p-x);
+  }
+}

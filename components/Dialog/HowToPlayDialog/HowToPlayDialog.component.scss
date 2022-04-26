@@ -1,0 +1,38 @@
+.how-to-play-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--tablet);
+
+  #{$van-dialog} {
+    &__content {
+      position: relative;
+    }
+  }
+
+  &__explain {
+    position: relative;
+    display: block;
+    max-height: 50vh;
+    padding: var(--base-p-y) calc(var(--base-p-x) * 1.8);
+    overflow: auto;
+
+    p {
+      font-size: var(--font-size-text-7);
+      line-height: calc(var(--font-size-text-7) * 1.5);
+
+      @include mq($until: tablet) {
+        font-size: var(--font-size-text-8);
+        line-height: calc(var(--font-size-text-8) * 1.5);
+      }
+    }
+  }
+
+  // Footer
+  &__footer {
+    margin: var(--base-m-y) var(--base-m-x);
+    padding: var(--base-p-y) var(--base-p-x);
+    background-color: var(--color-ui-01);
+    border-radius: var(--border-radius-01);
+  }
+}

@@ -1,3 +1,4 @@
 :root {
-  --header-height: 70px;
+  --header-height: 50px;
+  --header-position: relative;
 }
