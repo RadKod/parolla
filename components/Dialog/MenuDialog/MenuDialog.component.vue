@@ -18,7 +18,7 @@ Dialog.menu-dialog(
     )
     Cell.menu-dialog-nav__item(
       icon="bar-chart-o"
-      title="Skoru nasıl hesaplanıyoruz"
+      title="Skoru nasıl hesaplıyoruz"
       size="large"
       is-link
       @click.native="$emit('clickedHowToCalculateStats')"
