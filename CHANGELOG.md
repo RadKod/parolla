@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.2
+
+- :lipstick: UI improvements
+
 ## v1.0.1
 
 - :pencil: typo fix
