@@ -119,6 +119,7 @@ export default defineComponent({
       store.commit('game/SET_IS_GAME_OVER', {
         isGameOver: false
       })
+      store.commit('game/SET_CURRENT_DATE', day)
     }
 
     const isGameStarted = ref(false)
@@ -188,13 +189,7 @@ export default defineComponent({
 
     // Fetch Questions
     const { fetch, fetchState } = useFetch(async () => {
-      if (day === storedDay) {
-        await store.commit('game/SET_QUESTIONS', {
-          questions: persistStore.game.questions
-        })
-      } else {
-        await store.dispatch('game/fetchQuestions')
-      }
+      await store.dispatch('game/fetchQuestions')
     })
 
     const reFetch = async () => {
