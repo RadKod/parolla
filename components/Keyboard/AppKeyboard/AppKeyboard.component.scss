@@ -27,7 +27,7 @@
     text-transform: uppercase;
 
     &-tab {
-      display: none;
+      display: none !important;
     }
 
     &-pass {

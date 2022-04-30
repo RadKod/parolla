@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.5
+
+- :lipstick: style fix
+
 ## v1.0.4
 
 - :lips: When pressing tab key pass question on desktop
