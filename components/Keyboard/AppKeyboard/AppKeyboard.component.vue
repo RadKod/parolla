@@ -24,10 +24,10 @@ export default defineComponent({
       await nextTick()
 
       keyboard.value = new Keyboard('.app-keyboard', {
-        mergeDisplay: true,
+        mergeDisplay: false,
         physicalKeyboardHighlight: true,
         physicalKeyboardHighlightPress: true,
-        useButtonTag: true,
+        useButtonTag: false,
         layoutName: 'default',
         layout: {
           default: ['q w e r t y u ı o p ğ ü', 'a s d f g h j k l ş i', 'z x c v b n m ö ç {backspace}', '{pass} {space} {enter}'],
@@ -49,7 +49,7 @@ export default defineComponent({
         onKeyPress: button => {
           emit('onKeyPress', button)
 
-          setLetterTooltip(button)
+          // setLetterTooltip(button)
         }
       })
 

@@ -3,8 +3,8 @@
 
   --motion: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  @media (max-width: 424px) {
-    zoom: 80%;
+  @media (max-height: 569px) {
+    zoom: 90%;
   }
 
   @keyframes pop {
@@ -53,6 +53,10 @@
     height: var(--alphabet-height);
     margin-bottom: calc(var(--base-m-y) * 2);
     padding: var(--base-p-y) 0;
+
+    @include mq($until: mobile-m) {
+      margin-bottom: var(--base-m-y);
+    }
 
     &__inner {
       position: relative;
@@ -112,6 +116,10 @@
 
     @include mq($from: tablet) {
       padding: calc(var(--base-p-y) * 2) calc(var(--base-p-x) * 4);
+    }
+
+    @include mq($until: mobile-m) {
+      padding: var(--base-p-y) var(--base-p-x);
     }
   }
 
