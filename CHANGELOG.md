@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3
+
+- :lips: UX improvements
+
 ## v1.0.2
 
 - :lipstick: UI improvements
