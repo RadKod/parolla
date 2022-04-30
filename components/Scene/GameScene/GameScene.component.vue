@@ -1,5 +1,5 @@
 <template lang="pug">
-.scene.game-scene(ref="rootRef" :class="{ 'game-scene--isMobileDevice': isMobileDevice, 'game-scene--gameOver': isGameOver }")
+.scene.game-scene(ref="rootRef" tabindex="1" :class="{ 'game-scene--isMobileDevice': isMobileDevice, 'game-scene--gameOver': isGameOver }")
   // Scene Inner
   .scene__inner.game-scene__inner
     // Alphabet
@@ -45,6 +45,7 @@
           v-model="answer.field"
           type="text"
           placeholder="Cevabını yaz"
+          tabindex="-1"
           spellcheck="false"
           :maxlength="ANSWER_CHAR_LENGTH"
           @keypress.enter="handleAnswer"
@@ -351,6 +352,11 @@ export default defineComponent({
 
     const handleKeyboardOnKeyPress = button => {
       if (!isGameStarted.value) return false
+
+      if (button === '{tab}') {
+        rootRef.value.focus()
+        pass()
+      }
 
       if (button === '{enter}') {
         handleAnswer()

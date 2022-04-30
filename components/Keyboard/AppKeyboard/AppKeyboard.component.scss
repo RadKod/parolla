@@ -26,6 +26,10 @@
   .hg-button {
     text-transform: uppercase;
 
+    &-tab {
+      display: none;
+    }
+
     &-pass {
       color: var(--color-text-04) !important;
       background-color: var(--color-warning-01) !important;
