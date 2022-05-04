@@ -6958,6 +6958,13 @@ nuxt-font-loader@^1.1.3:
   resolved "https://registry.npmjs.org/nuxt-font-loader/-/nuxt-font-loader-1.1.4.tgz"
   integrity sha512-2ZyJxRIHKjKiL6sfUt29DLG+0O6+YlUAxxKV7UpVuGRt2xgQC7ZuLiDGDSJO7YzMB/AEG5bh3gqBaTmo3+i9Ew==
 
+nuxt-user-agent@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/nuxt-user-agent/-/nuxt-user-agent-1.2.2.tgz#696462fcbdbc32d5be2bc63976afd9eef6e9f6b7"
+  integrity sha512-Z9d+r1/PzJAvrr4rX70IWvRyI3qw3RukAGrRZPZ9WeByuCWmVKiW8G1AhdkUOyrDrVoBUC59iLqIVkop/NjSuQ==
+  dependencies:
+    woothee "^1.8.1"
+
 nuxt@2.15.2:
   version "2.15.2"
   resolved "https://registry.npmjs.org/nuxt/-/nuxt-2.15.2.tgz"
@@ -11201,6 +11208,11 @@ with@^5.0.0:
   dependencies:
     acorn "^3.1.0"
     acorn-globals "^3.0.0"
+
+woothee@^1.8.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/woothee/-/woothee-1.11.1.tgz#ac0a831345d1ca068a27b56f0f298b844769531e"
+  integrity sha512-KdArM3MsNa5tlSBSL29w9ouy9MXZoFPeUdPVnL4QZH3iyV8HsqnwbWw2YLiXEx2wAh0bM55dnl0+qDE6KHBlhQ==
 
 word-wrap@^1.2.3:
   version "1.2.3"

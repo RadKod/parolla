@@ -45,6 +45,32 @@
     }
   }
 
+  @at-root html[ua-is-from-ios='true'] {
+    #{$game-scene} {
+      &--osk {
+        #{$game-scene} {
+          &__fieldSection {
+            position: relative !important;
+          }
+        }
+      }
+    }
+  }
+
+  @at-root html[ua-browser='Safari'] {
+    #{$game-scene} {
+      &--osk {
+        #{$game-scene} {
+          @include mq($until: wide) {
+            &__fieldSection {
+              position: relative !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Alphabet
   .alphabet {
     --alphabet-height: auto;
@@ -127,6 +153,8 @@
 
   // Question
   .question {
+    $question: '.question';
+
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -141,8 +169,28 @@
       height: 150px;
     }
 
+    @media (max-height: 569px) {
+      height: 100px;
+    }
+
     &__title {
       @include font-weight-bold;
+    }
+
+    @at-root html[ua-is-from-ios='true'] {
+      #{$question} {
+        &--osk {
+          @include mq($until: mobile) {
+            height: 90px;
+          }
+        }
+      }
+    }
+
+    &--osk {
+      @media (max-height: 569px) {
+        height: 60px;
+      }
     }
   }
 
@@ -154,6 +202,8 @@
     width: 100%;
     max-width: var(--layout-max-width);
     margin: 0 auto;
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translate3d(0, 0, 0);
 
     @include center(true, false);
 
@@ -165,7 +215,12 @@
 
   // Answer Field
   .answer-field {
+    --field-height: 54px;
+
+    position: relative;
     width: 100%;
+    height: var(--field-height);
+    box-shadow: var(--box-shadow-01);
 
     @mixin readonly {
       user-select: none;
@@ -173,16 +228,32 @@
       -webkit-user-drag: none;
     }
 
-    input {
+    &__input {
+      width: 100%;
+      height: var(--field-height);
+      padding: 0 var(--base-p-x);
+      font-size: var(--font-size-text-7);
       text-transform: uppercase;
+      border: 0;
+      outline: none;
 
       @include font-weight-bold;
-      @include readonly;
 
       &::placeholder {
+        color: var(--color-text-03);
         text-transform: capitalize;
 
         @include font-weight-regular;
+      }
+    }
+
+    &__button {
+      @include center(false, true);
+
+      right: calc(var(--base-p-x) / 2);
+
+      &--pass {
+        margin-right: 40px;
       }
     }
   }
@@ -197,7 +268,6 @@
     .swiper-slide {
       width: calc(100px - var(--base-p-x));
       height: calc(100px - var(--base-p-y));
-      aspect-ratio: 1/1;
 
       @include mq($until: desktop) {
         width: calc(72px - var(--base-p-y));

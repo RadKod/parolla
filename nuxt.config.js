@@ -32,7 +32,11 @@ module.exports = {
       { charset: 'utf-8' },
       {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+        content: 'width=device-width, height=device-height, initial-scale=1.0, viewport-fit=cover, user-scalable=no'
+      },
+      {
+        name: 'apple-mobile-web-app-capable',
+        content: 'yes'
       },
       {
         hid: 'description',
@@ -125,7 +129,8 @@ module.exports = {
    */
   plugins: [
     // https://www.npmjs.com/package/vuex-persist
-    { src: '~/plugins/vuex-persist', ssr: false }
+    { src: '~/plugins/vuex-persist', ssr: false },
+    { src: '~/plugins/ua-injector', ssr: false }
   ],
 
   /*
@@ -180,7 +185,9 @@ module.exports = {
         debug: false,
         id: 'GTM-W87WBTN'
       }
-    ]
+    ],
+    // https://www.npmjs.com/package/nuxt-user-agent
+    'nuxt-user-agent'
   ],
 
   /*
