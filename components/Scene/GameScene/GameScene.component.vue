@@ -59,21 +59,22 @@
             @blur="answer.isFocused = false"
             @keypress.enter="handleAnswer"
           )
-          Button.answer-field__button.answer-field__button--pass(
-            color="var(--color-warning-01)"
-            icon="arrow"
-            size="small"
-            round
-            @click="pass"
-          )
-          Button.answer-field__button(
-            color="var(--color-brand-02)"
-            icon="guide-o"
-            size="small"
-            round
-            :disabled="answer.field <= 0"
-            @click="handleAnswer"
-          )
+          // Optional action buttons
+            Button.answer-field__button.answer-field__button--pass(
+              color="var(--color-warning-01)"
+              icon="arrow"
+              size="small"
+              round
+              @click="pass"
+            )
+            Button.answer-field__button(
+              color="var(--color-brand-02)"
+              icon="guide-o"
+              size="small"
+              round
+              :disabled="answer.field <= 0"
+              @click="handleAnswer"
+            )
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -400,22 +401,42 @@ export default defineComponent({
 
       setTimeout(() => {
         questionFitText()
+      }, 0) // DOM Bypass
+
+      const toast = Toast.loading({
+        className: 'start-game-toast',
+        overlay: true,
+        duration: 0, // continuous display toast
+        forbidClick: true,
+        loadingType: 'spinner',
+        message: `5 \n Yenilikler: \n Artık paslamak için pas yazmalısın. \n Nihayet kendi klavyeni kullanabilirsin.`
+      })
+      let second = 5
+      const timer = setInterval(() => {
+        second--
+
+        if (second) {
+          toast.message = `${second} \n Yenilikler: \n Artık paslamak için pas yazmalısın. \n Nihayet kendi klavyeni kullanabilirsin.`
+        } else {
+          clearInterval(timer)
+          Toast.clear()
+        }
+      }, 1000)
+
+      setTimeout(() => {
+        countdownTimerRef.value.start()
+        isGameStarted.value = true
+        startSoundFx.play()
 
         if (context.$ua.isFromAndroidOs()) {
           focusToAnswerFieldInput()
         }
-      }, 0) // DOM Bypass
-
-      startSoundFx.play()
-      setTimeout(() => {
-        countdownTimerRef.value.start()
-        isGameStarted.value = true
 
         window.localStorage.setItem('correctAnswers', JSON.stringify([]))
         window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
         window.localStorage.setItem('passedAnswers', JSON.stringify([]))
         window.localStorage.setItem('myAnswers', JSON.stringify([]))
-      }, 1000) // 1 second sleep
+      }, 6000) // 5+1 second sleep
     }
 
     const endGame = async () => {
