@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.1
+
+- :lips: UX improvements
+
 ## v1.1.0
 
 - :lips: UX improvements
