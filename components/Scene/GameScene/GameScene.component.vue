@@ -60,21 +60,11 @@
             @keypress.enter="handleAnswer"
           )
           // Optional action buttons
-            Button.answer-field__button.answer-field__button--pass(
-              color="var(--color-warning-01)"
-              icon="arrow"
-              size="small"
-              round
-              @click="pass"
-            )
-            Button.answer-field__button(
-              color="var(--color-brand-02)"
-              icon="guide-o"
-              size="small"
-              round
-              :disabled="answer.field <= 0"
-              @click="handleAnswer"
-            )
+          .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
+            Button(color="var(--color-warning-01)" icon="arrow" size="small" round)
+
+          .answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(@mousedown="handleAnswer")
+            Button(color="var(--color-brand-02)" icon="guide-o" size="small" round :disabled="answer.field <= 0")
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -409,14 +399,14 @@ export default defineComponent({
         duration: 0, // continuous display toast
         forbidClick: true,
         loadingType: 'spinner',
-        message: `5 \n Yenilikler: \n Artık paslamak için pas yazmalısın. \n Nihayet kendi klavyeni kullanabilirsin.`
+        message: `5 \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
       })
       let second = 5
       const timer = setInterval(() => {
         second--
 
         if (second) {
-          toast.message = `${second} \n Yenilikler: \n Artık paslamak için pas yazmalısın. \n Nihayet kendi klavyeni kullanabilirsin.`
+          toast.message = `${second} \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
         } else {
           clearInterval(timer)
           Toast.clear()
@@ -500,6 +490,45 @@ export default defineComponent({
       window.scrollTo(0, 0)
     }
 
+    const isTouchEnabled = () => {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+    }
+
+    const acceptsInput = elem => {
+      if (!elem) {
+        return false
+      }
+
+      let tag = elem.tagName
+
+      return tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA' || elem.isContentEditable || elem.tabIndex >= 0
+    }
+
+    const handleDontHideKeyboard = event => {
+      let target = event.target
+      let dontDiscardKeyboard = target.classList.contains('do-not-hide-keyboard')
+
+      let isPassButton = target.classList.contains('do-not-hide-keyboard--pass')
+      let isSendButton = target.classList.contains('do-not-hide-keyboard--send')
+
+      // On iOS tapping anywhere doesn’t
+      // automatically discard keyboard
+      if (dontDiscardKeyboard) {
+        event.preventDefault()
+
+        // DO ACTION HERE
+        if (isPassButton) {
+          pass()
+        }
+
+        if (isSendButton) {
+          handleAnswer()
+        }
+      } else if (!acceptsInput(target)) {
+        document.activeElement.blur()
+      }
+    }
+
     onMounted(() => {
       initCarousels()
 
@@ -514,6 +543,10 @@ export default defineComponent({
       window.addEventListener('beforeunload', event => handleBeforeUnload(event))
 
       window.addEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value.addEventListener('touchend', event => handleDontHideKeyboard(event))
+      }
     })
 
     onUnmounted(() => {
@@ -521,6 +554,10 @@ export default defineComponent({
       window.removeEventListener('beforeunload', handleBeforeUnload)
 
       window.removeEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value.removeEventListener('touchend', handleDontHideKeyboard)
+      }
     })
 
     return {
@@ -544,7 +581,8 @@ export default defineComponent({
       resetAnswer,
       startGame,
       listenCountdown,
-      handleCountdownFinish
+      handleCountdownFinish,
+      isTouchEnabled
     }
   }
 })
