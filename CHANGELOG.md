@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.0
+
+- :lips: UX improvements
+- :lips: Native keyboard
+
 ## v1.0.5
 
 - :lipstick: style fix
