@@ -1,0 +1,19 @@
+.van-toast {
+  $van-toast: '.van-toast';
+
+  &.start-game-toast {
+    width: 90%;
+    max-width: 320px;
+
+    #{$van-toast} {
+      &__text {
+        margin-top: var(--base-m-y);
+
+        strong {
+          color: var(--color-warning-01);
+          @include font-weight-semi-bold;
+        }
+      }
+    }
+  }
+}

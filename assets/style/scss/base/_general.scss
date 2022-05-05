@@ -27,10 +27,14 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: hidden !important;
   font-family: 'Rubik', sans-serif !important;
   background-color: var(--color-ui-01);
   overscroll-behavior-y: contain;
 
   @include font-weight-regular;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
 }

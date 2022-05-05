@@ -11,8 +11,8 @@ Dialog.how-to-play-dialog(
   .how-to-play-dialog__explain
     p Her harfe karşılık gelen sorunun cevabını bulmalısın, cevap o harf ile başlar.<br><br>
       | Örneğin: <strong>Bal yapan hayvan?</strong> sorusunda aktif harf <strong>A</strong> ve bunun cevabı <strong>Arı</strong>'dır gibi.<br><br>
-      | Cevabın <strong>🟩 Doğru</strong> ya da <strong>🟥 Yanlış</strong> olabilir. <br> Eğer cevabı bilmiyorsan klavyedeki <strong>🟨 PAS</strong>
-      | butonuna basıp daha sonra o soruya dönebilirsin. Paslanmış soruları süren bitene kadar cevaplayabilirsin.
+      | Cevabın <strong>🟩 Doğru</strong> ya da <strong>🟥 Yanlış</strong> olabilir. <br> Eğer cevabı bilmiyorsan kutucuğa <strong>PAS</strong>
+      | yazıp gönder ya da pas butonuna bas. Daha sonra o soruya dönebileceksin. 🟨 Pasladığın soruları süren bitene kadar cevaplayabilirsin.
       | <br><br> Oyunun toplam süresi <strong>5 dakika</strong>'dır.
       | <br><small>Eğer sayfayı yenilersen oyun en baştan başlar</small>
       | <br><br> <strong>parolla</strong> oyunu <strong>{{ ALPHABET_LENGTH }}</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.

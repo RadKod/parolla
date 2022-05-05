@@ -1,5 +1,9 @@
 <template lang="pug">
-.scene.game-scene(ref="rootRef" tabindex="1" :class="{ 'game-scene--isMobileDevice': isMobileDevice, 'game-scene--gameOver': isGameOver }")
+.scene.game-scene(
+  ref="rootRef"
+  tabindex="1"
+  :class="{ 'game-scene--isMobileDevice': $ua.isFromMobilephone(), 'game-scene--gameOver': isGameOver, 'game-scene--osk': answer.isFocused }"
+)
   // Scene Inner
   .scene__inner.game-scene__inner
     // Alphabet
@@ -34,34 +38,33 @@
         .question(
           v-for="(question, index) in questions"
           v-show="index === alphabet.activeIndex"
-          :class="{ 'question--active': index === alphabet.activeIndex }"
+          :class="{ 'question--active': index === alphabet.activeIndex, 'question--osk': answer.isFocused }"
         )
           strong.question__title {{ question.question }}
 
       // Field Section
       section.game-scene__fieldSection(:class="{ 'game-scene__fieldSection--disabled': !isGameStarted }")
         // Answer Field
-        Field#answerField.answer-field(
-          v-model="answer.field"
-          type="text"
-          placeholder="Cevabını yaz"
-          tabindex="-1"
-          spellcheck="false"
-          :maxlength="ANSWER_CHAR_LENGTH"
-          @keypress.enter="handleAnswer"
-        )
-          template(#button)
-            Button.answer-field__button(
-              color="var(--color-brand-02)"
-              icon="guide-o"
-              size="small"
-              round
-              :disabled="answer.field <= 0"
-              @click="handleAnswer"
-            )
+        .answer-field
+          input.answer-field__input(
+            type="text"
+            :value="answer.field"
+            placeholder="Cevabını yaz"
+            tabindex="-1"
+            spellcheck="false"
+            autocomplete="off"
+            :maxlength="ANSWER_CHAR_LENGTH"
+            @input="handleAnswerField"
+            @focus="answer.isFocused = true"
+            @blur="answer.isFocused = false"
+            @keypress.enter="handleAnswer"
+          )
+          // Optional action buttons
+          .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
+            Button(color="var(--color-warning-01)" icon="arrow" size="small" round)
 
-        // Keyboard
-        AppKeyboard(:input="answer.field" @onChange="handleKeyboardOnChange" @onKeyPress="handleKeyboardOnKeyPress")
+          .answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(@mousedown="handleAnswer")
+            Button(color="var(--color-brand-02)" icon="guide-o" size="small" round :disabled="answer.field <= 0")
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -80,12 +83,11 @@ import {
   onMounted,
   nextTick,
   watch,
-  onUnmounted
+  onUnmounted,
+  useContext
 } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
-import { useUa } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
-import { AppKeyboard } from '@/components/Keyboard'
 import { HowToPlayDialog, StatsDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
@@ -102,13 +104,12 @@ export default defineComponent({
     Empty,
     CountDown,
     Icon,
-    AppKeyboard,
     HowToPlayDialog,
     StatsDialog
   },
   setup() {
     const rootRef = ref(null)
-    const { isMobileDevice } = useUa()
+    const context = useContext()
 
     const store = useStore()
     const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
@@ -172,7 +173,8 @@ export default defineComponent({
     const countdownTimerRef = ref(false)
 
     const answer = reactive({
-      field: ''
+      field: '',
+      isFocused: false
     })
 
     const dialog = reactive({
@@ -260,6 +262,19 @@ export default defineComponent({
       soundFx.pass.play()
     }
 
+    const handleAnswerField = $event => {
+      answer.field = $event.target.value
+    }
+
+    watch(
+      () => answer.isFocused,
+      currentValue => {
+        if (currentValue) {
+          questionFitText()
+        }
+      }
+    )
+
     const handleAnswer = () => {
       if (isGameOver.value || answer.field.trim().length <= 0) return false
 
@@ -269,6 +284,14 @@ export default defineComponent({
 
       const answerField = answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
       const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
+
+      const passKeyword = 'pas'
+
+      if (answerField === passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+        pass()
+
+        return false
+      }
 
       const isCorrect = correctAnswers.some(answer => {
         if (answerField === answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
@@ -290,14 +313,29 @@ export default defineComponent({
       alphabet.value.activeIndex = nextLetter()
     }
 
+    const focusToAnswerFieldInput = () => {
+      rootRef.value.querySelector('.answer-field__input').focus()
+      answer.isFocused = true
+    }
+
     const resetAnswer = () => {
       answer.field = ''
+    }
+
+    const handleTabKey = event => {
+      if (!isGameStarted.value) return false
+
+      if (event.key === 'Tab' || event.keyCode === 9) {
+        pass()
+        focusToAnswerFieldInput()
+      }
     }
 
     const initCarousels = async () => {
       await nextTick()
 
       const alphabetCarousel = new Swiper('.alphabet-carousel', {
+        direction: 'horizontal',
         speed: 800,
         spaceBetween: 24,
         slidesPerView: 'auto',
@@ -344,29 +382,6 @@ export default defineComponent({
     soundFx.pass = passSoundFx
     soundFx.halfTime = halfTimeSoundFx
 
-    const handleKeyboardOnChange = input => {
-      if (!isGameStarted.value) return false
-
-      answer.field = input
-    }
-
-    const handleKeyboardOnKeyPress = button => {
-      if (!isGameStarted.value) return false
-
-      if (button === '{tab}') {
-        rootRef.value.focus()
-        pass()
-      }
-
-      if (button === '{enter}') {
-        handleAnswer()
-      }
-
-      if (button === '{pass}') {
-        pass()
-      }
-    }
-
     const startGame = async () => {
       await nextTick()
 
@@ -378,16 +393,40 @@ export default defineComponent({
         questionFitText()
       }, 0) // DOM Bypass
 
-      startSoundFx.play()
+      const toast = Toast.loading({
+        className: 'start-game-toast',
+        overlay: true,
+        duration: 0, // continuous display toast
+        forbidClick: true,
+        loadingType: 'spinner',
+        message: `5 \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
+      })
+      let second = 5
+      const timer = setInterval(() => {
+        second--
+
+        if (second) {
+          toast.message = `${second} \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
+        } else {
+          clearInterval(timer)
+          Toast.clear()
+        }
+      }, 1000)
+
       setTimeout(() => {
         countdownTimerRef.value.start()
         isGameStarted.value = true
+        startSoundFx.play()
+
+        if (context.$ua.isFromAndroidOs()) {
+          focusToAnswerFieldInput()
+        }
 
         window.localStorage.setItem('correctAnswers', JSON.stringify([]))
         window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
         window.localStorage.setItem('passedAnswers', JSON.stringify([]))
         window.localStorage.setItem('myAnswers', JSON.stringify([]))
-      }, 1000) // 1 second sleep
+      }, 6000) // 5+1 second sleep
     }
 
     const endGame = async () => {
@@ -447,6 +486,49 @@ export default defineComponent({
       }
     }
 
+    const scrollTop = () => {
+      window.scrollTo(0, 0)
+    }
+
+    const isTouchEnabled = () => {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+    }
+
+    const acceptsInput = elem => {
+      if (!elem) {
+        return false
+      }
+
+      let tag = elem.tagName
+
+      return tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA' || elem.isContentEditable || elem.tabIndex >= 0
+    }
+
+    const handleDontHideKeyboard = event => {
+      let target = event.target
+      let dontDiscardKeyboard = target.classList.contains('do-not-hide-keyboard')
+
+      let isPassButton = target.classList.contains('do-not-hide-keyboard--pass')
+      let isSendButton = target.classList.contains('do-not-hide-keyboard--send')
+
+      // On iOS tapping anywhere doesn’t
+      // automatically discard keyboard
+      if (dontDiscardKeyboard) {
+        event.preventDefault()
+
+        // DO ACTION HERE
+        if (isPassButton) {
+          pass()
+        }
+
+        if (isSendButton) {
+          handleAnswer()
+        }
+      } else if (!acceptsInput(target)) {
+        document.activeElement.blur()
+      }
+    }
+
     onMounted(() => {
       initCarousels()
 
@@ -455,18 +537,31 @@ export default defineComponent({
         endGame()
       }
 
+      window.addEventListener('keyup', event => handleTabKey(event))
+
       window.addEventListener('resize', questionFitText)
       window.addEventListener('beforeunload', event => handleBeforeUnload(event))
+
+      window.addEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value.addEventListener('touchend', event => handleDontHideKeyboard(event))
+      }
     })
 
     onUnmounted(() => {
       window.removeEventListener('resize', questionFitText)
       window.removeEventListener('beforeunload', handleBeforeUnload)
+
+      window.removeEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value.removeEventListener('touchend', handleDontHideKeyboard)
+      }
     })
 
     return {
       rootRef,
-      isMobileDevice,
       ANSWER_CHAR_LENGTH,
       fetch,
       fetchState,
@@ -481,13 +576,13 @@ export default defineComponent({
       countdownTimerRef,
       alphabetItemClasses,
       pass,
+      handleAnswerField,
       handleAnswer,
       resetAnswer,
-      handleKeyboardOnChange,
-      handleKeyboardOnKeyPress,
       startGame,
       listenCountdown,
-      handleCountdownFinish
+      handleCountdownFinish,
+      isTouchEnabled
     }
   }
 })

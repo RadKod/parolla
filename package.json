@@ -1,6 +1,6 @@
 {
   "name": "parolla",
-  "version": "1.0.5",
+  "version": "1.1.1",
   "description": "Günlük bilgi oyunu.",
   "private": false,
   "keywords": [
@@ -49,6 +49,7 @@
     "express": "^4.17.1",
     "howler": "^2.2.3",
     "nuxt": "2.15.2",
+    "nuxt-user-agent": "^1.2.2",
     "simple-keyboard": "^3.4.65",
     "swiper": "^8.0.6",
     "textfit": "^2.4.0",
