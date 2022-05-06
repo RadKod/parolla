@@ -369,7 +369,7 @@ export default defineComponent({
     })
 
     const passSoundFx = new Howl({
-      src: ['/sound/fx/pass.ogg']
+      src: ['/sound/fx/pass.wav']
     })
 
     const halfTimeSoundFx = new Howl({
