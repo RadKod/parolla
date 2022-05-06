@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2
+
+- :bento: update pass sound fx
+
 ## v1.1.1
 
 - :lips: UX improvements
