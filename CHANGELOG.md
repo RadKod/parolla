@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.4
+
+- :lips: UX improvements
+
 ## v1.1.3
 
 - :iphone: responsive fix

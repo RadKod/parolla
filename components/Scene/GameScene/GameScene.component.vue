@@ -86,7 +86,7 @@ import {
   onUnmounted,
   useContext
 } from '@nuxtjs/composition-api'
-import { ANSWER_CHAR_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
+import { ALPHABET_LENGTH, ANSWER_CHAR_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { HowToPlayDialog, StatsDialog } from '@/components/Dialog'
 // Swiper
@@ -146,6 +146,21 @@ export default defineComponent({
     }
 
     const myAnswers = ref([])
+    watch(
+      () => myAnswers.value,
+      currentValue => {
+        const passedAnswers = store.getters['game/passedAnswers']
+
+        if (currentValue.length === ALPHABET_LENGTH && passedAnswers.length > 0) {
+          Notify({
+            message: 'Aklına bir cevap gelmezse süreyi beklemene gerek yok, bitir yazıp bitirebilirsin de.',
+            color: 'var(--color-text-04)',
+            background: 'var(--color-info-01)',
+            duration: 4000
+          })
+        }
+      }
+    )
     const alphabet = computed(() => store.getters['game/alphabet'])
 
     watch(
@@ -286,9 +301,29 @@ export default defineComponent({
       const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
       const passKeyword = 'pas'
+      const endGameKeyword = 'bitir'
+      const radkodKeyword = 'radkod'
 
       if (answerField === passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
         pass()
+
+        return false
+      }
+
+      if (answerField === endGameKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+        endGame()
+
+        return false
+      }
+
+      if (answerField === radkodKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+        Notify({
+          message: 'Aradığın cevap biz olabilir miyiz? - RadKod.com',
+          color: 'var(--color-text-04)',
+          background: 'var(--color-brand-radkod)'
+        })
+
+        radkodEasterEggSoundFx.play()
 
         return false
       }
@@ -353,7 +388,8 @@ export default defineComponent({
       correct: null,
       wrong: null,
       pass: null,
-      halfTime: null
+      halfTime: null,
+      radkodEasterEgg: null
     })
 
     const startSoundFx = new Howl({
@@ -376,11 +412,16 @@ export default defineComponent({
       src: ['/sound/fx/half-time.wav']
     })
 
+    const radkodEasterEggSoundFx = new Howl({
+      src: ['/sound/fx/radkod-easter-egg.mp3']
+    })
+
     soundFx.start = startSoundFx
     soundFx.correct = correctSoundFx
     soundFx.wrong = wrongSoundFx
     soundFx.pass = passSoundFx
     soundFx.halfTime = halfTimeSoundFx
+    soundFx.radkodEasterEgg = radkodEasterEggSoundFx
 
     const startGame = async () => {
       await nextTick()
@@ -393,20 +434,30 @@ export default defineComponent({
         questionFitText()
       }, 0) // DOM Bypass
 
+      const startGameToastMessage = `
+          <img class='start-game-toast__spinner' src="${require('@/assets/img/core/loader.svg')}" />
+          <div class="start-game-toast-info">
+            <strong class='start-game-toast-info__title'>Bilmende fayda var</strong>
+            <ul>
+              <li>Paslamak için <code>pas</code> yazıp gönderebilirsin.</li>
+              <li>Oyunu erkenden sonlandırmak istersen <code>bitir</code> yazıp gönderebilirsin.</li>
+            </ul>
+          </div>
+        `
       const toast = Toast.loading({
+        type: 'html',
         className: 'start-game-toast',
         overlay: true,
         duration: 0, // continuous display toast
         forbidClick: true,
-        loadingType: 'spinner',
-        message: `5 \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
+        message: `<h3 class='start-game-toast__countdown'>5</h3> \n ${startGameToastMessage}`
       })
       let second = 5
       const timer = setInterval(() => {
         second--
 
         if (second) {
-          toast.message = `${second} \n Yenilikler: \n Artık paslamak için pas yazabilirsin. \n Nihayet kendi klavyeni kullanabilirsin.`
+          toast.message = `<h3 class='start-game-toast__countdown'>${second}</h3> \n ${startGameToastMessage}`
         } else {
           clearInterval(timer)
           Toast.clear()
