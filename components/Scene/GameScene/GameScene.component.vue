@@ -13,7 +13,7 @@
           .alphabet__item(:class="[alphabetItemClasses(item, index)]") {{ item.letter }}
 
     // Countdown
-    .countdown(:class="{ 'd-none': fetchState.pending || fetchState.error }")
+    .countdown.game-scene__countdown(:class="{ 'd-none': fetchState.pending || fetchState.error }")
       Icon.countdown__icon(name="clock-o")
       CountDown.countdown__timer(
         ref="countdownTimerRef"
@@ -86,7 +86,7 @@ import {
   onUnmounted,
   useContext
 } from '@nuxtjs/composition-api'
-import { ANSWER_CHAR_LENGTH } from '@/system/constant'
+import { ANSWER_CHAR_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
 import { HowToPlayDialog, StatsDialog } from '@/components/Dialog'
 // Swiper
@@ -529,6 +529,20 @@ export default defineComponent({
       }
     }
 
+    const checkUnsupportedHeight = () => {
+      if (window.innerHeight < UNSUPPORTED_HEIGHT) {
+        document.documentElement.classList.add('unsupported-height')
+
+        setTimeout(() => {
+          Notify({
+            message: 'Daha iyi bir deneyim için daha büyük bir ekranda oynamalısın.',
+            color: 'var(--color-text-04)',
+            background: 'var(--color-warning-01)'
+          })
+        }, 1000)
+      }
+    }
+
     onMounted(() => {
       initCarousels()
 
@@ -547,6 +561,9 @@ export default defineComponent({
       if (isTouchEnabled) {
         rootRef.value.addEventListener('touchend', event => handleDontHideKeyboard(event))
       }
+
+      // Unsupported screen height
+      checkUnsupportedHeight()
     })
 
     onUnmounted(() => {

@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.3
+
+- :iphone: responsive fix
+
 ## v1.1.2
 
 - :bento: update pass sound fx
