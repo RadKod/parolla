@@ -208,7 +208,16 @@ module.exports = {
         ]
       ]
     },
-    transpile: ['vant']
+    transpile: ['vant'],
+    postcss: {
+      plugins: {
+        'postcss-preset-env': this.preset,
+        'postcss-custom-media': {}
+      },
+      preset: {
+        stage: 2
+      }
+    }
   },
 
   /*
