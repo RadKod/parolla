@@ -58,10 +58,11 @@
             @focus="answer.isFocused = true"
             @blur="answer.isFocused = false"
             @keypress.enter="handleAnswer"
+            @keydown.tab.prevent="pass"
           )
           // Optional action buttons
-          .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
-            Button(color="var(--color-warning-01)" icon="arrow" size="small" round)
+            .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
+              Button(color="var(--color-warning-01)" icon="arrow" size="small" round)
 
           .answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(@mousedown="handleAnswer")
             Button(color="var(--color-brand-02)" icon="guide-o" size="small" round :disabled="answer.field <= 0")
@@ -358,7 +359,11 @@ export default defineComponent({
     }
 
     const handleTabKey = event => {
+      event.preventDefault()
+
       if (!isGameStarted.value) return false
+
+      if (answer.isFocused) return false
 
       if (event.key === 'Tab' || event.keyCode === 9) {
         pass()
@@ -439,7 +444,7 @@ export default defineComponent({
           <div class="start-game-toast-info">
             <strong class='start-game-toast-info__title'>Bilmende fayda var</strong>
             <ul>
-              <li>Paslamak için <code>pas</code> yazıp gönderebilirsin.</li>
+              <li>Paslamak için <code>pas</code> yazıp göndermelisin.</li>
               <li>Oyunu erkenden sonlandırmak istersen <code>bitir</code> yazıp gönderebilirsin.</li>
             </ul>
           </div>

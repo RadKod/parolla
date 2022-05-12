@@ -10,16 +10,12 @@ Dialog.credits-dialog(
   @opened="$emit('opened')"
 )
   span.credits-dialog__person
-    | Arkaplan ve Veri Tabanı
-    a(href="https://twitter.com/apo_bozdag" target="_blank") @apo_bozdag
-
-  span.credits-dialog__person
-    | Algoritma
-    a(href="https://twitter.com/erayaydi" target="_blank") @erayaydi
-
-  span.credits-dialog__person
     | Planlama ve Arayüz
     a(href="https://twitter.com/selimdoyranli" target="_blank") @selimdoyranli
+
+  span.credits-dialog__person
+    | Arkaplan ve Veri Tabanı
+    a(href="https://twitter.com/apo_bozdag" target="_blank") @apo_bozdag
 </template>
 
 <script>
