@@ -58,6 +58,7 @@
             @focus="answer.isFocused = true"
             @blur="answer.isFocused = false"
             @keypress.enter="handleAnswer"
+            @keydown.tab.prevent="pass"
           )
           // Optional action buttons
             .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
@@ -358,7 +359,11 @@ export default defineComponent({
     }
 
     const handleTabKey = event => {
+      event.preventDefault()
+
       if (!isGameStarted.value) return false
+
+      if (answer.isFocused) return false
 
       if (event.key === 'Tab' || event.keyCode === 9) {
         pass()
