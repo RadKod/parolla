@@ -62,10 +62,10 @@ Dialog.stats-dialog(
                 span &nbsp;{{ question.question }}
               p.answer__correctAnswer
                 strong Doğru cevap:
-                span &nbsp;{{ question.answer }}
+                span &nbsp;{{ question.answer.toLocaleUpperCase('tr') }}
               p.answer__myAnswer
                 strong Senin cevabın:
-                span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field }}
+                span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
     // Footer
