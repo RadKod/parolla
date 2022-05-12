@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.5
+
+- :bug: fix handle tab key
+- :pencil2: Update how to play dialog
+- :pencil2: Update credits
+- :lips: UX improvements
+- :fire: remove unnecessary components
+
 ## v1.1.4
 
 - :lips: UX improvements
