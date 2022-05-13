@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.6
+
+- :lips: UX improvements
+
 ## v1.1.5
 
 - :bug: fix handle tab key
