@@ -167,7 +167,15 @@
           color: var(--color-warning-01);
 
           &::before {
-            content: '👉';
+            position: relative;
+            top: calc(var(--base-m-y) / 4);
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: calc(var(--base-m-x) / 2) !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' class='iconify iconify--twemoji' width='32' height='32' preserveAspectRatio='xMidYMid meet' viewBox='0 0 36 36'%3E%3Cpath fill='%23d3af38' d='M36 32a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h28a4 4 0 0 1 4 4v28z'%3E%3C/path%3E%3Cpath fill='%23FFF' d='M7 14h9V7l13 11l-13 11v-7H7z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: contain;
+            content: '';
           }
         }
       }

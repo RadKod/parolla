@@ -272,6 +272,7 @@
   .answer-field {
     --field-height: 54px;
     --field-height--small: 40px;
+    --action-button-width: 100px;
 
     position: relative;
     width: 100%;
@@ -296,6 +297,7 @@
       width: 100%;
       height: var(--field-height);
       padding: 0 var(--base-p-x);
+      padding-right: calc(var(--action-button-width) + var(--base-p-x));
       font-size: var(--font-size-text-7);
       text-transform: uppercase;
       border: 0;
@@ -319,24 +321,33 @@
     }
 
     &__button {
-      @include center(false, true);
+      $answer-field-button: '.answer-field__button';
 
-      right: calc(var(--base-p-x) / 2);
+      right: calc(var(--base-m-x) / 2);
+      width: var(--action-button-width);
+      height: calc(var(--field-height) - var(--base-p-y));
+      border-radius: var(--border-radius-01);
+      cursor: pointer;
+
+      @include center(false, true);
 
       &::before {
         position: absolute;
-        top: 0;
+        right: calc(var(--base-m-x) / 2);
         left: 0;
         z-index: 2;
         width: 100%;
         height: 100%;
-        background-color: transparent;
-        border-radius: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
         content: '';
+
+        @include center(false, true);
       }
 
-      &--pass {
-        margin-right: 40px;
+      @at-root .unsupported-height {
+        #{$answer-field-button} {
+          height: calc(var(--field-height--small) - (var(--base-p-y) / 2));
+        }
       }
     }
   }

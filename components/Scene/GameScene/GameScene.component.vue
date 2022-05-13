@@ -61,11 +61,19 @@
             @keydown.tab.prevent="pass"
           )
           // Optional action buttons
-            .answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(@mousedown="pass")
-              Button(color="var(--color-warning-01)" icon="arrow" size="small" round)
+          template(v-if="answer.field.length > 0")
+            Button.answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(
+              color="var(--color-brand-02)"
+              icon="guide-o"
+              @click="handleAnswer"
+            ) GÖNDER
 
-          .answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(@mousedown="handleAnswer")
-            Button(color="var(--color-brand-02)" icon="guide-o" size="small" round :disabled="answer.field <= 0")
+          template(v-else)
+            Button.answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(
+              color="var(--color-warning-01)"
+              icon="arrow"
+              @click="pass"
+            ) PAS
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -444,7 +452,6 @@ export default defineComponent({
           <div class="start-game-toast-info">
             <strong class='start-game-toast-info__title'>Bilmende fayda var</strong>
             <ul>
-              <li>Paslamak için <code>pas</code> yazıp göndermelisin.</li>
               <li>Oyunu erkenden sonlandırmak istersen <code>bitir</code> yazıp gönderebilirsin.</li>
             </ul>
           </div>
