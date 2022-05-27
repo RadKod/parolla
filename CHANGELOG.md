@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.8
+
+- :alembic: Update after midnight re-fetcher
+
 ## v1.1.7
 
 - :alembic: fetch trigger after midnight
