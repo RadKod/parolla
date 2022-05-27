@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.7
+
+- :alembic: fetch trigger after midnight
+
 ## v1.1.6
 
 - :lips: UX improvements
