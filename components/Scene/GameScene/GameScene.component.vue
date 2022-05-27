@@ -131,7 +131,7 @@ export default defineComponent({
         isGameOver: false
       })
       store.commit('game/SET_CURRENT_DATE', day)
-      fetch()
+      store.dispatch('game/fetchQuestions')
     }
 
     const isGameStarted = ref(false)
