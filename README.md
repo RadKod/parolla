@@ -4,7 +4,7 @@
 
 <br>
 
-![parolla](https://raw.githubusercontent.com/RadKod/parolla/master/static/meta/preview/mockup.png)
+![parolla](/static/meta/preview/mockup.png)
 
 ### Front-End Development Repository.
 
