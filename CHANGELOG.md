@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.9
+
+- :pencil: Update readme
+
 ## v1.1.8
 
 - :alembic: Update after midnight re-fetcher
