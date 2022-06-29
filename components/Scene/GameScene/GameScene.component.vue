@@ -314,7 +314,10 @@ export default defineComponent({
       const endGameKeyword = 'bitir'
       const radkodKeyword = 'radkod'
 
-      if (answerField === passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+      if (
+        answerField === passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') &&
+        !correctAnswers.includes(passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+      ) {
         pass()
 
         return false
