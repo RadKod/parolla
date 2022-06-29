@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+
+- :bug: if answer includes pass keyword no pass
+
 ## v1.1.9
 
 - :pencil: Update readme
