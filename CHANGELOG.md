@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.1
+
+- :pencil: Add github link
+
 ## v1.2.0
 
 - :bug: if answer includes pass keyword no pass
