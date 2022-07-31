@@ -9,6 +9,9 @@ Dialog.credits-dialog(
   @closed="$emit('closed')"
   @opened="$emit('opened')"
 )
+  p <strong>parolla</strong> açık kaynak bir projedir.
+    | &nbsp;<a href="https://github.com/RadKod/parolla" title="parolla Github" target="_blank">GitHub</a> bağlantısından ulaşabilirsin.
+
   span.credits-dialog__person
     | Planlama ve Arayüz
     a(href="https://twitter.com/selimdoyranli" target="_blank") @selimdoyranli
