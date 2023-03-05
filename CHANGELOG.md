@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.1
+
+- :bug: preference fix on theming
+
 ## v1.3.0
 
 - :lipstick: dark theme

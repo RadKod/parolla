@@ -173,7 +173,12 @@ module.exports = {
       }
     ],
     // https://v2.color-mode.nuxtjs.org
-    ['@nuxtjs/color-mode']
+    [
+      '@nuxtjs/color-mode',
+      {
+        preference: 'light'
+      }
+    ]
   ],
 
   /*

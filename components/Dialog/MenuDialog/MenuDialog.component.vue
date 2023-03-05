@@ -68,7 +68,18 @@ export default defineComponent({
       }
     )
 
-    const isDark = ref(context.$colorMode.preference === 'dark')
+    const isDark = ref(context.$colorMode.value === 'dark')
+
+    watch(
+      () => context.$colorMode.value,
+      value => {
+        if (value === 'dark') {
+          isDark.value = true
+        } else {
+          isDark.value = false
+        }
+      }
+    )
 
     const toggleDarkTheme = isChecked => {
       if (isChecked) {
