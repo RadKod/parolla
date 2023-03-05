@@ -10,13 +10,13 @@
   --color-ui-02: #fff;
   --color-ui-03: #eee;
   --color-ui-04: #f8f8f8;
-  --color-field-01: #eee;
+  --color-field-01: #fff;
   --color-skeleton-01: #eee;
   --color-skeleton-02: #ddd;
 
   /* Borders */
   --color-border-01: #ededed;
-  --color-border-02: #ccc;
+  --color-border-02: #ebedf0;
 
   /* Typographic */
   --color-text-01: #111;
@@ -31,7 +31,60 @@
   --color-hover-02: #fff;
   --color-active-01: #ededed;
   --color-selected-01: #000;
-  --color-disabled-01: #c4c4c4;
+  --color-disabled-01: #666;
+  --color-highlight-01: #ff7878;
+
+  /* Denotative */
+  --color-danger-01: #df585f;
+  --color-success-01: #7da388;
+  --color-warning-01: #d3af38;
+  --color-info-01: #4d84fa;
+
+  /* Overlays */
+  --color-overlay-01: rgba(80, 69, 69, 0.7);
+  --color-overlay-02: rgba(255, 255, 255, 0.7);
+
+  /* Vant */
+  --van-primary-color: var(--color-brand-02);
+  --van-success-color: var(--color-success-01);
+  --van-danger-color: var(--color-danger-01);
+  --van-warning-color: var(--color-warning-01);
+}
+
+.dark-mode {
+  /* Brand */
+  --color-brand-01: #fff;
+  --color-brand-02: #ff7878;
+  --color-brand-03: #eee;
+  --color-brand-radkod: #012353;
+
+  /* Block Elements */
+  --color-ui-01: #161616;
+  --color-ui-02: #272727;
+  --color-ui-03: #343434;
+  --color-ui-04: #272727;
+  --color-field-01: #383838;
+  --color-skeleton-01: #eee;
+  --color-skeleton-02: #ddd;
+
+  /* Borders */
+  --color-border-01: #242424;
+  --color-border-02: #343434;
+
+  /* Typographic */
+  --color-text-01: #ccc;
+  --color-text-02: #aaa;
+  --color-text-03: #888;
+  --color-text-04: #fff;
+  --color-link-01: #ff7878;
+  --color-icon-01: #aaa;
+
+  /* Interactive */
+  --color-hover-01: #fafafa;
+  --color-hover-02: #fff;
+  --color-active-01: #ededed;
+  --color-selected-01: #000;
+  --color-disabled-01: #626262;
   --color-highlight-01: #ff7878;
 
   /* Denotative */

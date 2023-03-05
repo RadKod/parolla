@@ -130,7 +130,8 @@ module.exports = {
   plugins: [
     // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/vuex-persist', ssr: false },
-    { src: '~/plugins/ua-injector', ssr: false }
+    { src: '~/plugins/ua-injector', ssr: false },
+    { src: '~/plugins/theme-color', ssr: false }
   ],
 
   /*
@@ -170,7 +171,9 @@ module.exports = {
         prefetch: true,
         preconnect: true
       }
-    ]
+    ],
+    // https://v2.color-mode.nuxtjs.org
+    ['@nuxtjs/color-mode']
   ],
 
   /*

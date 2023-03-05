@@ -1309,6 +1309,14 @@
     webpack-node-externals "^2.5.2"
     webpackbar "^4.0.0"
 
+"@nuxtjs/color-mode@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/color-mode/-/color-mode-2.1.0.tgz#62976665e82a0c03cd2a46332e0f10b1a6706627"
+  integrity sha512-tMdkyr81deU1qk/nFZYP2DeYQin5nliaNUO6DooVK9l8qd8orMWIxzybvQ+6o9rER9RxAIGDKJ1qpgzx24AXkQ==
+  dependencies:
+    defu "^5.0.0"
+    lodash.template "^4.5.0"
+
 "@nuxtjs/composition-api@^0.24.7":
   version "0.24.7"
   resolved "https://registry.npmjs.org/@nuxtjs/composition-api/-/composition-api-0.24.7.tgz"

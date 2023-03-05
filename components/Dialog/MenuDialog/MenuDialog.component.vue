@@ -9,6 +9,9 @@ Dialog.menu-dialog(
   @closed="$emit('closed')"
 )
   CellGroup.menu-dialog-nav
+    Cell.menu-dialog-nav__item(icon="eye-o" title="Koyu Tema" size="large")
+      template(#right-icon)
+        SwitchInput(v-model="isDark" size="22px" @change="toggleDarkTheme")
     Cell.menu-dialog-nav__item(
       icon="question-o"
       title="Soru önermek ister misin?"
@@ -29,14 +32,15 @@ Dialog.menu-dialog(
 </template>
 
 <script>
-import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
-import { Dialog, CellGroup, Cell, Toast } from 'vant'
+import { defineComponent, useContext, ref, reactive, watch } from '@nuxtjs/composition-api'
+import { Dialog, CellGroup, Cell, Switch, Toast } from 'vant'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     CellGroup,
-    Cell
+    Cell,
+    SwitchInput: Switch
   },
   props: {
     isOpen: {
@@ -51,6 +55,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const context = useContext()
+
     const state = reactive({
       isOpen: props.isOpen
     })
@@ -61,6 +67,18 @@ export default defineComponent({
         state.isOpen = value
       }
     )
+
+    const isDark = ref(context.$colorMode.preference === 'dark')
+
+    const toggleDarkTheme = isChecked => {
+      if (isChecked) {
+        context.$colorMode.preference = 'dark'
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#161616')
+      } else {
+        context.$colorMode.preference = 'light'
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#eeeeee')
+      }
+    }
 
     const openSuggestQuestion = () => {
       window.open(
@@ -90,7 +108,7 @@ export default defineComponent({
       }
     }
 
-    return { state, openSuggestQuestion, openSharer }
+    return { state, isDark, toggleDarkTheme, openSuggestQuestion, openSharer }
   }
 })
 </script>
