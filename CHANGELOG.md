@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0
+
+- :lipstick: dark theme
+
 ## v1.2.1
 
 - :pencil: Add github link
