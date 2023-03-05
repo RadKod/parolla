@@ -23,6 +23,8 @@
   }
 
   &-nav {
+    $app-header-nav__item: '.app-header-nav__item';
+
     position: relative;
     display: inline-flex;
     margin-left: auto;
@@ -35,6 +37,14 @@
       color: var(--color-icon-01);
       font-size: var(--font-size-text-5);
       cursor: pointer;
+
+      @at-root .dark-mode {
+        #{$app-header-nav__item} {
+          .van-icon {
+            filter: invert(1) brightness(60%);
+          }
+        }
+      }
     }
   }
 }

@@ -88,6 +88,8 @@
       }
 
       &__timer {
+        color: var(--color-text-02);
+
         @include font-weight-bold;
 
         @include mq($until: mobile) {

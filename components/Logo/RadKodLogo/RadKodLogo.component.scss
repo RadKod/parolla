@@ -2,4 +2,10 @@
   position: relative;
   display: block;
   width: auto;
+
+  @at-root .dark-mode {
+    .radkod-logo {
+      filter: invert(1) grayscale(100%) brightness(90%);
+    }
+  }
 }
