@@ -32,6 +32,16 @@
     }
   }
 
+  @at-root .dark-mode {
+    .layout {
+      &__inner {
+        &::before {
+          opacity: 0.014;
+        }
+      }
+    }
+  }
+
   &__main {
     position: relative;
   }
