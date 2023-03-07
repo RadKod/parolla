@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.2
+
+- :money_with_wings: add adsense
+
 ## v1.3.1
 
 - :bug: preference fix on theming
