@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.3.4
+
+- :money_with_wings: insert ads
+- :money_with_wings: add ads.txt
+
 ## v1.3.3
 
 - :rotating_light: fix lint

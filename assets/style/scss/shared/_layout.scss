@@ -1,5 +1,35 @@
 .layout {
   position: relative;
+  display: grid;
+  grid-template-columns: auto var(--layout-max-width) auto;
+
+  @include mq($until: wide) {
+    display: block;
+  }
+
+  &__ad {
+    display: inline-block;
+    width: 320px;
+    height: 100vh;
+    color: var(--color-text-03);
+    background-color: var(--color-ui-04);
+
+    @include mq($until: wide) {
+      display: none;
+    }
+
+    @include mq($from: wide, $until: wide2x) {
+      width: 256px;
+    }
+
+    &--left {
+      margin-right: auto;
+    }
+
+    &--right {
+      margin-left: auto;
+    }
+  }
 
   &__inner {
     position: relative;

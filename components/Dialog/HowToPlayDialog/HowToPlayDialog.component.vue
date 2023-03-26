@@ -16,6 +16,8 @@ Dialog.how-to-play-dialog(
       | <br><br> Oyunun toplam süresi <strong>5 dakika</strong>'dır.
       | <br><small>Eğer sayfayı yenilersen oyun en baştan başlar</small>
       | <br><br> <strong>parolla</strong> oyunu <strong>{{ ALPHABET_LENGTH }}</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.
+    .how-to-play-dialog__ad
+      AppAd(:data-ad-slot="9964323575")
 
   // Footer
   footer.how-to-play-dialog__footer
@@ -29,11 +31,13 @@ import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH } from '@/system/constant'
 import { Dialog } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
-    RadKodLogo
+    RadKodLogo,
+    AppAd
   },
   props: {
     isOpen: {
