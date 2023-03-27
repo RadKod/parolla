@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.5
+
+- :money_with_wings: insert interstitial ad
+
 ## v1.3.4
 
 - :money_with_wings: insert ads
