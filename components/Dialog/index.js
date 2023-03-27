@@ -4,3 +4,4 @@ export { default as HowToCalculateStatsDialog } from './HowToCalculateStatsDialo
 export { default as CreditsDialog } from './CreditsDialog/CreditsDialog.component'
 export { default as ContactDialog } from './ContactDialog/ContactDialog.component'
 export { default as MenuDialog } from './MenuDialog/MenuDialog.component'
+export { default as InterstitialAdDialog } from './InterstitialAdDialog/InterstitialAdDialog.component'
