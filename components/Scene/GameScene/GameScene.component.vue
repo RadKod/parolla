@@ -79,6 +79,8 @@
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
   StatsDialog(:isOpen="dialog.stats.isOpen")
+  // Interstital Ad Dialog
+  InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
@@ -97,7 +99,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH, ANSWER_CHAR_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
-import { HowToPlayDialog, StatsDialog } from '@/components/Dialog'
+import { HowToPlayDialog, StatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -114,7 +116,8 @@ export default defineComponent({
     CountDown,
     Icon,
     HowToPlayDialog,
-    StatsDialog
+    StatsDialog,
+    InterstitialAdDialog
   },
   setup() {
     const rootRef = ref(null)
@@ -207,6 +210,9 @@ export default defineComponent({
         isOpen: true
       },
       stats: {
+        isOpen: false
+      },
+      interstitialAd: {
         isOpen: false
       }
     })
@@ -504,6 +510,10 @@ export default defineComponent({
       })
       countdownTimerRef.value.pause()
       dialog.stats.isOpen = true
+
+      setTimeout(() => {
+        dialog.interstitialAd.isOpen = true
+      }, 1000)
     }
 
     const listenCountdown = async timeData => {
