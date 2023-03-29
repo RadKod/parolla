@@ -23,5 +23,15 @@ export default {
 
   RESET_COUNTDOWN_TIMER(state) {
     state.countdown.time = GAME_TIME_LIMIT
+  },
+
+  RESET_ALPHABET(state) {
+    state.alphabet.activeIndex = 0
+
+    state.alphabet.items.forEach(item => {
+      item.isPassed = false
+      item.isWrong = false
+      item.isCorrect = false
+    })
   }
 }

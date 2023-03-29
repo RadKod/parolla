@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.3
+
+- :speech_balloon: add privacy policy
+- :bug: reset fix
+
 ## v2.0.2
 
 - :children_crossing: ux improvements
