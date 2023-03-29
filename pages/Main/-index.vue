@@ -1,5 +1,5 @@
 <template lang="pug">
-.page.home-page
+.page.main-page
   IntroScene
 </template>
 
@@ -16,4 +16,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./Home.page.scss"></style>
+<style lang="scss" src="./Main.page.scss"></style>
