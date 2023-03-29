@@ -2,10 +2,11 @@
 .app-header
   AppLogo(type="title")
   nav.app-header-nav
-    li.app-header-nav__item(@click="toggleHowToPlayDialog")
-      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
-    li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
-      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+    template(v-if="$route.name === 'DailyMode' || $route.name === 'UnlimitedMode'")
+      li.app-header-nav__item(@click="toggleHowToPlayDialog")
+        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
+      li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
+        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
     li.app-header-nav__item(@click="toggleMenuDialog")
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
 

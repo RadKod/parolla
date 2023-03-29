@@ -81,6 +81,7 @@ Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
 
 <script>
 import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
+import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
@@ -106,6 +107,8 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
+
+    const { convertMsToTime } = useTime()
 
     const state = reactive({
       isOpen: props.isOpen
@@ -138,7 +141,9 @@ export default defineComponent({
 
     const remainTime = computed(() => {
       if (isGameOver.value) {
-        return window.localStorage.getItem('dailyRemainTime')
+        const { minutes, seconds } = convertMsToTime(window.localStorage.getItem('dailyRemainTime'))
+
+        return `${minutes}:${seconds}`
       }
     })
 

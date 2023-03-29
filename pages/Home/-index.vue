@@ -1,16 +1,16 @@
 <template lang="pug">
 .page.home-page
-  h3 Intro
-  p
-    nuxt-link(to="/daily") Daily Mode
-  p
-    nuxt-link(to="/unlimited") Unlimited Mode
+  IntroScene
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { IntroScene } from '@/components/Scene'
 
 export default defineComponent({
+  components: {
+    IntroScene
+  },
   layout: 'Default/Default.layout',
   setup() {}
 })

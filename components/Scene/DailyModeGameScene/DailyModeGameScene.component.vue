@@ -454,6 +454,8 @@ export default defineComponent({
 
       if (isGameOver.value) return false
 
+      await store.commit('daily/RESET_COUNTDOWN_TIMER')
+
       setTimeout(() => {
         questionFitText()
       }, 0) // DOM Bypass
@@ -527,7 +529,7 @@ export default defineComponent({
       let remainTime = days + hours + minutes + seconds + milliseconds
 
       await store.commit('daily/UPDATE_COUNTDOWN_TIMER', remainTime)
-      await window.localStorage.setItem('dailyRemainTime', `${timeData.minutes}:${timeData.seconds}`)
+      await window.localStorage.setItem('dailyRemainTime', remainTime)
       await countdownTimerRef.value.start()
 
       if (timeData.minutes === 2 && timeData.seconds === 30) {
