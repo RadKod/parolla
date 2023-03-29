@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.menu-dialog(
+Dialog.dialog.menu-dialog(
   v-model="state.isOpen"
   title="Daha Fazla"
   :cancel-button-text="cancelButtonText"

@@ -1,5 +1,5 @@
 <template lang="pug">
-.scene.game-scene(
+.scene.game-scene.daily-mode-game-scene(
   ref="rootRef"
   tabindex="1"
   :class="{ 'game-scene--isMobileDevice': $ua.isFromMobilephone(), 'game-scene--gameOver': isGameOver, 'game-scene--osk': answer.isFocused }"
@@ -78,7 +78,7 @@
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
-  StatsDialog(:isOpen="dialog.stats.isOpen")
+  DailyModeStatsDialog(:isOpen="dialog.stats.isOpen")
   // Interstital Ad Dialog
   InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
 </template>
@@ -99,7 +99,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH, ANSWER_CHAR_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
 import { Button, Field, Empty, CountDown, Icon, Notify, Toast } from 'vant'
-import { HowToPlayDialog, StatsDialog, InterstitialAdDialog } from '@/components/Dialog'
+import { HowToPlayDialog, DailyModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -116,7 +116,7 @@ export default defineComponent({
     CountDown,
     Icon,
     HowToPlayDialog,
-    StatsDialog,
+    DailyModeStatsDialog,
     InterstitialAdDialog
   },
   setup() {
@@ -127,19 +127,19 @@ export default defineComponent({
     const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
 
     const day = new Date().toLocaleDateString('tr').slice(0, 10)
-    const storedDay = persistStore && persistStore.game.currentDate
+    const storedDay = persistStore && persistStore.daily.currentDate
 
     if (day !== storedDay) {
-      store.commit('game/SET_IS_GAME_OVER', {
+      store.commit('daily/SET_IS_GAME_OVER', {
         isGameOver: false
       })
-      store.commit('game/SET_CURRENT_DATE', day)
-      store.dispatch('game/fetchQuestions')
+      store.commit('daily/SET_CURRENT_DATE', day)
+      store.dispatch('daily/fetchQuestions')
     }
 
     const isGameStarted = ref(false)
 
-    const isGameOver = computed(() => store.getters['game/isGameOver'])
+    const isGameOver = computed(() => store.getters['daily/isGameOver'])
 
     watch(isGameOver, async value => {
       if (value) {
@@ -148,21 +148,21 @@ export default defineComponent({
       }
     })
 
-    const calculateStatsOfToday = async () => {
-      const correctAnswers = await store.getters['game/correctAnswers']
-      const wrongAnswers = await store.getters['game/wrongAnswers']
-      const passedAnswers = await store.getters['game/passedAnswers']
+    const calculateStats = async () => {
+      const correctAnswers = await store.getters['daily/correctAnswers']
+      const wrongAnswers = await store.getters['daily/wrongAnswers']
+      const passedAnswers = await store.getters['daily/passedAnswers']
 
-      window.localStorage.setItem('correctAnswers', JSON.stringify(correctAnswers))
-      window.localStorage.setItem('wrongAnswers', JSON.stringify(wrongAnswers))
-      window.localStorage.setItem('passedAnswers', JSON.stringify(passedAnswers))
+      window.localStorage.setItem('dailyCorrectAnswers', JSON.stringify(correctAnswers))
+      window.localStorage.setItem('dailyWrongAnswers', JSON.stringify(wrongAnswers))
+      window.localStorage.setItem('dailyPassedAnswers', JSON.stringify(passedAnswers))
     }
 
     const myAnswers = ref([])
     watch(
       () => myAnswers.value,
       currentValue => {
-        const passedAnswers = store.getters['game/passedAnswers']
+        const passedAnswers = store.getters['daily/passedAnswers']
 
         if (currentValue.length === ALPHABET_LENGTH && passedAnswers.length > 0) {
           Notify({
@@ -174,13 +174,13 @@ export default defineComponent({
         }
       }
     )
-    const alphabet = computed(() => store.getters['game/alphabet'])
+    const alphabet = computed(() => store.getters['daily/alphabet'])
 
     watch(
       () => alphabet.value.activeIndex,
       async value => {
-        await store.commit('game/SET_ALPHABET_ACTIVE_INDEX', value)
-        await calculateStatsOfToday()
+        await store.commit('daily/SET_ALPHABET_ACTIVE_INDEX', value)
+        await calculateStats()
 
         if (value === -1) {
           endGame()
@@ -194,9 +194,9 @@ export default defineComponent({
       }
     )
 
-    const questions = computed(() => store.getters['game/questions'])
+    const questions = computed(() => store.getters['daily/questions'])
 
-    const countdown = computed(() => store.getters['game/countdown'])
+    const countdown = computed(() => store.getters['daily/countdown'])
 
     const countdownTimerRef = ref(false)
 
@@ -223,7 +223,7 @@ export default defineComponent({
 
     // Fetch Questions
     const { fetch, fetchState } = useFetch(async () => {
-      await store.dispatch('game/fetchQuestions')
+      await store.dispatch('daily/fetchQuestions')
     })
 
     const reFetch = async () => {
@@ -286,7 +286,7 @@ export default defineComponent({
       alphabet.value.items[alphabet.value.activeIndex].isPassed = true
 
       myAnswers.value.push({ ...alphabet.value.items[alphabet.value.activeIndex], field: answer.field })
-      window.localStorage.setItem('myAnswers', JSON.stringify(myAnswers.value))
+      window.localStorage.setItem('dailyMyAnswers', JSON.stringify(myAnswers.value))
 
       alphabet.value.activeIndex = nextLetter()
 
@@ -362,7 +362,7 @@ export default defineComponent({
       }
 
       myAnswers.value.push({ ...alphabet.value.items[alphabet.value.activeIndex], field: answer.field })
-      window.localStorage.setItem('myAnswers', JSON.stringify(myAnswers.value))
+      window.localStorage.setItem('dailyMyAnswers', JSON.stringify(myAnswers.value))
 
       alphabet.value.activeIndex = nextLetter()
     }
@@ -406,6 +406,7 @@ export default defineComponent({
 
       carousels.alphabet = alphabetCarousel
     }
+
     const soundFx = reactive({
       start: null,
       correct: null,
@@ -453,6 +454,8 @@ export default defineComponent({
 
       if (isGameOver.value) return false
 
+      await store.commit('daily/RESET_COUNTDOWN_TIMER')
+
       setTimeout(() => {
         questionFitText()
       }, 0) // DOM Bypass
@@ -495,17 +498,17 @@ export default defineComponent({
           focusToAnswerFieldInput()
         }
 
-        window.localStorage.setItem('correctAnswers', JSON.stringify([]))
-        window.localStorage.setItem('wrongAnswers', JSON.stringify([]))
-        window.localStorage.setItem('passedAnswers', JSON.stringify([]))
-        window.localStorage.setItem('myAnswers', JSON.stringify([]))
+        window.localStorage.setItem('dailyCorrectAnswers', JSON.stringify([]))
+        window.localStorage.setItem('dailyWrongAnswers', JSON.stringify([]))
+        window.localStorage.setItem('dailyPassedAnswers', JSON.stringify([]))
+        window.localStorage.setItem('dailyMyAnswers', JSON.stringify([]))
       }, 6000) // 5+1 second sleep
     }
 
     const endGame = async () => {
       await nextTick()
 
-      store.commit('game/SET_IS_GAME_OVER', {
+      store.commit('daily/SET_IS_GAME_OVER', {
         isGameOver: true
       })
       countdownTimerRef.value.pause()
@@ -525,8 +528,8 @@ export default defineComponent({
 
       let remainTime = days + hours + minutes + seconds + milliseconds
 
-      await store.commit('game/UPDATE_COUNTDOWN_TIMER', remainTime)
-      await window.localStorage.setItem('remainTime', `${timeData.minutes}:${timeData.seconds}`)
+      await store.commit('daily/UPDATE_COUNTDOWN_TIMER', remainTime)
+      await window.localStorage.setItem('dailyRemainTime', remainTime)
       await countdownTimerRef.value.start()
 
       if (timeData.minutes === 2 && timeData.seconds === 30) {
@@ -682,4 +685,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./GameScene.component.scss"></style>
+<style lang="scss" src="./DailyModeGameScene.component.scss"></style>

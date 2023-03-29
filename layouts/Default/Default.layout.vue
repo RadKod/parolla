@@ -8,7 +8,7 @@
     AppAd(:data-ad-slot="2717771834")
 
   // Inner
-  .layout__inner
+  .layout__inner(:class="{ 'layout__inner--pulseBg': $route.name === 'Home' }")
     // App Header
     AppHeader
 

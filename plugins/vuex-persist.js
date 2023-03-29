@@ -4,10 +4,10 @@ export default ({ store }) => {
   new VuexPersistence({
     key: 'persistStore',
     reducer: state => ({
-      game: {
-        isGameOver: state.game.isGameOver,
-        currentDate: state.game.currentDate,
-        questions: state.game.questions
+      daily: {
+        isGameOver: state.daily.isGameOver,
+        currentDate: state.daily.currentDate,
+        questions: state.daily.questions
       }
     })
   }).plugin(store)

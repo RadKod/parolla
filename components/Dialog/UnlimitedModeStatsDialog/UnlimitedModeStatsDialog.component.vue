@@ -1,8 +1,8 @@
 <template lang="pug">
-Dialog.stats-dialog(
+Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
   v-model="state.isOpen"
-  title="Bugünün İstatistiği"
-  cancel-button-text="Kapat"
+  title="İstatistik"
+  :cancel-button-text="cancelButtonText"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
@@ -35,12 +35,6 @@ Dialog.stats-dialog(
 
         // Actions
         .stats-dialog__actions
-          // Next Game Countdown
-          .countdown.stats-dialog__countdown
-            span.countdown__title Sonraki Oyun
-            Icon.countdown__icon(name="clock-o")
-            CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="nextGameDateMs")
-
           // Result Sharer
           .result-sharer
             Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
@@ -80,7 +74,8 @@ Dialog.stats-dialog(
 </template>
 
 <script>
-import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
+import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
 
@@ -102,10 +97,16 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
+    },
+    cancelButtonText: {
+      type: String,
+      required: false,
+      default: 'Kapat'
     }
   },
   setup(props) {
     const store = useStore()
+    const { convertMsToTime } = useTime()
 
     const state = reactive({
       isOpen: props.isOpen
@@ -122,30 +123,30 @@ export default defineComponent({
     const activeTab = ref('score')
     const toggledAnswer = ref(['A'])
 
-    const isGameOver = computed(() => store.getters['game/isGameOver'])
+    const isGameOver = computed(() => store.getters['unlimited/isGameOver'])
 
-    const questions = computed(() => store.getters['game/questions'])
+    const questions = computed(() => store.getters['unlimited/questions'])
 
     const correctAnswers = ref([])
     const wrongAnswers = ref([])
     const passedAnswers = ref([])
 
     const setAnswers = () => {
-      correctAnswers.value = JSON.parse(window.localStorage.getItem('correctAnswers')) || []
-      wrongAnswers.value = JSON.parse(window.localStorage.getItem('wrongAnswers')) || []
-      passedAnswers.value = JSON.parse(window.localStorage.getItem('passedAnswers')) || []
+      correctAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedCorrectAnswers')) || []
+      wrongAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedWrongAnswers')) || []
+      passedAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedPassedAnswers')) || []
     }
 
     const remainTime = computed(() => {
       if (isGameOver.value) {
-        return window.localStorage.getItem('remainTime')
+        const { minutes, seconds } = convertMsToTime(store.getters['unlimited/countdown'].time)
+
+        return `${minutes}:${seconds}`
       }
     })
 
-    const today = new Date().toLocaleDateString('tr').slice(0, 10)
-
     const shareResults = async () => {
-      const shareText = `parolla - Günlük bilgi oyunu. \n\n${today} \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
+      const shareText = `parolla - Günlük bilgi oyunu. \n\n(Limitsiz Oyun Modu) \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
@@ -164,17 +165,6 @@ export default defineComponent({
         })
       }
     }
-
-    const nextGameDateMs = computed(() => {
-      const midnight = new Date()
-
-      midnight.setHours(24)
-      midnight.setMinutes(0)
-      midnight.setSeconds(0)
-      midnight.setMilliseconds(0)
-
-      return midnight.getTime() - new Date().getTime()
-    })
 
     const answerClasses = question => {
       const correct = correctAnswers.value.some(item => question.letter === item.letter)
@@ -195,7 +185,7 @@ export default defineComponent({
     }
 
     const myAnswer = question => {
-      const storedAnswers = JSON.parse(window.localStorage.getItem('myAnswers'))
+      const storedAnswers = JSON.parse(window.localStorage.getItem('unlimitedMyAnswers'))
 
       if (storedAnswers && storedAnswers.length > 0) {
         return storedAnswers.filter(item => question.letter === item.letter).reverse()[0]
@@ -217,7 +207,6 @@ export default defineComponent({
       passedAnswers,
       isGameOver,
       questions,
-      nextGameDateMs,
       answerClasses,
       myAnswer
     }
@@ -225,4 +214,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./StatsDialog.component.scss"></style>
+<style lang="scss" src="./UnlimitedModeStatsDialog.component.scss"></style>
