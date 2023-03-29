@@ -455,6 +455,7 @@ export default defineComponent({
       if (isGameOver.value) return false
 
       await store.commit('daily/RESET_COUNTDOWN_TIMER')
+      await store.commit('daily/RESET_ALPHABET')
 
       setTimeout(() => {
         questionFitText()
