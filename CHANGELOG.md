@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.2
+
+- :children_crossing: ux improvements
+
 ## v2.0.1
 
 - :necktie: rebranding

@@ -8,7 +8,7 @@
     .intro-scene-mode-list
       Button.intro-scene-mode-list-item(to="/daily" size="large")
         span.intro-scene-mode-list-item__icon 📅
-        | GÜNLÜK (ORİJİNAL)
+        | REKABETÇİ (GÜNLÜK)
       Button.intro-scene-mode-list-item(to="/unlimited" size="large")
         span.intro-scene-mode-list-item__icon 🔁
         | LİMİTSİZ
