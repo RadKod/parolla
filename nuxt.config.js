@@ -133,7 +133,7 @@ module.exports = {
       routes.push({
         name: 'PrivacyPolicy',
         path: '/page/privacy-policy',
-        component: resolve(__dirname, 'pages/page/PrivacyPolicy/-index.vue')
+        component: resolve(__dirname, 'pages/Page/PrivacyPolicy/-index.vue')
       })
     }
   },
