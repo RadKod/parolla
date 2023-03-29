@@ -118,7 +118,7 @@ module.exports = {
       routes.push({
         name: 'Home',
         path: '/',
-        component: resolve(__dirname, 'pages/Home/-index.vue')
+        component: resolve(__dirname, 'pages/Main/-index.vue')
       })
       routes.push({
         name: 'DailyMode',
