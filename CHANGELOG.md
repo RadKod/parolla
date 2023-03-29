@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.1
+
+- :necktie: rebranding
+- :necktie: rebranding
+
 ## v2.0.0
 
 - :lipstick: ui improvements

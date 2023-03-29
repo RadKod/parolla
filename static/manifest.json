@@ -1,7 +1,7 @@
 {
   "name": "parolla",
   "short_name": "parolla",
-  "description": "Günlük bilgi oyunu.",
+  "description": "Kelime oyunu",
   "lang": "tr-TR",
   "start_url": "https://parolla.app",
   "background_color": "#eeeeee",

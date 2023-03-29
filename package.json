@@ -1,13 +1,13 @@
 {
   "name": "parolla",
-  "version": "2.0.0",
-  "description": "Günlük bilgi oyunu.",
+  "version": "2.0.1",
+  "description": "Kelime oyunu",
   "private": false,
   "keywords": [
     "oyun",
-    "bilgi oyunu",
+    "kelime oyunu",
     "bulmaca",
-    "passaparola"
+    "pasaparola"
   ],
   "author": "selimdoyranli",
   "contributors": [
