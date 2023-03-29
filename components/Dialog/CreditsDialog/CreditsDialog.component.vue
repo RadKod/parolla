@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.credits-dialog(
+Dialog.dialog.credits-dialog(
   v-model="state.isOpen"
   title="Yapımcılar"
   :cancel-button-text="cancelButtonText"

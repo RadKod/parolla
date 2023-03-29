@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.how-to-play-dialog(
+Dialog.dialog.how-to-play-dialog(
   v-model="state.isOpen"
   title="parolla Nasıl Oynanır?"
   :cancel-button-text="cancelButtonText"

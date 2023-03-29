@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.stats-dialog(
+Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
   v-model="state.isOpen"
   title="Bugünün İstatistiği"
   cancel-button-text="Kapat"
@@ -122,23 +122,23 @@ export default defineComponent({
     const activeTab = ref('score')
     const toggledAnswer = ref(['A'])
 
-    const isGameOver = computed(() => store.getters['game/isGameOver'])
+    const isGameOver = computed(() => store.getters['daily/isGameOver'])
 
-    const questions = computed(() => store.getters['game/questions'])
+    const questions = computed(() => store.getters['daily/questions'])
 
     const correctAnswers = ref([])
     const wrongAnswers = ref([])
     const passedAnswers = ref([])
 
     const setAnswers = () => {
-      correctAnswers.value = JSON.parse(window.localStorage.getItem('correctAnswers')) || []
-      wrongAnswers.value = JSON.parse(window.localStorage.getItem('wrongAnswers')) || []
-      passedAnswers.value = JSON.parse(window.localStorage.getItem('passedAnswers')) || []
+      correctAnswers.value = JSON.parse(window.localStorage.getItem('dailyCorrectAnswers')) || []
+      wrongAnswers.value = JSON.parse(window.localStorage.getItem('dailyWrongAnswers')) || []
+      passedAnswers.value = JSON.parse(window.localStorage.getItem('dailyPassedAnswers')) || []
     }
 
     const remainTime = computed(() => {
       if (isGameOver.value) {
-        return window.localStorage.getItem('remainTime')
+        return window.localStorage.getItem('dailyRemainTime')
       }
     })
 
@@ -195,7 +195,7 @@ export default defineComponent({
     }
 
     const myAnswer = question => {
-      const storedAnswers = JSON.parse(window.localStorage.getItem('myAnswers'))
+      const storedAnswers = JSON.parse(window.localStorage.getItem('dailyMyAnswers'))
 
       if (storedAnswers && storedAnswers.length > 0) {
         return storedAnswers.filter(item => question.letter === item.letter).reverse()[0]
@@ -225,4 +225,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./StatsDialog.component.scss"></style>
+<style lang="scss" src="./DailyModeStatsDialog.component.scss"></style>
