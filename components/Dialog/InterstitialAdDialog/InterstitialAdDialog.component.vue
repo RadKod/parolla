@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.interstitial-ad-dialog(
+Dialog.dialog.interstitial-ad-dialog(
   v-model="state.isOpen"
   title="Reklam desteğiyle bunu sürdürüyoruz"
   :cancel-button-text="`${cancelButtonText} (${countdownSecond})`"

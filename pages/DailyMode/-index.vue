@@ -1,19 +1,20 @@
 <template lang="pug">
-.page.home-page
-  IntroScene
+.page.daily-mode-page
+  // Game Scene
+  DailyModeGameScene
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IntroScene } from '@/components/Scene'
+import { DailyModeGameScene } from '@/components/Scene'
 
 export default defineComponent({
   components: {
-    IntroScene
+    DailyModeGameScene
   },
   layout: 'Default/Default.layout',
   setup() {}
 })
 </script>
 
-<style lang="scss" src="./Home.page.scss"></style>
+<style lang="scss" src="./DailyMode.page.scss"></style>

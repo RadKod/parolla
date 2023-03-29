@@ -1,8 +1,13 @@
+.dialog {
+  // Dialog shared styles
+}
+
+// Stats Dialog shared styles
 .stats-dialog {
   $van-dialog: '.van-dialog';
 
-  width: 90%;
-  max-width: var(--tablet);
+  width: 90% !important;
+  max-width: var(--tablet) !important;
 
   #{$van-dialog} {
     &__content {

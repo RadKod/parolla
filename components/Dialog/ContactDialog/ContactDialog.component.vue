@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.contact-dialog(
+Dialog.dialog.contact-dialog(
   v-model="state.isOpen"
   title="Bize ulaşın"
   :cancel-button-text="cancelButtonText"

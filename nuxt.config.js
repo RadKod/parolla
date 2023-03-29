@@ -116,9 +116,19 @@ module.exports = {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: 'home',
+        name: 'Home',
         path: '/',
-        component: resolve(__dirname, 'pages/home/-index.vue')
+        component: resolve(__dirname, 'pages/Home/-index.vue')
+      })
+      routes.push({
+        name: 'DailyMode',
+        path: '/daily',
+        component: resolve(__dirname, 'pages/DailyMode/-index.vue')
+      })
+      routes.push({
+        name: 'UnlimitedMode',
+        path: '/unlimited',
+        component: resolve(__dirname, 'pages/UnlimitedMode/-index.vue')
       })
     }
   },

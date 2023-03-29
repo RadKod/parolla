@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.0
+
+- :lipstick: ui improvements
+- :sparkles: game modes structure
+
 ## v1.3.5
 
 - :money_with_wings: insert interstitial ad

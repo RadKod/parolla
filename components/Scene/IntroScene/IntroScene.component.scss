@@ -1,0 +1,54 @@
+.intro-scene {
+  $scene: '.scene';
+
+  position: relative;
+
+  #{$scene} {
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .app-logo {
+    height: auto;
+    margin: 0 auto;
+    transform: scale(0.8);
+    transform-origin: center center;
+  }
+
+  &__title {
+    margin-bottom: calc(var(--base-m-y) * 2);
+    color: var(--color-text-02);
+    text-align: center;
+  }
+
+  &-mode-list {
+    position: relative;
+
+    &-item {
+      $van-button: '.van-button';
+
+      position: relative;
+      display: flex;
+      width: 90%;
+      height: 64px;
+      margin: 0 auto;
+      margin-bottom: calc(var(--base-m-y) / 1.5);
+      padding-left: var(--base-p-x);
+      color: var(--color-text-02);
+      text-align: left;
+      background-color: var(--color-ui-02);
+      border-radius: var(--border-radius-01);
+
+      @include font-weight-semi-bold;
+
+      &__icon {
+        position: absolute;
+        right: var(--base-m-x);
+        margin: 0 var(--base-m-x);
+      }
+    }
+  }
+}

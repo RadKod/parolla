@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.how-to-calculate-stats-dialog(
+Dialog.dialog.how-to-calculate-stats-dialog(
   v-model="state.isOpen"
   title="Skoru nasıl hesaplıyoruz"
   :cancel-button-text="cancelButtonText"

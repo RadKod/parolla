@@ -6,6 +6,7 @@
 @import '../css/variables/box-shadow.css';
 @import '../css/variables/z-index.css';
 @import '../css/variables/font-size.css';
+@import '../css/variables/motion.css';
 @import '../css/variables/layout.css';
 @import '../css/variables/header.css';
 @import '../css/variables/scene.css';
@@ -30,3 +31,4 @@
 @import 'shared/scene';
 @import 'shared/countdown';
 @import 'shared/toast';
+@import 'shared/dialog';

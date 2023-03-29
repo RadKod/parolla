@@ -1,19 +1,20 @@
 <template lang="pug">
-.page.home-page
-  IntroScene
+.page.unlimited-mode-page
+  // Game Scene
+  UnlimitedModeGameScene
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { IntroScene } from '@/components/Scene'
+import { UnlimitedModeGameScene } from '@/components/Scene'
 
 export default defineComponent({
   components: {
-    IntroScene
+    UnlimitedModeGameScene
   },
   layout: 'Default/Default.layout',
   setup() {}
 })
 </script>
 
-<style lang="scss" src="./Home.page.scss"></style>
+<style lang="scss" src="./UnlimitedMode.page.scss"></style>
