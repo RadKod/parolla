@@ -41,7 +41,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || 'Günlük bilgi oyunu.'
+        content: process.env.npm_package_description || 'Kelime oyunu'
       },
       {
         hid: 'og:image',
@@ -51,7 +51,7 @@ module.exports = {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: `Günlük bilgi oyunu.`
+        content: `Kelime oyunu`
       },
       {
         hid: 'og:url',

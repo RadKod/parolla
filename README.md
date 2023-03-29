@@ -1,6 +1,6 @@
 # parolla
 
-> parolla.app - Günlük bilgi oyunu.
+> parolla.app - Kelime oyunu
 
 <br>
 

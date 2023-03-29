@@ -146,7 +146,7 @@ export default defineComponent({
     })
 
     const shareResults = async () => {
-      const shareText = `parolla - Günlük bilgi oyunu. \n\n(Limitsiz Oyun Modu) \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
+      const shareText = `parolla - Kelime oyunu \n\n(Limitsiz Oyun Modu) \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
