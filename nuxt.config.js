@@ -130,6 +130,11 @@ module.exports = {
         path: '/unlimited',
         component: resolve(__dirname, 'pages/UnlimitedMode/-index.vue')
       })
+      routes.push({
+        name: 'PrivacyPolicy',
+        path: '/page/privacy-policy',
+        component: resolve(__dirname, 'pages/page/PrivacyPolicy/-index.vue')
+      })
     }
   },
 
