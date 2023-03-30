@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.4
+
+- :building_construction: clean code
+
 ## v2.0.3
 
 - :speech_balloon: add privacy policy
