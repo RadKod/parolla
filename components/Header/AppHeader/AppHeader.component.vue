@@ -2,7 +2,7 @@
 .app-header
   AppLogo(type="title")
   nav.app-header-nav
-    template(v-if="$route.name === 'DailyMode' || $route.name === 'UnlimitedMode'")
+    template(v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED")
       li.app-header-nav__item(@click="toggleHowToPlayDialog")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
@@ -33,7 +33,9 @@
 </template>
 
 <script>
-import { defineComponent, useRoute, reactive } from '@nuxtjs/composition-api'
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import { gameModeKeyEnum } from '@/enums'
+import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
 import { AppLogo } from '@/components/Logo'
 import {
@@ -59,7 +61,7 @@ export default defineComponent({
     ContactDialog
   },
   setup() {
-    const route = useRoute()
+    const { activeGameMode } = useGameMode()
 
     const dialog = reactive({
       stats: {
@@ -90,11 +92,11 @@ export default defineComponent({
     })
 
     const toggleStatsDialog = () => {
-      if (route.value.name === 'DailyMode') {
+      if (activeGameMode.value === gameModeKeyEnum.DAILY) {
         dialog.stats.mode.daily.isOpen = !dialog.stats.mode.daily.isOpen
       }
 
-      if (route.value.name === 'UnlimitedMode') {
+      if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {
         dialog.stats.mode.unlimited.isOpen = !dialog.stats.mode.unlimited.isOpen
       }
     }
@@ -120,6 +122,8 @@ export default defineComponent({
     }
 
     return {
+      gameModeKeyEnum,
+      activeGameMode,
       dialog,
       toggleStatsDialog,
       toggleHowToPlayDialog,

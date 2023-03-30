@@ -9,8 +9,8 @@ Dialog.dialog.how-to-play-dialog(
   @closed="$emit('closed')"
 )
   .how-to-play-dialog__explain
-    HowToPlayDailyModeContent(v-if="$route.name === 'DailyMode'")
-    HowToPlayUnlimitedModeContent(v-if="$route.name === 'UnlimitedMode'")
+    HowToPlayDailyModeContent(v-if="activeGameMode === gameModeKeyEnum.DAILY")
+    HowToPlayUnlimitedModeContent(v-if="activeGameMode === gameModeKeyEnum.UNLIMITED")
     .how-to-play-dialog__ad
       AppAd(:data-ad-slot="9964323575")
 
@@ -24,6 +24,8 @@ Dialog.dialog.how-to-play-dialog(
 <script>
 import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH } from '@/system/constant'
+import { gameModeKeyEnum } from '@/enums'
+import { useGameMode } from '@/hooks'
 import { Dialog } from 'vant'
 import { HowToPlayDailyModeContent, HowToPlayUnlimitedModeContent } from '@/components/Content'
 import { RadKodLogo } from '@/components/Logo'
@@ -50,6 +52,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { activeGameMode } = useGameMode()
+
     const state = reactive({
       isOpen: props.isOpen
     })
@@ -61,7 +65,12 @@ export default defineComponent({
       }
     )
 
-    return { ALPHABET_LENGTH, state }
+    return {
+      ALPHABET_LENGTH,
+      gameModeKeyEnum,
+      activeGameMode,
+      state
+    }
   }
 })
 </script>
