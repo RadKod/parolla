@@ -1,8 +1,16 @@
 <template lang="pug">
 .app-header
+  nav.app-header-nav
+    template(
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+    )
+      li.app-header-nav__item(@click="handleClickBackButton")
+        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
   AppLogo(type="title")
   nav.app-header-nav
-    template(v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED")
+    template(
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+    )
       li.app-header-nav__item(@click="toggleHowToPlayDialog")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
@@ -33,7 +41,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, useRouter } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
@@ -61,6 +69,8 @@ export default defineComponent({
     ContactDialog
   },
   setup() {
+    const router = useRouter()
+
     const { activeGameMode } = useGameMode()
 
     const dialog = reactive({
@@ -121,6 +131,10 @@ export default defineComponent({
       dialog.contact.isOpen = !dialog.contact.isOpen
     }
 
+    const handleClickBackButton = () => {
+      router.replace({ name: 'Home' })
+    }
+
     return {
       gameModeKeyEnum,
       activeGameMode,
@@ -130,7 +144,8 @@ export default defineComponent({
       toggleMenuDialog,
       toggleHowToCalculateStatsDialog,
       toggleCreditsDialog,
-      toggleContactDialog
+      toggleContactDialog,
+      handleClickBackButton
     }
   }
 })
