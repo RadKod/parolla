@@ -205,9 +205,12 @@ export default () => {
 
   watch(
     () => answer.isFocused,
-    currentValue => {
-      if (currentValue) {
+    value => {
+      if (value) {
+        document.querySelector('html').classList.add('osk')
         questionFitText()
+      } else {
+        document.querySelector('html').classList.remove('osk')
       }
     }
   )
@@ -449,7 +452,7 @@ export default () => {
     await nextTick()
 
     textfit(rootRef.value.querySelectorAll('.question--active')[0], {
-      minFontSize: 14,
+      minFontSize: 16,
       maxFontSize: 30
     })
   }
