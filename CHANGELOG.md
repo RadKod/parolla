@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.6
+
+- :lipstick: ui improvements
+
 ## v2.0.5
 
 - :children_crossing: ux improvements

@@ -13,6 +13,8 @@
 
   --motion: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
+  outline: none;
+
   @media (max-height: 569px) {
     zoom: 90%;
   }
@@ -36,8 +38,6 @@
     animation-name: pop;
     animation-duration: 0.2s;
   }
-
-  outline: none;
 
   &__inner {
     position: relative;
