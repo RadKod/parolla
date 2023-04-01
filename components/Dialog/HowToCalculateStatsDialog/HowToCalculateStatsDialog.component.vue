@@ -12,9 +12,9 @@ Dialog.dialog.how-to-calculate-stats-dialog(
   p.how-to-calculate-stats-dialog__description
     | Cevabın doğru ise doğru sorulara yanlış ise yanlış sorulara eklenir.
     <br><br>
-    | Eğer süren bittiğinde hala paslanmış soruların varsa bunlar da paslanmış sorulara eklenir.
+    | Eğer süren bittiğinde hala paslanmış soruların varsa bunlar da pasladığın sorulara eklenir.
     <br><br>
-    | Ve tüm toplam sonuç oyun bittiğinde günlük istatistik ekranında gösterilir.
+    | Ve tüm toplam sonuç oyun bittiğinde istatistik ekranında gösterilir.
 </template>
 
 <script>

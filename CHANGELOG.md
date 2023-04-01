@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.5
+
+- :children_crossing: ux improvements
+- :bug: throw post message on share for webview
+
 ## v2.0.4
 
 - :building_construction: clean code

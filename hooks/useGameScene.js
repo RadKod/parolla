@@ -504,6 +504,12 @@ export default () => {
     }
   }
 
+  const handlePopState = () => {
+    window.addEventListener('popstate', () => {
+      window.location.href = window.origin
+    })
+  }
+
   return {
     setRootRef,
     isGameStarted,
@@ -534,6 +540,7 @@ export default () => {
     scrollTop,
     isTouchEnabled,
     handleDontHideKeyboard,
+    handlePopState,
     checkUnsupportedHeight
   }
 }
