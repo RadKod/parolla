@@ -1,0 +1,52 @@
+.creator-mode-compose-form {
+  position: relative;
+
+  &__title {
+    position: relative;
+    display: block;
+    color: var(--color-text-01);
+  }
+
+  &__roomTitle {
+    overflow: hidden;
+    border-radius: var(--border-radius-01);
+  }
+
+  .compose-qa-list {
+    position: relative;
+
+    &__addQaButton {
+      display: inline-block;
+      margin: var(--base-m-y) 0;
+      margin-right: var(--base-m-x);
+    }
+  }
+
+  .compose-qa-card {
+    position: relative;
+    margin-bottom: var(--base-m-y);
+    overflow: hidden;
+    background-color: var(--color-ui-02);
+    border-radius: var(--border-radius-01);
+
+    &__actions {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: var(--base-p-y) var(--base-p-x);
+    }
+
+    &__moveButton {
+      margin-right: calc(var(--base-m-x) / 2);
+      color: var(--color-text-02);
+      background-color: var(--color-ui-02);
+      border: 1px solid var(--color-border-02);
+    }
+
+    &__removeButton {
+      position: relative;
+      display: block;
+      margin-left: auto;
+    }
+  }
+}

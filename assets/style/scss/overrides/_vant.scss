@@ -1,3 +1,16 @@
+.van-button {
+  $van-button: '.van-button';
+
+  &--danger {
+    color: var(--color-danger-01) !important;
+    border: 1px solid var(--color-danger-01) !important;
+  }
+
+  &--plain {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
 .van-dialog {
   background-color: var(--color-ui-02) !important;
 
@@ -66,5 +79,21 @@
     &--active {
       color: var(--color-text-02) !important;
     }
+  }
+}
+
+.van-field {
+  $van-field: '.van-field';
+
+  &__control {
+    color: var(--color-text-02) !important;
+
+    &::placeholder {
+      color: var(--color-text-03) !important;
+    }
+  }
+
+  &__error-message {
+    color: var(--color-danger-01) !important;
   }
 }

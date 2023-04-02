@@ -131,6 +131,16 @@ module.exports = {
         component: resolve(__dirname, 'pages/UnlimitedMode/-index.vue')
       })
       routes.push({
+        name: 'CreatorMode',
+        path: '/creator',
+        component: resolve(__dirname, 'pages/CreatorMode/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorModeCompose',
+        path: '/creator/compose',
+        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeCompose/-index.vue')
+      })
+      routes.push({
         name: 'PrivacyPolicy',
         path: '/page/privacy-policy',
         component: resolve(__dirname, 'pages/Page/PrivacyPolicy/-index.vue')

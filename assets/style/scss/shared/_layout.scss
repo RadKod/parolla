@@ -94,5 +94,7 @@
 
   &__main {
     position: relative;
+    height: calc(var(--layout-height) - var(--header-height));
+    overflow: auto;
   }
 }
