@@ -6,3 +6,4 @@ export { default as CreditsDialog } from './CreditsDialog/CreditsDialog.componen
 export { default as ContactDialog } from './ContactDialog/ContactDialog.component'
 export { default as MenuDialog } from './MenuDialog/MenuDialog.component'
 export { default as InterstitialAdDialog } from './InterstitialAdDialog/InterstitialAdDialog.component'
+export { default as CreatorModeCreatedRoomDialog } from './CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'

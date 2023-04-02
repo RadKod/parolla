@@ -1,16 +1,19 @@
 <template lang="pug">
-Form.creator-mode-compose-form(@submit="handleSubmit")
+Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
   h2.creator-mode-compose-form__title(align="center") ODA OLUŞTUR
   br
   h3.creator-mode-compose-form__title ODA BİLGİLERİ
-  Field.creator-mode-compose-form__roomTitle(
-    v-model="form.roomTitle"
-    name="roomTitle"
-    label="Oda başlığı"
-    placeholder="Oda başlığı yaz"
-    maxlength="120"
-    :rules="[{ required: true, message: 'Oda başlığı gereklidir' }]"
-  )
+  .creator-mode-compose-form__roomInfo
+    Field.creator-mode-compose-form__roomTitle(
+      v-model="form.roomTitle"
+      name="roomTitle"
+      label="Oda başlığı"
+      placeholder="Oda başlığı yaz"
+      maxlength="64"
+      show-word-limit
+      :rules="[{ required: true, message: 'Oda başlığı gereklidir' }]"
+    )
+    SwitchCell.creator-mode-compose-form__isPublic(v-model="form.isPublic" title="Açık odalarda listelensin mi?")
   h3.creator-mode-compose-form__title SORU-CEVAP SETİ
 
   .compose-qa-list
@@ -21,9 +24,10 @@ Form.creator-mode-compose-form(@submit="handleSubmit")
           v-model="item.character"
           name="character"
           label="Karakter"
-          placeholder="Hangi karakter için soru yazacaksın?"
+          placeholder="Soru karakteri"
           maxlength="1"
           :rules="[{ required: true, message: 'Karakter gereklidir' }]"
+          @input="validateAnswer(item, index)"
         )
         Field(
           v-model="item.question"
@@ -40,11 +44,13 @@ Form.creator-mode-compose-form(@submit="handleSubmit")
           v-model="item.answer"
           name="answer"
           label="Cevap"
-          placeholder="Yazdığın sorunun cevabı nedir?"
+          placeholder="Cevapları virgül ile ayırabilirsin"
           maxlength="120"
           show-word-limit
           rows="2"
-          :rules="[{ required: true, message: 'Cevap gereklidir' }]"
+          :error-message="item.isMatched === false ? 'Cevap belirlediğin karakter ile başlamalı' : null"
+          :error="item.isMatched === false"
+          @input="validateAnswer(item, index)"
         )
 
         .compose-qa-card__actions
@@ -90,8 +96,10 @@ Form.creator-mode-compose-form(@submit="handleSubmit")
       plain
       native-type="button"
       round
+      :loading="form.isBusy"
+      :disabled="form.isBusy"
       @click="addItem"
-    ) Başka Soru ekle
+    ) Başka soru ekle
 
     // Save list button
     Button.compose-qa-list__submitButton(
@@ -101,31 +109,56 @@ Form.creator-mode-compose-form(@submit="handleSubmit")
       plain
       native-type="submit"
       round
+      :loading="form.isBusy"
+      :disabled="form.isBusy"
     ) Bitir ve yayınla
+
+  CreatorModeCreatedRoomDialog(:isOpen="dialog.room.isOpen" :room="createdRoom" @closed="handleCloseRoomDialog")
 </template>
 
 <script>
-import { defineComponent, reactive, set } from '@nuxtjs/composition-api'
-import { Form, Field, Button, Empty } from 'vant'
+import { defineComponent, useRouter, useStore, reactive, set } from '@nuxtjs/composition-api'
+import { Form, Field, SwitchCell, Button, Empty, Notify } from 'vant'
+import { CreatorModeCreatedRoomDialog } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
     Form,
     Field,
+    SwitchCell,
     Button,
-    Empty
+    Empty,
+    CreatorModeCreatedRoomDialog
   },
   setup() {
+    const router = useRouter()
+    const store = useStore()
+
     const form = reactive({
+      isBusy: false,
+      isClear: false,
       roomTitle: '',
+      isPublic: true,
       qaList: []
+    })
+
+    const createdRoom = reactive({
+      title: '',
+      id: ''
+    })
+
+    const dialog = reactive({
+      room: {
+        isOpen: false
+      }
     })
 
     const addItem = () => {
       form.qaList.push({
         character: '',
         question: '',
-        answer: ''
+        answer: '',
+        isMatched: null
       })
     }
 
@@ -148,8 +181,84 @@ export default defineComponent({
     const disableMoveUp = index => index === 0
     const disableMoveDown = index => index === form.qaList.length - 1
 
-    const handleSubmit = () => {
-      console.log('submitted')
+    const validateAnswer = (item, index) => {
+      if (item.character && item.character.length > 0 && item.answer && item.answer.length > 0) {
+        const answers = item.answer.split(',')
+
+        const isMatched = answers.every(answer => {
+          console.log(answer)
+
+          if (answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase('tr'))) {
+            return true
+          } else {
+            return false
+          }
+        })
+
+        console.log(answers)
+        console.log(isMatched)
+
+        if (isMatched) {
+          form.qaList[index].isMatched = true
+        } else {
+          form.qaList[index].isMatched = false
+        }
+      } else {
+        form.qaList[index].isMatched = false
+      }
+    }
+
+    const handleFailed = errorInfo => {
+      if (errorInfo && errorInfo.values.length > 0) {
+        form.isClear = false
+      } else {
+        form.isClear = true
+      }
+    }
+
+    const handleSubmit = async () => {
+      form.isBusy = true
+
+      const nonMatchedItems = form.qaList.filter(item => {
+        return item.isMatched === false
+      })
+
+      if (nonMatchedItems.length > 0) {
+        form.isClear = false
+      } else {
+        form.isClear = true
+      }
+
+      if (form.isClear) {
+        const result = await store.dispatch('creator/postQaForm', form)
+
+        if (result.success) {
+          createdRoom.title = result.data.title
+          createdRoom.id = result.data.room
+
+          dialog.room.isOpen = true
+        } else {
+          Notify({
+            message: `Oda oluşturulamadı, lütfen kontrol edip tekrar dene`,
+            color: 'var(--color-text-04)',
+            background: 'var(--color-danger-01)',
+            duration: 1000
+          })
+        }
+      } else {
+        Notify({
+          message: `Oda oluşturulamadı, lütfen kontrol edip tekrar dene`,
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 1000
+        })
+      }
+
+      form.isBusy = false
+    }
+
+    const handleCloseRoomDialog = () => {
+      router.push(`/creator/room/${createdRoom.id}`)
     }
 
     return {
@@ -160,7 +269,12 @@ export default defineComponent({
       moveDown,
       disableMoveUp,
       disableMoveDown,
-      handleSubmit
+      validateAnswer,
+      handleFailed,
+      handleSubmit,
+      createdRoom,
+      dialog,
+      handleCloseRoomDialog
     }
   }
 })
