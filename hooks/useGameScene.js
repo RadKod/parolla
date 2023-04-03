@@ -1,5 +1,5 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
-import { UNSUPPORTED_HEIGHT } from '@/system/constant'
+import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 // Swiper
@@ -294,27 +294,27 @@ export default () => {
   })
 
   const startSoundFx = new Howl({
-    src: ['/sound/fx/start.wav']
+    src: [`${WEB_CDN}/assets/sound/fx/start.wav`]
   })
 
   const correctSoundFx = new Howl({
-    src: ['/sound/fx/correct.wav']
+    src: [`${WEB_CDN}/assets/sound/fx/correct.wav`]
   })
 
   const wrongSoundFx = new Howl({
-    src: ['/sound/fx/wrong.wav']
+    src: [`${WEB_CDN}/assets/sound/fx/wrong.wav`]
   })
 
   const passSoundFx = new Howl({
-    src: ['/sound/fx/pass.wav']
+    src: [`${WEB_CDN}/assets/sound/fx/pass.wav`]
   })
 
   const halfTimeSoundFx = new Howl({
-    src: ['/sound/fx/half-time.wav']
+    src: [`${WEB_CDN}/assets/sound/fx/half-time.wav`]
   })
 
   const radkodEasterEggSoundFx = new Howl({
-    src: ['/sound/fx/radkod-easter-egg.mp3']
+    src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`]
   })
 
   soundFx.start = startSoundFx

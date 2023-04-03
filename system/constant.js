@@ -1,6 +1,10 @@
 export const APP_NAME = 'parolla'
 export const APP_DOMAIN = 'parolla.app'
 export const APP_URL = 'https://parolla.app'
+export const PUBLISHER_NAME = 'RadKod'
+export const PUBLISHER_DOMAIN = 'radkod.com'
+export const PUBLISHER_URL = 'https://radkod.com'
+export const WEB_CDN = 'https://radkod.com/cdn/parolla/web'
 export const ALPHABET_LENGTH = 26
 export const ANSWER_CHAR_LENGTH = 64
 export const GAME_TIME_LIMIT = 60 * 5 * 1000 // 5min
