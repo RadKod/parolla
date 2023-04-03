@@ -1,7 +1,7 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
 import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode } from '@/hooks'
+import { useGameMode, useEncodeDecode } from '@/hooks'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -17,6 +17,7 @@ export default () => {
   const store = useStore()
 
   const { activeGameMode } = useGameMode()
+  const { encodeEnglish } = useEncodeDecode()
 
   const rootRef = ref(null)
   const setRootRef = element => {
@@ -145,7 +146,7 @@ export default () => {
 
     item.isPassed = false
 
-    const answerField = answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+    const answerField = encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
     const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
     const passKeyword = 'pas'
@@ -180,7 +181,7 @@ export default () => {
     }
 
     const isCorrect = correctAnswers.some(answer => {
-      if (answerField === answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+      if (answerField === encodeEnglish(answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
         item.isCorrect = true
         soundFx.correct.play()
 

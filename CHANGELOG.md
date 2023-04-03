@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.2
+
+- :alembic: english char encoder
+
 ## v2.1.1
 
 - :bug: app sharer fix
