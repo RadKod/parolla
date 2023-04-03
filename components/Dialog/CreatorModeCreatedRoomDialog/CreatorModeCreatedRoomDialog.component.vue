@@ -58,6 +58,7 @@ export default defineComponent({
 
     const copyRoomUrl = async () => {
       const url = `https://parolla.app/room?id=${props.room.id}`
+      window.postMessage({ type: 'sharer', data: url })
 
       try {
         await navigator.clipboard.writeText(url)
@@ -76,8 +77,6 @@ export default defineComponent({
           position: 'bottom'
         })
       }
-
-      window.postMessage(url)
     }
 
     return {

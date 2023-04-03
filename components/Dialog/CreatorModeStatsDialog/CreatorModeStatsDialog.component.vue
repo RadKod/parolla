@@ -151,6 +151,7 @@ export default defineComponent({
 
     const shareResults = async () => {
       const shareText = `parolla - Kelime oyunu \n\n"${room.value.title}" odasında ${questions.value.length} soruluk özel soru-cevap setini oynadım \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \n${APP_URL}/room?id=${route.value.query.id}`
+      window.postMessage({ type: 'sharer', data: shareText })
 
       try {
         await navigator.clipboard.writeText(shareText)
@@ -169,8 +170,6 @@ export default defineComponent({
           position: 'bottom'
         })
       }
-
-      window.postMessage(shareText)
     }
 
     const answerClasses = question => {
