@@ -13,7 +13,7 @@ export default () => {
       return gameModeKeyEnum.UNLIMITED
     }
 
-    if (route.value.name === 'CreatorMode') {
+    if (route.value.name === 'CreatorModeRoom') {
       return gameModeKeyEnum.CREATOR
     }
   })

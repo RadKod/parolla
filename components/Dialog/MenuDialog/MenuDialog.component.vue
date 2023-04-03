@@ -26,13 +26,22 @@ Dialog.dialog.menu-dialog(
       is-link
       @click.native="$emit('clickedHowToCalculateStats')"
     )
+    Cell.menu-dialog-nav__item(
+      v-if="$route.name === 'CreatorModeRoom'"
+      icon="smile-comment-o"
+      title="Odayı paylaş"
+      size="large"
+      is-link
+      @click.native="openRoomSharer"
+    )
     Cell.menu-dialog-nav__item(icon="smile-comment-o" title="parolla'yı paylaş" size="large" is-link @click.native="openSharer")
     Cell.menu-dialog-nav__item(icon="manager-o" title="Yapımcılar" size="large" is-link @click.native="$emit('clickedCredits')")
     Cell.menu-dialog-nav__item(icon="guide-o" title="Bize ulaşın" size="large" is-link @click.native="$emit('clickedContact')")
 </template>
 
 <script>
-import { defineComponent, useContext, ref, reactive, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, useStore, useContext, ref, reactive, computed, watch } from '@nuxtjs/composition-api'
+import { APP_URL } from '@/system/constant'
 import { Dialog, CellGroup, Cell, Switch, Toast } from 'vant'
 
 export default defineComponent({
@@ -55,6 +64,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const route = useRoute()
+    const store = useStore()
     const context = useContext()
 
     const state = reactive({
@@ -98,8 +109,12 @@ export default defineComponent({
       )
     }
 
-    const openSharer = async () => {
-      const shareText = `parolla - Kelime oyunu \n\nhttps://parolla.app`
+    const room = computed(() => store.getters['creator/room'])
+    const questions = computed(() => store.getters['creator/questions'])
+
+    const openRoomSharer = async () => {
+      const shareText = `parolla - Kelime oyunu \n\n"${room.value.title}" odasında ${questions.value.length} soruluk özel soru-cevap setini oyna! \n \n${APP_URL}/room?id=${route.value.query.id}`
+
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
@@ -119,7 +134,36 @@ export default defineComponent({
       }
     }
 
-    return { state, isDark, toggleDarkTheme, openSuggestQuestion, openSharer }
+    const openAppSharer = async () => {
+      const shareText = `parolla - Kelime oyunu \n\nhttps://parolla.app`
+
+      try {
+        await navigator.clipboard.writeText(shareText)
+        await Toast({
+          message: 'Panoya kopyalandı',
+          position: 'bottom'
+        })
+        await navigator.share({
+          title: 'parolla',
+          text: shareText
+        })
+      } catch {
+        await navigator.clipboard.writeText(shareText)
+        await Toast({
+          message: 'Panoya kopyalandı',
+          position: 'bottom'
+        })
+      }
+    }
+
+    return {
+      state,
+      isDark,
+      toggleDarkTheme,
+      openSuggestQuestion,
+      openRoomSharer,
+      openAppSharer
+    }
   }
 })
 </script>

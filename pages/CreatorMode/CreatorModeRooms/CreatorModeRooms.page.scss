@@ -1,0 +1,70 @@
+.creator-mode-rooms-page {
+  position: relative;
+
+  &__inner {
+    position: relative;
+    width: calc(100% - (var(--base-p-x) * 2));
+    margin: calc(var(--base-m-y) * 2) auto;
+  }
+
+  &__title {
+    position: relative;
+    display: block;
+    color: var(--color-text-01);
+
+    &--rooms {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &-join-room {
+    position: relative;
+
+    &__urlField {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-radius: var(--border-radius-01);
+    }
+  }
+
+  &-rooms {
+    &__refetchButton {
+      color: var(--color-text-02);
+      background-color: var(--color-ui-02);
+      border: 1px solid var(--color-border-02);
+    }
+
+    &__searchField {
+      $van-search: '.van-search';
+
+      position: relative;
+      margin-bottom: var(--base-m-y);
+      background-color: var(--color-ui-02);
+      border-radius: var(--border-radius-01);
+
+      #{$van-search} {
+        &__content {
+          &--square {
+            background-color: var(--color-ui-02);
+          }
+        }
+      }
+    }
+  }
+
+  .room-list {
+    position: relative;
+
+    .van-cell {
+      $van-cell: '.van-cell';
+
+      margin-bottom: var(--base-m-y);
+      overflow: hidden;
+      border-radius: var(--border-radius-01);
+    }
+  }
+}

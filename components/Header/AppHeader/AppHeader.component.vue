@@ -1,9 +1,7 @@
 <template lang="pug">
 .app-header
   nav.app-header-nav
-    template(
-      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
-    )
+    template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
   AppLogo(type="title")
@@ -23,6 +21,7 @@
   // Stats Dialog
   DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
   UnlimitedModeStatsDialog(:isOpen="dialog.stats.mode.unlimited.isOpen" @closed="dialog.stats.mode.unlimited.isOpen = false")
+  CreatorModeStatsDialog(:isOpen="dialog.stats.mode.creator.isOpen" @closed="dialog.stats.mode.creator.isOpen = false")
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useRoute, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
@@ -49,6 +48,7 @@ import { AppLogo } from '@/components/Logo'
 import {
   DailyModeStatsDialog,
   UnlimitedModeStatsDialog,
+  CreatorModeStatsDialog,
   HowToPlayDialog,
   MenuDialog,
   HowToCalculateStatsDialog,
@@ -62,6 +62,7 @@ export default defineComponent({
     AppLogo,
     DailyModeStatsDialog,
     UnlimitedModeStatsDialog,
+    CreatorModeStatsDialog,
     HowToPlayDialog,
     MenuDialog,
     HowToCalculateStatsDialog,
@@ -70,6 +71,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
 
     const { activeGameMode } = useGameMode()
 
@@ -80,6 +82,9 @@ export default defineComponent({
             isOpen: false
           },
           unlimited: {
+            isOpen: false
+          },
+          creator: {
             isOpen: false
           }
         }
@@ -109,6 +114,10 @@ export default defineComponent({
       if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {
         dialog.stats.mode.unlimited.isOpen = !dialog.stats.mode.unlimited.isOpen
       }
+
+      if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
+        dialog.stats.mode.creator.isOpen = !dialog.stats.mode.creator.isOpen
+      }
     }
 
     const toggleHowToPlayDialog = () => {
@@ -132,8 +141,25 @@ export default defineComponent({
     }
 
     const handleClickBackButton = () => {
-      router.replace({ name: 'Home' })
+      if (route.value.name === 'CreatorModeRooms' || route.value.name === 'CreatorModeCompose') {
+        router.replace({ name: 'CreatorModeIntro' })
+      } else {
+        router.replace({ name: 'Home' })
+      }
     }
+
+    const isVisibleBackButton = computed(() => {
+      if (
+        activeGameMode.value === gameModeKeyEnum.DAILY ||
+        activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
+        activeGameMode.value === gameModeKeyEnum.CREATOR ||
+        route.value.name === 'CreatorModeIntro' ||
+        route.value.name === 'CreatorModeRooms' ||
+        route.value.name === 'CreatorModeCompose'
+      ) {
+        return true
+      }
+    })
 
     return {
       gameModeKeyEnum,
@@ -145,7 +171,8 @@ export default defineComponent({
       toggleHowToCalculateStatsDialog,
       toggleCreditsDialog,
       toggleContactDialog,
-      handleClickBackButton
+      handleClickBackButton,
+      isVisibleBackButton
     }
   }
 })

@@ -11,6 +11,7 @@ Dialog.dialog.how-to-play-dialog(
   .how-to-play-dialog__explain
     HowToPlayDailyModeContent(v-if="activeGameMode === gameModeKeyEnum.DAILY")
     HowToPlayUnlimitedModeContent(v-if="activeGameMode === gameModeKeyEnum.UNLIMITED")
+    HowToPlayCreatorModeContent(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
     .how-to-play-dialog__ad
       AppAd(:data-ad-slot="9964323575")
 
@@ -27,7 +28,7 @@ import { ALPHABET_LENGTH } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Dialog } from 'vant'
-import { HowToPlayDailyModeContent, HowToPlayUnlimitedModeContent } from '@/components/Content'
+import { HowToPlayDailyModeContent, HowToPlayUnlimitedModeContent, HowToPlayCreatorModeContent } from '@/components/Content'
 import { RadKodLogo } from '@/components/Logo'
 import { AppAd } from '@/components/Ad'
 
@@ -36,6 +37,7 @@ export default defineComponent({
     Dialog: Dialog.Component,
     HowToPlayDailyModeContent,
     HowToPlayUnlimitedModeContent,
+    HowToPlayCreatorModeContent,
     RadKodLogo,
     AppAd
   },

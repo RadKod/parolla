@@ -1,5 +1,5 @@
 <template lang="pug">
-.scene.game-scene.unlimited-mode-game-scene(
+.scene.game-scene.creator-mode-game-scene(
   ref="rootRef"
   tabindex="1"
   :class="{ 'game-scene--isMobileDevice': $ua.isFromMobilephone(), 'game-scene--gameOver': isGameOver, 'game-scene--osk': answer.isFocused }"
@@ -78,17 +78,17 @@
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
-  UnlimitedModeStatsDialog(cancelButtonText="Kapat ve Tekrar Oyna" :isOpen="dialog.stats.isOpen" @closed="resetGame")
+  CreatorModeStatsDialog(cancelButtonText="Kapat ve Tekrar Oyna" :isOpen="dialog.stats.isOpen" @closed="resetGame")
   // Interstital Ad Dialog
   InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
-import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useRoute, useStore, useContext, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
-import { Button, Field, Empty, CountDown, Icon } from 'vant'
-import { HowToPlayDialog, UnlimitedModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
+import { Button, Field, Empty, CountDown, Icon, Notify } from 'vant'
+import { HowToPlayDialog, CreatorModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
@@ -97,13 +97,17 @@ export default defineComponent({
     Empty,
     CountDown,
     Icon,
+    Notify,
     HowToPlayDialog,
-    UnlimitedModeStatsDialog,
+    CreatorModeStatsDialog,
     InterstitialAdDialog
   },
   setup() {
-    const rootRef = ref(null)
+    const route = useRoute()
     const store = useStore()
+    const { redirect } = useContext()
+
+    const rootRef = ref(null)
 
     const {
       setRootRef,
@@ -133,9 +137,21 @@ export default defineComponent({
       checkUnsupportedHeight
     } = useGameScene()
 
-    // Fetch Questions
+    // Fetch Room
     const { fetch, fetchState } = useFetch(async () => {
-      await store.dispatch('unlimited/fetchQuestions')
+      const result = await store.dispatch('creator/fetchRoom', route.value.query.id)
+
+      if (!result.success) {
+        Notify({
+          message: result.data[0],
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 3000
+        })
+        setTimeout(() => {
+          redirect(`/creator/rooms`)
+        }, 1000)
+      }
     })
 
     const reFetch = async () => {
@@ -147,13 +163,13 @@ export default defineComponent({
     }
 
     const resetGame = async () => {
-      // Reset Game every mount because is Unlimited Mode
+      // Reset Game every mount because is Creator Mode
       await fetch()
-      await store.commit('unlimited/SET_IS_GAME_OVER', {
+      await store.commit('creator/SET_IS_GAME_OVER', {
         isGameOver: false
       })
-      await store.commit('unlimited/RESET_COUNTDOWN_TIMER')
-      await store.commit('unlimited/RESET_ALPHABET')
+      await store.commit('creator/RESET_COUNTDOWN_TIMER')
+      await store.commit('creator/RESET_ALPHABET')
       dialog.stats.isOpen = false
     }
 
@@ -219,4 +235,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./UnlimitedModeGameScene.component.scss"></style>
+<style lang="scss" src="./CreatorModeGameScene.component.scss"></style>

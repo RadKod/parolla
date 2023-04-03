@@ -1,0 +1,52 @@
+.creator-mode-created-room-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--tablet);
+
+  #{$van-dialog} {
+    &__content {
+      position: relative;
+      display: block;
+      max-height: 50vh;
+      padding: var(--base-p-y) calc(var(--base-p-x) * 1.8);
+      overflow: auto;
+    }
+  }
+
+  &__roomTitle {
+    display: block;
+    color: var(--color-text-02);
+    font-size: var(--font-size-text-5);
+  }
+
+  &__roomIdField {
+    $van-field: '.van-field';
+
+    display: flex;
+    align-items: center;
+    background-color: var(--color-ui-01) !important;
+    border-radius: var(--border-radius-01);
+
+    #{$van-field} {
+      &__control {
+        color: var(--color-text-02) !important;
+        -webkit-text-fill-color: var(--color-text-02) !important;
+        cursor: text;
+
+        &::selection {
+          color: var(--color-link-01) !important;
+          -webkit-text-fill-color: var(--color-link-01) !important;
+        }
+      }
+    }
+
+    @at-root .dark-mode {
+      #{$van-field} {
+        .van-icon {
+          filter: invert(1) grayscale(100%) brightness(90%);
+        }
+      }
+    }
+  }
+}
