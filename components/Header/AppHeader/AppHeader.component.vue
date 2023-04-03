@@ -21,6 +21,7 @@
   // Stats Dialog
   DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
   UnlimitedModeStatsDialog(:isOpen="dialog.stats.mode.unlimited.isOpen" @closed="dialog.stats.mode.unlimited.isOpen = false")
+  CreatorModeStatsDialog(:isOpen="dialog.stats.mode.creator.isOpen" @closed="dialog.stats.mode.creator.isOpen = false")
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
@@ -47,6 +48,7 @@ import { AppLogo } from '@/components/Logo'
 import {
   DailyModeStatsDialog,
   UnlimitedModeStatsDialog,
+  CreatorModeStatsDialog,
   HowToPlayDialog,
   MenuDialog,
   HowToCalculateStatsDialog,
@@ -60,6 +62,7 @@ export default defineComponent({
     AppLogo,
     DailyModeStatsDialog,
     UnlimitedModeStatsDialog,
+    CreatorModeStatsDialog,
     HowToPlayDialog,
     MenuDialog,
     HowToCalculateStatsDialog,
@@ -79,6 +82,9 @@ export default defineComponent({
             isOpen: false
           },
           unlimited: {
+            isOpen: false
+          },
+          creator: {
             isOpen: false
           }
         }
@@ -107,6 +113,10 @@ export default defineComponent({
 
       if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {
         dialog.stats.mode.unlimited.isOpen = !dialog.stats.mode.unlimited.isOpen
+      }
+
+      if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
+        dialog.stats.mode.creator.isOpen = !dialog.stats.mode.creator.isOpen
       }
     }
 

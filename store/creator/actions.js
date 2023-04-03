@@ -32,17 +32,34 @@ export default {
     const response = await fetch(`${process.env.API}/rooms`)
     const result = await response.json()
 
-    const rooms = result.data.rooms.map(room => roomTransformer(room))
+    if (result.success) {
+      const rooms = result.data.rooms.map(room => roomTransformer(room))
 
-    commit('SET_ROOMS', rooms)
+      commit('SET_ROOMS', rooms)
+    }
+
+    return result
   },
 
-  async fetchQuestions({ commit }) {
-    const questionsResponse = await fetch(`${process.env.API}/modes/custom?room=${roomId}`)
-    const questionsResult = await questionsResponse.json()
+  async fetchRoom({ commit }, id) {
+    const response = await fetch(`${process.env.API}/modes/custom?room=${id}`)
+    const result = await response.json()
 
-    commit('SET_QUESTIONS', {
-      questions: questionsResult.data.questions
-    })
+    if (result.success) {
+      const room = roomTransformer(result.data)
+
+      commit('SET_ROOM', {
+        title: room.title,
+        isPublic: room.isPublic
+      })
+
+      commit('SET_QUESTIONS', {
+        questions: room.questions
+      })
+
+      commit('SET_ALPHABET_ITEMS', room.alphabet)
+    }
+
+    return result
   }
 }

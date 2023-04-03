@@ -1,5 +1,6 @@
 export { default as DailyModeStatsDialog } from './DailyModeStatsDialog/DailyModeStatsDialog.component'
 export { default as UnlimitedModeStatsDialog } from './UnlimitedModeStatsDialog/UnlimitedModeStatsDialog.component'
+export { default as CreatorModeStatsDialog } from './CreatorModeStatsDialog/CreatorModeStatsDialog.component'
 export { default as HowToPlayDialog } from './HowToPlayDialog/HowToPlayDialog.component'
 export { default as HowToCalculateStatsDialog } from './HowToCalculateStatsDialog/HowToCalculateStatsDialog.component'
 export { default as CreditsDialog } from './CreditsDialog/CreditsDialog.component'

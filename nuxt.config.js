@@ -27,7 +27,7 @@ module.exports = {
     htmlAttrs: {
       lang: 'tr'
     },
-    title: process.env.npm_package_name || 'parolla',
+    title: 'parolla - Kelime oyunu',
     meta: [
       { charset: 'utf-8' },
       {
@@ -41,7 +41,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || 'Kelime oyunu'
+        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       },
       {
         hid: 'og:image',
@@ -51,7 +51,7 @@ module.exports = {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: `Kelime oyunu`
+        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       },
       {
         hid: 'og:url',

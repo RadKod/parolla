@@ -5,6 +5,10 @@ export default {
     state.rooms = rooms
   },
 
+  SET_ROOM(state, room) {
+    state.room = room
+  },
+
   SET_CURRENT_DATE(state, date) {
     state.currentDate = date
   },
@@ -15,6 +19,19 @@ export default {
 
   SET_QUESTIONS(state, { questions }) {
     state.questions = questions
+  },
+
+  SET_ALPHABET_ITEMS(state, items) {
+    const alphabetItems = items.map(item => {
+      return {
+        letter: item,
+        isPassed: false,
+        isWrong: false,
+        isCorrect: false
+      }
+    })
+
+    state.alphabet.items = alphabetItems
   },
 
   SET_ALPHABET_ACTIVE_INDEX(state, index) {

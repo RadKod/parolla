@@ -3,6 +3,10 @@ export default {
     return state.rooms
   },
 
+  room(state) {
+    return state.room
+  },
+
   isGameOver(state) {
     return state.isGameOver
   },

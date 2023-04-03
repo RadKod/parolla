@@ -1,5 +1,5 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
-import { ALPHABET_LENGTH, UNSUPPORTED_HEIGHT } from '@/system/constant'
+import { UNSUPPORTED_HEIGHT } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 // Swiper
@@ -99,7 +99,7 @@ export default () => {
     currentValue => {
       const passedAnswers = store.getters[`${activeGameMode.value}/passedAnswers`]
 
-      if (currentValue.length === ALPHABET_LENGTH && passedAnswers.length > 0) {
+      if (currentValue.length === alphabet.value.items.length && passedAnswers.length > 0) {
         Notify({
           message: 'Aklına bir cevap gelmezse süreyi beklemene gerek yok, bitir yazıp bitirebilirsin de.',
           color: 'var(--color-text-04)',
