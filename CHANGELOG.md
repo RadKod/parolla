@@ -1,5 +1,16 @@
 # Changelog
 
+## v2.1.0
+
+- :rocket: performance improvements
+- :lipstick: ui improvements
+- :bridge_at_night: post message for webview
+- :sparkles: room sharer
+- :alien: creator mode game scene
+- :bridge_at_night: creator mode rooms mode
+- :bridge_at_night: creator mode compose form
+- :bridge_at_night: creator mode structure
+
 ## v2.0.6
 
 - :lipstick: ui improvements

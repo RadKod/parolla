@@ -27,7 +27,7 @@ module.exports = {
     htmlAttrs: {
       lang: 'tr'
     },
-    title: process.env.npm_package_name || 'parolla',
+    title: 'parolla - Kelime oyunu',
     meta: [
       { charset: 'utf-8' },
       {
@@ -41,7 +41,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || 'Kelime oyunu'
+        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       },
       {
         hid: 'og:image',
@@ -51,7 +51,7 @@ module.exports = {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: `Kelime oyunu`
+        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       },
       {
         hid: 'og:url',
@@ -129,6 +129,31 @@ module.exports = {
         name: 'UnlimitedMode',
         path: '/unlimited',
         component: resolve(__dirname, 'pages/UnlimitedMode/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorModeIntro',
+        path: '/creator/start',
+        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeIntro/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorMode',
+        path: '/creator',
+        component: resolve(__dirname, 'pages/CreatorMode/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorModeRooms',
+        path: '/creator/rooms',
+        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeRooms/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorModeCompose',
+        path: '/creator/compose',
+        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeCompose/-index.vue')
+      })
+      routes.push({
+        name: 'CreatorModeRoom',
+        path: '/room',
+        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeRoom/-index.vue')
       })
       routes.push({
         name: 'PrivacyPolicy',

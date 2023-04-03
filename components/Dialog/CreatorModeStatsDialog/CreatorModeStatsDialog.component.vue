@@ -1,5 +1,5 @@
 <template lang="pug">
-Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
+Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
   v-model="state.isOpen"
   title="İstatistik"
   :cancel-button-text="cancelButtonText"
@@ -74,7 +74,8 @@ Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
 </template>
 
 <script>
-import { defineComponent, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
+import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
@@ -105,6 +106,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const route = useRoute()
     const store = useStore()
     const { convertMsToTime } = useTime()
 
@@ -121,32 +123,34 @@ export default defineComponent({
     )
 
     const activeTab = ref('score')
-    const toggledAnswer = ref(['A'])
+    const toggledAnswer = ref([0])
 
-    const isGameOver = computed(() => store.getters['unlimited/isGameOver'])
+    const room = computed(() => store.getters['creator/room'])
 
-    const questions = computed(() => store.getters['unlimited/questions'])
+    const isGameOver = computed(() => store.getters['creator/isGameOver'])
+
+    const questions = computed(() => store.getters['creator/questions'])
 
     const correctAnswers = ref([])
     const wrongAnswers = ref([])
     const passedAnswers = ref([])
 
     const setAnswers = () => {
-      correctAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedCorrectAnswers')) || []
-      wrongAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedWrongAnswers')) || []
-      passedAnswers.value = JSON.parse(window.localStorage.getItem('unlimitedPassedAnswers')) || []
+      correctAnswers.value = JSON.parse(window.localStorage.getItem('creatorCorrectAnswers')) || []
+      wrongAnswers.value = JSON.parse(window.localStorage.getItem('creatorWrongAnswers')) || []
+      passedAnswers.value = JSON.parse(window.localStorage.getItem('creatorPassedAnswers')) || []
     }
 
     const remainTime = computed(() => {
       if (isGameOver.value) {
-        const { minutes, seconds } = convertMsToTime(store.getters['unlimited/countdown'].time)
+        const { minutes, seconds } = convertMsToTime(store.getters['creator/countdown'].time)
 
         return `${minutes}:${seconds}`
       }
     })
 
     const shareResults = async () => {
-      const shareText = `parolla - Kelime oyunu \n\n(Limitsiz Oyun Modu) \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
+      const shareText = `parolla - Kelime oyunu \n\n"${room.value.title}" odasında ${questions.value.length} soruluk özel soru-cevap setini oynadım \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \n${APP_URL}/room?id=${route.value.query.id}`
       window.postMessage({ type: 'sharer', data: shareText })
 
       try {
@@ -187,7 +191,7 @@ export default defineComponent({
     }
 
     const myAnswer = question => {
-      const storedAnswers = JSON.parse(window.localStorage.getItem('unlimitedMyAnswers'))
+      const storedAnswers = JSON.parse(window.localStorage.getItem('creatorMyAnswers'))
 
       if (storedAnswers && storedAnswers.length > 0) {
         return storedAnswers.filter(item => question.letter === item.letter).reverse()[0]
@@ -216,4 +220,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./UnlimitedModeStatsDialog.component.scss"></style>
+<style lang="scss" src="./CreatorModeStatsDialog.component.scss"></style>
