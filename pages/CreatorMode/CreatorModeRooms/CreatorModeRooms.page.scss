@@ -13,14 +13,10 @@
     color: var(--color-text-01);
 
     &--rooms {
-      position: sticky;
-      top: 0;
-      left: 0;
-      z-index: var(--z-index-sticky);
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: var(--color-ui-01);
     }
   }
 

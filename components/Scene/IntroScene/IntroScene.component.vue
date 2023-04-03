@@ -14,7 +14,7 @@
         | LİMİTSİZ
       Button.intro-scene-mode-list-item(to="/creator/start" size="large")
         span.intro-scene-mode-list-item__icon 📝
-        | KENDİN OLUŞTUR
+        | YARATICI
 </template>
 
 <script>
