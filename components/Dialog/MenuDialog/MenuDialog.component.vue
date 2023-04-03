@@ -34,7 +34,7 @@ Dialog.dialog.menu-dialog(
       is-link
       @click.native="openRoomSharer"
     )
-    Cell.menu-dialog-nav__item(icon="smile-comment-o" title="parolla'yı paylaş" size="large" is-link @click.native="openSharer")
+    Cell.menu-dialog-nav__item(icon="smile-comment-o" title="parolla'yı paylaş" size="large" is-link @click.native="openAppSharer")
     Cell.menu-dialog-nav__item(icon="manager-o" title="Yapımcılar" size="large" is-link @click.native="$emit('clickedCredits')")
     Cell.menu-dialog-nav__item(icon="guide-o" title="Bize ulaşın" size="large" is-link @click.native="$emit('clickedContact')")
 </template>
@@ -135,7 +135,7 @@ export default defineComponent({
     }
 
     const openAppSharer = async () => {
-      const shareText = `parolla - Kelime oyunu \n\nhttps://parolla.app`
+      const shareText = `parolla - Kelime oyunu\n\n\Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz \n\nhttps://parolla.app`
 
       try {
         await navigator.clipboard.writeText(shareText)

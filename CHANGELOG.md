@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.1
+
+- :bug: app sharer fix
+
 ## v2.1.0
 
 - :rocket: performance improvements
