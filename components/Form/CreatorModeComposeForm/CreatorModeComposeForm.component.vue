@@ -186,17 +186,12 @@ export default defineComponent({
         const answers = item.answer.split(',')
 
         const isMatched = answers.every(answer => {
-          console.log(answer)
-
           if (answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase('tr'))) {
             return true
           } else {
             return false
           }
         })
-
-        console.log(answers)
-        console.log(isMatched)
 
         if (isMatched) {
           form.qaList[index].isMatched = true
@@ -237,6 +232,8 @@ export default defineComponent({
           createdRoom.id = result.data.room
 
           dialog.room.isOpen = true
+
+          resetForm()
         } else {
           Notify({
             message: `Oda oluşturulamadı, lütfen kontrol edip tekrar dene`,
@@ -257,8 +254,14 @@ export default defineComponent({
       form.isBusy = false
     }
 
+    const resetForm = () => {
+      form.roomTitle = ''
+      form.isPublic = true
+      form.qaList = []
+    }
+
     const handleCloseRoomDialog = () => {
-      router.push(`/creator/room/${createdRoom.id}`)
+      router.push(`/room?id=${createdRoom.id}`)
     }
 
     return {

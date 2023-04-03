@@ -1,6 +1,6 @@
 <template lang="pug">
-.page.creator-mode-page
-  h1 Creator Mode Page
+.page.creator-mode-room-page
+  h1 Creator Room Mode Page {{ $route.query.id }}
 </template>
 
 <script>
@@ -12,4 +12,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./CreatorMode.page.scss"></style>
+<style lang="scss" src="./CreatorModeRoom.page.scss"></style>

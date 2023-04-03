@@ -1,9 +1,7 @@
 <template lang="pug">
 .app-header
   nav.app-header-nav
-    template(
-      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
-    )
+    template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
   AppLogo(type="title")
@@ -41,7 +39,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useRoute, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
@@ -70,6 +68,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
 
     const { activeGameMode } = useGameMode()
 
@@ -132,8 +131,25 @@ export default defineComponent({
     }
 
     const handleClickBackButton = () => {
-      router.replace({ name: 'Home' })
+      if (route.value.name === 'CreatorModeRooms' || route.value.name === 'CreatorModeCompose') {
+        router.replace({ name: 'CreatorModeIntro' })
+      } else {
+        router.replace({ name: 'Home' })
+      }
     }
+
+    const isVisibleBackButton = computed(() => {
+      if (
+        activeGameMode.value === gameModeKeyEnum.DAILY ||
+        activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
+        activeGameMode.value === gameModeKeyEnum.CREATOR ||
+        route.value.name === 'CreatorModeIntro' ||
+        route.value.name === 'CreatorModeRooms' ||
+        route.value.name === 'CreatorModeCompose'
+      ) {
+        return true
+      }
+    })
 
     return {
       gameModeKeyEnum,
@@ -145,7 +161,8 @@ export default defineComponent({
       toggleHowToCalculateStatsDialog,
       toggleCreditsDialog,
       toggleContactDialog,
-      handleClickBackButton
+      handleClickBackButton,
+      isVisibleBackButton
     }
   }
 })

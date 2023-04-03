@@ -3,7 +3,6 @@
 
   .creator-mode-compose-form {
     width: calc(100% - (var(--base-p-x) * 2));
-    margin: 0 auto;
-    margin-top: calc(var(--base-m-y) * 2);
+    margin: calc(var(--base-m-y) * 2) auto;
   }
 }

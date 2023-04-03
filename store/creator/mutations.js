@@ -1,6 +1,10 @@
 import { GAME_TIME_LIMIT } from '@/system/constant'
 
 export default {
+  SET_ROOMS(state, rooms) {
+    state.rooms = rooms
+  },
+
   SET_CURRENT_DATE(state, date) {
     state.currentDate = date
   },

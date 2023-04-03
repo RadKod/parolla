@@ -10,7 +10,7 @@ Dialog.dialog.creator-mode-created-room-dialog(
   @opened="$emit('opened')"
 )
   h4.creator-mode-created-room-dialog__roomTitle {{ room.title }}
-  Field.creator-mode-created-room-dialog__roomIdField(:value="`https://parolla.app/creator/room/${room.id}`" disabled)
+  Field.creator-mode-created-room-dialog__roomIdField(:value="`https://parolla.app/room?id=${room.id}`" disabled)
     template(#left-icon)
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerLink.svg')")
     template(#button)
@@ -57,7 +57,7 @@ export default defineComponent({
     )
 
     const copyRoomUrl = async () => {
-      const url = `https://parolla.app/creator/room/${props.room.id}`
+      const url = `https://parolla.app/room?id=${props.room.id}`
 
       try {
         await navigator.clipboard.writeText(url)

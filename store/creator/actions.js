@@ -1,7 +1,7 @@
+import { roomTransformer } from '@/transformers'
+
 export default {
   async postQaForm({ commit, state }, form) {
-    console.log('store', form)
-
     const transform = form => {
       return {
         room_title: form.roomTitle,
@@ -28,7 +28,16 @@ export default {
     return response.json()
   },
 
-  async fetchQuestions({ commit, roomId }) {
+  async fetchRooms({ commit }) {
+    const response = await fetch(`${process.env.API}/rooms`)
+    const result = await response.json()
+
+    const rooms = result.data.rooms.map(room => roomTransformer(room))
+
+    commit('SET_ROOMS', rooms)
+  },
+
+  async fetchQuestions({ commit }) {
     const questionsResponse = await fetch(`${process.env.API}/modes/custom?room=${roomId}`)
     const questionsResult = await questionsResponse.json()
 

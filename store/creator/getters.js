@@ -1,4 +1,8 @@
 export default {
+  rooms(state) {
+    return state.rooms
+  },
+
   isGameOver(state) {
     return state.isGameOver
   },
