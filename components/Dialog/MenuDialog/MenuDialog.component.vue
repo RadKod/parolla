@@ -136,6 +136,7 @@ export default defineComponent({
 
     const openAppSharer = async () => {
       const shareText = `parolla - Kelime oyunu\n\n\Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz \n\nhttps://parolla.app`
+      window.postMessage({ type: 'sharer', data: shareText })
 
       try {
         await navigator.clipboard.writeText(shareText)

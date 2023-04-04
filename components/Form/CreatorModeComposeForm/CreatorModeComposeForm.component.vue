@@ -1,5 +1,5 @@
 <template lang="pug">
-Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
+Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
   h2.creator-mode-compose-form__title(align="center") ODA OLUŞTUR
   br
   h3.creator-mode-compose-form__title ODA BİLGİLERİ
@@ -21,15 +21,6 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
       // List
       .compose-qa-card(v-for="(item, index) in form.qaList")
         Field(
-          v-model="item.character"
-          name="character"
-          label="Karakter"
-          placeholder="Soru karakteri"
-          maxlength="1"
-          :rules="[{ required: true, message: 'Karakter gereklidir' }]"
-          @input="validateAnswer(item, index)"
-        )
-        Field(
           v-model="item.question"
           name="question"
           label="Soru"
@@ -48,8 +39,20 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
           maxlength="120"
           show-word-limit
           rows="2"
-          :error-message="item.isMatched === false ? 'Cevap belirlediğin karakter ile başlamalı' : null"
+          :formatter="formatAnswerField"
+          :error-message="item.isMatched === false ? 'Her cevap aynı karakterle başlamalı' : null"
           :error="item.isMatched === false"
+          @input="getCharacter(item, index)"
+        )
+        Field(
+          v-model="item.character"
+          name="character"
+          label="Karakter"
+          placeholder="Soru karakteri"
+          maxlength="1"
+          readonly
+          disabled
+          :rules="[{ required: true, message: 'Karakter gereklidir' }]"
           @input="validateAnswer(item, index)"
         )
 
@@ -101,16 +104,29 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
       @click="addItem"
     ) Başka soru ekle
 
+    Button(
+      v-if="form.qaList && form.qaList.length > 0"
+      type="warning"
+      color="var(--color-text-03)"
+      plain
+      native-type="button"
+      round
+      :loading="form.isBusy"
+      :disabled="form.isBusy"
+      @click="saveDraft"
+    ) Taslak kaydet
+
     // Save list button
     Button.compose-qa-list__submitButton(
       v-if="form.qaList && form.qaList.length > 0"
       type="primary"
       icon="success"
       plain
-      native-type="submit"
+      native-type="button"
       round
       :loading="form.isBusy"
       :disabled="form.isBusy"
+      @click="handleSubmit"
     ) Bitir ve yayınla
 
   CreatorModeCreatedRoomDialog(:isOpen="dialog.room.isOpen" :room="createdRoom" @closed="handleCloseRoomDialog")
@@ -180,6 +196,42 @@ export default defineComponent({
 
     const disableMoveUp = index => index === 0
     const disableMoveDown = index => index === form.qaList.length - 1
+
+    const formatAnswerField = value => {
+      const formattedValue = value.startsWith(' ') ? '' : value
+
+      return formattedValue
+    }
+
+    const getCharacter = (item, index) => {
+      if (item.answer && item.answer.length > 0) {
+        const answers = item.answer.split(',')
+        const firstAnswer = answers[0]
+        const firstAnswerChar = firstAnswer.substring(0, 1)
+
+        const isMatched = answers.every(answer => {
+          const char = answer.substring(0, 1)
+
+          if (
+            char.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') === firstAnswerChar.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+          ) {
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (isMatched) {
+          form.qaList[index].character = firstAnswerChar
+        }
+      } else {
+        form.qaList[index].character = ''
+      }
+
+      setTimeout(() => {
+        validateAnswer(item, index)
+      }, 100)
+    }
 
     const validateAnswer = (item, index) => {
       if (item.character && item.character.length > 0 && item.answer && item.answer.length > 0) {
@@ -260,6 +312,25 @@ export default defineComponent({
       form.qaList = []
     }
 
+    const saveDraft = () => {
+      window.localStorage.setItem('creatorFormDraft', JSON.stringify(form))
+
+      Notify({
+        message: `Sonrası için kaydedildi, geri döndüğünde aynı form olacak`,
+        color: 'var(--color-text-04)',
+        background: 'var(--color-info-01)',
+        duration: 1000
+      })
+    }
+
+    const storagedForm = JSON.parse(window.localStorage.getItem('creatorFormDraft'))
+
+    if (storagedForm) {
+      form.roomTitle = storagedForm.roomTitle
+      form.isPublic = storagedForm.isPublic
+      form.qaList = storagedForm.qaList
+    }
+
     const handleCloseRoomDialog = () => {
       router.push(`/room?id=${createdRoom.id}`)
     }
@@ -272,9 +343,12 @@ export default defineComponent({
       moveDown,
       disableMoveUp,
       disableMoveDown,
+      formatAnswerField,
+      getCharacter,
       validateAnswer,
       handleFailed,
       handleSubmit,
+      saveDraft,
       createdRoom,
       dialog,
       handleCloseRoomDialog

@@ -20,8 +20,6 @@
   HowToPlayDialog(cancel-button-text="Kapat" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
   // Stats Dialog
   DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
-  UnlimitedModeStatsDialog(:isOpen="dialog.stats.mode.unlimited.isOpen" @closed="dialog.stats.mode.unlimited.isOpen = false")
-  CreatorModeStatsDialog(:isOpen="dialog.stats.mode.creator.isOpen" @closed="dialog.stats.mode.creator.isOpen = false")
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
@@ -40,15 +38,13 @@
 </template>
 
 <script>
-import { defineComponent, useRouter, useRoute, reactive, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useRoute, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
 import { AppLogo } from '@/components/Logo'
 import {
   DailyModeStatsDialog,
-  UnlimitedModeStatsDialog,
-  CreatorModeStatsDialog,
   HowToPlayDialog,
   MenuDialog,
   HowToCalculateStatsDialog,
@@ -61,8 +57,6 @@ export default defineComponent({
     Icon,
     AppLogo,
     DailyModeStatsDialog,
-    UnlimitedModeStatsDialog,
-    CreatorModeStatsDialog,
     HowToPlayDialog,
     MenuDialog,
     HowToCalculateStatsDialog,
@@ -72,6 +66,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
 
     const { activeGameMode } = useGameMode()
 
@@ -79,12 +74,6 @@ export default defineComponent({
       stats: {
         mode: {
           daily: {
-            isOpen: false
-          },
-          unlimited: {
-            isOpen: false
-          },
-          creator: {
             isOpen: false
           }
         }
@@ -106,17 +95,20 @@ export default defineComponent({
       }
     })
 
+    const unlimitedDialog = computed(() => store.getters['unlimited/dialog'])
+    const creatorDialog = computed(() => store.getters['unlimited/dialog'])
+
     const toggleStatsDialog = () => {
       if (activeGameMode.value === gameModeKeyEnum.DAILY) {
         dialog.stats.mode.daily.isOpen = !dialog.stats.mode.daily.isOpen
       }
 
       if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {
-        dialog.stats.mode.unlimited.isOpen = !dialog.stats.mode.unlimited.isOpen
+        store.commit('unlimited/SET_IS_OPEN_STATS_DIALOG', !unlimitedDialog.value.stats.isOpen)
       }
 
       if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
-        dialog.stats.mode.creator.isOpen = !dialog.stats.mode.creator.isOpen
+        store.commit('creator/SET_IS_OPEN_STATS_DIALOG', !creatorDialog.value.stats.isOpen)
       }
     }
 

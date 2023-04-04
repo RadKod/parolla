@@ -78,13 +78,19 @@
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
-  UnlimitedModeStatsDialog(cancelButtonText="Kapat ve Tekrar Oyna" :isOpen="dialog.stats.isOpen" @closed="resetGame")
+  UnlimitedModeStatsDialog(
+    cancelButtonText="Kapat"
+    confirmButtonText="Baştan oyna"
+    :isOpen="unlimitedDialog.stats.isOpen"
+    @onCancel="$store.commit('unlimited/SET_IS_OPEN_STATS_DIALOG', false)"
+    @onConfirm="resetGame"
+  )
   // Interstital Ad Dialog
   InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
-import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon } from 'vant'
@@ -133,6 +139,8 @@ export default defineComponent({
       checkUnsupportedHeight
     } = useGameScene()
 
+    const unlimitedDialog = computed(() => store.getters['unlimited/dialog'])
+
     // Fetch Questions
     const { fetch, fetchState } = useFetch(async () => {
       await store.dispatch('unlimited/fetchQuestions')
@@ -147,14 +155,15 @@ export default defineComponent({
     }
 
     const resetGame = async () => {
-      // Reset Game every mount because is Unlimited Mode
       await fetch()
       await store.commit('unlimited/SET_IS_GAME_OVER', {
         isGameOver: false
       })
       await store.commit('unlimited/RESET_COUNTDOWN_TIMER')
       await store.commit('unlimited/RESET_ALPHABET')
-      dialog.stats.isOpen = false
+      await store.commit('unlimited/SET_IS_OPEN_STATS_DIALOG', false)
+
+      dialog.howToPlay.isOpen = true
     }
 
     onMounted(() => {
@@ -203,6 +212,7 @@ export default defineComponent({
       questions,
       answer,
       dialog,
+      unlimitedDialog,
       countdown,
       countdownTimerRef,
       alphabetItemClasses,
