@@ -180,6 +180,23 @@ export default () => {
       return false
     }
 
+    if (!answerField.startsWith(encodeEnglish(item.letter.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')))) {
+      Notify({
+        message: 'CEVAP AKTİF (YUKARDAKİ) KARAKTERLE BAŞLAMALI',
+        color: 'var(--color-text-04)',
+        background: 'var(--color-danger-01)'
+      })
+
+      resetAnswer()
+
+      rootRef.value.querySelector('.answer-field__input').classList.add('answer-field__input--errorAnimation')
+      setTimeout(() => {
+        rootRef.value.querySelector('.answer-field__input').classList.remove('answer-field__input--errorAnimation')
+      }, 400)
+
+      return false
+    }
+
     const isCorrect = correctAnswers.some(answer => {
       if (answerField === encodeEnglish(answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
         item.isCorrect = true
