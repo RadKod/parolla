@@ -104,6 +104,18 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       @click="addItem"
     ) Başka soru ekle
 
+    Button(
+      v-if="form.qaList && form.qaList.length > 0"
+      type="warning"
+      color="var(--color-text-03)"
+      plain
+      native-type="button"
+      round
+      :loading="form.isBusy"
+      :disabled="form.isBusy"
+      @click="saveDraft"
+    ) Taslak kaydet
+
     // Save list button
     Button.compose-qa-list__submitButton(
       v-if="form.qaList && form.qaList.length > 0"
@@ -300,6 +312,25 @@ export default defineComponent({
       form.qaList = []
     }
 
+    const saveDraft = () => {
+      window.localStorage.setItem('creatorFormDraft', JSON.stringify(form))
+
+      Notify({
+        message: `Sonrası için kaydedildi, geri döndüğünde aynı form olacak`,
+        color: 'var(--color-text-04)',
+        background: 'var(--color-info-01)',
+        duration: 1000
+      })
+    }
+
+    const storagedForm = JSON.parse(window.localStorage.getItem('creatorFormDraft'))
+
+    if (storagedForm) {
+      form.roomTitle = storagedForm.roomTitle
+      form.isPublic = storagedForm.isPublic
+      form.qaList = storagedForm.qaList
+    }
+
     const handleCloseRoomDialog = () => {
       router.push(`/room?id=${createdRoom.id}`)
     }
@@ -317,6 +348,7 @@ export default defineComponent({
       validateAnswer,
       handleFailed,
       handleSubmit,
+      saveDraft,
       createdRoom,
       dialog,
       handleCloseRoomDialog
