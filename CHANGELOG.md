@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.4
+
+- :necktie: legal things
+
 ## v2.1.3
 
 - :children_crossing: ux improvements
