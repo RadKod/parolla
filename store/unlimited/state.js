@@ -166,5 +166,10 @@ export default () => ({
   questions: [],
   countdown: {
     time: GAME_TIME_LIMIT
+  },
+  dialog: {
+    stats: {
+      isOpen: false
+    }
   }
 })

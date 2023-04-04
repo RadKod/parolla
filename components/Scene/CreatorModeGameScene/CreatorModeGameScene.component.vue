@@ -78,13 +78,19 @@
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
-  CreatorModeStatsDialog(cancelButtonText="Kapat ve Tekrar Oyna" :isOpen="dialog.stats.isOpen" @closed="resetGame")
+  CreatorModeStatsDialog(
+    cancelButtonText="Kapat"
+    confirmButtonText="Baştan oyna"
+    :isOpen="creatorDialog.stats.isOpen"
+    @onCancel="$store.commit('creator/SET_IS_OPEN_STATS_DIALOG', false)"
+    @onConfirm="resetGame"
+  )
   // Interstital Ad Dialog
   InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
-import { defineComponent, useFetch, useRoute, useStore, useContext, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useRoute, useStore, useContext, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown, Icon, Notify } from 'vant'
@@ -137,6 +143,8 @@ export default defineComponent({
       checkUnsupportedHeight
     } = useGameScene()
 
+    const creatorDialog = computed(() => store.getters['creator/dialog'])
+
     // Fetch Room
     const { fetch, fetchState } = useFetch(async () => {
       const result = await store.dispatch('creator/fetchRoom', route.value.query.id)
@@ -163,14 +171,15 @@ export default defineComponent({
     }
 
     const resetGame = async () => {
-      // Reset Game every mount because is Creator Mode
       await fetch()
       await store.commit('creator/SET_IS_GAME_OVER', {
         isGameOver: false
       })
       await store.commit('creator/RESET_COUNTDOWN_TIMER')
       await store.commit('creator/RESET_ALPHABET')
-      dialog.stats.isOpen = false
+      await store.commit('creator/SET_IS_OPEN_STATS_DIALOG', false)
+
+      dialog.howToPlay.isOpen = true
     }
 
     onMounted(() => {
@@ -219,6 +228,7 @@ export default defineComponent({
       questions,
       answer,
       dialog,
+      creatorDialog,
       countdown,
       countdownTimerRef,
       alphabetItemClasses,

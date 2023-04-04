@@ -54,5 +54,9 @@ export default {
       item.isWrong = false
       item.isCorrect = false
     })
+  },
+
+  SET_IS_OPEN_STATS_DIALOG(state, isOpen) {
+    state.dialog.stats.isOpen = isOpen
   }
 }

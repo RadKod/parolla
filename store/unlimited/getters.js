@@ -25,5 +25,9 @@ export default {
 
   passedAnswers(state) {
     return state.alphabet.items.filter(item => item.isPassed)
+  },
+
+  dialog(state) {
+    return state.dialog
   }
 }

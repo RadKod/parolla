@@ -337,6 +337,10 @@ export default () => {
       await store.commit('daily/RESET_ALPHABET')
     }
 
+    dialog.howToPlay.isOpen = false
+
+    resetAnswer()
+
     setTimeout(() => {
       questionFitText()
     }, 0) // DOM Bypass
@@ -356,9 +360,11 @@ export default () => {
       overlay: true,
       duration: 0, // continuous display toast
       forbidClick: true,
-      message: `<h3 class='start-game-toast__countdown'>5</h3> \n ${startGameToastMessage}`
+      message: `<h3 class='start-game-toast__countdown'>3</h3> \n ${startGameToastMessage}`
     })
-    let second = 5
+
+    let second = 3
+
     const timer = setInterval(() => {
       second--
 
@@ -383,7 +389,7 @@ export default () => {
       window.localStorage.setItem(`${activeGameMode.value}WrongAnswers`, JSON.stringify([]))
       window.localStorage.setItem(`${activeGameMode.value}PassedAnswers`, JSON.stringify([]))
       window.localStorage.setItem(`${activeGameMode.value}MyAnswers`, JSON.stringify([]))
-    }, 6000) // 5+1 second sleep
+    }, second * 1000 + 1000)
   }
 
   const endGame = async () => {
@@ -393,7 +399,12 @@ export default () => {
       isGameOver: true
     })
     countdownTimerRef.value.pause()
-    dialog.stats.isOpen = true
+
+    if (activeGameMode.value === gameModeKeyEnum.UNLIMITED || activeGameMode.value === gameModeKeyEnum.CREATOR) {
+      store.commit(`${activeGameMode.value}/SET_IS_OPEN_STATS_DIALOG`, true)
+    } else {
+      dialog.stats.isOpen = true
+    }
 
     setTimeout(() => {
       dialog.interstitialAd.isOpen = true

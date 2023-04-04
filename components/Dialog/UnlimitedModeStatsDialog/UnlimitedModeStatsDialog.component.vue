@@ -3,10 +3,13 @@ Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
   v-model="state.isOpen"
   title="İstatistik"
   :cancel-button-text="cancelButtonText"
-  :show-confirm-button="false"
+  :confirm-button-text="confirmButtonText"
   :show-cancel-button="true"
+  :show-confirm-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
+  @cancel="$emit('onCancel')"
+  @confirm="$emit('onConfirm')"
 )
   template(v-if="isGameOver")
     // Tabs
@@ -102,6 +105,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'Kapat'
+    },
+    confirmButtonText: {
+      type: String,
+      required: false,
+      default: 'Tekrar oyna'
     }
   },
   setup(props) {
