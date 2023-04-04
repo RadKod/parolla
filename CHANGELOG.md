@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.1.3
+
+- :children_crossing: ux improvements
+- :children_crossing: ux improvements
+- :children_crossing: ux improvements
+- :children_crossing: ux improvements
+- :children_crossing: ux improvements
+- :bridge_at_night: webview post message for app sharer
+
 ## v2.1.2
 
 - :alembic: english char encoder
