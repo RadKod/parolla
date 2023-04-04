@@ -20,6 +20,11 @@
       margin: var(--base-m-y) 0;
       margin-right: var(--base-m-x);
     }
+
+    &__submitButton {
+      display: block;
+      margin-left: auto;
+    }
   }
 
   .compose-qa-card {

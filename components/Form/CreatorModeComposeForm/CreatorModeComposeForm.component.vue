@@ -1,5 +1,5 @@
 <template lang="pug">
-Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
+Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
   h2.creator-mode-compose-form__title(align="center") ODA OLUŞTUR
   br
   h3.creator-mode-compose-form__title ODA BİLGİLERİ
@@ -110,10 +110,11 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
       type="primary"
       icon="success"
       plain
-      native-type="submit"
+      native-type="button"
       round
       :loading="form.isBusy"
       :disabled="form.isBusy"
+      @click="handleSubmit"
     ) Bitir ve yayınla
 
   CreatorModeCreatedRoomDialog(:isOpen="dialog.room.isOpen" :room="createdRoom" @closed="handleCloseRoomDialog")
@@ -191,10 +192,6 @@ export default defineComponent({
     }
 
     const getCharacter = (item, index) => {
-      validateAnswer(item, index)
-
-      let charField = ''
-
       if (item.answer && item.answer.length > 0) {
         const answers = item.answer.split(',')
         const firstAnswer = answers[0]
@@ -206,8 +203,6 @@ export default defineComponent({
           if (
             char.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') === firstAnswerChar.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
           ) {
-            charField = char
-
             return true
           } else {
             return false
@@ -215,11 +210,15 @@ export default defineComponent({
         })
 
         if (isMatched) {
-          form.qaList[index].character = charField
+          form.qaList[index].character = firstAnswerChar
         }
       } else {
         form.qaList[index].character = ''
       }
+
+      setTimeout(() => {
+        validateAnswer(item, index)
+      }, 100)
     }
 
     const validateAnswer = (item, index) => {
