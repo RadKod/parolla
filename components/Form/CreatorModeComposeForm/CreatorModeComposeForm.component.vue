@@ -21,15 +21,6 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
       // List
       .compose-qa-card(v-for="(item, index) in form.qaList")
         Field(
-          v-model="item.character"
-          name="character"
-          label="Karakter"
-          placeholder="Soru karakteri"
-          maxlength="1"
-          :rules="[{ required: true, message: 'Karakter gereklidir' }]"
-          @input="validateAnswer(item, index)"
-        )
-        Field(
           v-model="item.question"
           name="question"
           label="Soru"
@@ -48,8 +39,20 @@ Form.creator-mode-compose-form(@submit="handleSubmit" @failed="handleFailed")
           maxlength="120"
           show-word-limit
           rows="2"
-          :error-message="item.isMatched === false ? 'Cevap belirlediğin karakter ile başlamalı' : null"
+          :formatter="formatAnswerField"
+          :error-message="item.isMatched === false ? 'Her cevap aynı karakterle başlamalı' : null"
           :error="item.isMatched === false"
+          @input="getCharacter(item, index)"
+        )
+        Field(
+          v-model="item.character"
+          name="character"
+          label="Karakter"
+          placeholder="Soru karakteri"
+          maxlength="1"
+          readonly
+          disabled
+          :rules="[{ required: true, message: 'Karakter gereklidir' }]"
           @input="validateAnswer(item, index)"
         )
 
@@ -181,6 +184,44 @@ export default defineComponent({
     const disableMoveUp = index => index === 0
     const disableMoveDown = index => index === form.qaList.length - 1
 
+    const formatAnswerField = value => {
+      const formattedValue = value.startsWith(' ') ? '' : value
+
+      return formattedValue
+    }
+
+    const getCharacter = (item, index) => {
+      validateAnswer(item, index)
+
+      let charField = ''
+
+      if (item.answer && item.answer.length > 0) {
+        const answers = item.answer.split(',')
+        const firstAnswer = answers[0]
+        const firstAnswerChar = firstAnswer.substring(0, 1)
+
+        const isMatched = answers.every(answer => {
+          const char = answer.substring(0, 1)
+
+          if (
+            char.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') === firstAnswerChar.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+          ) {
+            charField = char
+
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (isMatched) {
+          form.qaList[index].character = charField
+        }
+      } else {
+        form.qaList[index].character = ''
+      }
+    }
+
     const validateAnswer = (item, index) => {
       if (item.character && item.character.length > 0 && item.answer && item.answer.length > 0) {
         const answers = item.answer.split(',')
@@ -272,6 +313,8 @@ export default defineComponent({
       moveDown,
       disableMoveUp,
       disableMoveDown,
+      formatAnswerField,
+      getCharacter,
       validateAnswer,
       handleFailed,
       handleSubmit,
