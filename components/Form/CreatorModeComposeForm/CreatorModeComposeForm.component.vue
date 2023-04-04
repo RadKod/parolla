@@ -116,6 +116,11 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       @click="saveDraft"
     ) Taslak kaydet
 
+    p.creator-mode-compose-form__termsDescription(v-if="form.qaList && form.qaList.length > 0")
+      | * Oda oluştururken spam, nefret söylemi içeren, ırkçı ve aşağılayacı içeriklerden kaçının.
+      | Bu gibi odalar moderasyon tespitinde silinecektir.
+      | Oda oluştururken IP adresiniz yasal mevzuat gereği saklanır.
+
     // Save list button
     Button.compose-qa-list__submitButton(
       v-if="form.qaList && form.qaList.length > 0"
