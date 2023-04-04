@@ -55,4 +55,10 @@
       margin-left: auto;
     }
   }
+
+  &__termsDescription {
+    display: block;
+    color: var(--color-text-03);
+    font-size: var(--font-size-text-10);
+  }
 }
