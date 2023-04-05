@@ -46,7 +46,7 @@ module.exports = {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/meta/preview/og.jpg'
+        content: '/meta/preview/og-main.jpg'
       },
       {
         hid: 'og:description',
