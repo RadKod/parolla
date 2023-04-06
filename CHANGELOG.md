@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.6
+
+- :bug: fix stats for creator
+
 ## v2.1.5
 
 - :bento: update og image
