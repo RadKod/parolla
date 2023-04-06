@@ -47,11 +47,11 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
             // Answer
             CollapseItem.answer(
-              v-for="question in questions"
-              :key="question.letter"
+              v-for="(question, index) in questions"
+              :key="index"
               :value="question.letter"
-              :class="[answerClasses(question)]"
-              :name="question.letter"
+              :class="[answerClasses({ questionIndex: index })]"
+              :name="index"
               :title="question.answer"
             )
               p.answer__question
@@ -62,7 +62,8 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
                 span &nbsp;{{ question.answer.toLocaleUpperCase('tr') }}
               p.answer__myAnswer
                 strong Senin cevabın:
-                span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field.toLocaleUpperCase('tr') }}
+                span(v-if="myAnswer({ questionIndex: index }) && myAnswer({ questionIndex: index }).field.length > 0")
+                  | &nbsp;{{ myAnswer({ questionIndex: index }).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
     // Footer
@@ -180,10 +181,10 @@ export default defineComponent({
       }
     }
 
-    const answerClasses = question => {
-      const correct = correctAnswers.value.some(item => question.letter === item.letter)
-      const wrong = wrongAnswers.value.some(item => question.letter === item.letter)
-      const passed = passedAnswers.value.some(item => question.letter === item.letter)
+    const answerClasses = ({ questionIndex }) => {
+      const correct = correctAnswers.value.some(item => questionIndex === item.index)
+      const wrong = wrongAnswers.value.some(item => questionIndex === item.index)
+      const passed = passedAnswers.value.some(item => questionIndex === item.index)
 
       if (correct) {
         return 'answer--correct'
@@ -198,11 +199,11 @@ export default defineComponent({
       }
     }
 
-    const myAnswer = question => {
+    const myAnswer = ({ questionIndex }) => {
       const storedAnswers = JSON.parse(window.localStorage.getItem('creatorMyAnswers'))
 
       if (storedAnswers && storedAnswers.length > 0) {
-        return storedAnswers.filter(item => question.letter === item.letter).reverse()[0]
+        return storedAnswers.filter(item => questionIndex === item.index).reverse()[0]
       } else {
         return {
           field: '-'

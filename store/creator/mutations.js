@@ -22,8 +22,9 @@ export default {
   },
 
   SET_ALPHABET_ITEMS(state, items) {
-    const alphabetItems = items.map(item => {
+    const alphabetItems = items.map((item, index) => {
       return {
+        index,
         letter: item,
         isPassed: false,
         isWrong: false,
@@ -49,7 +50,8 @@ export default {
   RESET_ALPHABET(state) {
     state.alphabet.activeIndex = 0
 
-    state.alphabet.items.forEach(item => {
+    state.alphabet.items.forEach((item, index) => {
+      item.index = index
       item.isPassed = false
       item.isWrong = false
       item.isCorrect = false
