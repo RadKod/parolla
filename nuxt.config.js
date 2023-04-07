@@ -91,9 +91,22 @@ module.exports = {
    */
   styleResources: {
     scss: [
+      /*
+       * Vendor
+       */
+      // > Bootstrap Vendor
+      'bootstrap/scss/_functions.scss',
+      'bootstrap/scss/_variables.scss',
+      'bootstrap/scss/_mixins.scss',
+
+      /*
+       * Overrides (This overrides not includes actual styles. | variables, mixins etc.)
+       */
+      // > Bootstrap Overrides
+      '@/assets/style/scss/overrides/bootstrap/_grid.override.scss',
+      '@/assets/style/scss/overrides/bootstrap/_spacing.override.scss',
       // Plugins
-      '~/assets/style/scss/plugins/_breakpoint.scss',
-      '~/assets/style/scss/plugins/_mq.scss', // Doc: https://github.com/sass-mq/sass-mq
+      //--
       // Functions
       '~/assets/style/scss/functions/_center.scss',
       // Mixins
@@ -258,9 +271,10 @@ module.exports = {
     },
     transpile: ['vant'],
     postcss: {
-      plugins: {
-        'postcss-preset-env': this.preset,
-        'postcss-custom-media': {}
+      postcssOptions: {
+        plugins: {
+          'postcss-preset-env': this.preset
+        }
       },
       preset: {
         stage: 2

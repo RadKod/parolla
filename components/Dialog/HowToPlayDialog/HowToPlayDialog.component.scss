@@ -21,7 +21,7 @@
       font-size: var(--font-size-text-7);
       line-height: calc(var(--font-size-text-7) * 1.5);
 
-      @include mq($until: tablet) {
+      @include media-breakpoint-down(tablet) {
         font-size: var(--font-size-text-8);
         line-height: calc(var(--font-size-text-8) * 1.5);
       }

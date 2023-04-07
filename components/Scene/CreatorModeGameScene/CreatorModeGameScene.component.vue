@@ -212,7 +212,7 @@ export default defineComponent({
       window.removeEventListener('scroll', scrollTop)
 
       if (isTouchEnabled) {
-        rootRef.value.removeEventListener('touchend', handleDontHideKeyboard)
+        rootRef.value?.removeEventListener('touchend', handleDontHideKeyboard)
       }
     })
 
