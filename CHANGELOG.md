@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.1.7
+
+
+### 💅 Refactors
+
+  - Gitmoji > conventional commit ([15dcee3](https://github.com/RadKod/parolla/commit/15dcee3))
+  - **upgrade:** Upgrades ([1901761](https://github.com/RadKod/parolla/commit/1901761))
+
+### 🏡 Chore
+
+  - **upgrade:** Nuxt version upgrade to 2.16.3 ([f7349e3](https://github.com/RadKod/parolla/commit/f7349e3))
+  - Update changelogen npm script ([db24b3b](https://github.com/RadKod/parolla/commit/db24b3b))
+  - Add nvmrc ([ad5d7ee](https://github.com/RadKod/parolla/commit/ad5d7ee))
+  - Add commitizen npm script ([d0c724c](https://github.com/RadKod/parolla/commit/d0c724c))
+
+### 🤖 CI
+
+  - Add changelogen ([1c9a39e](https://github.com/RadKod/parolla/commit/1c9a39e))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.1.6
 
 - :bug: fix stats for creator
