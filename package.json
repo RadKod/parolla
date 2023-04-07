@@ -50,7 +50,7 @@
     "cross-env": "^5.2.0",
     "express": "^4.17.1",
     "howler": "^2.2.3",
-    "nuxt": "2.16.0",
+    "nuxt": "2.16.3",
     "nuxt-user-agent": "^1.2.2",
     "simple-keyboard": "^3.4.65",
     "swiper": "^8.0.6",
