@@ -13,7 +13,12 @@ module.exports = {
   extends: ['plugin:vue/strongly-recommended', 'eslint-config-prettier', 'prettier', 'prettier/vue'],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': ['error'],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'crlf'
+      }
+    ],
     'max-len': [
       'error',
       {
