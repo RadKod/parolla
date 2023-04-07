@@ -1,0 +1,41 @@
+// https://getbootstrap.com/docs/5.0/utilities/spacing/#maps
+
+$spacer: 4px;
+
+$spacers: map-merge(
+  (
+    base: 16px,
+    0: 0,
+    1: (
+      $spacer * 0.25
+    ),
+    2: (
+      $spacer * 0.5
+    ),
+    3: $spacer,
+    4: (
+      $spacer * 1.5
+    ),
+    5: (
+      $spacer * 3
+    ),
+    6: (
+      $spacer * 4
+    ),
+    7: (
+      $spacer * 5
+    ),
+    8: (
+      $spacer * 6.25
+    ),
+    9: (
+      $spacer * 7.5
+    ),
+    10: (
+      $spacer * 9.375
+    )
+  ),
+  $spacers
+);
+
+$negative-spacers: if($enable-negative-margins, negativify-map($spacers), null);

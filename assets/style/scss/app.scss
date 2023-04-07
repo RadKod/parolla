@@ -14,14 +14,22 @@
 // Overrides
 @import 'overrides/vant';
 
-// Vendor
-// --
+/*
+ * Bootstrap Vendor (5.2.3)
+ */
+
+// > Bootstrap Partials
+
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/utilities';
+@import 'bootstrap/scss/utilities/api';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/containers';
 
 // Base
 @import 'base/general';
 
 // Utils
-@import 'utils/display';
 @import 'utils/state';
 
 // Shared (elements with common/shared style classes)

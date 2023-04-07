@@ -71,7 +71,7 @@
     #{$game-scene} {
       &--osk {
         #{$game-scene} {
-          @include mq($until: wide) {
+          @include media-breakpoint-down(wide) {
             &__fieldSection {
               position: relative !important;
             }
@@ -92,7 +92,7 @@
     margin-bottom: calc(var(--base-m-y) * 2);
     padding: var(--base-p-y) 0;
 
-    @include mq($until: mobile-m) {
+    @include media-breakpoint-down(mobile-m) {
       margin-bottom: var(--base-m-y);
     }
 
@@ -203,11 +203,11 @@
     padding: calc(var(--base-p-y) * 2) var(--base-p-x);
     text-align: center;
 
-    @include mq($from: tablet) {
+    @include media-breakpoint-up(tablet) {
       padding: calc(var(--base-p-y) * 2) calc(var(--base-p-x) * 4);
     }
 
-    @include mq($until: mobile-m) {
+    @include media-breakpoint-down(mobile-m) {
       padding: var(--base-p-y) var(--base-p-x);
     }
 
@@ -232,7 +232,7 @@
     font-size: var(--font-size-text-1);
     letter-spacing: 0.02em;
 
-    @include mq($until: mobile) {
+    @include media-breakpoint-down(mobile) {
       height: 150px;
     }
 
@@ -248,7 +248,7 @@
     @at-root html[ua-is-from-ios='true'] {
       #{$question} {
         &--osk {
-          @include mq($until: mobile) {
+          @include media-breakpoint-down(mobile) {
             height: 90px;
           }
         }
@@ -431,12 +431,12 @@
       width: calc(100px - var(--base-p-x));
       height: calc(100px - var(--base-p-y));
 
-      @include mq($until: desktop) {
+      @include media-breakpoint-down(desktop) {
         width: calc(72px - var(--base-p-y));
         height: calc(72px - var(--base-p-x));
       }
 
-      @include mq($until: tablet) {
+      @include media-breakpoint-down(tablet) {
         width: calc(64px - var(--base-p-y));
         height: calc(64px - var(--base-p-x));
       }

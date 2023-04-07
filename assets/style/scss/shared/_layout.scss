@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: auto var(--layout-max-width) auto;
 
-  @include mq($until: wide) {
+  @include media-breakpoint-down(wide) {
     display: block;
   }
 
@@ -14,11 +14,11 @@
     color: var(--color-text-03);
     background-color: var(--color-ui-04);
 
-    @include mq($until: wide) {
+    @include media-breakpoint-down(wide) {
       display: none;
     }
 
-    @include mq($from: wide, $until: wide2x) {
+    @include media-breakpoint-between(wide, wide2x) {
       width: 256px;
     }
 
@@ -75,7 +75,7 @@
       opacity: 0.03;
       content: '';
 
-      @include mq($until: desktop) {
+      @include media-breakpoint-down(desktop) {
         transform: scale(2);
         transform-origin: center center;
       }
