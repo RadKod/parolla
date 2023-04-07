@@ -31,7 +31,9 @@
     "lint:stylelint": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\"",
     "lint:stylelint:fix": "stylelint --ignore-path .stylelintignore \"{assets/style,components,layouts,pages}/**/*.{css,sass,scss,less,stylus,vue}\" --fix",
     "prettier": "prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --write \"**/*.{js,json,css,scss,vue,html,pug}\"",
-    "changelog": "changelogen"
+    "changelog": "changelogen",
+    "preinstall": "nvm use",
+    "prebuild": "nvm use"
   },
   "lint-staged": {
     "*.{js,vue,json}": [
