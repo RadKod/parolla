@@ -1,18 +1,15 @@
 <template lang="pug">
 Dialog.dialog.contact-dialog(
   v-model="state.isOpen"
-  title="Bize ulaşın"
-  :cancel-button-text="cancelButtonText"
+  :title="$t('dialog.contact.title')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
   @opened="$emit('opened')"
 )
-  p.contact-dialog__description Öneri, şikayet ya da işbirliği için; <br><br>
-    | <a href="mailto:info@radkod.com?subject=parolla_contact">info@radkod.com</a> <br> veya <br>
-    a(href="https://twitter.com/parollaapp" target="_blank") @parollaapp <br>
-    | twitter hesabımızdan ulaşabilirsin.
+  p.contact-dialog__description(v-html="$t('dialog.contact.description')")
 </template>
 
 <script>
@@ -32,7 +29,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Kapat'
+      default: null
     }
   },
   setup(props) {

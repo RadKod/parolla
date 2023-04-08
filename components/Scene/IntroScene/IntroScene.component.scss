@@ -45,6 +45,24 @@
 
       @include font-weight-semi-bold;
 
+      &--disabled {
+        opacity: 0.4;
+      }
+
+      &__label {
+        position: absolute;
+        right: calc(var(--base-m-x) * 4);
+        padding: calc(var(--base-p-y) / 4) calc(var(--base-p-x) / 4);
+        color: var(--color-text-04);
+        font-size: var(--font-size-text-10);
+        background-color: var(--color-info-01);
+        border-radius: calc(var(--border-radius-01) / 4);
+
+        @include media-breakpoint-down(tablet) {
+          display: none;
+        }
+      }
+
       &__icon {
         position: absolute;
         right: var(--base-m-x);

@@ -1,19 +1,20 @@
-import { useRoute, computed } from '@nuxtjs/composition-api'
+import { useRoute, useContext, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 
 export default () => {
   const route = useRoute()
+  const { localePath } = useContext()
 
   const activeGameMode = computed(() => {
-    if (route.value.name === 'DailyMode') {
+    if (route.value.path === localePath({ name: 'DailyMode' })) {
       return gameModeKeyEnum.DAILY
     }
 
-    if (route.value.name === 'UnlimitedMode') {
+    if (route.value.path === localePath({ name: 'UnlimitedMode' })) {
       return gameModeKeyEnum.UNLIMITED
     }
 
-    if (route.value.name === 'CreatorModeRoom') {
+    if (route.value.name.startsWith('CreatorMode-CreatorModeRoom')) {
       return gameModeKeyEnum.CREATOR
     }
   })

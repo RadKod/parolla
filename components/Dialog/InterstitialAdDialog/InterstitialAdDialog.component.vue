@@ -1,7 +1,7 @@
 <template lang="pug">
 Dialog.dialog.interstitial-ad-dialog(
   v-model="state.isOpen"
-  title="Reklam desteğiyle bunu sürdürüyoruz"
+  :title="$t('dialog.interstitialAd.title')"
   :cancel-button-text="`${cancelButtonText} (${countdownSecond})`"
   :show-confirm-button="false"
   :show-cancel-button="true"
@@ -32,7 +32,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Reklamı Geç ⇥'
+      default: null
     }
   },
   setup(props) {

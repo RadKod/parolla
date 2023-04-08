@@ -1,16 +1,14 @@
 <template lang="pug">
 .page.creator-mode-intro-page
   .creator-mode-intro-page__inner
-    p.creator-mode-intro-page__description
-      strong Oyuncular tarafından oluşturulmuş soru-cevap setleri
-      | &nbsp; <br> Hemen <strong>odalara bak</strong> ya da <strong>kendi soru-cevap setini oluştur</strong>
+    p.creator-mode-intro-page__description(v-html="$t('creatorModeIntro.description')")
     .choose-list
-      Button.choose-list-item(to="/creator/rooms" size="large")
+      Button.choose-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeRooms' })")
         span.choose-list-item__icon 📢
-        | ODALARA BAK
-      Button.choose-list-item(to="/creator/compose" size="large")
+        | {{ $t('creatorModeIntro.list.rooms.title') }}
+      Button.choose-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeCompose' })")
         span.choose-list-item__icon ➕
-        | ODA OLUŞTUR
+        | {{ $t('creatorModeIntro.list.compose.title') }}
 </template>
 
 <script>

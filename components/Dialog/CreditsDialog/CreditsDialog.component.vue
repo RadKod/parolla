@@ -1,24 +1,15 @@
 <template lang="pug">
 Dialog.dialog.credits-dialog(
   v-model="state.isOpen"
-  title="Yapımcılar"
-  :cancel-button-text="cancelButtonText"
+  :title="$t('dialog.credits.title')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
   @opened="$emit('opened')"
 )
-  p <strong>parolla</strong> açık kaynak bir projedir.
-    | &nbsp;<a href="https://github.com/RadKod/parolla" title="parolla Github" target="_blank">GitHub</a> bağlantısından ulaşabilirsin.
-
-  span.credits-dialog__person
-    | Planlama ve Arayüz
-    a(href="https://twitter.com/selimdoyranli" target="_blank") @selimdoyranli
-
-  span.credits-dialog__person
-    | Arkaplan ve Veri Tabanı
-    a(href="https://twitter.com/apo_bozdag" target="_blank") @apo_bozdag
+  p(v-html="$t('dialog.credits.description')")
 </template>
 
 <script>
@@ -38,7 +29,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Kapat'
+      default: null
     }
   },
   setup(props) {

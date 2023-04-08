@@ -2,7 +2,7 @@
 .app-preloader(v-if="preloader.isLoading")
   .app-preloader__inner
     AppLogo
-    span.app-preloader__loadingText Yükleniyor...
+    span.app-preloader__loadingText {{ $t('general.loading') }}...
 </template>
 
 <script>

@@ -1,14 +1,17 @@
 <template lang="pug">
 .page.creator-mode-page
-  h1 Creator Mode Page
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   layout: 'Default/Default.layout',
-  setup() {}
+  setup() {
+    const { localePath, redirect } = useContext()
+
+    redirect(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
+  }
 })
 </script>
 

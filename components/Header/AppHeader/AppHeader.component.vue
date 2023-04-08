@@ -16,29 +16,30 @@
     li.app-header-nav__item(@click="toggleMenuDialog")
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
 
-  // How To Play Dialog
-  HowToPlayDialog(cancel-button-text="Kapat" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
-  // Stats Dialog
-  DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
-  // Menu Dialog
-  MenuDialog(
-    :isOpen="dialog.menu.isOpen"
-    @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
-    @clickedCredits="toggleCreditsDialog"
-    @clickedContact="toggleContactDialog"
-    @closed="dialog.menu.isOpen = false"
-  )
+  client-only
+    // How To Play Dialog
+    HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
+    // Stats Dialog
+    DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
+    // Menu Dialog
+    MenuDialog(
+      :isOpen="dialog.menu.isOpen"
+      @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
+      @clickedCredits="toggleCreditsDialog"
+      @clickedContact="toggleContactDialog"
+      @closed="dialog.menu.isOpen = false"
+    )
 
-  // How To Calculate Stats Dialog
-  HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
-  // Credits Dialog
-  CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
-  // Contact Dialog
-  ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
+    // How To Calculate Stats Dialog
+    HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
+    // Credits Dialog
+    CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
+    // Contact Dialog
+    ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
 </template>
 
 <script>
-import { defineComponent, useRouter, useRoute, useStore, reactive, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { Icon } from 'vant'
@@ -66,6 +67,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const { localePath } = useContext()
     const store = useStore()
 
     const { activeGameMode } = useGameMode()
@@ -133,10 +135,13 @@ export default defineComponent({
     }
 
     const handleClickBackButton = () => {
-      if (route.value.name === 'CreatorModeRooms' || route.value.name === 'CreatorModeCompose') {
-        router.replace({ name: 'CreatorModeIntro' })
+      if (
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
+      ) {
+        router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
       } else {
-        router.replace({ name: 'Home' })
+        router.replace(localePath({ name: 'Main' }))
       }
     }
 
@@ -145,9 +150,9 @@ export default defineComponent({
         activeGameMode.value === gameModeKeyEnum.DAILY ||
         activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
         activeGameMode.value === gameModeKeyEnum.CREATOR ||
-        route.value.name === 'CreatorModeIntro' ||
-        route.value.name === 'CreatorModeRooms' ||
-        route.value.name === 'CreatorModeCompose'
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeIntro' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
       ) {
         return true
       }

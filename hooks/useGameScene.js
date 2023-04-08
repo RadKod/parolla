@@ -13,7 +13,7 @@ import textfit from 'textfit'
 import { Notify, Toast } from 'vant'
 
 export default () => {
-  const context = useContext()
+  const { i18n, $ua } = useContext()
   const store = useStore()
 
   const { activeGameMode } = useGameMode()
@@ -102,7 +102,7 @@ export default () => {
 
       if (currentValue.length === alphabet.value.items.length && passedAnswers.length > 0) {
         Notify({
-          message: 'Aklına bir cevap gelmezse süreyi beklemene gerek yok, bitir yazıp bitirebilirsin de.',
+          message: i18n.t('gameScene.allQuestionsSeen'),
           color: 'var(--color-text-04)',
           background: 'var(--color-info-01)',
           duration: 4000
@@ -149,20 +149,17 @@ export default () => {
     const answerField = encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
     const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
-    const passKeyword = 'pas'
-    const endGameKeyword = 'bitir'
+    const passKeywords = ['pas', 'pass']
+    const endGameKeywords = ['bitir', 'finish']
     const radkodKeyword = 'radkod'
 
-    if (
-      answerField === passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') &&
-      !correctAnswers.includes(passKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
-    ) {
+    if (passKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
       pass()
 
       return false
     }
 
-    if (answerField === endGameKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+    if (endGameKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
       endGame()
 
       return false
@@ -170,7 +167,7 @@ export default () => {
 
     if (answerField === radkodKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
       Notify({
-        message: 'Aradığın cevap biz olabilir miyiz? - RadKod.com',
+        message: i18n.t('gameScene.radkodNotify'),
         color: 'var(--color-text-04)',
         background: 'var(--color-brand-radkod)'
       })
@@ -182,7 +179,7 @@ export default () => {
 
     if (!answerField.startsWith(encodeEnglish(item.letter.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')))) {
       Notify({
-        message: 'CEVAP AKTİF (YUKARDAKİ) KARAKTERLE BAŞLAMALI',
+        message: i18n.t('gameScene.error.notStartsWithActiveChar'),
         color: 'var(--color-text-04)',
         background: 'var(--color-danger-01)'
       })
@@ -365,10 +362,8 @@ export default () => {
     const startGameToastMessage = `
         <img class='start-game-toast__spinner' src="${require('@/assets/img/core/loader.svg')}" />
         <div class="start-game-toast-info">
-          <strong class='start-game-toast-info__title'>Bilmende fayda var</strong>
-          <ul>
-            <li>Oyunu erkenden sonlandırmak istersen <code>bitir</code> yazıp gönderebilirsin.</li>
-          </ul>
+          <strong class='start-game-toast-info__title'>${i18n.t('gameScene.toast.startGame.title')}</strong>
+          ${i18n.t('gameScene.toast.startGame.description')}
         </div>
       `
     const toast = Toast.loading({
@@ -398,7 +393,7 @@ export default () => {
       isGameStarted.value = true
       startSoundFx.play()
 
-      if (context.$ua.isFromAndroidOs()) {
+      if ($ua.isFromAndroidOs()) {
         focusToAnswerFieldInput()
       }
 
@@ -448,7 +443,7 @@ export default () => {
     if (timeData.minutes === 2 && timeData.seconds === 30) {
       halfTimeSoundFx.play()
       Notify({
-        message: 'Sürenin yarısı doldu',
+        message: i18n.t('gameScene.halfTime'),
         color: 'var(--color-text-04)',
         background: 'var(--color-warning-01)'
       })
@@ -457,7 +452,7 @@ export default () => {
 
   const handleCountdownFinish = async () => {
     await Toast({
-      message: 'Süre Doldu',
+      message: i18n.t('gameScene.timeOver'),
       position: 'bottom'
     })
     await endGame()
@@ -469,7 +464,7 @@ export default () => {
 
       setTimeout(() => {
         Notify({
-          message: 'Daha iyi bir deneyim için daha büyük bir ekranda oynamalısın.',
+          message: i18n.t('gameScene.unsupportedHeight'),
           color: 'var(--color-text-04)',
           background: 'var(--color-warning-01)'
         })

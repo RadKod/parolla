@@ -26,11 +26,11 @@
 
     // Fetch State
     template(v-if="fetchState.pending")
-      Empty(description="Sorular getiriliyor...")
+      Empty(:description="$t('gameScene.pendingQuestions')")
 
     template(v-else-if="fetchState.error")
-      Empty(image="error" description="Veriler alınırken hata oluştu.")
-        Button(@click="reFetch") Tekrar Dene
+      Empty(image="error" :description="$t('gameScene.error.fetchQuestions.description')")
+        Button(@click="reFetch") {{ $t('gameScene.error.fetchQuestions.action') }}
 
     template(v-else)
       // Questions
@@ -49,7 +49,7 @@
           input.answer-field__input(
             type="text"
             :value="answer.field"
-            placeholder="Cevabını yaz"
+            :placeholder="$t('gameScene.answerField.placeholder')"
             tabindex="-1"
             spellcheck="false"
             autocomplete="off"
@@ -66,27 +66,27 @@
               color="var(--color-brand-02)"
               icon="guide-o"
               @click="handleAnswer"
-            ) GÖNDER
+            ) {{ $t('gameScene.answerField.submit') }}
 
           template(v-else)
             Button.answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(
               color="var(--color-warning-01)"
               icon="arrow"
               @click="pass"
-            ) PAS
+            ) {{ $t('gameScene.answerField.pass') }}
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
   CreatorModeStatsDialog(
-    cancelButtonText="Kapat"
-    confirmButtonText="Baştan oyna"
+    :cancelButtonText="$t('general.close')"
+    :confirmButtonText="$t('general.playAgain')"
     :isOpen="creatorDialog.stats.isOpen"
     @onCancel="$store.commit('creator/SET_IS_OPEN_STATS_DIALOG', false)"
     @onConfirm="resetGame"
   )
   // Interstital Ad Dialog
-  InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
+  InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
@@ -111,7 +111,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
-    const { redirect } = useContext()
+    const { localePath, redirect } = useContext()
 
     const rootRef = ref(null)
 
@@ -157,7 +157,7 @@ export default defineComponent({
           duration: 3000
         })
         setTimeout(() => {
-          redirect(`/creator/rooms`)
+          redirect(localePath({ name: 'CreatorMode-CreatorModeRooms' }))
         }, 1000)
       }
     })
@@ -196,7 +196,7 @@ export default defineComponent({
       window.addEventListener('scroll', scrollTop)
 
       if (isTouchEnabled) {
-        rootRef.value.addEventListener('touchend', event => handleDontHideKeyboard(event))
+        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
       }
 
       handlePopState()

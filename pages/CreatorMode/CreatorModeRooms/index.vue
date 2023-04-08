@@ -1,52 +1,71 @@
 <template lang="pug">
 .page.creator-mode-rooms-page
   .page.creator-mode-rooms-page__inner
-    h2.creator-mode-rooms-page__title(align="center") ODALAR
+    h2.creator-mode-rooms-page__title(align="center") {{ $t('creatorModeRooms.title') }}
 
     br
 
     .creator-mode-rooms-page-join-room
-      h3.creator-mode-rooms-page__title ODA BAĞLANTISINI GİR
+      h3.creator-mode-rooms-page__title {{ $t('creatorModeRooms.joinRoom.typeUrl') }}
       Field.creator-mode-rooms-page-join-room__urlField(
         v-model="form.roomUrl.url"
-        placeholder="Örn: https://parolla.app/room?id=aea23618"
+        :placeholder="`${APP_URL}${localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: 'a12345b' } })}`"
         @input="validateRoomUrl"
         @keypress.native.enter="gotoRoom"
       )
         template(#left-icon)
           Icon(:name="require('@/assets/img/icons/svg/tabler/TablerLink.svg')")
         template(#button)
-          Button(type="info" size="small" native-type="button" round :disabled="!form.roomUrl.isClear" @click="gotoRoom") ODAYA GİT
+          Button(type="info" size="small" native-type="button" round :disabled="!form.roomUrl.isClear" @click="gotoRoom")
+            | {{ $t('creatorModeRooms.joinRoom.url.action') }}
 
-    Divider YA DA
+    Divider {{ $t('creatorModeRooms.divider') }}
 
     .creator-mode-rooms-page-rooms
       .creator-mode-rooms-page__title.creator-mode-rooms-page__title--rooms
-        h3 LİSTEDEN SEÇ ({{ rooms.length }})
-        Button.creator-mode-rooms-page-rooms__refetchButton(icon="replay" size="small" round @click="fetch") TAZELE
+        h3 {{ $t('creatorModeRooms.rooms.selectFromList') }} ({{ rooms.length }})
+        Button.creator-mode-rooms-page-rooms__refetchButton(icon="replay" size="small" round @click="fetch")
+          | {{ $t('creatorModeRooms.rooms.refresh') }}
 
-      Search.creator-mode-rooms-page-rooms__searchField(v-model="form.rooms.search" placeholder="Oda ara" @input="handleSearchRoom")
+      Search.creator-mode-rooms-page-rooms__searchField(
+        v-model="form.rooms.search"
+        :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
+        @input="handleSearchRoom"
+      )
 
       .room-list
         template(v-if="fetchState.pending")
-          Empty(description="Odalar getiriliyor...")
+          Empty(:description="$t('creatorModeRooms.rooms.pendingRooms')")
 
         template(v-else-if="fetchState.error")
-          Empty(image="error" description="Veriler alınırken hata oluştu.")
-            Button(@click="fetch") Tekrar Dene
+          Empty(image="error" :description="$t('creatorModeRooms.error.rooms.fetchError.description')")
+            Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetchError.action') }}
 
         template(v-else)
           template(v-if="isEmptyRoomList")
-            Empty(description="Oda bulunamadı, kendi soru-cevap setini oluşturmak için hemen oda kur!")
-              Button(type="info" icon="plus" native-type="button" round @click="$router.push({ name: 'CreatorModeCompose' })") Oda oluştur
+            Empty(:description="$t('creatorModeRooms.rooms.empty.description')")
+              Button(
+                type="info"
+                icon="plus"
+                native-type="button"
+                round
+                @click="$router.push(localePath({ name: 'CreatorMode-CreatorModeCompose' }))"
+              ) {{ $t('creatorModeRooms.rooms.empty.action') }}
 
           template(v-else)
             template(v-for="room in form.rooms.search.length > 0 ? filteredRooms : rooms")
-              Cell(v-if="room.isPublic" :label="`ID: ${room.id}`" is-link :to="`/room?id=${room.id}`" :title="room.title")
+              Cell(
+                v-if="room.isPublic"
+                :label="`ID: ${room.id}`"
+                is-link
+                :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
+                :title="room.title"
+              )
 </template>
 
 <script>
-import { defineComponent, useFetch, useRouter, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
+import { APP_URL } from '@/system/constant'
 import { Field, Search, Button, Icon, Divider, Cell, Empty, Notify } from 'vant'
 
 export default defineComponent({
@@ -63,6 +82,7 @@ export default defineComponent({
   layout: 'Default/Default.layout',
   setup() {
     const router = useRouter()
+    const { localePath, i18n } = useContext()
     const store = useStore()
 
     // Fetch Rooms
@@ -76,7 +96,7 @@ export default defineComponent({
     const form = reactive({
       roomUrl: {
         isClear: false,
-        pattern: /^(https?:\/\/)?(www\.)?parolla\.app\/room\?id=.+$/,
+        pattern: /^(https?:\/\/)?(www\.)?parolla\.app\/(oda|en\/room)\?id=.+$/,
         url: ''
       },
       rooms: {
@@ -111,10 +131,15 @@ export default defineComponent({
       if (form.roomUrl.isClear) {
         const id = form.roomUrl.url.split('id=')[1]
 
-        router.push({ name: 'CreatorModeRoom', query: { id } })
+        router.push(
+          localePath({
+            name: 'CreatorMode-CreatorModeRoom',
+            query: { id }
+          })
+        )
       } else {
         Notify({
-          message: `Odaya gidilemedi, lütfen girdiğin bağlantıyı kontrol et`,
+          message: i18n.t('creatorModeRooms.error.joinRoom'),
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
           duration: 1000
@@ -129,6 +154,7 @@ export default defineComponent({
     })
 
     return {
+      APP_URL,
       fetch,
       fetchState,
       rooms,

@@ -1,8 +1,8 @@
 <template lang="pug">
 Dialog.dialog.creator-mode-created-room-dialog(
   v-model="state.isOpen"
-  title="Oda Oluşturuldu"
-  :cancel-button-text="cancelButtonText"
+  :title="$t('dialog.createdRoom.title')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
@@ -10,15 +10,19 @@ Dialog.dialog.creator-mode-created-room-dialog(
   @opened="$emit('opened')"
 )
   h4.creator-mode-created-room-dialog__roomTitle {{ room.title }}
-  Field.creator-mode-created-room-dialog__roomIdField(:value="`https://parolla.app/room?id=${room.id}`" disabled)
+  Field.creator-mode-created-room-dialog__roomIdField(
+    :value="`${APP_URL}${localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })}`"
+    disabled
+  )
     template(#left-icon)
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerLink.svg')")
     template(#button)
-      Button(type="info" size="small" native-type="button" round @click="copyRoomUrl") Kopyala
+      Button(type="info" size="small" native-type="button" round @click="copyRoomUrl") {{ $t('clipboard.copy') }}
 </template>
 
 <script>
-import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, reactive, watch } from '@nuxtjs/composition-api'
+import { APP_URL } from '@/system/constant'
 import { Dialog, Field, Button, Icon, Toast } from 'vant'
 
 export default defineComponent({
@@ -37,7 +41,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Odaya git'
+      default: null
     },
     room: {
       type: Object,
@@ -45,6 +49,8 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { localePath, i18n } = useContext()
+
     const state = reactive({
       isOpen: props.isOpen
     })
@@ -57,13 +63,13 @@ export default defineComponent({
     )
 
     const copyRoomUrl = async () => {
-      const url = `https://parolla.app/room?id=${props.room.id}`
+      const url = `${APP_URL}${localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: props.room.id } })}`
       window.postMessage({ type: 'sharer', data: url })
 
       try {
         await navigator.clipboard.writeText(url)
         await Toast({
-          message: 'Oda bağlantısı kopyalandı',
+          message: i18n.t('dialog.createdRoom.copyUrl.callback.success'),
           position: 'bottom'
         })
         await navigator.share({
@@ -73,13 +79,14 @@ export default defineComponent({
       } catch {
         await navigator.clipboard.writeText(url)
         await Toast({
-          message: 'Oda bağlantısı kopyalandı',
+          message: i18n.t('dialog.createdRoom.copyUrl.callback.success'),
           position: 'bottom'
         })
       }
     }
 
     return {
+      APP_URL,
       state,
       copyRoomUrl
     }
