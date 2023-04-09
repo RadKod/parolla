@@ -83,6 +83,7 @@ export default {
     menu: {
       title: 'More',
       darkTheme: 'Dark theme',
+      switchLocale: 'Choose language',
       suggestQa: 'Do you want to suggest a question?',
       howToCalculateStats: 'How we calculate the score',
       shareRoom: 'Share room',
@@ -162,6 +163,10 @@ export default {
     localeSwitch: {
       title: 'Choose language',
       switching: 'Switching'
+    },
+    leave: {
+      title: 'Do you confirm?',
+      description: 'You may have to do the things you did again'
     }
   },
   clipboard: {

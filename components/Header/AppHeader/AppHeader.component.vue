@@ -7,7 +7,7 @@
     template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
-  AppLogo(type="title")
+  AppLogo(type="title" @click.native.prevent.capture="handleClickAppLogo")
   nav.app-header-nav
     template(
       v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
@@ -30,6 +30,7 @@
       @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
       @clickedCredits="toggleCreditsDialog"
       @clickedContact="toggleContactDialog"
+      @clickedSwitchLocale="toggleLocaleSwitchDialog"
       @closed="dialog.menu.isOpen = false"
     )
 
@@ -46,7 +47,7 @@
 <script>
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode } from '@/hooks'
+import { useGameMode, useDialog } from '@/hooks'
 import { Icon } from 'vant'
 import { AppLogo } from '@/components/Logo'
 import {
@@ -78,6 +79,7 @@ export default defineComponent({
     const store = useStore()
 
     const { activeGameMode } = useGameMode()
+    const { openLeaveDialog } = useDialog()
 
     const dialog = reactive({
       stats: {
@@ -149,13 +151,37 @@ export default defineComponent({
     }
 
     const handleClickBackButton = () => {
-      if (
-        route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
-        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
-      ) {
-        router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
+      const triggerRoute = () => {
+        if (
+          route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
+          route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
+        ) {
+          router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
+        } else {
+          router.replace(localePath({ name: 'Main' }))
+        }
+      }
+
+      if (activeGameMode.value && activeGameMode.value.length > 0) {
+        openLeaveDialog({
+          confirm: () => {
+            triggerRoute()
+          }
+        })
       } else {
-        router.replace(localePath({ name: 'Main' }))
+        triggerRoute()
+      }
+    }
+
+    const handleClickAppLogo = () => {
+      if (activeGameMode.value && activeGameMode.value.length > 0) {
+        openLeaveDialog({
+          confirm: () => {
+            router.push(localePath({ name: 'Main' }))
+          }
+        })
+      } else {
+        router.push(localePath({ name: 'Main' }))
       }
     }
 
@@ -190,6 +216,7 @@ export default defineComponent({
       toggleContactDialog,
       toggleLocaleSwitchDialog,
       handleClickBackButton,
+      handleClickAppLogo,
       isVisibleLocaleSwitchButton,
       isVisibleBackButton
     }

@@ -1,7 +1,7 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
 import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode, useEncodeDecode } from '@/hooks'
+import { useGameMode, useEncodeDecode, useDialog } from '@/hooks'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -18,6 +18,7 @@ export default () => {
 
   const { activeGameMode } = useGameMode()
   const { encodeEnglish } = useEncodeDecode()
+  const { openLeaveDialog } = useDialog()
 
   const rootRef = ref(null)
   const setRootRef = element => {
@@ -482,9 +483,20 @@ export default () => {
   }
 
   const handleBeforeUnload = event => {
-    if (isGameStarted.value && !isGameOver.value) {
-      event.preventDefault()
-      event.returnValue = ''
+    if (activeGameMode.value && activeGameMode.value.length > 0) {
+      if (isGameStarted.value && !isGameOver.value) {
+        event.preventDefault()
+        event.returnValue = ''
+
+        const message = i18n.t('dialog.leave.description')
+
+        if (confirm(message)) {
+          return
+        } else {
+          event.stopPropagation()
+          event.preventDefault()
+        }
+      }
     }
   }
 
@@ -531,12 +543,6 @@ export default () => {
     }
   }
 
-  const handlePopState = () => {
-    window.addEventListener('popstate', () => {
-      window.location.href = window.origin
-    })
-  }
-
   return {
     setRootRef,
     isGameStarted,
@@ -567,7 +573,6 @@ export default () => {
     scrollTop,
     isTouchEnabled,
     handleDontHideKeyboard,
-    handlePopState,
     checkUnsupportedHeight
   }
 }

@@ -30,6 +30,7 @@ Dialog.dialog.locale-switch-dialog(
 
 <script>
 import { defineComponent, useRoute, useContext, reactive, ref, watch } from '@nuxtjs/composition-api'
+import { useDialog } from '@/hooks'
 import { Dialog, RadioGroup, CellGroup, Cell, Radio, Toast } from 'vant'
 
 export default defineComponent({
@@ -61,6 +62,8 @@ export default defineComponent({
     const route = useRoute()
     const { i18n, localePath } = useContext()
 
+    const { openLeaveDialog } = useDialog()
+
     const state = reactive({
       isOpen: props.isOpen
     })
@@ -77,16 +80,20 @@ export default defineComponent({
     watch(
       () => activeLocale.value,
       value => {
-        i18n.setLocale(value)
-        setTimeout(() => {
-          Toast.loading({
-            message: i18n.t('dialog.localeSwitch.switching'),
-            forbidClick: true
-          })
-        }, 100)
-        setTimeout(() => {
-          window.location.replace(localePath(route.value.path))
-        }, 1000)
+        openLeaveDialog({
+          confirm: () => {
+            i18n.setLocale(value)
+            setTimeout(() => {
+              Toast.loading({
+                message: i18n.t('dialog.localeSwitch.switching'),
+                forbidClick: true
+              })
+            }, 100)
+            setTimeout(() => {
+              window.location.replace(localePath(route.value.path))
+            }, 1000)
+          }
+        })
       }
     )
 

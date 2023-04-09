@@ -13,6 +13,15 @@ Dialog.dialog.menu-dialog(
       template(#right-icon)
         SwitchInput(v-model="isDark" size="22px" @change="toggleDarkTheme")
     Cell.menu-dialog-nav__item(
+      v-if="$route.path === localePath({ name: 'Main' })"
+      icon="font-o"
+      size="large"
+      is-link
+      :title="$t('dialog.menu.switchLocale')"
+      @click.native="$emit('clickedSwitchLocale')"
+    )
+    Cell.menu-dialog-nav__item(
+      v-if="$i18n.locale === $i18n.defaultLocale"
       icon="question-o"
       size="large"
       is-link
@@ -27,7 +36,7 @@ Dialog.dialog.menu-dialog(
       @click.native="$emit('clickedHowToCalculateStats')"
     )
     Cell.menu-dialog-nav__item(
-      v-if="$route.name.startsWith('CreatorMode-CreatorModeRoom')"
+      v-if="$route.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })"
       icon="smile-comment-o"
       size="large"
       is-link

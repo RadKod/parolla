@@ -14,7 +14,7 @@ export default () => {
       return gameModeKeyEnum.UNLIMITED
     }
 
-    if (route.value.name.startsWith('CreatorMode-CreatorModeRoom')) {
+    if (route.value.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })) {
       return gameModeKeyEnum.CREATOR
     }
   })

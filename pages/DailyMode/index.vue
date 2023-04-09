@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { DailyModeGameScene } from '@/components/Scene'
 
 export default defineComponent({
@@ -13,7 +13,13 @@ export default defineComponent({
     DailyModeGameScene
   },
   layout: 'Default/Default.layout',
-  setup() {}
+  setup() {
+    const { i18n, redirect, localePath } = useContext()
+
+    if (i18n.locale !== i18n.defaultLocale) {
+      redirect(localePath({ name: 'Main' }))
+    }
+  }
 })
 </script>
 

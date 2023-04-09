@@ -139,7 +139,6 @@ export default defineComponent({
       scrollTop,
       isTouchEnabled,
       handleDontHideKeyboard,
-      handlePopState,
       checkUnsupportedHeight
     } = useGameScene()
 
@@ -198,8 +197,6 @@ export default defineComponent({
       if (isTouchEnabled) {
         rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
       }
-
-      handlePopState()
 
       // Unsupported screen height
       checkUnsupportedHeight()

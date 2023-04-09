@@ -83,6 +83,7 @@ export default {
     menu: {
       title: 'Daha fazla',
       darkTheme: 'Koyu tema',
+      switchLocale: 'Dil değiştir',
       suggestQa: 'Soru önermek ister misin?',
       howToCalculateStats: 'Skoru nasıl hesaplıyoruz',
       shareRoom: 'Odayı paylaş',
@@ -161,6 +162,10 @@ export default {
     localeSwitch: {
       title: 'Dil değiştir',
       switching: 'Değiştiriliyor'
+    },
+    leave: {
+      title: 'Onaylıyor musun?',
+      description: 'Yaptığın şeyleri tekrar yapmak zorunda kalabilirsin'
     }
   },
   clipboard: {
