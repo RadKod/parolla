@@ -7,16 +7,16 @@ export default {
     copyright: '{text} {spacer} {logo}'
   },
   error: {
-    error: 'Hata',
-    anErrorOccurred: 'Bir hata oluştu',
-    tryAgain: 'Tekrar dene'
+    error: 'Error',
+    anErrorOccurred: 'An error occurred',
+    tryAgain: 'Try again'
   },
   general: {
     loading: 'Loading',
     yes: 'Yes',
     no: 'No',
-    ok: 'Tamam',
-    cancel: 'Vazgeç',
+    ok: 'OK',
+    cancel: 'Cancel',
     apply: 'Apply',
     question: 'Question',
     answer: 'Answer',
