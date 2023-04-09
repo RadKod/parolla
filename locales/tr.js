@@ -17,6 +17,7 @@ export default {
     no: 'Hayır',
     ok: 'Tamam',
     cancel: 'Vazgeç',
+    apply: 'Uygula',
     question: 'Soru',
     answer: 'Cevap',
     remove: 'Kaldır',
@@ -156,6 +157,10 @@ export default {
     },
     interstitialAd: {
       title: 'Reklam desteğiyle bunu sürdürüyoruz'
+    },
+    localeSwitch: {
+      title: 'Dil değiştir',
+      switching: 'Değiştiriliyor'
     }
   },
   clipboard: {

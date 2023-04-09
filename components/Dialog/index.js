@@ -8,3 +8,4 @@ export { default as ContactDialog } from './ContactDialog/ContactDialog.componen
 export { default as MenuDialog } from './MenuDialog/MenuDialog.component'
 export { default as InterstitialAdDialog } from './InterstitialAdDialog/InterstitialAdDialog.component'
 export { default as CreatorModeCreatedRoomDialog } from './CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'
+export { default as LocaleSwitchDialog } from './LocaleSwitchDialog/LocaleSwitchDialog.component'

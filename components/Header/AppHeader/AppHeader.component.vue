@@ -1,6 +1,9 @@
 <template lang="pug">
 .app-header
   nav.app-header-nav
+    template(v-if="isVisibleLocaleSwitchButton")
+      li.app-header-nav__item(@click="toggleLocaleSwitchDialog")
+        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerWorldCog.svg')")
     template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
@@ -36,6 +39,8 @@
     CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
     // Contact Dialog
     ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
+    // Locale Switch Dialog
+    LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
 </template>
 
 <script>
@@ -50,7 +55,8 @@ import {
   MenuDialog,
   HowToCalculateStatsDialog,
   CreditsDialog,
-  ContactDialog
+  ContactDialog,
+  LocaleSwitchDialog
 } from '@/components/Dialog'
 
 export default defineComponent({
@@ -62,7 +68,8 @@ export default defineComponent({
     MenuDialog,
     HowToCalculateStatsDialog,
     CreditsDialog,
-    ContactDialog
+    ContactDialog,
+    LocaleSwitchDialog
   },
   setup() {
     const router = useRouter()
@@ -93,6 +100,9 @@ export default defineComponent({
         isOpen: false
       },
       contact: {
+        isOpen: false
+      },
+      localeSwitch: {
         isOpen: false
       }
     })
@@ -134,6 +144,10 @@ export default defineComponent({
       dialog.contact.isOpen = !dialog.contact.isOpen
     }
 
+    const toggleLocaleSwitchDialog = () => {
+      dialog.localeSwitch.isOpen = !dialog.localeSwitch.isOpen
+    }
+
     const handleClickBackButton = () => {
       if (
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
@@ -144,6 +158,12 @@ export default defineComponent({
         router.replace(localePath({ name: 'Main' }))
       }
     }
+
+    const isVisibleLocaleSwitchButton = computed(() => {
+      if (route.value.path === localePath({ name: 'Main' })) {
+        return true
+      }
+    })
 
     const isVisibleBackButton = computed(() => {
       if (
@@ -168,7 +188,9 @@ export default defineComponent({
       toggleHowToCalculateStatsDialog,
       toggleCreditsDialog,
       toggleContactDialog,
+      toggleLocaleSwitchDialog,
       handleClickBackButton,
+      isVisibleLocaleSwitchButton,
       isVisibleBackButton
     }
   }

@@ -17,6 +17,7 @@ export default {
     no: 'No',
     ok: 'Tamam',
     cancel: 'Vazgeç',
+    apply: 'Apply',
     question: 'Question',
     answer: 'Answer',
     remove: 'Remove',
@@ -157,6 +158,10 @@ export default {
     },
     interstitialAd: {
       title: 'We keep it up with ad support'
+    },
+    localeSwitch: {
+      title: 'Choose language',
+      switching: 'Switching'
     }
   },
   clipboard: {
