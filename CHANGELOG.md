@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.2.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/9f6d599...v2.2.0)
+
+
+### 🚀 Enhancements
+
+  - **i18n:** I18n based project ([523bbbd](https://github.com/RadKod/parolla/commit/523bbbd))
+  - **i18n:** Add language switcher ([805762d](https://github.com/RadKod/parolla/commit/805762d))
+  - Ux improvements on navigations ([15ad785](https://github.com/RadKod/parolla/commit/15ad785))
+  - **i18n:** Language based rooms ([6ed560a](https://github.com/RadKod/parolla/commit/6ed560a))
+
+### 🏡 Chore
+
+  - **i18n:** Update texts ([4d909fc](https://github.com/RadKod/parolla/commit/4d909fc))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.1.8
 
 
