@@ -8,14 +8,15 @@
     AppAd(:data-ad-slot="2717771834")
 
   // Inner
-  .layout__inner(:class="{ 'layout__inner--pulseBg': $route.name === 'Home' }")
+  .layout__inner(:class="{ 'layout__inner--pulseBg': $route.path === localePath({ name: 'Main' }) }")
     // App Header
     AppHeader
 
     // Layout Main
     main.layout__main
       // Router View
-      nuxt.router-view
+      client-only
+        nuxt.router-view
 
   .layout__ad.layout__ad--right
     // image_vertical_flex_right

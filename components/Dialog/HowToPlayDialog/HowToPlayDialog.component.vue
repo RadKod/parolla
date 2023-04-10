@@ -1,8 +1,8 @@
 <template lang="pug">
 Dialog.dialog.how-to-play-dialog(
   v-model="state.isOpen"
-  title="parolla Nasıl Oynanır?"
-  :cancel-button-text="cancelButtonText"
+  :title="$t('dialog.howToPlay.title')"
+  :cancel-button-text="cancelButtonText || $t('dialog.howToPlay.cancelButtonText')"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
@@ -17,9 +17,13 @@ Dialog.dialog.how-to-play-dialog(
 
   // Footer
   footer.how-to-play-dialog__footer
-    .d-flex
-      RadKodLogo(:width="80" height="auto")
-      span &nbsp;tarafından.
+    i18n.d-flex(path="app.copyright")
+      template(#logo)
+        RadKodLogo(:width="80" height="auto")
+      template(#spacer)
+        span &nbsp;
+      template(#text)
+        span {{ $t('general.by') }}
 </template>
 
 <script>
@@ -50,7 +54,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Kapat ve Başla'
+      default: null
     }
   },
   setup(props) {

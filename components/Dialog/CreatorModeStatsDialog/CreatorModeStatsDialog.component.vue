@@ -1,9 +1,9 @@
 <template lang="pug">
 Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
   v-model="state.isOpen"
-  title="İstatistik"
-  :cancel-button-text="cancelButtonText"
-  :confirm-button-text="confirmButtonText"
+  :title="$t('general.stats')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
+  :confirm-button-text="confirmButtonText || $t('general.ok')"
   :show-cancel-button="true"
   :show-confirm-button="true"
   :close-on-click-overlay="false"
@@ -15,33 +15,35 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
     // Tabs
     Tabs.stats-dialog__tabs(v-model="activeTab")
       // Score Tab
-      Tab(name="score" title="Skor Dağılımı")
+      Tab(name="score" :title="$t('gameScene.scoreStats')")
         br
         // Scoreboard
         .scoreboard
           .score
             span.score__icon 🟩
             span.score__count {{ correctAnswers.length }}
-            span.score__title Doğru
+            span.score__title {{ $t('gameScene.correct') }}
 
           .score
             span.score__icon 🟥
             span.score__count {{ wrongAnswers.length }}
-            span.score__title Yanlış
+            span.score__title {{ $t('gameScene.wrong') }}
 
           .score
             span.score__icon 🟨
             span.score__count {{ passedAnswers.length }}
-            span.score__title Pas
+            span.score__title {{ $t('gameScene.pass') }}
 
-          p Kalan Süre: <strong>{{ remainTime }}</strong>
+          p {{ $t('gameScene.remainTime') }}: <strong>{{ remainTime }}</strong>
 
         // Actions
         .stats-dialog__actions
           // Result Sharer
           .result-sharer
-            Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
-      Tab(name="answers" title="Cevap Anahtarı")
+            Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults")
+              | {{ $t('general.share').toLocaleUpperCase($i18n.locale) }}
+
+      Tab(name="answers" :title="$t('gameScene.answerKey')")
         // Answers
         .answers
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
@@ -55,30 +57,34 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
               :title="question.answer"
             )
               p.answer__question
-                strong Soru:
+                strong {{ $t('general.question') }}:
                 span &nbsp;{{ question.question }}
               p.answer__correctAnswer
-                strong Doğru cevap:
+                strong {{ $t('gameScene.correctAnswer') }}:
                 span &nbsp;{{ question.answer.toLocaleUpperCase('tr') }}
               p.answer__myAnswer
-                strong Senin cevabın:
+                strong {{ $t('gameScene.yourAnswer') }}:
                 span(v-if="myAnswer({ questionIndex: index }) && myAnswer({ questionIndex: index }).field.length > 0")
                   | &nbsp;{{ myAnswer({ questionIndex: index }).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
     // Footer
     footer.stats-dialog__footer
-      .d-flex
-        RadKodLogo(:width="80" height="auto")
-        span &nbsp;tarafından.
+      i18n.d-flex(path="app.copyright")
+        template(#logo)
+          RadKodLogo(:width="80" height="auto")
+        template(#spacer)
+          span &nbsp;
+        template(#text)
+          span {{ $t('general.by') }}
 
   template(v-else)
     Empty.stats-dialog-empty
-      p.stats-dialog-empty__title Oyun bittiğinde <br> istatistik burada görünecek.
+      p.stats-dialog-empty__title(v-html="$t('dialog.stats.empty.description')")
 </template>
 
 <script>
-import { defineComponent, useRoute, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
@@ -106,17 +112,19 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Kapat'
+      default: null
     },
     confirmButtonText: {
       type: String,
       required: false,
-      default: 'Tekrar oyna'
+      default: null
     }
   },
   setup(props) {
     const route = useRoute()
+    const { localePath, i18n } = useContext()
     const store = useStore()
+
     const { convertMsToTime } = useTime()
 
     const state = reactive({
@@ -159,13 +167,22 @@ export default defineComponent({
     })
 
     const shareResults = async () => {
-      const shareText = `parolla - Kelime oyunu \n\n"${room.value.title}" odasında ${questions.value.length} soruluk özel soru-cevap setini oynadım \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \n${APP_URL}/room?id=${route.value.query.id}`
+      const shareText = i18n.t('sharer.creatorModeStats.description', {
+        roomTitle: room.value.title,
+        questionCount: questions.value.length,
+        correctAnswerCount: correctAnswers.value.length,
+        wrongAnswerCount: wrongAnswers.value.length,
+        passedAnswerCount: passedAnswers.value.length,
+        remainTime: remainTime.value,
+        url: `${APP_URL}${localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: route.value.query.id } })}`
+      })
+
       window.postMessage({ type: 'sharer', data: shareText })
 
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Skorun Kopyalandı',
+          message: i18n.t('dialog.stats.clipboard.score.callback.success'),
           position: 'bottom'
         })
         await navigator.share({
@@ -175,7 +192,7 @@ export default defineComponent({
       } catch {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Skorun Kopyalandı',
+          message: i18n.t('dialog.stats.clipboard.score.callback.success'),
           position: 'bottom'
         })
       }

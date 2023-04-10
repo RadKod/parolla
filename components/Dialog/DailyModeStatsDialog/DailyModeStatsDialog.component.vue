@@ -1,50 +1,54 @@
 <template lang="pug">
 Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
   v-model="state.isOpen"
-  title="Bugünün İstatistiği"
-  cancel-button-text="Kapat"
-  :show-confirm-button="false"
+  :title="$t('general.dailyStats')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
+  :confirm-button-text="confirmButtonText || $t('general.ok')"
   :show-cancel-button="true"
+  :show-confirm-button="false"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
+  @cancel="$emit('onCancel')"
+  @confirm="$emit('onConfirm')"
 )
   template(v-if="isGameOver")
     // Tabs
     Tabs.stats-dialog__tabs(v-model="activeTab")
       // Score Tab
-      Tab(name="score" title="Skor Dağılımı")
+      Tab(name="score" :title="$t('gameScene.scoreStats')")
         br
         // Scoreboard
         .scoreboard
           .score
             span.score__icon 🟩
             span.score__count {{ correctAnswers.length }}
-            span.score__title Doğru
+            span.score__title {{ $t('gameScene.correct') }}
 
           .score
             span.score__icon 🟥
             span.score__count {{ wrongAnswers.length }}
-            span.score__title Yanlış
+            span.score__title {{ $t('gameScene.wrong') }}
 
           .score
             span.score__icon 🟨
             span.score__count {{ passedAnswers.length }}
-            span.score__title Pas
+            span.score__title {{ $t('gameScene.pass') }}
 
-          p Kalan Süre: <strong>{{ remainTime }}</strong>
+          p {{ $t('gameScene.remainTime') }}: <strong>{{ remainTime }}</strong>
 
         // Actions
         .stats-dialog__actions
           // Next Game Countdown
           .countdown.stats-dialog__countdown
-            span.countdown__title Sonraki Oyun
+            span.countdown__title {{ $t('dialog.stats.daily.nextGame') }}
             Icon.countdown__icon(name="clock-o")
             CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="nextGameDateMs")
 
           // Result Sharer
           .result-sharer
             Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults") PAYLAŞ
-      Tab(name="answers" title="Cevap Anahtarı")
+
+      Tab(name="answers" :title="$t('gameScene.answerKey')")
         // Answers
         .answers
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
@@ -58,29 +62,34 @@ Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
               :title="question.answer"
             )
               p.answer__question
-                strong Soru:
+                strong {{ $t('general.question') }}:
                 span &nbsp;{{ question.question }}
               p.answer__correctAnswer
-                strong Doğru cevap:
+                strong {{ $t('gameScene.correctAnswer') }}:
                 span &nbsp;{{ question.answer.toLocaleUpperCase('tr') }}
               p.answer__myAnswer
-                strong Senin cevabın:
+                strong {{ $t('gameScene.yourAnswer') }}:
                 span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
     // Footer
     footer.stats-dialog__footer
-      .d-flex
-        RadKodLogo(:width="80" height="auto")
-        span &nbsp;tarafından.
+      i18n.d-flex(path="app.copyright")
+        template(#logo)
+          RadKodLogo(:width="80" height="auto")
+        template(#spacer)
+          span &nbsp;
+        template(#text)
+          span {{ $t('general.by') }}
 
   template(v-else)
     Empty.stats-dialog-empty
-      p.stats-dialog-empty__title Oyun bittiğinde <br> istatistik burada görünecek.
+      p.stats-dialog-empty__title(v-html="$t('dialog.stats.empty.description')")
 </template>
 
 <script>
-import { defineComponent, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
+import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
@@ -103,9 +112,20 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
+    },
+    cancelButtonText: {
+      type: String,
+      required: false,
+      default: null
+    },
+    confirmButtonText: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   setup(props) {
+    const { i18n } = useContext()
     const store = useStore()
 
     const { convertMsToTime } = useTime()
@@ -150,13 +170,21 @@ export default defineComponent({
     const today = new Date().toLocaleDateString('tr').slice(0, 10)
 
     const shareResults = async () => {
-      const shareText = `parolla - Kelime oyunu \n\n${today} \n\n🟩 ${correctAnswers.value.length} Doğru \n🟥 ${wrongAnswers.value.length} Yanlış \n🟨 ${passedAnswers.value.length} Pas \n \nKalan Süre: ${remainTime.value} \n \nhttps://parolla.app`
+      const shareText = i18n.t('sharer.dailyModeStats.description', {
+        day: today,
+        correctAnswerCount: correctAnswers.value.length,
+        wrongAnswerCount: wrongAnswers.value.length,
+        passedAnswerCount: passedAnswers.value.length,
+        remainTime: remainTime.value,
+        url: APP_URL
+      })
+
       window.postMessage({ type: 'sharer', data: shareText })
 
       try {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Skorun Kopyalandı',
+          message: i18n.t('dialog.stats.clipboard.score.callback.success'),
           position: 'bottom'
         })
         await navigator.share({
@@ -166,7 +194,7 @@ export default defineComponent({
       } catch {
         await navigator.clipboard.writeText(shareText)
         await Toast({
-          message: 'Skorun Kopyalandı',
+          message: i18n.t('dialog.stats.clipboard.score.callback.success'),
           position: 'bottom'
         })
       }

@@ -1,20 +1,20 @@
 <template lang="pug">
 Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
-  h2.creator-mode-compose-form__title(align="center") ODA OLUŞTUR
+  h2.creator-mode-compose-form__title(align="center") {{ $t('form.creatorModeCompose.title') }}
   br
-  h3.creator-mode-compose-form__title ODA BİLGİLERİ
+  h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.roomInformations') }}
   .creator-mode-compose-form__roomInfo
     Field.creator-mode-compose-form__roomTitle(
       v-model="form.roomTitle"
       name="roomTitle"
-      label="Oda başlığı"
-      placeholder="Oda başlığı yaz"
+      :label="$t('form.creatorModeCompose.room.roomTitle.label')"
+      :placeholder="$t('form.creatorModeCompose.room.roomTitle.placeholder')"
       maxlength="64"
       show-word-limit
-      :rules="[{ required: true, message: 'Oda başlığı gereklidir' }]"
+      :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.room.roomTitle.label') }) }]"
     )
-    SwitchCell.creator-mode-compose-form__isPublic(v-model="form.isPublic" title="Açık odalarda listelensin mi?")
-  h3.creator-mode-compose-form__title SORU-CEVAP SETİ
+    SwitchCell.creator-mode-compose-form__isPublic(v-model="form.isPublic" :title="$t('form.creatorModeCompose.room.isPublic.label')")
+  h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.qaSet') }}
 
   .compose-qa-list
     template(v-if="form.qaList && form.qaList.length > 0")
@@ -23,36 +23,36 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
         Field(
           v-model="item.question"
           name="question"
-          label="Soru"
-          placeholder="Soruyu yaz"
+          :label="$t('form.creatorModeCompose.qa.question.label')"
+          :placeholder="$t('form.creatorModeCompose.qa.question.placeholder')"
           maxlength="120"
           rows="2"
           autosize
           show-word-limit
-          :rules="[{ required: true, message: 'Soru gereklidir' }]"
+          :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.qa.question.label') }) }]"
         )
         Field(
           v-model="item.answer"
           name="answer"
-          label="Cevap"
-          placeholder="Cevapları virgül ile ayırabilirsin"
+          :label="$t('form.creatorModeCompose.qa.answer.label')"
+          :placeholder="$t('form.creatorModeCompose.qa.answer.label')"
           maxlength="120"
           show-word-limit
           rows="2"
           :formatter="formatAnswerField"
-          :error-message="item.isMatched === false ? 'Her cevap aynı karakterle başlamalı' : null"
+          :error-message="item.isMatched === false ? $t('form.creatorModeCompose.qa.answer.error.nonMatched') : null"
           :error="item.isMatched === false"
           @input="getCharacter(item, index)"
         )
         Field(
           v-model="item.character"
           name="character"
-          label="Karakter"
-          placeholder="Soru karakteri"
+          :label="$t('form.creatorModeCompose.qa.character.label')"
+          :placeholder="$t('form.creatorModeCompose.qa.character.placeholder')"
           maxlength="1"
           readonly
           disabled
-          :rules="[{ required: true, message: 'Karakter gereklidir' }]"
+          :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.qa.character.label') }) }]"
           @input="validateAnswer(item, index)"
         )
 
@@ -83,13 +83,14 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
             round
             size="small"
             @click="removeItem(index)"
-          ) Kaldır
+          ) {{ $t('general.remove') }}
 
     // Empty List
     template(v-else)
-      Empty(description="Soru cevap setin şu anda boş")
+      Empty(:description="$t('form.creatorModeCompose.qa.empty.description')")
         // Add qa button
-        Button.compose-qa-list__addQaButton(type="info" icon="plus" native-type="button" round @click="addItem") Soru ekle
+        Button.compose-qa-list__addQaButton(type="info" icon="plus" native-type="button" round @click="addItem")
+          | {{ $t('form.creatorModeCompose.qa.empty.action') }}
 
     // Add qa button
     Button.compose-qa-list__addQaButton(
@@ -102,7 +103,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       :loading="form.isBusy"
       :disabled="form.isBusy"
       @click="addItem"
-    ) Başka soru ekle
+    ) {{ $t('form.creatorModeCompose.qa.addMoreQuestion') }}
 
     Button(
       v-if="form.qaList && form.qaList.length > 0"
@@ -114,12 +115,10 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       :loading="form.isBusy"
       :disabled="form.isBusy"
       @click="saveDraft"
-    ) Taslak kaydet
+    ) {{ $t('form.creatorModeCompose.saveDraft.action') }}
 
     p.creator-mode-compose-form__termsDescription(v-if="form.qaList && form.qaList.length > 0")
-      | * Oda oluştururken spam, nefret söylemi içeren, ırkçı ve aşağılayacı içeriklerden kaçının.
-      | Bu gibi odalar moderasyon tespitinde silinecektir.
-      | Oda oluştururken IP adresiniz yasal mevzuat gereği saklanır.
+      | {{ $t('form.creatorModeCompose.termsDescription') }}
 
     // Save list button
     Button.compose-qa-list__submitButton(
@@ -132,13 +131,18 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       :loading="form.isBusy"
       :disabled="form.isBusy"
       @click="handleSubmit"
-    ) Bitir ve yayınla
+    ) {{ $t('form.creatorModeCompose.submit') }}
 
-  CreatorModeCreatedRoomDialog(:isOpen="dialog.room.isOpen" :room="createdRoom" @closed="handleCloseRoomDialog")
+  CreatorModeCreatedRoomDialog(
+    :isOpen="dialog.room.isOpen"
+    :cancelButtonText="$t('dialog.createdRoom.joinRoom')"
+    :room="createdRoom"
+    @closed="handleCloseRoomDialog"
+  )
 </template>
 
 <script>
-import { defineComponent, useRouter, useStore, reactive, set } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useContext, useStore, reactive, set } from '@nuxtjs/composition-api'
 import { Form, Field, SwitchCell, Button, Empty, Notify } from 'vant'
 import { CreatorModeCreatedRoomDialog } from '@/components/Dialog'
 
@@ -153,6 +157,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const { localePath, i18n } = useContext()
     const store = useStore()
 
     const form = reactive({
@@ -268,6 +273,15 @@ export default defineComponent({
       }
     }
 
+    const getErrorNotify = () => {
+      Notify({
+        message: i18n.t('form.creatorModeCompose.error.couldNotCreate'),
+        color: 'var(--color-text-04)',
+        background: 'var(--color-danger-01)',
+        duration: 1000
+      })
+    }
+
     const handleSubmit = async () => {
       form.isBusy = true
 
@@ -292,20 +306,10 @@ export default defineComponent({
 
           resetForm()
         } else {
-          Notify({
-            message: `Oda oluşturulamadı, lütfen kontrol edip tekrar dene`,
-            color: 'var(--color-text-04)',
-            background: 'var(--color-danger-01)',
-            duration: 1000
-          })
+          getErrorNotify()
         }
       } else {
-        Notify({
-          message: `Oda oluşturulamadı, lütfen kontrol edip tekrar dene`,
-          color: 'var(--color-text-04)',
-          background: 'var(--color-danger-01)',
-          duration: 1000
-        })
+        getErrorNotify()
       }
 
       form.isBusy = false
@@ -321,7 +325,7 @@ export default defineComponent({
       window.localStorage.setItem('creatorFormDraft', JSON.stringify(form))
 
       Notify({
-        message: `Sonrası için kaydedildi, geri döndüğünde aynı form olacak`,
+        message: i18n.t('form.creatorModeCompose.saveDraft.callback.success'),
         color: 'var(--color-text-04)',
         background: 'var(--color-info-01)',
         duration: 1000
@@ -337,7 +341,12 @@ export default defineComponent({
     }
 
     const handleCloseRoomDialog = () => {
-      router.push(`/room?id=${createdRoom.id}`)
+      router.push(
+        localePath({
+          name: 'CreatorMode-CreatorModeRoom',
+          query: { id: createdRoom.id }
+        })
+      )
     }
 
     return {

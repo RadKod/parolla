@@ -21,10 +21,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development && nuxt --port 3000",
-    "prod": "cross-env NODE_ENV=production && nuxt start --port 3000",
+    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:eslint": "eslint --ext .js,.vue,.pug --ignore-path .gitignore --ignore-path .eslintignore .",
     "lint:eslint:fix": "eslint --fix --ext .js,.vue,.pug --ignore-path .gitignore --ignore-path .eslintignore .",
@@ -49,6 +48,7 @@
   "dependencies": {
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/gtm": "^2.4.0",
+    "@nuxtjs/i18n": "^7.3.1",
     "bootstrap": "5.2.3",
     "cross-env": "^5.2.0",
     "express": "^4.17.1",

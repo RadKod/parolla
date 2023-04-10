@@ -1,20 +1,15 @@
 <template lang="pug">
 Dialog.dialog.how-to-calculate-stats-dialog(
   v-model="state.isOpen"
-  title="Skoru nasıl hesaplıyoruz"
-  :cancel-button-text="cancelButtonText"
+  :title="$t('dialog.howToCalculateStats.title')"
+  :cancel-button-text="cancelButtonText || $t('general.close')"
   :show-confirm-button="false"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
   @opened="$emit('opened')"
 )
-  p.how-to-calculate-stats-dialog__description
-    | Cevabın doğru ise doğru sorulara yanlış ise yanlış sorulara eklenir.
-    <br><br>
-    | Eğer süren bittiğinde hala paslanmış soruların varsa bunlar da pasladığın sorulara eklenir.
-    <br><br>
-    | Ve tüm toplam sonuç oyun bittiğinde istatistik ekranında gösterilir.
+  p.how-to-calculate-stats-dialog__description(v-html="$t('dialog.howToCalculateStats.description')")
 </template>
 
 <script>
@@ -34,7 +29,7 @@ export default defineComponent({
     cancelButtonText: {
       type: String,
       required: false,
-      default: 'Kapat'
+      default: null
     }
   },
   setup(props) {

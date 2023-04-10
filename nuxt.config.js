@@ -9,7 +9,7 @@ module.exports = {
    ** Nuxt ssr
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-ssr
    */
-  ssr: false,
+  ssr: true,
 
   /*
    ** Nuxt environments
@@ -28,56 +28,6 @@ module.exports = {
       lang: 'tr'
     },
     title: 'parolla - Kelime oyunu',
-    meta: [
-      { charset: 'utf-8' },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1.0, interactive-widget=resizes-content, user-scalable=no'
-      },
-      {
-        name: 'apple-mobile-web-app-capable',
-        content: 'yes'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
-      },
-      {
-        hid: 'og:image',
-        property: 'og:image',
-        content: '/meta/preview/og-main.jpg'
-      },
-      {
-        hid: 'og:description',
-        property: 'og:description',
-        content: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
-      },
-      {
-        hid: 'og:url',
-        property: 'og:url',
-        content: `parolla.app`
-      },
-      {
-        hid: 'twitter:card',
-        property: 'twitter:card',
-        content: `summary_large_image`
-      },
-      {
-        hid: 'twitter:creator',
-        property: 'twitter:creator',
-        content: `@parollaapp`
-      },
-      {
-        hid: 'Publisher',
-        property: 'Publisher',
-        content: `RadKod`
-      },
-      {
-        name: 'theme-color',
-        content: '#eeeeee'
-      }
-    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
       { rel: 'dns-prefetch', href: '//api.radkod.com' },
@@ -126,55 +76,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'Home',
-        path: '/',
-        component: resolve(__dirname, 'pages/Main/-index.vue')
-      })
-      routes.push({
-        name: 'DailyMode',
-        path: '/daily',
-        component: resolve(__dirname, 'pages/DailyMode/-index.vue')
-      })
-      routes.push({
-        name: 'UnlimitedMode',
-        path: '/unlimited',
-        component: resolve(__dirname, 'pages/UnlimitedMode/-index.vue')
-      })
-      routes.push({
-        name: 'CreatorModeIntro',
-        path: '/creator/start',
-        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeIntro/-index.vue')
-      })
-      routes.push({
-        name: 'CreatorMode',
-        path: '/creator',
-        component: resolve(__dirname, 'pages/CreatorMode/-index.vue')
-      })
-      routes.push({
-        name: 'CreatorModeRooms',
-        path: '/creator/rooms',
-        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeRooms/-index.vue')
-      })
-      routes.push({
-        name: 'CreatorModeCompose',
-        path: '/creator/compose',
-        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeCompose/-index.vue')
-      })
-      routes.push({
-        name: 'CreatorModeRoom',
-        path: '/room',
-        component: resolve(__dirname, 'pages/CreatorMode/CreatorModeRoom/-index.vue')
-      })
-      routes.push({
-        name: 'PrivacyPolicy',
-        path: '/page/privacy-policy',
-        component: resolve(__dirname, 'pages/Page/PrivacyPolicy/-index.vue')
-      })
-    }
-  },
+  router: {},
 
   /*
    ** Plugins to load before mounting the App
@@ -184,7 +86,8 @@ module.exports = {
     // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/ua-injector', ssr: false },
-    { src: '~/plugins/theme-color', ssr: false }
+    { src: '~/plugins/theme-color', ssr: false },
+    { src: '~/plugins/global-meta-tags-setter', ssr: true }
   ],
 
   /*
@@ -238,6 +141,69 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+    // https://i18n.nuxtjs.org
+    [
+      '@nuxtjs/i18n',
+      {
+        lazy: true,
+        locales: [
+          {
+            name: 'Turkish',
+            title: 'Türkçe',
+            code: 'tr',
+            iso: 'tr-TR',
+            file: 'tr.js'
+          },
+          {
+            name: 'English',
+            title: 'English',
+            code: 'en',
+            iso: 'en-US',
+            file: 'en.js'
+          }
+        ],
+        langDir: 'locales/',
+        defaultLocale: 'tr',
+        strategy: 'prefix_except_default',
+        detectBrowserLanguage: false,
+        detectBrowserLanguage: false,
+        parsePages: false,
+        pages: {
+          'Main/index': {
+            tr: '/',
+            en: '/'
+          },
+          'DailyMode/index': {
+            tr: '/gunluk',
+            en: '/daily'
+          },
+          'UnlimitedMode/index': {
+            tr: '/limitsiz',
+            en: '/unlimited'
+          },
+          'CreatorMode/CreatorModeIntro/index': {
+            tr: '/yaratici/basla',
+            en: '/creator/start'
+          },
+          'CreatorMode/index': {
+            tr: '/yaratici',
+            en: '/creator'
+          },
+          'CreatorMode/CreatorModeRooms/index': {
+            tr: '/yaratici/odalar',
+            en: '/creator/rooms'
+          },
+          'CreatorMode/CreatorModeCompose/index': {
+            tr: '/yaratici/olustur',
+            en: '/creator/compose'
+          },
+          'CreatorMode/CreatorModeRoom/index': {
+            tr: '/oda',
+            en: '/room'
+          }
+        }
+      }
+    ],
     // https://www.npmjs.com/package/@nuxtjs/gtm
     [
       '@nuxtjs/gtm',
@@ -256,6 +222,7 @@ module.exports = {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
+    standalone: true, // for ESM import
     extractCSS: process.env.NODE_ENV === 'production',
     babel: {
       plugins: [
@@ -284,11 +251,11 @@ module.exports = {
 
   /*
    ** Server configuration
-   ** See https://nuxtjs.org/api/configuration-server/
+   ** See https://nuxtjs.org/api/configuration-server
    */
   server: {
     host: '0.0.0.0', // default: localhost,
     timing: false,
-    port: 8080
+    port: 3000
   }
 }

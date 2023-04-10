@@ -20,7 +20,8 @@ export default {
       method: 'post',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept-Language': this.$i18n.locale
       },
       body: JSON.stringify(transform(form))
     })
@@ -29,7 +30,12 @@ export default {
   },
 
   async fetchRooms({ commit }) {
-    const response = await fetch(`${process.env.API}/rooms`)
+    const response = await fetch(`${process.env.API}/rooms`, {
+      method: 'get',
+      headers: {
+        'Accept-Language': this.$i18n.locale
+      }
+    })
     const result = await response.json()
 
     if (result.success) {

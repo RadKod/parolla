@@ -26,11 +26,11 @@
 
     // Fetch State
     template(v-if="fetchState.pending")
-      Empty(description="Sorular getiriliyor...")
+      Empty(:description="$t('gameScene.pendingQuestions')")
 
     template(v-else-if="fetchState.error")
-      Empty(image="error" description="Veriler alınırken hata oluştu.")
-        Button(@click="reFetch") Tekrar Dene
+      Empty(image="error" :description="$t('gameScene.error.fetchQuestions.description')")
+        Button(@click="reFetch") {{ $t('gameScene.error.fetchQuestions.action') }}
 
     template(v-else)
       // Questions
@@ -49,7 +49,7 @@
           input.answer-field__input(
             type="text"
             :value="answer.field"
-            placeholder="Cevabını yaz"
+            :placeholder="$t('gameScene.answerField.placeholder')"
             tabindex="-1"
             spellcheck="false"
             autocomplete="off"
@@ -66,21 +66,21 @@
               color="var(--color-brand-02)"
               icon="guide-o"
               @click="handleAnswer"
-            ) GÖNDER
+            ) {{ $t('gameScene.answerField.submit') }}
 
           template(v-else)
             Button.answer-field__button.answer-field__button--pass.do-not-hide-keyboard.do-not-hide-keyboard--pass(
               color="var(--color-warning-01)"
               icon="arrow"
               @click="pass"
-            ) PAS
+            ) {{ $t('gameScene.answerField.pass') }}
 
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
   DailyModeStatsDialog(:isOpen="dialog.stats.isOpen")
   // Interstital Ad Dialog
-  InterstitialAdDialog(cancelButtonText="Reklamı geç ve skorunu gör ⇥" :isOpen="dialog.interstitialAd.isOpen")
+  InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
@@ -132,19 +132,20 @@ export default defineComponent({
       scrollTop,
       isTouchEnabled,
       handleDontHideKeyboard,
-      handlePopState,
       checkUnsupportedHeight
     } = useGameScene()
 
     const day = new Date().toLocaleDateString('tr').slice(0, 10)
     const storedDay = persistStore && persistStore.daily.currentDate
 
-    if (day !== storedDay) {
-      store.commit('daily/SET_IS_GAME_OVER', {
-        isGameOver: false
-      })
-      store.commit('daily/SET_CURRENT_DATE', day)
-      store.dispatch('daily/fetchQuestions')
+    if (process.browser) {
+      if (day !== storedDay) {
+        store.commit('daily/SET_IS_GAME_OVER', {
+          isGameOver: false
+        })
+        store.commit('daily/SET_CURRENT_DATE', day)
+        store.dispatch('daily/fetchQuestions')
+      }
     }
 
     // Fetch Questions
@@ -178,10 +179,8 @@ export default defineComponent({
       window.addEventListener('scroll', scrollTop)
 
       if (isTouchEnabled) {
-        rootRef.value.addEventListener('touchend', event => handleDontHideKeyboard(event))
+        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
       }
-
-      handlePopState()
 
       // Unsupported screen height
       checkUnsupportedHeight()
