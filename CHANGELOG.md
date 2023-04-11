@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.2.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/c492be9...v2.2.1)
+
+
+### 🩹 Fixes
+
+  - Revert to no ssr project ([d425e7c](https://github.com/RadKod/parolla/commit/d425e7c))
+  - Update npm scripts ([1ff1c27](https://github.com/RadKod/parolla/commit/1ff1c27))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.2.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/9f6d599...v2.2.0)
