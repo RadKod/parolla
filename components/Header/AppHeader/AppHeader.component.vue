@@ -19,29 +19,28 @@
     li.app-header-nav__item(@click="toggleMenuDialog")
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
 
-  client-only
-    // How To Play Dialog
-    HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
-    // Stats Dialog
-    DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
-    // Menu Dialog
-    MenuDialog(
-      :isOpen="dialog.menu.isOpen"
-      @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
-      @clickedCredits="toggleCreditsDialog"
-      @clickedContact="toggleContactDialog"
-      @clickedSwitchLocale="toggleLocaleSwitchDialog"
-      @closed="dialog.menu.isOpen = false"
-    )
+  // How To Play Dialog
+  HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
+  // Stats Dialog
+  DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
+  // Menu Dialog
+  MenuDialog(
+    :isOpen="dialog.menu.isOpen"
+    @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
+    @clickedCredits="toggleCreditsDialog"
+    @clickedContact="toggleContactDialog"
+    @clickedSwitchLocale="toggleLocaleSwitchDialog"
+    @closed="dialog.menu.isOpen = false"
+  )
 
-    // How To Calculate Stats Dialog
-    HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
-    // Credits Dialog
-    CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
-    // Contact Dialog
-    ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
-    // Locale Switch Dialog
-    LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
+  // How To Calculate Stats Dialog
+  HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
+  // Credits Dialog
+  CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
+  // Contact Dialog
+  ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
+  // Locale Switch Dialog
+  LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
 </template>
 
 <script>

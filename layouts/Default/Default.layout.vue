@@ -15,8 +15,7 @@
     // Layout Main
     main.layout__main
       // Router View
-      client-only
-        nuxt.router-view
+      nuxt.router-view
 
   .layout__ad.layout__ad--right
     // image_vertical_flex_right
