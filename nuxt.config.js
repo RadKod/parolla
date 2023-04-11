@@ -9,7 +9,7 @@ module.exports = {
    ** Nuxt ssr
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-ssr
    */
-  ssr: true,
+  ssr: false,
 
   /*
    ** Nuxt environments
@@ -76,7 +76,10 @@ module.exports = {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  router: {},
+  router: {
+    trailingSlash: false,
+    middleware: ['redirect']
+  },
 
   /*
    ** Plugins to load before mounting the App
@@ -87,7 +90,7 @@ module.exports = {
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
-    { src: '~/plugins/global-meta-tags-setter', ssr: true }
+    { src: '~/plugins/global-meta-tags-setter', ssr: false }
   ],
 
   /*

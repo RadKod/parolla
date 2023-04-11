@@ -39,9 +39,18 @@
         }
       }
 
+      .van-icon {
+        color: transparent;
+      }
+
       &--active {
         img {
           transform: scale(1.1);
+        }
+
+        .van-icon {
+          color: var(--color-text-04);
+          filter: brightness(1);
         }
       }
     }

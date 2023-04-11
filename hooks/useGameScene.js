@@ -1,7 +1,7 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
 import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode, useEncodeDecode, useDialog } from '@/hooks'
+import { useGameMode, useEncodeDecode } from '@/hooks'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -18,7 +18,6 @@ export default () => {
 
   const { activeGameMode } = useGameMode()
   const { encodeEnglish } = useEncodeDecode()
-  const { openLeaveDialog } = useDialog()
 
   const rootRef = ref(null)
   const setRootRef = element => {
@@ -476,10 +475,12 @@ export default () => {
   const questionFitText = async () => {
     await nextTick()
 
-    textfit(rootRef.value.querySelectorAll('.question--active')[0], {
-      minFontSize: 16,
-      maxFontSize: 30
-    })
+    if (!!rootRef.value.querySelectorAll('.question--active')[0]) {
+      textfit(rootRef.value.querySelectorAll('.question--active')[0], {
+        minFontSize: 16,
+        maxFontSize: 30
+      })
+    }
   }
 
   const handleBeforeUnload = event => {
