@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.2.2
+
+[compare changes](https://github.com/RadKod/parolla/compare/83b2d10...v2.2.2)
+
+
+### 🩹 Fixes
+
+  - **typo:** Typo fix on credits ([47917c4](https://github.com/RadKod/parolla/commit/47917c4))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.2.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/c492be9...v2.2.1)
