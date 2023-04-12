@@ -99,7 +99,7 @@ export default {
     credits: {
       title: 'Yapımcılar',
       description:
-        'parolla açık kaynak bir projedir. <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> bağlantısından ulaşabilirsin. <label>Proje ve Arayüz <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Arkaplan ve veri tabanı <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobil uygulama <a href="https://twitter.com/muratozakcil" target="_blank">@muratozakcil</a></label>'
+        'parolla açık kaynak bir projedir. <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> bağlantısından ulaşabilirsin. <label>Proje ve Arayüz <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Arkaplan ve Veritabanı <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobil Uygulama <a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
     },
     contact: {
       title: 'Bize ulaşın',
