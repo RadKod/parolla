@@ -99,7 +99,7 @@ export default {
     credits: {
       title: 'Credits',
       description:
-        'parolla is an open source project. Check the <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> link. <label>Project and UI <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Back-end and database <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobile app <a href="https://twitter.com/muratozakcil" target="_blank">@muratozakcil</a></label>'
+        'parolla is an open source project. Check the <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> link. <label>Project and UI <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Back-end and Database <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobile App <a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
     },
     contact: {
       title: 'Contact',
