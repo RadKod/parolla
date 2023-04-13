@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.2.3
+
+[compare changes](https://github.com/RadKod/parolla/compare/463b3e4...v2.2.3)
+
+
+### 🩹 Fixes
+
+  - Validation fix answer field on room compose form ([b7c16a8](https://github.com/RadKod/parolla/commit/b7c16a8))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.2.2
 
 [compare changes](https://github.com/RadKod/parolla/compare/83b2d10...v2.2.2)
