@@ -240,6 +240,7 @@ export default {
       title: 'COMPOSE A ROOM',
       roomInformations: 'ROOM INFORMATIONS',
       qaSet: 'QUESTION-ANSWER SET',
+      clearForm: 'Clear Form',
       room: {
         roomTitle: {
           label: 'Room title',
@@ -274,11 +275,17 @@ export default {
       saveDraft: {
         action: 'Save draft',
         callback: {
-          success: 'Saved for later, when it comes back it will be the same form'
+          success: 'Saving for later, when it comes back it will be the same form'
+        }
+      },
+      deleteDraft: {
+        action: 'Clear saved form',
+        callback: {
+          success: 'Cleared saved form'
         }
       },
       termsDescription:
-        '* Avoid spam, hate speech, racist and insulting content when creating rooms. Such rooms will be deleted upon moderation detection. While creating a room, your IP address is stored in accordance with legal regulations.',
+        '* Avoid spam, hate speech, racist and insulting content when creating rooms. Such rooms will be deleted upon moderation detection. While creating a room, your IP address is stored in accordance with legal regulations. In case of violation, legal sanctions may be applied.',
       submit: 'Finish and publish',
       error: {
         couldNotCreate: 'Could not create room, please check and try again'

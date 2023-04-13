@@ -237,6 +237,7 @@ export default {
     isRequired: '{model} gereklidir',
     creatorModeCompose: {
       title: 'ODA OLUŞTUR',
+      clearForm: 'Formu Temizle',
       roomInformations: 'ODA BİLGİLERİ',
       qaSet: 'SORU-CEVAP SETİ',
       room: {
@@ -273,11 +274,17 @@ export default {
       saveDraft: {
         action: 'Taslak kaydet',
         callback: {
-          success: 'Sonrası için kaydedildi, geri döndüğünde aynı form olacak'
+          success: 'Sonrası için kaydediliyor, geri döndüğünde aynı form olacak'
+        }
+      },
+      deleteDraft: {
+        action: 'Kayıtlı formu temizle',
+        callback: {
+          success: 'Kayıtlı form temizlendi'
         }
       },
       termsDescription:
-        '* Oda oluştururken spam, nefret söylemi içeren, ırkçı ve aşağılayacı içeriklerden kaçının. Bu gibi odalar moderasyon tespitinde silinecektir. Oda oluştururken IP adresiniz yasal mevzuat gereği saklanır.',
+        '* Oda oluştururken spam, nefret söylemi içeren, ırkçı ve aşağılayacı içeriklerden kaçının. Bu gibi odalar moderasyon tespitinde silinecektir. Oda oluştururken IP adresiniz yasal mevzuat gereği saklanır. İhlal durumunda yasal yaptırım uygulanabilir.',
       submit: 'Bitir ve yayınla',
       error: {
         couldNotCreate: 'Oda oluşturulamadı, lütfen kontrol edip tekrar dene'

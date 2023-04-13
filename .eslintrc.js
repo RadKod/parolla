@@ -33,6 +33,7 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
     'vue/component-definition-name-casing': ['error', 'PascalCase'],
     'vue/multi-word-component-names': 'off',
+    'vue/script-setup-uses-vars': 'off',
     'no-extend-native': 'off',
     'space-before-function-paren': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
