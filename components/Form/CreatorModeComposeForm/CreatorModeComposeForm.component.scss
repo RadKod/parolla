@@ -8,6 +8,7 @@
   }
 
   &__roomInfo {
+    margin-bottom: calc(var(--base-m-y) * 2);
     overflow: hidden;
     border-radius: var(--border-radius-01);
   }
@@ -58,7 +59,10 @@
 
   &__termsDescription {
     display: block;
+    width: 100%;
     color: var(--color-text-03);
-    font-size: var(--font-size-text-10);
+    font-size: var(--font-size-text-9);
+    text-align: justify;
+    text-wrap: balance;
   }
 }

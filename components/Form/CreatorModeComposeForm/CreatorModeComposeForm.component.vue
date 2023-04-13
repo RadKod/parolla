@@ -2,7 +2,7 @@
 Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
   h2.creator-mode-compose-form__title(align="center") {{ $t('form.creatorModeCompose.title') }}
   br
-  h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.roomInformations') }}
+  h3.creator-mode-compose-form__title.mt-1 {{ $t('form.creatorModeCompose.roomInformations') }}
   .creator-mode-compose-form__roomInfo
     Field.creator-mode-compose-form__roomTitle(
       v-model="form.roomTitle"
@@ -113,14 +113,13 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     Button(
       v-if="form.qaList && form.qaList.length > 0"
       type="warning"
-      color="var(--color-text-03)"
       plain
       native-type="button"
       round
       :loading="form.isBusy"
       :disabled="form.isBusy"
-      @click="saveDraft"
-    ) {{ $t('form.creatorModeCompose.saveDraft.action') }}
+      @click="handleClickDeleteDraft"
+    ) {{ $t('form.creatorModeCompose.deleteDraft.action') }}
 
     p.creator-mode-compose-form__termsDescription(v-if="form.qaList && form.qaList.length > 0")
       | {{ $t('form.creatorModeCompose.termsDescription') }}
@@ -147,8 +146,8 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 </template>
 
 <script>
-import { defineComponent, useRouter, useContext, useStore, reactive, set } from '@nuxtjs/composition-api'
-import { Form, Field, SwitchCell, Button, Empty, Notify } from 'vant'
+import { defineComponent, useRouter, useContext, useStore, ref, reactive, set, watch, onMounted } from '@nuxtjs/composition-api'
+import { Form, Field, SwitchCell, Button, Empty, Notify, Loading } from 'vant'
 import { CreatorModeCreatedRoomDialog } from '@/components/Dialog'
 
 export default defineComponent({
@@ -158,6 +157,7 @@ export default defineComponent({
     SwitchCell,
     Button,
     Empty,
+    Loading,
     CreatorModeCreatedRoomDialog
   },
   setup() {
@@ -333,15 +333,12 @@ export default defineComponent({
       form.qaList = []
     }
 
+    const handleClickDeleteDraft = () => {
+      deleteDraft()
+    }
+
     const saveDraft = () => {
       window.localStorage.setItem('creatorFormDraft', JSON.stringify(form))
-
-      Notify({
-        message: i18n.t('form.creatorModeCompose.saveDraft.callback.success'),
-        color: 'var(--color-text-04)',
-        background: 'var(--color-info-01)',
-        duration: 1000
-      })
     }
 
     const storagedForm = JSON.parse(window.localStorage.getItem('creatorFormDraft'))
@@ -352,6 +349,11 @@ export default defineComponent({
       form.qaList = storagedForm.qaList
     }
 
+    const deleteDraft = () => {
+      window.localStorage.removeItem('creatorFormDraft')
+      resetForm()
+    }
+
     const handleCloseRoomDialog = () => {
       router.push(
         localePath({
@@ -360,6 +362,12 @@ export default defineComponent({
         })
       )
     }
+
+    watch(form, value => {
+      if (value.qaList && value.qaList.length > 0) {
+        saveDraft()
+      }
+    })
 
     return {
       form,
@@ -374,7 +382,9 @@ export default defineComponent({
       validateAnswer,
       handleFailed,
       handleSubmit,
+      handleClickDeleteDraft,
       saveDraft,
+      deleteDraft,
       createdRoom,
       dialog,
       handleCloseRoomDialog
