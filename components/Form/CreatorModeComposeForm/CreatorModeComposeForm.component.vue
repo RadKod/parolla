@@ -20,7 +20,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     template(v-if="form.qaList && form.qaList.length > 0")
       // List
       .compose-qa-card(v-for="(item, index) in form.qaList")
-        Field(
+        Field.creator-mode-compose-form__questionField(
           v-model="item.question"
           name="question"
           :label="$t('form.creatorModeCompose.qa.question.label')"
@@ -31,8 +31,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
           show-word-limit
           :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.qa.question.label') }) }]"
         )
-        Field(
-          v-model="item.answer"
+        Field.creator-mode-compose-form__answerField(
           name="answer"
           :label="$t('form.creatorModeCompose.qa.answer.label')"
           :placeholder="$t('form.creatorModeCompose.qa.answer.label')"
@@ -42,9 +41,15 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
           :formatter="formatAnswerField"
           :error-message="item.isMatched === false ? $t('form.creatorModeCompose.qa.answer.error.nonMatched') : null"
           :error="item.isMatched === false"
-          @input="getCharacter(item, index)"
         )
-        Field(
+          template(#input)
+            input.van-field__control(
+              :value="item.answer"
+              :placeholder="$t('form.creatorModeCompose.qa.answer.placeholder')"
+              maxlength="120"
+              @input="e => getCharacter(e.target.value, { item, index })"
+            )
+        Field.creator-mode-compose-form__characterField(
           v-model="item.character"
           name="character"
           :label="$t('form.creatorModeCompose.qa.character.label')"
@@ -53,7 +58,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
           readonly
           disabled
           :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.qa.character.label') }) }]"
-          @input="validateAnswer(item, index)"
+          @input="validateAnswer({ item, index })"
         )
 
         .compose-qa-card__actions
@@ -156,6 +161,8 @@ export default defineComponent({
     CreatorModeCreatedRoomDialog
   },
   setup() {
+    const baseClassName = 'creator-mode-compose-form'
+
     const router = useRouter()
     const { localePath, i18n } = useContext()
     const store = useStore()
@@ -213,9 +220,11 @@ export default defineComponent({
       return formattedValue
     }
 
-    const getCharacter = (item, index) => {
-      if (item.answer && item.answer.length > 0) {
-        const answers = item.answer.split(',')
+    const getCharacter = (value, { item, index }) => {
+      if (value && value.length > 0) {
+        form.qaList[index].answer = value
+
+        const answers = value.split(',')
         const firstAnswer = answers[0]
         const firstAnswerChar = firstAnswer.substring(0, 1)
 
@@ -232,20 +241,23 @@ export default defineComponent({
         })
 
         if (isMatched) {
-          form.qaList[index].character = firstAnswerChar
+          form.qaList[index].character = firstAnswerChar.toLocaleUpperCase('tr')
         }
       } else {
         form.qaList[index].character = ''
       }
 
+      // Set word limit
+      document.querySelectorAll(`.${baseClassName}__answerField`)[index].querySelector('.van-field__word-num').innerHTML = value.length
+
       setTimeout(() => {
-        validateAnswer(item, index)
+        validateAnswer(value, { item, index })
       }, 100)
     }
 
-    const validateAnswer = (item, index) => {
-      if (item.character && item.character.length > 0 && item.answer && item.answer.length > 0) {
-        const answers = item.answer.split(',')
+    const validateAnswer = (value, { item, index }) => {
+      if (item.character && item.character.length > 0 && value && value.length > 0) {
+        const answers = value.split(',')
 
         const isMatched = answers.every(answer => {
           if (answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase('tr'))) {
