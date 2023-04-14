@@ -1,5 +1,23 @@
 # Changelog
 
+## v2.3.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/cd1585d...v2.3.0)
+
+
+### 🚀 Enhancements
+
+  - Ux improvements on room compose form ([f1aee55](https://github.com/RadKod/parolla/commit/f1aee55))
+  - Ux improvements ([904e6ea](https://github.com/RadKod/parolla/commit/904e6ea))
+
+### 💅 Refactors
+
+  - **lint:** Update eslint config ([4b2c55e](https://github.com/RadKod/parolla/commit/4b2c55e))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.2.3
 
 [compare changes](https://github.com/RadKod/parolla/compare/463b3e4...v2.2.3)
