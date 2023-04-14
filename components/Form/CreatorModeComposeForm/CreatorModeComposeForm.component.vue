@@ -111,7 +111,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     ) {{ $t('form.creatorModeCompose.qa.addMoreQuestion') }}
 
     Button(
-      v-if="form.qaList && form.qaList.length > 0"
+      v-if="form.qaList && form.qaList.length > 1"
       type="warning"
       plain
       native-type="button"
@@ -146,8 +146,8 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 </template>
 
 <script>
-import { defineComponent, useRouter, useContext, useStore, ref, reactive, set, watch, onMounted } from '@nuxtjs/composition-api'
-import { Form, Field, SwitchCell, Button, Empty, Notify, Loading } from 'vant'
+import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, onMounted } from '@nuxtjs/composition-api'
+import { Form, Field, SwitchCell, Button, Empty, Notify, Dialog } from 'vant'
 import { CreatorModeCreatedRoomDialog } from '@/components/Dialog'
 
 export default defineComponent({
@@ -157,7 +157,7 @@ export default defineComponent({
     SwitchCell,
     Button,
     Empty,
-    Loading,
+    Dialog,
     CreatorModeCreatedRoomDialog
   },
   setup() {
@@ -334,7 +334,14 @@ export default defineComponent({
     }
 
     const handleClickDeleteDraft = () => {
-      deleteDraft()
+      Dialog.confirm({
+        title: i18n.t('form.creatorModeCompose.deleteDraft.confirm.title'),
+        message: i18n.t('form.creatorModeCompose.deleteDraft.confirm.description'),
+        cancelButtonText: i18n.t('form.creatorModeCompose.deleteDraft.confirm.cancel'),
+        confirmButtonText: i18n.t('form.creatorModeCompose.deleteDraft.confirm.confirm')
+      }).then(() => {
+        deleteDraft()
+      })
     }
 
     const saveDraft = () => {

@@ -279,6 +279,12 @@ export default {
       },
       deleteDraft: {
         action: 'Kayıtlı formu temizle',
+        confirm: {
+          title: 'Emin misin?',
+          description: 'Formu temizliyorsun şu anda formda gördüklerin silinecek',
+          confirm: 'Temizle',
+          cancel: 'Vazgeç'
+        },
         callback: {
           success: 'Kayıtlı form temizlendi'
         }
