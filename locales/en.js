@@ -280,6 +280,12 @@ export default {
       },
       deleteDraft: {
         action: 'Clear saved form',
+        confirm: {
+          title: 'Sure?',
+          description: 'You are clearing the form, what you see on the form now will be deleted',
+          confirm: 'Clear',
+          cancel: 'Cancel'
+        },
         callback: {
           success: 'Cleared saved form'
         }
