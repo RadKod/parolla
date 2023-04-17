@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.3.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.3.0...v2.3.1)
+
+
+### 💅 Refactors
+
+  - End game message for webview ([ea85964](https://github.com/RadKod/parolla/commit/ea85964))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.3.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/cd1585d...v2.3.0)
