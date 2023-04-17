@@ -405,6 +405,8 @@ export default () => {
   }
 
   const endGame = async () => {
+    window.postMessage({ type: 'end-game', data: true })
+
     await nextTick()
 
     store.commit(`${activeGameMode.value}/SET_IS_GAME_OVER`, {
