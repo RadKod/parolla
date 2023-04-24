@@ -44,6 +44,14 @@ Dialog.dialog.menu-dialog(
       @click.native="openRoomSharer"
     )
     Cell.menu-dialog-nav__item(
+      v-if="$route.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })"
+      icon="chat-o"
+      size="large"
+      is-link
+      :title="$t('dialog.menu.reviewRoom')"
+      @click.native="$emit('clickedReviewRoom')"
+    )
+    Cell.menu-dialog-nav__item(
       icon="smile-comment-o"
       size="large"
       is-link

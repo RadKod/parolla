@@ -16,6 +16,9 @@
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+    template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
+      li.app-header-nav__item.app-header-nav__item--roomReviews(@click="toggleRoomReviewDialog")
+        Icon(badge="14" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
     li.app-header-nav__item(@click="toggleMenuDialog")
       Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
 
@@ -30,6 +33,7 @@
     @clickedCredits="toggleCreditsDialog"
     @clickedContact="toggleContactDialog"
     @clickedSwitchLocale="toggleLocaleSwitchDialog"
+    @clickedReviewRoom="toggleRoomReviewDialog"
     @closed="dialog.menu.isOpen = false"
   )
 
@@ -41,6 +45,8 @@
   ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
   // Locale Switch Dialog
   LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
+  // Room Review Dialog
+  RoomReviewDialog(:isOpen="dialog.roomReview.isOpen" @closed="dialog.roomReview.isOpen = false")
 </template>
 
 <script>
@@ -56,7 +62,8 @@ import {
   HowToCalculateStatsDialog,
   CreditsDialog,
   ContactDialog,
-  LocaleSwitchDialog
+  LocaleSwitchDialog,
+  RoomReviewDialog
 } from '@/components/Dialog'
 
 export default defineComponent({
@@ -69,7 +76,8 @@ export default defineComponent({
     HowToCalculateStatsDialog,
     CreditsDialog,
     ContactDialog,
-    LocaleSwitchDialog
+    LocaleSwitchDialog,
+    RoomReviewDialog
   },
   setup() {
     const router = useRouter()
@@ -104,6 +112,9 @@ export default defineComponent({
         isOpen: false
       },
       localeSwitch: {
+        isOpen: false
+      },
+      roomReview: {
         isOpen: false
       }
     })
@@ -147,6 +158,10 @@ export default defineComponent({
 
     const toggleLocaleSwitchDialog = () => {
       dialog.localeSwitch.isOpen = !dialog.localeSwitch.isOpen
+    }
+
+    const toggleRoomReviewDialog = () => {
+      dialog.roomReview.isOpen = !dialog.roomReview.isOpen
     }
 
     const handleClickBackButton = () => {
@@ -214,6 +229,7 @@ export default defineComponent({
       toggleCreditsDialog,
       toggleContactDialog,
       toggleLocaleSwitchDialog,
+      toggleRoomReviewDialog,
       handleClickBackButton,
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,

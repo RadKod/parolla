@@ -87,6 +87,7 @@ export default {
       suggestQa: 'Do you want to suggest a question?',
       howToCalculateStats: 'How we calculate the score',
       shareRoom: 'Share room',
+      reviewRoom: 'Review room',
       shareApp: `Share the parolla`,
       credits: 'Credits',
       contact: 'Contact'
@@ -167,6 +168,9 @@ export default {
     leave: {
       title: 'Do you confirm?',
       description: 'You may have to do the things you did again'
+    },
+    roomReview: {
+      title: 'Room reviews'
     }
   },
   clipboard: {

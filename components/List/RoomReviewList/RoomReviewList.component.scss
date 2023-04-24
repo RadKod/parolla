@@ -1,0 +1,72 @@
+.room-review-list {
+  position: relative;
+
+  &__title {
+    display: block;
+    margin-bottom: var(--base-m-y);
+    color: var(--color-text-02);
+    font-size: var(--font-size-text-6);
+  }
+
+  .vue-star-rating {
+    margin-bottom: var(--base-m-y);
+
+    &-star {
+      margin-right: calc(var(--base-m-x) / 4);
+    }
+
+    &-rating-text {
+      color: var(--color-text-03);
+      font-size: var(--font-size-text-7);
+    }
+  }
+
+  &__items {
+    position: relative;
+  }
+
+  &-item {
+    position: relative;
+
+    &__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    &-user {
+      position: relative;
+
+      &__username {
+        color: var(--color-text-02);
+        font-size: var(--font-size-text-9);
+      }
+    }
+
+    &-date {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &__icon {
+        margin-right: calc(var(--base-m-x) / 4);
+      }
+
+      &__value {
+        color: var(--color-text-03);
+        font-size: var(--font-size-text-10);
+      }
+    }
+
+    &-content {
+      position: relative;
+
+      &__description {
+        color: var(--color-text-03);
+        font-size: var(--font-size-text-10);
+        text-align: justify;
+      }
+    }
+  }
+}

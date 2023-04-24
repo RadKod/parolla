@@ -87,6 +87,7 @@ export default {
       suggestQa: 'Soru önermek ister misin?',
       howToCalculateStats: 'Skoru nasıl hesaplıyoruz',
       shareRoom: 'Odayı paylaş',
+      reviewRoom: 'Odayı değerlendir',
       shareApp: `parolla'yı paylaş`,
       credits: 'Yapımcılar',
       contact: 'Bize ulaşın'
@@ -166,6 +167,9 @@ export default {
     leave: {
       title: 'Onaylıyor musun?',
       description: 'Yaptığın şeyleri tekrar yapmak zorunda kalabilirsin'
+    },
+    roomReview: {
+      title: 'Oda değerlendirmeleri'
     }
   },
   clipboard: {
@@ -295,7 +299,18 @@ export default {
       error: {
         couldNotCreate: 'Oda oluşturulamadı, lütfen kontrol edip tekrar dene'
       }
+    },
+    roomReview: {
+      back: 'Geri dön',
+      comment: {
+        placeholder: 'Yorumunu yaz'
+      },
+      submit: 'Gönder'
     }
+  },
+  roomReviewList: {
+    ratingTitle: 'Oda puanı',
+    reviewsTitle: 'Yorumlar'
   },
   seo: {
     main: {
