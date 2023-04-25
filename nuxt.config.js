@@ -217,7 +217,9 @@ module.exports = {
       }
     ],
     // https://www.npmjs.com/package/nuxt-user-agent
-    'nuxt-user-agent'
+    'nuxt-user-agent',
+    // https://www.npmjs.com/package/nuxt-client-init-module
+    'nuxt-client-init-module'
   ],
 
   /*

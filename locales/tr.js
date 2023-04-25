@@ -82,9 +82,12 @@ export default {
   dialog: {
     menu: {
       title: 'Daha fazla',
+      usernameEdit: 'Oyuncu adını değiştir',
+      menu: 'Menü',
       darkTheme: 'Koyu tema',
       switchLocale: 'Dil değiştir',
       suggestQa: 'Soru önermek ister misin?',
+      howToPLay: 'Nasıl oynanır?',
       howToCalculateStats: 'Skoru nasıl hesaplıyoruz',
       shareRoom: 'Odayı paylaş',
       reviewRoom: 'Odayı değerlendir',
@@ -306,6 +309,18 @@ export default {
         placeholder: 'Yorumunu yaz'
       },
       submit: 'Gönder'
+    },
+    usernameEdit: {
+      usernameField: {
+        placeholder: 'Oyuncu adını yaz'
+      },
+      submit: 'Kaydet',
+      callback: {
+        success: 'Oyuncu adın değiştirildi'
+      },
+      error: {
+        submit: 'Bu oyuncu adı uygun değil lütfen başka yaz'
+      }
     }
   },
   roomReviewList: {

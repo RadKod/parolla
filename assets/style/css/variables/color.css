@@ -11,6 +11,7 @@
   --color-ui-03: #eee;
   --color-ui-04: #f8f8f8;
   --color-field-01: #fff;
+  --color-field-02: #383838;
   --color-skeleton-01: #eee;
   --color-skeleton-02: #ddd;
 
@@ -30,7 +31,7 @@
   --color-hover-01: #fafafa;
   --color-hover-02: #fff;
   --color-active-01: #ededed;
-  --color-selected-01: #000;
+  --color-selected-01: #121212;
   --color-disabled-01: #666;
   --color-highlight-01: #ff7878;
 
@@ -64,6 +65,7 @@
   --color-ui-03: #343434;
   --color-ui-04: #272727;
   --color-field-01: #383838;
+  --color-field-02: #383838;
   --color-skeleton-01: #eee;
   --color-skeleton-02: #ddd;
 
@@ -83,7 +85,7 @@
   --color-hover-01: #fafafa;
   --color-hover-02: #fff;
   --color-active-01: #ededed;
-  --color-selected-01: #000;
+  --color-selected-01: #121212;
   --color-disabled-01: #626262;
   --color-highlight-01: #ff7878;
 

@@ -82,9 +82,12 @@ export default {
   dialog: {
     menu: {
       title: 'More',
+      usernameEdit: 'Change the player name',
+      menu: 'Menu',
       darkTheme: 'Dark theme',
       switchLocale: 'Choose language',
       suggestQa: 'Do you want to suggest a question?',
+      howToPLay: 'How to play?',
       howToCalculateStats: 'How we calculate the score',
       shareRoom: 'Share room',
       reviewRoom: 'Review room',
@@ -300,7 +303,30 @@ export default {
       error: {
         couldNotCreate: 'Could not create room, please check and try again'
       }
+    },
+    roomReview: {
+      back: 'Back',
+      comment: {
+        placeholder: 'Type a comment'
+      },
+      submit: 'Submit'
+    },
+    usernameEdit: {
+      usernameField: {
+        placeholder: 'Type a player name'
+      },
+      submit: 'Save',
+      callback: {
+        success: 'Changed your player name'
+      },
+      error: {
+        submit: 'This player name is not available please type another'
+      }
     }
+  },
+  roomReviewList: {
+    ratingTitle: 'Room rating',
+    reviewsTitle: 'Comments'
   },
   seo: {
     main: {

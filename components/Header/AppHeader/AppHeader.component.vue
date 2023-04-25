@@ -12,15 +12,18 @@
     template(
       v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
     )
-      li.app-header-nav__item(@click="toggleHowToPlayDialog")
+      li.app-header-nav__item(
+        v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED"
+        @click="toggleHowToPlayDialog"
+      )
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
     template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
-      li.app-header-nav__item.app-header-nav__item--roomReviews(@click="toggleRoomReviewDialog")
+      li.app-header-nav__item.app-header-nav__item--roomReviews.me-2(@click="toggleRoomReviewDialog")
         Icon(badge="14" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
     li.app-header-nav__item(@click="toggleMenuDialog")
-      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
+      PlayerAvatar(:name="user.fingerprint")
 
   // How To Play Dialog
   HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
@@ -29,6 +32,7 @@
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
+    @clickedHowToPlay="toggleHowToPlayDialog"
     @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
     @clickedCredits="toggleCreditsDialog"
     @clickedContact="toggleContactDialog"
@@ -54,6 +58,7 @@ import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, c
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode, useDialog } from '@/hooks'
 import { Icon } from 'vant'
+import { PlayerAvatar } from '@/components/Avatar'
 import { AppLogo } from '@/components/Logo'
 import {
   DailyModeStatsDialog,
@@ -69,6 +74,7 @@ import {
 export default defineComponent({
   components: {
     Icon,
+    PlayerAvatar,
     AppLogo,
     DailyModeStatsDialog,
     HowToPlayDialog,
@@ -218,6 +224,8 @@ export default defineComponent({
       }
     })
 
+    const user = computed(() => store.getters['auth/user'])
+
     return {
       gameModeKeyEnum,
       activeGameMode,
@@ -233,7 +241,8 @@ export default defineComponent({
       handleClickBackButton,
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,
-      isVisibleBackButton
+      isVisibleBackButton,
+      user
     }
   }
 })
