@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.4.2
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.4.1...v2.4.2)
+
+
+### 🩹 Fixes
+
+  - Dialog export hoisting ([415265f](https://github.com/RadKod/parolla/commit/415265f))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.4.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.4.0...v2.4.1)
