@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.4.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/b719fc9...v2.4.0)
+
+
+### 🚀 Enhancements
+
+  - Room reviews ui ([7271366](https://github.com/RadKod/parolla/commit/7271366))
+  - Browser based username system ([465a707](https://github.com/RadKod/parolla/commit/465a707))
+  - Room reviews ([53ca4f9](https://github.com/RadKod/parolla/commit/53ca4f9))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.3.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.3.0...v2.3.1)
