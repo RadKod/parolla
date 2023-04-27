@@ -12,12 +12,19 @@
     template(
       v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
     )
-      li.app-header-nav__item(@click="toggleHowToPlayDialog")
+      li.app-header-nav__item(
+        v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED"
+        @click="toggleHowToPlayDialog"
+      )
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+    template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
+      li.app-header-nav__item.app-header-nav__item--roomReviews.me-2(@click="toggleRoomReviewDialog")
+        Icon(v-if="room.reviewCount > 0" :badge="room.reviewCount" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
+        Icon(v-else :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
     li.app-header-nav__item(@click="toggleMenuDialog")
-      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMenu2.svg')")
+      PlayerAvatar(:name="user.fingerprint")
 
   // How To Play Dialog
   HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
@@ -26,10 +33,12 @@
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
+    @clickedHowToPlay="toggleHowToPlayDialog"
     @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
     @clickedCredits="toggleCreditsDialog"
     @clickedContact="toggleContactDialog"
     @clickedSwitchLocale="toggleLocaleSwitchDialog"
+    @clickedReviewRoom="toggleRoomReviewDialog"
     @closed="dialog.menu.isOpen = false"
   )
 
@@ -41,6 +50,8 @@
   ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
   // Locale Switch Dialog
   LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
+  // Room Review Dialog
+  RoomReviewDialog(:isOpen="dialog.roomReview.isOpen" @closed="dialog.roomReview.isOpen = false")
 </template>
 
 <script>
@@ -48,6 +59,7 @@ import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, c
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode, useDialog } from '@/hooks'
 import { Icon } from 'vant'
+import { PlayerAvatar } from '@/components/Avatar'
 import { AppLogo } from '@/components/Logo'
 import {
   DailyModeStatsDialog,
@@ -56,12 +68,14 @@ import {
   HowToCalculateStatsDialog,
   CreditsDialog,
   ContactDialog,
-  LocaleSwitchDialog
+  LocaleSwitchDialog,
+  RoomReviewDialog
 } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
     Icon,
+    PlayerAvatar,
     AppLogo,
     DailyModeStatsDialog,
     HowToPlayDialog,
@@ -69,7 +83,8 @@ export default defineComponent({
     HowToCalculateStatsDialog,
     CreditsDialog,
     ContactDialog,
-    LocaleSwitchDialog
+    LocaleSwitchDialog,
+    RoomReviewDialog
   },
   setup() {
     const router = useRouter()
@@ -104,6 +119,9 @@ export default defineComponent({
         isOpen: false
       },
       localeSwitch: {
+        isOpen: false
+      },
+      roomReview: {
         isOpen: false
       }
     })
@@ -147,6 +165,10 @@ export default defineComponent({
 
     const toggleLocaleSwitchDialog = () => {
       dialog.localeSwitch.isOpen = !dialog.localeSwitch.isOpen
+    }
+
+    const toggleRoomReviewDialog = () => {
+      dialog.roomReview.isOpen = !dialog.roomReview.isOpen
     }
 
     const handleClickBackButton = () => {
@@ -203,6 +225,9 @@ export default defineComponent({
       }
     })
 
+    const user = computed(() => store.getters['auth/user'])
+    const room = computed(() => store.getters['creator/room'])
+
     return {
       gameModeKeyEnum,
       activeGameMode,
@@ -214,10 +239,13 @@ export default defineComponent({
       toggleCreditsDialog,
       toggleContactDialog,
       toggleLocaleSwitchDialog,
+      toggleRoomReviewDialog,
       handleClickBackButton,
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,
-      isVisibleBackButton
+      isVisibleBackButton,
+      user,
+      room
     }
   }
 })

@@ -8,6 +8,9 @@ Dialog.dialog.menu-dialog(
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
 )
+  span.menu-dialog__title {{ $t('dialog.menu.usernameEdit') }}
+  UsernameEditForm.mb-base
+  span.menu-dialog__title {{ $t('dialog.menu.title') }}
   CellGroup.menu-dialog-nav
     Cell.menu-dialog-nav__item(icon="eye-o" size="large" :title="$t('dialog.menu.darkTheme')")
       template(#right-icon)
@@ -21,12 +24,12 @@ Dialog.dialog.menu-dialog(
       @click.native="$emit('clickedSwitchLocale')"
     )
     Cell.menu-dialog-nav__item(
-      v-if="$i18n.locale === $i18n.defaultLocale"
-      icon="question-o"
+      v-if="activeGameMode && activeGameMode.length > 0"
+      icon="info-o"
       size="large"
       is-link
-      :title="$t('dialog.menu.suggestQa')"
-      @click.native="openSuggestQuestion"
+      :title="$t('dialog.menu.howToPLay')"
+      @click.native="$emit('clickedHowToPlay')"
     )
     Cell.menu-dialog-nav__item(
       icon="bar-chart-o"
@@ -44,6 +47,14 @@ Dialog.dialog.menu-dialog(
       @click.native="openRoomSharer"
     )
     Cell.menu-dialog-nav__item(
+      v-if="$route.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })"
+      icon="chat-o"
+      size="large"
+      is-link
+      :title="$t('dialog.menu.reviewRoom')"
+      @click.native="$emit('clickedReviewRoom')"
+    )
+    Cell.menu-dialog-nav__item(
       icon="smile-comment-o"
       size="large"
       is-link
@@ -58,6 +69,14 @@ Dialog.dialog.menu-dialog(
       @click.native="$emit('clickedCredits')"
     )
     Cell.menu-dialog-nav__item(
+      v-if="$i18n.locale === $i18n.defaultLocale"
+      icon="question-o"
+      size="large"
+      is-link
+      :title="$t('dialog.menu.suggestQa')"
+      @click.native="openSuggestQuestion"
+    )
+    Cell.menu-dialog-nav__item(
       icon="guide-o"
       size="large"
       is-link
@@ -69,14 +88,17 @@ Dialog.dialog.menu-dialog(
 <script>
 import { defineComponent, useRoute, useStore, useContext, ref, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
+import { useGameMode } from '@/hooks'
 import { Dialog, CellGroup, Cell, Switch, Toast } from 'vant'
+import { UsernameEditForm } from '@/components/Form'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     CellGroup,
     Cell,
-    SwitchInput: Switch
+    SwitchInput: Switch,
+    UsernameEditForm
   },
   props: {
     isOpen: {
@@ -94,6 +116,8 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const { localePath, i18n, $colorMode } = useContext()
+
+    const { activeGameMode } = useGameMode()
 
     const state = reactive({
       isOpen: props.isOpen
@@ -189,6 +213,7 @@ export default defineComponent({
     }
 
     return {
+      activeGameMode,
       state,
       isDark,
       toggleDarkTheme,

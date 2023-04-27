@@ -82,11 +82,15 @@ export default {
   dialog: {
     menu: {
       title: 'Daha fazla',
+      usernameEdit: 'Oyuncu adını değiştir',
+      menu: 'Menü',
       darkTheme: 'Koyu tema',
       switchLocale: 'Dil değiştir',
       suggestQa: 'Soru önermek ister misin?',
+      howToPLay: 'Nasıl oynanır?',
       howToCalculateStats: 'Skoru nasıl hesaplıyoruz',
       shareRoom: 'Odayı paylaş',
+      reviewRoom: 'Odayı değerlendir',
       shareApp: `parolla'yı paylaş`,
       credits: 'Yapımcılar',
       contact: 'Bize ulaşın'
@@ -166,6 +170,17 @@ export default {
     leave: {
       title: 'Onaylıyor musun?',
       description: 'Yaptığın şeyleri tekrar yapmak zorunda kalabilirsin'
+    },
+    roomReview: {
+      title: 'Oda değerlendirmeleri',
+      review: 'Değerlendir',
+      pendingReviews: 'Yorumlar getiriliyor',
+      error: {
+        fetchReviews: {
+          description: 'Yorumlar getirilemedi',
+          action: 'Tekrar dene'
+        }
+      }
     }
   },
   clipboard: {
@@ -295,6 +310,43 @@ export default {
       error: {
         couldNotCreate: 'Oda oluşturulamadı, lütfen kontrol edip tekrar dene'
       }
+    },
+    roomReview: {
+      back: 'Geri dön',
+      comment: {
+        placeholder: 'Yorumunu yaz'
+      },
+      submit: 'Gönder',
+      empty: {
+        rating: {
+          description: 'Yorum yazmadan önce puan vermelisin'
+        }
+      },
+      error: {
+        emptyRating: 'Puan vermelisin',
+        required: 'Bir şeyler yazmalısın',
+        maxLength: 'Çok uzun yazmamalısın'
+      }
+    },
+    usernameEdit: {
+      usernameField: {
+        placeholder: 'Oyuncu adını yaz'
+      },
+      submit: 'Kaydet',
+      callback: {
+        success: 'Oyuncu adın değiştirildi'
+      },
+      error: {
+        submit: 'Bu oyuncu adı uygun değil lütfen başka yaz'
+      }
+    }
+  },
+  roomReviewList: {
+    ratingTitle: 'Oda puanı',
+    reviewsTitle: 'Yorumlar',
+    empty: {
+      description: 'Henüz kimse değerlendirme yapmadı',
+      action: 'Yorum ekle'
     }
   },
   seo: {

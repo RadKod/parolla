@@ -25,8 +25,9 @@ export default {
       },
       body: JSON.stringify(transform(form))
     })
+    const result = await response.json()
 
-    return response.json()
+    return result
   },
 
   async fetchRooms({ commit }) {
@@ -54,10 +55,7 @@ export default {
     if (result.success) {
       const room = roomTransformer(result.data)
 
-      commit('SET_ROOM', {
-        title: room.title,
-        isPublic: room.isPublic
-      })
+      commit('SET_ROOM', room)
 
       commit('SET_QUESTIONS', {
         questions: room.questions
@@ -65,6 +63,36 @@ export default {
 
       commit('SET_ALPHABET_ITEMS', room.alphabet)
     }
+
+    return result
+  },
+
+  async fetchReviews({ commit }, { relationId }) {
+    const response = await fetch(`${process.env.API}/rooms/${relationId}/reviews`)
+    const result = await response.json()
+
+    return result
+  },
+
+  async postReview({ commit, state }, { relationId, form, user }) {
+    const transform = form => {
+      return {
+        rating: form.rating,
+        content: form.comment,
+        fingerprint: user.fingerprint
+      }
+    }
+
+    const response = await fetch(`${process.env.API}/rooms/${relationId}/reviews`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Language': this.$i18n.locale
+      },
+      body: JSON.stringify(transform(form))
+    })
+    const result = await response.json()
 
     return result
   }
