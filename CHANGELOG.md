@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.4.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.4.0...v2.4.1)
+
+
+### 🩹 Fixes
+
+  - Null check on persist store for auth ([ea06006](https://github.com/RadKod/parolla/commit/ea06006))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.4.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/b719fc9...v2.4.0)
