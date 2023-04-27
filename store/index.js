@@ -3,7 +3,7 @@ export const actions = {
     if (process.browser) {
       const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
 
-      const storedFingerprint = persistStore && persistStore.auth.user.fingerprint
+      const storedFingerprint = persistStore && persistStore.auth?.user?.fingerprint
 
       if (!storedFingerprint || storedFingerprint.length <= 0) {
         await dispatch('auth/generateFingerprint')
