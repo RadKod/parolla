@@ -172,7 +172,15 @@ export default {
       description: 'Yaptığın şeyleri tekrar yapmak zorunda kalabilirsin'
     },
     roomReview: {
-      title: 'Oda değerlendirmeleri'
+      title: 'Oda değerlendirmeleri',
+      review: 'Değerlendir',
+      pendingReviews: 'Yorumlar getiriliyor',
+      error: {
+        fetchReviews: {
+          description: 'Yorumlar getirilemedi',
+          action: 'Tekrar dene'
+        }
+      }
     }
   },
   clipboard: {
@@ -308,7 +316,17 @@ export default {
       comment: {
         placeholder: 'Yorumunu yaz'
       },
-      submit: 'Gönder'
+      submit: 'Gönder',
+      empty: {
+        rating: {
+          description: 'Yorum yazmadan önce puan vermelisin'
+        }
+      },
+      error: {
+        emptyRating: 'Puan vermelisin',
+        required: 'Bir şeyler yazmalısın',
+        maxLength: 'Çok uzun yazmamalısın'
+      }
     },
     usernameEdit: {
       usernameField: {
@@ -325,7 +343,11 @@ export default {
   },
   roomReviewList: {
     ratingTitle: 'Oda puanı',
-    reviewsTitle: 'Yorumlar'
+    reviewsTitle: 'Yorumlar',
+    empty: {
+      description: 'Henüz kimse değerlendirme yapmadı',
+      action: 'Yorum ekle'
+    }
   },
   seo: {
     main: {

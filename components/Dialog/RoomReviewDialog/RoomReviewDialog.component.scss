@@ -23,11 +23,9 @@
     right: var(--base-p-x);
     bottom: calc(var(--base-p-y) * 4);
     z-index: var(--z-index-sticky);
-    width: 48px;
-    height: 48px;
     color: var(--color-text-04);
     background-color: var(--color-brand-02);
-    border-radius: 100%;
+    border-radius: var(--border-radius-01);
     box-shadow: var(--box-shadow-01);
 
     .van-icon {

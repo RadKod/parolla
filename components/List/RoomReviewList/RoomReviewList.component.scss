@@ -2,10 +2,13 @@
   position: relative;
 
   &__title {
-    display: block;
+    display: flex;
+    align-items: center;
     margin-bottom: var(--base-m-y);
     color: var(--color-text-02);
     font-size: var(--font-size-text-6);
+
+    @include font-weight-semi-bold;
   }
 
   .vue-star-rating {
@@ -47,7 +50,7 @@
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: flex-start;
 
       &__icon {
         margin-right: calc(var(--base-m-x) / 4);

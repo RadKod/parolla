@@ -86,11 +86,11 @@ module.exports = {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
-    // https://www.npmjs.com/package/vuex-persist
-    { src: '~/plugins/vuex-persist', ssr: false },
+    { src: '~/plugins/vuex-persist', ssr: false }, // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
-    { src: '~/plugins/global-meta-tags-setter', ssr: false }
+    { src: '~/plugins/global-meta-tags-setter', ssr: false },
+    { src: '~/plugins/vue-timeago', ssr: false } // https://vue-timeago.egoist.sh
   ],
 
   /*

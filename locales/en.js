@@ -173,7 +173,15 @@ export default {
       description: 'You may have to do the things you did again'
     },
     roomReview: {
-      title: 'Room reviews'
+      title: 'Room reviews',
+      review: 'Review',
+      pendingReviews: 'Fetching reviews',
+      error: {
+        fetchReviews: {
+          description: 'Fetching reviews error',
+          action: 'Try again'
+        }
+      }
     }
   },
   clipboard: {
@@ -309,7 +317,17 @@ export default {
       comment: {
         placeholder: 'Type a comment'
       },
-      submit: 'Submit'
+      submit: 'Submit',
+      empty: {
+        rating: {
+          description: 'You must rate before posting a comment'
+        }
+      },
+      error: {
+        emptyRating: 'You must rate',
+        required: 'Type something',
+        maxLength: 'You must do not type too long'
+      }
     },
     usernameEdit: {
       usernameField: {
@@ -326,7 +344,11 @@ export default {
   },
   roomReviewList: {
     ratingTitle: 'Room rating',
-    reviewsTitle: 'Comments'
+    reviewsTitle: 'Comments',
+    empty: {
+      description: 'No review yet',
+      action: 'Add comment'
+    }
   },
   seo: {
     main: {

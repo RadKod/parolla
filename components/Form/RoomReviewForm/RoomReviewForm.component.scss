@@ -56,6 +56,14 @@
     }
   }
 
+  &__emptyRatingDescription {
+    display: block;
+    margin: calc(var(--base-m-y) * 4) auto;
+    color: var(--color-text-03);
+    font-size: var(--font-size-text-6);
+    text-align: center;
+  }
+
   &__commentField {
     position: relative;
     margin-top: 46px;

@@ -21,7 +21,8 @@
         Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
     template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
       li.app-header-nav__item.app-header-nav__item--roomReviews.me-2(@click="toggleRoomReviewDialog")
-        Icon(badge="14" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
+        Icon(v-if="room.reviewCount > 0" :badge="room.reviewCount" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
+        Icon(v-else :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
     li.app-header-nav__item(@click="toggleMenuDialog")
       PlayerAvatar(:name="user.fingerprint")
 
@@ -225,6 +226,7 @@ export default defineComponent({
     })
 
     const user = computed(() => store.getters['auth/user'])
+    const room = computed(() => store.getters['creator/room'])
 
     return {
       gameModeKeyEnum,
@@ -242,7 +244,8 @@ export default defineComponent({
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,
       isVisibleBackButton,
-      user
+      user,
+      room
     }
   }
 })

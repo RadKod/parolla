@@ -1,5 +1,5 @@
 <template lang="pug">
-Form.room-review-form(@keypress.enter.prevent @failed="handleFailed")
+Form.room-review-form(@keypress.enter.prevent)
   .room-review-form__head
     Button.room-review-form-back-button(native-type="button" @click="$emit('onClickBackButton')")
       Icon.room-review-form-back-button__icon(name="arrow-left")
@@ -8,24 +8,33 @@ Form.room-review-form(@keypress.enter.prevent @failed="handleFailed")
   .room-review-form__body
     StarRating(:rounded-corners="true" :star-size="42" @rating-selected="onRatingSelected")
 
-    Field.room-review-form__commentField(show-word-limit maxlength="240")
-      template(#input)
-        textarea(
-          name="comment"
-          :placeholder="$t('form.roomReview.comment.placeholder')"
-          rows="1"
-          maxlength="240"
-          @input="e => handleCommentInput(e)"
-        )
+    template(v-if="form.rating")
+      Field.room-review-form__commentField(show-word-limit maxlength="240")
+        template(#input)
+          textarea(
+            name="comment"
+            :placeholder="$t('form.roomReview.comment.placeholder')"
+            rows="1"
+            :maxlength="form.validation.comment.maxLength.max"
+            @input="e => handleCommentInput(e)"
+          )
 
-    Button.room-review-form-submit-button(native-type="submit")
-      Icon.room-review-form-submit-button__icon(name="guide-o")
-      span.room-review-form-submit-button__title {{ $t('form.roomReview.submit') }}
+      Button.room-review-form-submit-button(
+        native-type="button"
+        :loading="form.isBusy"
+        :disabled="!form.rating || form.comment.length <= 0 || form.isBusy"
+        @click="handleSubmit"
+      )
+        Icon.room-review-form-submit-button__icon(name="guide-o")
+        span.room-review-form-submit-button__title {{ $t('form.roomReview.submit') }}
+
+    template(v-else)
+      p.room-review-form__emptyRatingDescription {{ $t('form.roomReview.empty.rating.description') }}
 </template>
 
 <script>
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
-import { Form, Button, Icon, Field } from 'vant'
+import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
+import { Form, Button, Icon, Field, Notify } from 'vant'
 import StarRating from 'vue-star-rating'
 
 export default defineComponent({
@@ -34,14 +43,29 @@ export default defineComponent({
     Button,
     Icon,
     Field,
+    Notify,
     StarRating
   },
-  setup() {
+  setup(props, { emit }) {
     const baseClassName = 'room-review-form'
 
+    const { i18n } = useContext()
+    const store = useStore()
+
+    const room = computed(() => store.getters['creator/room'])
+    const user = computed(() => store.getters['auth/user'])
+
     const form = reactive({
+      isBusy: false,
+      rating: null,
       comment: '',
-      rating: null
+      validation: {
+        comment: {
+          maxLength: {
+            max: 240
+          }
+        }
+      }
     })
 
     const onRatingSelected = rating => {
@@ -56,15 +80,73 @@ export default defineComponent({
       document.querySelector(`.${baseClassName}__commentField`).querySelector('.van-field__word-num').innerHTML = value.length
     }
 
-    const handleFailed = () => {
-      console.log('failed')
+    const getErrorNotify = message => {
+      Notify({
+        message: message,
+        color: 'var(--color-text-04)',
+        background: 'var(--color-danger-01)',
+        duration: 1000
+      })
+    }
+
+    const getSuccessNotify = message => {
+      Notify({
+        message: message,
+        color: 'var(--color-text-04)',
+        background: 'var(--color-success-01)',
+        duration: 1000
+      })
+    }
+
+    const resetForm = () => {
+      form.rating = null
+      form.comment = ''
+    }
+
+    const handleSubmit = async () => {
+      form.isBusy = true
+
+      if (!form.rating) {
+        getErrorNotify(i18n.t('form.roomReview.error.emptyRating'))
+
+        return false
+      }
+
+      if (!form.comment || form.comment.length <= 0) {
+        getErrorNotify(i18n.t('form.roomReview.error.required'))
+
+        return false
+      }
+
+      if (form.comment && form.comment.length > form.validation.comment.maxLength.max) {
+        getErrorNotify(i18n.t('form.roomReview.error.maxLength'))
+
+        return false
+      } else {
+        const result = await store.dispatch('creator/postReview', {
+          relationId: room.value.relationId,
+          form,
+          user: user.value
+        })
+
+        if (result.success) {
+          getSuccessNotify(result.message)
+          await store.commit('creator/INCREMENT_ROOM_REVIEW_COUNT')
+          resetForm()
+          emit('onSuccess')
+        } else {
+          getErrorNotify(result.message)
+        }
+      }
+
+      form.isBusy = false
     }
 
     return {
       form,
       onRatingSelected,
       handleCommentInput,
-      handleFailed
+      handleSubmit
     }
   }
 })
