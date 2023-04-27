@@ -15,7 +15,10 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
     // Tabs
     Tabs.stats-dialog__tabs(v-model="activeTab")
       // Score Tab
-      Tab(name="score" :title="$t('gameScene.scoreStats')")
+      Tab(name="score")
+        template(#title)
+          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+          span {{ $t('gameScene.scoreStats') }}
         br
         // Scoreboard
         .scoreboard
@@ -43,7 +46,10 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
             Button.result-sharer__button(color="var(--color-success-01)" icon="share-o" icon-position="right" round @click="shareResults")
               | {{ $t('general.share').toLocaleUpperCase($i18n.locale) }}
 
-      Tab(name="answers" :title="$t('gameScene.answerKey')")
+      Tab(name="answers")
+        template(#title)
+          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerListCheck.svg')")
+          span {{ $t('gameScene.answerKey') }}
         // Answers
         .answers
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
@@ -68,6 +74,12 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
                   | &nbsp;{{ myAnswer({ questionIndex: index }).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
+      Tab(name="reviews")
+        template(#title)
+          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
+          span {{ $t('general.comments') }}
+        RoomReviewView(v-if="activeTab === 'reviews'")
+
     // Footer
     footer.stats-dialog__footer
       i18n.d-flex(path="app.copyright")
@@ -89,6 +101,7 @@ import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
+import { RoomReviewView } from '@/components/View'
 
 export default defineComponent({
   components: {
@@ -101,7 +114,8 @@ export default defineComponent({
     Collapse,
     CollapseItem,
     Empty,
-    RadKodLogo
+    RadKodLogo,
+    RoomReviewView
   },
   props: {
     isOpen: {

@@ -28,7 +28,8 @@ export default {
     stats: 'İstatistik',
     dailyStats: 'Bugünün istatistiği',
     share: 'Paylaş',
-    by: 'tarafından'
+    by: 'tarafından',
+    comments: 'Yorumlar'
   },
   introScene: {
     title: 'OYUN MODU SEÇ',

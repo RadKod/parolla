@@ -28,7 +28,8 @@ export default {
     stats: 'Stats',
     dailyStats: `Today's stats`,
     share: 'Share',
-    by: 'By'
+    by: 'By',
+    comments: 'Comments'
   },
   introScene: {
     title: 'CHOOSE GAME MODE',

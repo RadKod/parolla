@@ -1,10 +1,22 @@
 <template lang="pug">
 .list.room-review-list
-  strong.room-review-list__title
-    | {{ $t('roomReviewList.ratingTitle') }}
-  StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="32")
+  .room-review-list__head
+    .room-review-list__rating.room-review-list__rating--desktop
+      strong.room-review-list__title
+        | {{ $t('roomReviewList.ratingTitle') }}
+      StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="32")
 
-  strong.room-review-list__title.mt-base {{ $t('roomReviewList.reviewsTitle') }}
+    .d-none.d-md-block
+      slot(name="openFormButton")
+
+  .room-review-list__rating.room-review-list__rating--mobile
+    StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="20")
+
+  .room-review-list__title.mt-base
+    strong {{ $t('roomReviewList.reviewsTitle') }} ({{ items && items.length }})
+    .d-flex.d-md-none
+      slot(name="openFormButton")
+
   template(v-if="items && items.length > 0")
     List.list.room-review-list__items
       Cell.room-review-list-item(v-for="(item, index) in items" :key="index")

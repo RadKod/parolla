@@ -44,6 +44,12 @@
           }
         }
       }
+
+      &--roomReviews {
+        @include media-breakpoint-down(mobile-s) {
+          display: none;
+        }
+      }
     }
   }
 }
