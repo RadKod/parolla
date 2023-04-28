@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.4.3
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.4.2...v2.4.3)
+
+
+### 🩹 Fixes
+
+  - User null check on reviews ([1c6e408](https://github.com/RadKod/parolla/commit/1c6e408))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.4.2
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.4.1...v2.4.2)

@@ -22,7 +22,9 @@
       Cell.room-review-list-item(v-for="(item, index) in items" :key="index")
         .room-review-list-item__head
           .room-review-list-item-user
-            strong.room-review-list-item-user__username {{ item.user.username }}
+            strong.room-review-list-item-user__username
+              template(v-if="item.user") {{ item.user.username }}
+              template(v-else) -
             small &nbsp; (🟊 {{ item.rating.substring(0, 1) }})
 
         .room-review-list-item__body
