@@ -7,6 +7,6 @@ export default model => {
     comment: model.content,
     createdAt: model.created_at,
     updatedAt: model.updated_at,
-    user: userTransformer(model.user)
+    user: model.user ? userTransformer(model.user) : null
   }
 }
