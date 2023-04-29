@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.5.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/e4c3033...v2.5.0)
+
+
+### 🚀 Enhancements
+
+  - Ux improvements ([9f68a4d](https://github.com/RadKod/parolla/commit/9f68a4d))
+  - Ux improvements ([9a0be17](https://github.com/RadKod/parolla/commit/9a0be17))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.4.3
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.4.2...v2.4.3)
