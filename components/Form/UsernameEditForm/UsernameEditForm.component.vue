@@ -17,27 +17,26 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
 
     template(#button)
       Button.username-edit-form-submit-button(native-type="button" :loading="form.isBusy" :disabled="form.isBusy" @click="handleSubmit")
-        Icon.username-edit-form-submit-button__icon(name="success")
+        AppIcon.username-edit-form-submit-button__icon(name="tabler:check" color="var(--color-text-04)" :width="20" :height="20")
         span.username-edit-form-submit-button__title {{ $t('form.usernameEdit.submit') }}
 </template>
 
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
-import { Form, Button, Icon, Field, Notify } from 'vant'
+import { Form, Button, Field, Notify } from 'vant'
 import { PlayerAvatar } from '@/components/Avatar'
+import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
     Form,
     Button,
-    Icon,
     Field,
     Notify,
-    PlayerAvatar
+    PlayerAvatar,
+    AppIcon
   },
   setup() {
-    const baseClassName = 'username-edit-form'
-
     const { i18n } = useContext()
     const store = useStore()
 

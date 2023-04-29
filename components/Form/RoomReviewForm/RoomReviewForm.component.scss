@@ -13,7 +13,7 @@
 
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: var(--base-m-y);
     color: var(--color-text-03);
     background-color: transparent;
@@ -23,7 +23,7 @@
     #{$van-button} {
       &__text {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
       }
     }
 
@@ -105,7 +105,7 @@
     #{$van-button} {
       &__text {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
       }
     }
 

@@ -28,7 +28,8 @@ export default {
     stats: 'Stats',
     dailyStats: `Today's stats`,
     share: 'Share',
-    by: 'By'
+    by: 'By',
+    comments: 'Comments'
   },
   introScene: {
     title: 'CHOOSE GAME MODE',
@@ -217,6 +218,9 @@ export default {
       },
       compose: {
         title: 'COMPOSE A ROOM'
+      },
+      myRooms: {
+        title: 'MY RECENTLY CREATED ROOMS'
       }
     }
   },
@@ -249,6 +253,10 @@ export default {
       joinRoom: 'Could not go to the room, please check the link you entered'
     }
   },
+  creatorModeMyRooms: {
+    title: 'My recently created rooms',
+    description: 'Your recently created rooms are saved in the browser storage, this list will be cleared when the browser data is reset'
+  },
   form: {
     isRequired: '{model} is required',
     creatorModeCompose: {
@@ -261,8 +269,11 @@ export default {
           label: 'Room title',
           placeholder: 'Type room title'
         },
-        isPublic: {
+        isListed: {
           label: 'Wanna you listing on public rooms?'
+        },
+        isAnon: {
+          label: 'Hide creator player name?'
         }
       },
       qa: {

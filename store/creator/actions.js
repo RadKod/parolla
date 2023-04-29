@@ -1,18 +1,20 @@
 import { roomTransformer } from '@/transformers'
 
 export default {
-  async postQaForm({ commit, state }, form) {
+  async postQaForm({ commit, state }, { form, user }) {
     const transform = form => {
       return {
         room_title: form.roomTitle,
-        is_public: form.isPublic,
+        is_public: form.isListed,
         qa_list: form.qaList.map(item => {
           return {
             character: item.character,
             question: item.question,
             answer: item.answer
           }
-        })
+        }),
+        is_anon: form.isAnon,
+        fingerprint: user.fingerprint
       }
     }
 

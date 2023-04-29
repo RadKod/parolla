@@ -15,14 +15,14 @@ Dialog.dialog.locale-switch-dialog(
     CellGroup
       Cell.locale-switch-item(clickable :class="[{ 'locale-switch-item--active': $i18n.locale === 'tr' }]" @click="activeLocale = 'tr'")
         template(#title)
-          img(src="@/assets/img/icons/svg/circle-flags/CircleFlagsTr.svg" alt="tr" width="24" height="24")
+          AppIcon(name="circle-flags:tr")
           strong Türkçe
         template(#right-icon)
           Radio(name="tr")
 
       Cell.locale-switch-item(clickable :class="[{ 'locale-switch-item--active': $i18n.locale === 'en' }]" @click="activeLocale = 'en'")
         template(#title)
-          img(src="@/assets/img/icons/svg/circle-flags/CircleFlagsUs.svg" alt="tr" width="24" height="24")
+          AppIcon(name="circle-flags:us")
           strong English
         template(#right-icon)
           Radio(name="en")
@@ -32,6 +32,7 @@ Dialog.dialog.locale-switch-dialog(
 import { defineComponent, useRoute, useContext, reactive, ref, watch } from '@nuxtjs/composition-api'
 import { useDialog } from '@/hooks'
 import { Dialog, RadioGroup, CellGroup, Cell, Radio, Toast } from 'vant'
+import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
@@ -39,7 +40,8 @@ export default defineComponent({
     RadioGroup,
     CellGroup,
     Cell,
-    Radio
+    Radio,
+    AppIcon
   },
   props: {
     isOpen: {

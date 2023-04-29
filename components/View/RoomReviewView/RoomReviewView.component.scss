@@ -1,0 +1,37 @@
+.room-review-view {
+  position: relative;
+
+  &__list {
+    margin-bottom: calc(var(--base-m-y) * 2);
+  }
+
+  &__openFormButton {
+    position: relative;
+    z-index: var(--z-index-sticky);
+    margin-left: auto;
+    color: var(--color-text-04);
+    background-color: var(--color-brand-02);
+    border-radius: var(--border-radius-01);
+    box-shadow: var(--box-shadow-01);
+
+    &--desktop {
+      @include media-breakpoint-down(tablet) {
+        display: none;
+      }
+    }
+
+    &--mobile {
+      @include media-breakpoint-up(tablet) {
+        display: none;
+      }
+    }
+
+    .van-icon {
+      font-size: var(--font-size-text-4);
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-8);
+      }
+    }
+  }
+}

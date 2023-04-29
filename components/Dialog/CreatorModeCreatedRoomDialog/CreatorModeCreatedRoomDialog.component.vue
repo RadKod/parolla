@@ -15,7 +15,7 @@ Dialog.dialog.creator-mode-created-room-dialog(
     disabled
   )
     template(#left-icon)
-      Icon(:name="require('@/assets/img/icons/svg/tabler/TablerLink.svg')")
+      AppIcon(name="tabler:link" color="var(--color-icon-01)")
     template(#button)
       Button(type="info" size="small" native-type="button" round @click="copyRoomUrl") {{ $t('clipboard.copy') }}
 </template>
@@ -23,14 +23,15 @@ Dialog.dialog.creator-mode-created-room-dialog(
 <script>
 import { defineComponent, useContext, reactive, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { Dialog, Field, Button, Icon, Toast } from 'vant'
+import { Dialog, Field, Button, Toast } from 'vant'
+import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     Field,
     Button,
-    Icon
+    AppIcon
   },
   props: {
     isOpen: {

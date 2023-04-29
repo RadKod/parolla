@@ -28,7 +28,8 @@ export default {
     stats: 'İstatistik',
     dailyStats: 'Bugünün istatistiği',
     share: 'Paylaş',
-    by: 'tarafından'
+    by: 'tarafından',
+    comments: 'Yorumlar'
   },
   introScene: {
     title: 'OYUN MODU SEÇ',
@@ -216,6 +217,9 @@ export default {
       },
       compose: {
         title: 'ODA OLUŞTUR'
+      },
+      myRooms: {
+        title: 'SON OLUŞTURDUĞUM ODALAR'
       }
     }
   },
@@ -248,6 +252,10 @@ export default {
       joinRoom: 'Odaya gidilemedi, lütfen girdiğin bağlantıyı kontrol et'
     }
   },
+  creatorModeMyRooms: {
+    title: 'Son oluşturduğum odalar',
+    description: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
+  },
   form: {
     isRequired: '{model} gereklidir',
     creatorModeCompose: {
@@ -260,8 +268,11 @@ export default {
           label: 'Oda başlığı',
           placeholder: 'Oda başlığı yaz'
         },
-        isPublic: {
+        isListed: {
           label: 'Açık odalarda listensin mi?'
+        },
+        isAnon: {
+          label: 'Oluşturan oyuncu adın gizlensin mi?'
         }
       },
       qa: {

@@ -1,26 +1,43 @@
 <template lang="pug">
 .list.room-review-list
-  strong.room-review-list__title
-    | {{ $t('roomReviewList.ratingTitle') }}
-  StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="32")
+  .room-review-list__head
+    .room-review-list__rating.room-review-list__rating--desktop
+      strong.room-review-list__title
+        | {{ $t('roomReviewList.ratingTitle') }}
+      StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="32")
 
-  strong.room-review-list__title.mt-base {{ $t('roomReviewList.reviewsTitle') }}
+    .d-none.d-md-block
+      slot(name="openFormButton")
+
+  .room-review-list__rating.room-review-list__rating--mobile
+    StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="20")
+
+  .room-review-list__title.mt-base
+    strong {{ $t('roomReviewList.reviewsTitle') }} ({{ items && items.length }})
+    .d-flex.d-md-none
+      slot(name="openFormButton")
+
   template(v-if="items && items.length > 0")
     List.list.room-review-list__items
       Cell.room-review-list-item(v-for="(item, index) in items" :key="index")
         .room-review-list-item__head
           .room-review-list-item-user
             strong.room-review-list-item-user__username
-              template(v-if="item.user") {{ item.user.username }}
+              template(v-if="item.user")
+                PlayerAvatar(:size="20" :name="item.user.fingerprint")
+                span {{ item.user.username }}
               template(v-else) -
-            small &nbsp; (🟊 {{ item.rating.substring(0, 1) }})
+            small &nbsp; (
+              AppIcon(name="tabler:star-filled" color="var(--color-text-03)" :width="10" :height="10")
+              | {{ item.rating.substring(0, 1) }}
+              | )
 
         .room-review-list-item__body
           .room-review-list-item-content
             p.room-review-list-item-content__description {{ item.comment }}
 
           .room-review-list-item-date
-            Icon.room-review-list-item-date__icon(name="clock-o")
+            AppIcon.room-review-list-item-date__icon(name="tabler:clock" color="var(--color-text-03)" :width="16" :height="16")
             Timeago.room-review-list-item-date__value(:datetime="item.createdAt" :auto-update="60" :locale="$i18n.locale")
   // Empty List
   template(v-else)
@@ -30,17 +47,20 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { List, Cell, Icon, Empty, Button } from 'vant'
+import { List, Cell, Empty, Button } from 'vant'
 import StarRating from 'vue-star-rating'
+import { AppIcon } from '@/components/Icon'
+import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
     List,
     Cell,
-    Icon,
     Empty,
     Button,
-    StarRating
+    StarRating,
+    AppIcon,
+    PlayerAvatar
   },
   props: {
     rating: {

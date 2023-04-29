@@ -1487,6 +1487,18 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iconify/types@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
+  integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
+
+"@iconify/vue2@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@iconify/vue2/-/vue2-2.1.0.tgz#fbeaf02955c1ed31fbb0a935516679daaff4f6fd"
+  integrity sha512-+R4T9EqrUecMKh/tdiscju/mJS+HCzHFFuJ9XnNcFLaIj3lBOdh8RJolPY9n4k7XRG5V/tY16Lzx+mv+vOmjhA==
+  dependencies:
+    "@iconify/types" "^2.0.0"
+
 "@intlify/shared@^9.0.0":
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.2.2.tgz#5011be9ca2b4ab86f8660739286e2707f9abb4a5"

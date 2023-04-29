@@ -14,7 +14,7 @@
 
     // Countdown
     .countdown.game-scene__countdown(:class="{ 'd-none': fetchState.pending || fetchState.error }")
-      Icon.countdown__icon(name="clock-o")
+      AppIcon.countdown__icon(name="tabler:clock" color="var(--color-icon-01)")
       CountDown.countdown__timer(
         ref="countdownTimerRef"
         format="mm:ss"
@@ -87,7 +87,8 @@
 import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
-import { Button, Field, Empty, CountDown, Icon } from 'vant'
+import { Button, Field, Empty, CountDown } from 'vant'
+import { AppIcon } from '@/components/Icon'
 import { HowToPlayDialog, DailyModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 
 export default defineComponent({
@@ -96,7 +97,7 @@ export default defineComponent({
     Field,
     Empty,
     CountDown,
-    Icon,
+    AppIcon,
     HowToPlayDialog,
     DailyModeStatsDialog,
     InterstitialAdDialog
