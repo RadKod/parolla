@@ -2,7 +2,7 @@
 Form.room-review-form(@keypress.enter.prevent)
   .room-review-form__head
     Button.room-review-form-back-button(native-type="button" @click="$emit('onClickBackButton')")
-      Icon.room-review-form-back-button__icon(name="arrow-left")
+      AppIcon.room-review-form-back-button__icon(name="tabler:arrow-left" color="var(--color-icon-01)" :width="16" :height="16")
       span.room-review-form-back-button__title {{ $t('form.roomReview.back') }}
 
   .room-review-form__body
@@ -25,7 +25,7 @@ Form.room-review-form(@keypress.enter.prevent)
         :disabled="!form.rating || form.comment.length <= 0 || form.isBusy"
         @click="handleSubmit"
       )
-        Icon.room-review-form-submit-button__icon(name="guide-o")
+        AppIcon.room-review-form-submit-button__icon(name="tabler:send" color="var(--color-text-04)" :width="16" :height="16")
         span.room-review-form-submit-button__title {{ $t('form.roomReview.submit') }}
 
     template(v-else)
@@ -34,17 +34,18 @@ Form.room-review-form(@keypress.enter.prevent)
 
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
-import { Form, Button, Icon, Field, Notify } from 'vant'
+import { Form, Button, Field, Notify } from 'vant'
 import StarRating from 'vue-star-rating'
+import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
     Form,
     Button,
-    Icon,
     Field,
     Notify,
-    StarRating
+    StarRating,
+    AppIcon
   },
   setup(props, { emit }) {
     const baseClassName = 'room-review-form'

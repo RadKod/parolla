@@ -90,6 +90,7 @@ module.exports = {
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
     { src: '~/plugins/global-meta-tags-setter', ssr: false },
+    { src: '~/plugins/iconify', ssr: false }, // https://www.npmjs.com/package/@iconify/vue
     { src: '~/plugins/vue-timeago', ssr: false } // https://vue-timeago.egoist.sh
   ],
 

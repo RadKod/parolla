@@ -44,6 +44,7 @@
     ]
   },
   "dependencies": {
+    "@iconify/vue2": "^2.1.0",
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/i18n": "^7.3.1",

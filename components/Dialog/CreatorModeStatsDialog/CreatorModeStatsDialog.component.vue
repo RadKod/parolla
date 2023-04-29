@@ -17,8 +17,9 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
       // Score Tab
       Tab(name="score")
         template(#title)
-          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
-          span {{ $t('gameScene.scoreStats') }}
+          .stats-dialog-tab-title
+            AppIcon.stats-dialog-tab-title__icon(name="tabler:chart-bar" :width="20" :height="20")
+            span.stats-dialog-tab-title__value {{ $t('gameScene.scoreStats') }}
         br
         // Scoreboard
         .scoreboard
@@ -48,8 +49,9 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
 
       Tab(name="answers")
         template(#title)
-          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerListCheck.svg')")
-          span {{ $t('gameScene.answerKey') }}
+          .stats-dialog-tab-title
+            AppIcon.stats-dialog-tab-title__icon(name="tabler:list-check" :width="20" :height="20")
+            span.stats-dialog-tab-title__value {{ $t('gameScene.answerKey') }}
         // Answers
         .answers
           Collapse.answers__inner(v-model="toggledAnswer" accordion)
@@ -76,8 +78,9 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
 
       Tab(name="reviews")
         template(#title)
-          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
-          span {{ $t('general.comments') }}
+          .stats-dialog-tab-title
+            AppIcon.stats-dialog-tab-title__icon(name="tabler:message-2" :width="20" :height="20")
+            span.stats-dialog-tab-title__value {{ $t('general.comments') }}
         RoomReviewView(v-if="activeTab === 'reviews'")
 
     // Footer
@@ -99,7 +102,8 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
 import { defineComponent, useRoute, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
-import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
+import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
+import { AppIcon } from '@/components/Icon'
 import { RadKodLogo } from '@/components/Logo'
 import { RoomReviewView } from '@/components/View'
 
@@ -108,12 +112,12 @@ export default defineComponent({
     Dialog: Dialog.Component,
     Tabs,
     Tab,
-    Icon,
     CountDown,
     Button,
     Collapse,
     CollapseItem,
     Empty,
+    AppIcon,
     RadKodLogo,
     RoomReviewView
   },

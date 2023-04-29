@@ -13,7 +13,19 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       show-word-limit
       :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.room.roomTitle.label') }) }]"
     )
-    SwitchCell.creator-mode-compose-form__isPublic(v-model="form.isPublic" :title="$t('form.creatorModeCompose.room.isPublic.label')")
+    Cell.creator-mode-compose-form__.creator-mode-compose-form__isListed
+      template(#title)
+        span {{ $t('form.creatorModeCompose.room.isListed.label') }}
+
+      template(#right-icon)
+        VanSwitch(v-model="form.isListed" :size="24")
+    Cell.creator-mode-compose-form__isAnon
+      template(#title)
+        span {{ $t('form.creatorModeCompose.room.isAnon.label') }} &nbsp;
+        small(v-if="user") ({{ user.username }})
+
+      template(#right-icon)
+        VanSwitch(v-model="form.isAnon" :size="24")
   h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.qaSet') }}
 
   .compose-qa-list
@@ -146,15 +158,17 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 </template>
 
 <script>
-import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, onMounted } from '@nuxtjs/composition-api'
-import { Form, Field, SwitchCell, Button, Empty, Notify, Dialog } from 'vant'
-import { CreatorModeCreatedRoomDialog } from '@/components/Dialog'
+import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
+import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
+// Absolute path due to bypass for hoisting
+import CreatorModeCreatedRoomDialog from '@/components/Dialog/CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'
 
 export default defineComponent({
   components: {
     Form,
     Field,
-    SwitchCell,
+    Cell,
+    VanSwitch: Switch,
     Button,
     Empty,
     Dialog,
@@ -167,11 +181,14 @@ export default defineComponent({
     const { localePath, i18n } = useContext()
     const store = useStore()
 
+    const user = computed(() => store.getters['auth/user'])
+
     const form = reactive({
       isBusy: false,
       isClear: false,
       roomTitle: '',
-      isPublic: true,
+      isListed: true,
+      isAnon: false,
       qaList: []
     })
 
@@ -308,7 +325,7 @@ export default defineComponent({
       }
 
       if (form.isClear) {
-        const result = await store.dispatch('creator/postQaForm', form)
+        const result = await store.dispatch('creator/postQaForm', { form, user: user.value })
 
         if (result.success) {
           createdRoom.title = result.data.title
@@ -329,7 +346,8 @@ export default defineComponent({
 
     const resetForm = () => {
       form.roomTitle = ''
-      form.isPublic = true
+      form.isListed = true
+      form.isAnon = false
       form.qaList = []
     }
 
@@ -352,7 +370,8 @@ export default defineComponent({
 
     if (storagedForm) {
       form.roomTitle = storagedForm.roomTitle
-      form.isPublic = storagedForm.isPublic
+      form.isListed = storagedForm.isListed
+      form.isAnon = storagedForm.isAnon
       form.qaList = storagedForm.qaList
     }
 
@@ -377,6 +396,7 @@ export default defineComponent({
     })
 
     return {
+      user,
       form,
       addItem,
       removeItem,

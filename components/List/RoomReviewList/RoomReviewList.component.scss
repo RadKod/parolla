@@ -82,14 +82,30 @@
 
     &-user {
       position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
 
       &__username {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: flex-start;
         color: var(--color-text-02);
         font-size: var(--font-size-text-9);
+        word-wrap: break-word;
+
+        .player-avatar {
+          margin-top: calc(var(--base-m-y) / 8);
+          margin-right: calc(var(--base-m-x) / 2);
+        }
       }
 
       small {
         color: var(--color-text-02);
+
+        .app-icon {
+          display: inline-flex;
+          margin-right: calc(var(--base-m-x) / 4);
+        }
       }
     }
 

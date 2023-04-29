@@ -41,7 +41,7 @@ Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
           // Next Game Countdown
           .countdown.stats-dialog__countdown
             span.countdown__title {{ $t('dialog.stats.daily.nextGame') }}
-            Icon.countdown__icon(name="clock-o")
+            AppIcon.countdown__icon(name="tabler:clock" color="var(--color-icon-01)")
             CountDown.countdown__timer(ref="countdownTimerRef" format="HH:mm:ss" :auto-start="true" :time="nextGameDateMs")
 
           // Result Sharer
@@ -91,21 +91,22 @@ Dialog.dialog.stats-dialog.daily-mode-stats-dialog(
 import { defineComponent, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
-import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
+import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
+import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     Tabs,
     Tab,
-    Icon,
     CountDown,
     Button,
     Collapse,
     CollapseItem,
     Empty,
-    RadKodLogo
+    RadKodLogo,
+    AppIcon
   },
   props: {
     isOpen: {

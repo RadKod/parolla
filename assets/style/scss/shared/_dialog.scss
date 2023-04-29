@@ -5,6 +5,7 @@
 // Stats Dialog shared styles
 .stats-dialog {
   $van-dialog: '.van-dialog';
+  $stats-dialog: '.stats-dialog';
 
   width: 90% !important;
   max-width: var(--tablet) !important;
@@ -40,41 +41,27 @@
         display: flex;
         align-items: center;
 
-        @include media-breakpoint-down(mobile) {
-          span {
-            display: none;
+        #{$stats-dialog} {
+          &-tab-title {
+            display: flex;
+
+            &__value {
+              @include media-breakpoint-down(mobile) {
+                display: none;
+              }
+            }
           }
         }
       }
 
-      .van-icon {
-        width: 22px;
-        height: 22px;
+      .app-icon {
         margin-right: calc(var(--base-m-x) / 4);
-        opacity: 0.8;
-
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      @at-root .dark-mode {
-        .stats-dialog .van-tab {
-          .van-icon {
-            filter: invert(1) grayscale(100%) brightness(90%);
-          }
-        }
       }
     }
   }
 
   .score {
     position: relative;
-
-    &__icon {
-      //
-    }
 
     &__count {
       @include font-weight-bold;

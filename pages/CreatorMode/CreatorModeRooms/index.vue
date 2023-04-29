@@ -14,7 +14,7 @@
         @keypress.native.enter="gotoRoom"
       )
         template(#left-icon)
-          Icon(:name="require('@/assets/img/icons/svg/tabler/TablerLink.svg')")
+          AppIcon(name="tabler:link" color="var(--color-icon-01)" :width="20" :height="20")
         template(#button)
           Button(type="info" size="small" native-type="button" round :disabled="!form.roomUrl.isClear" @click="gotoRoom")
             | {{ $t('creatorModeRooms.joinRoom.url.action') }}
@@ -30,6 +30,7 @@
       Search.creator-mode-rooms-page-rooms__searchField(
         v-model="form.rooms.search"
         :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
+        :clearable="false"
         @input="handleSearchRoom"
       )
 
@@ -54,30 +55,57 @@
 
           template(v-else)
             template(v-for="room in form.rooms.search.length > 0 ? filteredRooms : rooms")
-              Cell(
-                v-if="room.isPublic"
-                :label="`ID: ${room.id}`"
+              Cell.room-list-item(
+                v-if="room.isListed"
                 is-link
                 :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
-                :title="room.title"
               )
+                template(#title)
+                  span.room-list-item__title {{ room.title }}
+
+                template(#label)
+                  .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
+                    AppIcon.room-list-item-badge__icon(name="tabler:user" color="var(--color-text-03)" :width="18" :height="18")
+                    span.room-list-item-badge__value {{ room.user.username }}
+
+                  .room-list-item__badges
+                    .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
+                      PlayerAvatar(:size="16" :name="room.user.fingerprint")
+                      span.room-list-item-badge__value {{ room.user.username }}
+
+                    .room-list-item-badge(v-if="room.questionCount")
+                      AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="18" :height="18")
+                      span.room-list-item-badge__value {{ room.questionCount }}
+
+                    .room-list-item-badge(v-if="room.viewCount")
+                      AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="18" :height="18")
+                      span.room-list-item-badge__value {{ room.viewCount }}
+
+                    .room-list-item-badge(v-if="room.rating")
+                      AppIcon.room-list-item-badge__icon(name="tabler:star" color="var(--color-text-03)" :width="18" :height="18")
+                      span.room-list-item-badge__value {{ String(room.rating).substring(0, 1) }}
+
+                  span.room-list-item__id ID: {{ room.id }}
 </template>
 
 <script>
 import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { Field, Search, Button, Icon, Divider, Cell, Empty, Notify } from 'vant'
+import { Field, Search, Button, Divider, Cell, Empty, Notify } from 'vant'
+import { AppIcon } from '@/components/Icon'
+import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
     Field,
     Search,
     Button,
-    Icon,
     Divider,
     Cell,
     Empty,
-    Notify
+    Notify,
+    AppIcon,
+    PlayerAvatar
   },
   layout: 'Default/Default.layout',
   setup() {

@@ -262,8 +262,11 @@ export default {
           label: 'Room title',
           placeholder: 'Type room title'
         },
-        isPublic: {
+        isListed: {
           label: 'Wanna you listing on public rooms?'
+        },
+        isAnon: {
+          label: 'Hide creator player name?'
         }
       },
       qa: {

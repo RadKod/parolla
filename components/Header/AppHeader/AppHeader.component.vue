@@ -3,10 +3,10 @@
   nav.app-header-nav
     template(v-if="isVisibleLocaleSwitchButton")
       li.app-header-nav__item(@click="toggleLocaleSwitchDialog")
-        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerWorldCog.svg')")
+        AppIcon(name="tabler:world-cog")
     template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
-        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerArrowLeft.svg')")
+        AppIcon(name="tabler:arrow-left")
   AppLogo(type="title" @click.native.prevent.capture="handleClickAppLogo")
   nav.app-header-nav
     template(
@@ -16,13 +16,13 @@
         v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED"
         @click="toggleHowToPlayDialog"
       )
-        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerInfoCircle.svg')")
+        AppIcon(name="tabler:info-circle")
       li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
-        Icon(:name="require('@/assets/img/icons/svg/tabler/TablerChartBar.svg')")
+        AppIcon(name="tabler:chart-bar")
     template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
-      li.app-header-nav__item.app-header-nav__item--roomReviews.me-2(@click="toggleRoomReviewDialog")
-        Icon(v-if="room.reviewCount > 0" :badge="room.reviewCount" :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
-        Icon(v-else :name="require('@/assets/img/icons/svg/tabler/TablerMessage2.svg')")
+      li.app-header-nav__item.app-header-nav__item--roomReviews(@click="toggleRoomReviewDialog")
+        AppIcon.me-2(v-if="room.reviewCount > 0" name="tabler:message-2" :label="room.reviewCount")
+        AppIcon(v-else name="tabler:message-2")
     li.app-header-nav__item(@click="toggleMenuDialog")
       PlayerAvatar(:name="user.fingerprint")
 
@@ -58,9 +58,9 @@
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode, useDialog } from '@/hooks'
-import { Icon } from 'vant'
 import { PlayerAvatar } from '@/components/Avatar'
 import { AppLogo } from '@/components/Logo'
+import { AppIcon } from '@/components/Icon'
 import {
   DailyModeStatsDialog,
   HowToPlayDialog,
@@ -74,9 +74,9 @@ import {
 
 export default defineComponent({
   components: {
-    Icon,
     PlayerAvatar,
     AppLogo,
+    AppIcon,
     DailyModeStatsDialog,
     HowToPlayDialog,
     MenuDialog,

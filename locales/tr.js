@@ -261,8 +261,11 @@ export default {
           label: 'Oda başlığı',
           placeholder: 'Oda başlığı yaz'
         },
-        isPublic: {
+        isListed: {
           label: 'Açık odalarda listensin mi?'
+        },
+        isAnon: {
+          label: 'Oluşturan oyuncu adın gizlensin mi?'
         }
       },
       qa: {

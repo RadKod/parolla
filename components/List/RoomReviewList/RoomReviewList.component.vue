@@ -23,16 +23,21 @@
         .room-review-list-item__head
           .room-review-list-item-user
             strong.room-review-list-item-user__username
-              template(v-if="item.user") {{ item.user.username }}
+              template(v-if="item.user")
+                PlayerAvatar(:size="20" :name="item.user.fingerprint")
+                span {{ item.user.username }}
               template(v-else) -
-            small &nbsp; (🟊 {{ item.rating.substring(0, 1) }})
+            small &nbsp; (
+              AppIcon(name="tabler:star-filled" color="var(--color-text-03)" :width="10" :height="10")
+              | {{ item.rating.substring(0, 1) }}
+              | )
 
         .room-review-list-item__body
           .room-review-list-item-content
             p.room-review-list-item-content__description {{ item.comment }}
 
           .room-review-list-item-date
-            Icon.room-review-list-item-date__icon(name="clock-o")
+            AppIcon.room-review-list-item-date__icon(name="tabler:clock" color="var(--color-text-03)" :width="16" :height="16")
             Timeago.room-review-list-item-date__value(:datetime="item.createdAt" :auto-update="60" :locale="$i18n.locale")
   // Empty List
   template(v-else)
@@ -42,17 +47,20 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { List, Cell, Icon, Empty, Button } from 'vant'
+import { List, Cell, Empty, Button } from 'vant'
 import StarRating from 'vue-star-rating'
+import { AppIcon } from '@/components/Icon'
+import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
     List,
     Cell,
-    Icon,
     Empty,
     Button,
-    StarRating
+    StarRating,
+    AppIcon,
+    PlayerAvatar
   },
   props: {
     rating: {
