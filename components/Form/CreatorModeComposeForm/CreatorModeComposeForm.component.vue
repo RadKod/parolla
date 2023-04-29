@@ -159,6 +159,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
+import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
 // Absolute path due to bypass for hoisting
 import CreatorModeCreatedRoomDialog from '@/components/Dialog/CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'
@@ -334,6 +335,14 @@ export default defineComponent({
           dialog.room.isOpen = true
 
           resetForm()
+
+          let storagedMyRooms = JSON.parse(window.localStorage.getItem('myRooms'))
+
+          if (storagedMyRooms && storagedMyRooms.length > 0) {
+            window.localStorage.setItem('myRooms', JSON.stringify([...storagedMyRooms, roomTransformer(result.data)]))
+          } else {
+            window.localStorage.setItem('myRooms', JSON.stringify([roomTransformer(result.data)]))
+          }
         } else {
           getErrorNotify()
         }

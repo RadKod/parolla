@@ -97,3 +97,9 @@
     color: var(--color-danger-01) !important;
   }
 }
+
+.van-empty {
+  &__description {
+    text-align: center;
+  }
+}

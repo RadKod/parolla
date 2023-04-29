@@ -175,7 +175,9 @@ export default defineComponent({
       const triggerRoute = () => {
         if (
           route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
-          route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
+          route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
+          route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' }) ||
+          route.value.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })
         ) {
           router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
         } else {
@@ -219,6 +221,7 @@ export default defineComponent({
         activeGameMode.value === gameModeKeyEnum.CREATOR ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeIntro' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
       ) {
         return true

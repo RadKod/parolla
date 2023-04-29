@@ -197,6 +197,10 @@ module.exports = {
             tr: '/yaratici/odalar',
             en: '/creator/rooms'
           },
+          'CreatorMode/CreatorModeMyRooms/index': {
+            tr: '/yaratici/odalarim',
+            en: '/creator/my-rooms'
+          },
           'CreatorMode/CreatorModeCompose/index': {
             tr: '/yaratici/olustur',
             en: '/creator/compose'

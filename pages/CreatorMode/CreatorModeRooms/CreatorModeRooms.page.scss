@@ -90,11 +90,6 @@
         #{$room-list-item} {
           &-badge {
             &--user {
-              .player-avatar {
-                display: flex;
-                align-items: center;
-                margin-right: calc(var(--base-m-x) / 4);
-              }
               @include media-breakpoint-down(mobile) {
                 display: none;
               }
@@ -131,6 +126,12 @@
           max-width: 100%;
           margin-right: var(--base-m-x);
           word-wrap: break-word;
+
+          .player-avatar {
+            display: flex;
+            align-items: center;
+            margin-right: calc(var(--base-m-x) / 4);
+          }
         }
 
         &__icon {

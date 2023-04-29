@@ -217,6 +217,9 @@ export default {
       },
       compose: {
         title: 'ODA OLUŞTUR'
+      },
+      myRooms: {
+        title: 'SON OLUŞTURDUĞUM ODALAR'
       }
     }
   },
@@ -248,6 +251,10 @@ export default {
       },
       joinRoom: 'Odaya gidilemedi, lütfen girdiğin bağlantıyı kontrol et'
     }
+  },
+  creatorModeMyRooms: {
+    title: 'Son oluşturduğum odalar',
+    description: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
   },
   form: {
     isRequired: '{model} gereklidir',

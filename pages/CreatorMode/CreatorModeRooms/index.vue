@@ -65,7 +65,7 @@
 
                 template(#label)
                   .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
-                    AppIcon.room-list-item-badge__icon(name="tabler:user" color="var(--color-text-03)" :width="18" :height="18")
+                    PlayerAvatar(:size="16" :name="room.user.fingerprint")
                     span.room-list-item-badge__value {{ room.user.username }}
 
                   .room-list-item__badges
@@ -74,16 +74,21 @@
                       span.room-list-item-badge__value {{ room.user.username }}
 
                     .room-list-item-badge(v-if="room.questionCount")
-                      AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="18" :height="18")
+                      AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="16" :height="16")
                       span.room-list-item-badge__value {{ room.questionCount }}
 
                     .room-list-item-badge(v-if="room.viewCount")
-                      AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="18" :height="18")
+                      AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="16" :height="16")
                       span.room-list-item-badge__value {{ room.viewCount }}
 
                     .room-list-item-badge(v-if="room.rating")
-                      AppIcon.room-list-item-badge__icon(name="tabler:star" color="var(--color-text-03)" :width="18" :height="18")
-                      span.room-list-item-badge__value {{ String(room.rating).substring(0, 1) }}
+                      AppIcon.room-list-item-badge__icon(
+                        name="tabler:star-filled"
+                        color="var(--color-warning-02)"
+                        :width="16"
+                        :height="16"
+                      )
+                      span.room-list-item-badge__value {{ String(room.rating).substring(0, 1) }}/5
 
                   span.room-list-item__id ID: {{ room.id }}
 </template>
