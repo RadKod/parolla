@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.5.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.5.0...v2.5.1)
+
+
+### 🩹 Fixes
+
+  - Ui fix on room compose form ([91c6159](https://github.com/RadKod/parolla/commit/91c6159))
+
+### ❤️  Contributors
+
+- Selimdoyranli <selim@radkod.com>
+
 ## v2.5.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/e4c3033...v2.5.0)
