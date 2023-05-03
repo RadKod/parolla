@@ -81,22 +81,26 @@
                       AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="16" :height="16")
                       span.room-list-item-badge__value {{ room.viewCount }}
 
-                    .room-list-item-badge(v-if="room.rating")
-                      AppIcon.room-list-item-badge__icon(
-                        name="tabler:star-filled"
-                        color="var(--color-warning-02)"
-                        :width="16"
-                        :height="16"
+                    .room-list-item-badge.room-list-item-badge--rating(v-if="room.rating")
+                      StarRating(
+                        read-only
+                        inline
+                        :show-rating="false"
+                        :rating="room.rating"
+                        :increment="0.1"
+                        :rounded-corners="false"
+                        :star-size="14"
                       )
-                      span.room-list-item-badge__value {{ String(room.rating).substring(0, 1) }}/5
-
+                      label {{ String(formatRating(room.rating)) }}
                   span.room-list-item__id ID: {{ room.id }}
 </template>
 
 <script>
 import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
+import { useFormatter } from '@/hooks'
 import { Field, Search, Button, Divider, Cell, Empty, Notify } from 'vant'
+import StarRating from 'vue-star-rating'
 import { AppIcon } from '@/components/Icon'
 import { PlayerAvatar } from '@/components/Avatar'
 
@@ -109,6 +113,7 @@ export default defineComponent({
     Cell,
     Empty,
     Notify,
+    StarRating,
     AppIcon,
     PlayerAvatar
   },
@@ -117,6 +122,8 @@ export default defineComponent({
     const router = useRouter()
     const { localePath, i18n } = useContext()
     const store = useStore()
+
+    const { formatRating } = useFormatter()
 
     // Fetch Rooms
     const { fetch, fetchState } = useFetch(async () => {
@@ -188,6 +195,7 @@ export default defineComponent({
 
     return {
       APP_URL,
+      formatRating,
       fetch,
       fetchState,
       rooms,

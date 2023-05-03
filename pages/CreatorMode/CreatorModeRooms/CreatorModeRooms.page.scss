@@ -134,6 +134,18 @@
           }
         }
 
+        &--rating {
+          label {
+            margin: 0 calc(var(--base-m-x) / 6);
+            color: var(--color-text-03);
+            font-size: var(--font-size-text-9);
+
+            &:first-child {
+              margin-right: calc(var(--base-m-x) / 2);
+            }
+          }
+        }
+
         &__icon {
           margin-right: calc(var(--base-m-x) / 4);
         }
@@ -146,6 +158,22 @@
 
       &__id {
         display: block;
+      }
+
+      .vue-star-rating {
+        position: relative;
+        display: flex;
+
+        &-star {
+          margin-right: calc(var(--base-m-x) / 6);
+        }
+
+        &-rating-text {
+          margin-bottom: 0;
+          margin-left: 2px;
+          color: var(--color-text-03);
+          font-size: var(--font-size-text-9);
+        }
       }
     }
   }
