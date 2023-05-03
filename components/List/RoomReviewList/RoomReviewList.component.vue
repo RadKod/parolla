@@ -4,13 +4,13 @@
     .room-review-list__rating.room-review-list__rating--desktop
       strong.room-review-list__title
         | {{ $t('roomReviewList.ratingTitle') }}
-      StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="32")
+      StarRating(read-only :rating="formatRating(rating)" :increment="0.1" :rounded-corners="true" :star-size="32")
 
     .d-none.d-md-block
       slot(name="openFormButton")
 
   .room-review-list__rating.room-review-list__rating--mobile
-    StarRating(read-only :rating="rating" :rounded-corners="true" :star-size="20")
+    StarRating(read-only :rating="formatRating(rating)" :increment="0.1" :rounded-corners="true" :star-size="20")
 
   .room-review-list__title.mt-base
     strong {{ $t('roomReviewList.reviewsTitle') }} ({{ items && items.length }})
@@ -29,7 +29,7 @@
               template(v-else) -
             small &nbsp; (
               AppIcon(name="tabler:star-filled" color="var(--color-text-03)" :width="10" :height="10")
-              | {{ item.rating.substring(0, 1) }}
+              | {{ String(formatRating(item.rating)) }}
               | )
 
         .room-review-list-item__body
@@ -47,6 +47,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { useFormatter } from '@/hooks'
 import { List, Cell, Empty, Button } from 'vant'
 import StarRating from 'vue-star-rating'
 import { AppIcon } from '@/components/Icon'
@@ -74,7 +75,13 @@ export default defineComponent({
       default: null
     }
   },
-  setup() {}
+  setup() {
+    const { formatRating } = useFormatter()
+
+    return {
+      formatRating
+    }
+  }
 })
 </script>
 

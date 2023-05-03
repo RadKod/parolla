@@ -1,7 +1,7 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
 import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode, useEncodeDecode } from '@/hooks'
+import { useGameMode, useFormatter } from '@/hooks'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -17,7 +17,7 @@ export default () => {
   const store = useStore()
 
   const { activeGameMode } = useGameMode()
-  const { encodeEnglish } = useEncodeDecode()
+  const { encodeEnglish } = useFormatter()
 
   const rootRef = ref(null)
   const setRootRef = element => {
