@@ -25,7 +25,7 @@ export default ({ app, i18n }) => {
     {
       hid: 'og:image',
       property: 'og:image',
-      content: `/meta/preview/og-main-${i18n.locale}.jpg`
+      content: `/meta/og-main-${i18n.locale}.jpg`
     },
     {
       hid: 'og:description',

@@ -4,17 +4,16 @@
   "description": "Kelime oyunu",
   "private": true,
   "keywords": [
-    "oyun",
     "kelime oyunu",
     "bulmaca",
-    "pasaparola"
+    "trivia"
   ],
   "author": "selimdoyranli",
   "contributors": [
-    "Selim Doyranlı <selim@radkod.com> (https://selimdoyranli.com)"
+    "selimdoyranli <selimdoyranli@gmail.com> (https://selimdoyranli.com)"
   ],
-  "bugs": "selim@radkod.com",
-  "homepage": "https://github.com/RadKod/parolla",
+  "bugs": "selimdoyranli@gmail.com",
+  "homepage": "https://parolla.app",
   "repository": {
     "type": "git",
     "url": "https://github.com/RadKod/parolla"
