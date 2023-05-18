@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.7.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.6.0...v2.7.0)
+
+
+### 🚀 Enhancements
+
+  - Pagination for room list ([2d3b789](https://github.com/RadKod/parolla/commit/2d3b789))
+
+### 📖 Documentation
+
+  - Update docs ([54d6af6](https://github.com/RadKod/parolla/commit/54d6af6))
+
+### 🏡 Chore
+
+  - **release:** V2.6.0 ([0200090](https://github.com/RadKod/parolla/commit/0200090))
+  - Update funding config for github ([1c48f91](https://github.com/RadKod/parolla/commit/1c48f91))
+  - Update funding config for github ([21d0195](https://github.com/RadKod/parolla/commit/21d0195))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.6.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.5.1...v2.6.0)
