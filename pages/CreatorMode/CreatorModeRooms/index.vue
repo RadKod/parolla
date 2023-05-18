@@ -23,7 +23,7 @@
 
     .creator-mode-rooms-page-rooms
       .creator-mode-rooms-page__title.creator-mode-rooms-page__title--rooms
-        h3 {{ $t('creatorModeRooms.rooms.selectFromList') }} ({{ rooms.length }})
+        h3 {{ $t('creatorModeRooms.rooms.selectFromList') }} ({{ roomTotal }})
         Button.creator-mode-rooms-page-rooms__refetchButton(icon="replay" size="small" round @click="fetch")
           | {{ $t('creatorModeRooms.rooms.refresh') }}
 
@@ -43,66 +43,15 @@
             Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetchError.action') }}
 
         template(v-else)
-          template(v-if="isEmptyRoomList")
-            Empty(:description="$t('creatorModeRooms.rooms.empty.description')")
-              Button(
-                type="info"
-                icon="plus"
-                native-type="button"
-                round
-                @click="$router.push(localePath({ name: 'CreatorMode-CreatorModeCompose' }))"
-              ) {{ $t('creatorModeRooms.rooms.empty.action') }}
-
-          template(v-else)
-            template(v-for="room in form.rooms.search.length > 0 ? filteredRooms : rooms")
-              Cell.room-list-item(
-                v-if="room.isListed"
-                is-link
-                :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
-              )
-                template(#title)
-                  span.room-list-item__title {{ room.title }}
-
-                template(#label)
-                  .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
-                    PlayerAvatar(:size="16" :name="room.user.fingerprint")
-                    span.room-list-item-badge__value {{ room.user.username }}
-
-                  .room-list-item__badges
-                    .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
-                      PlayerAvatar(:size="16" :name="room.user.fingerprint")
-                      span.room-list-item-badge__value {{ room.user.username }}
-
-                    .room-list-item-badge(v-if="room.questionCount")
-                      AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="16" :height="16")
-                      span.room-list-item-badge__value {{ room.questionCount }}
-
-                    .room-list-item-badge(v-if="room.viewCount")
-                      AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="16" :height="16")
-                      span.room-list-item-badge__value {{ room.viewCount }}
-
-                    .room-list-item-badge.room-list-item-badge--rating(v-if="room.rating")
-                      StarRating(
-                        read-only
-                        inline
-                        :show-rating="false"
-                        :rating="room.rating"
-                        :increment="0.1"
-                        :rounded-corners="false"
-                        :star-size="14"
-                      )
-                      label {{ String(formatRating(room.rating)) }}
-                  span.room-list-item__id ID: {{ room.id }}
+          RoomList(:items="form.rooms.search.length > 0 ? filteredRooms : rooms")
 </template>
 
 <script>
 import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { useFormatter } from '@/hooks'
-import { Field, Search, Button, Divider, Cell, Empty, Notify } from 'vant'
-import StarRating from 'vue-star-rating'
+import { Field, Search, Button, Divider, Empty, Notify } from 'vant'
 import { AppIcon } from '@/components/Icon'
-import { PlayerAvatar } from '@/components/Avatar'
+import { RoomList } from '@/components/List'
 
 export default defineComponent({
   components: {
@@ -110,12 +59,10 @@ export default defineComponent({
     Search,
     Button,
     Divider,
-    Cell,
     Empty,
     Notify,
-    StarRating,
     AppIcon,
-    PlayerAvatar
+    RoomList
   },
   layout: 'Default/Default.layout',
   setup() {
@@ -123,14 +70,16 @@ export default defineComponent({
     const { localePath, i18n } = useContext()
     const store = useStore()
 
-    const { formatRating } = useFormatter()
-
     // Fetch Rooms
     const { fetch, fetchState } = useFetch(async () => {
-      await store.dispatch('creator/fetchRooms')
+      await store.dispatch('creator/fetchRooms', {
+        isLoadMore: false
+      })
     })
 
     const rooms = computed(() => store.getters['creator/rooms'])
+    const roomTotal = computed(() => store.getters['creator/roomTotal'])
+
     const filteredRooms = ref([])
 
     const form = reactive({
@@ -195,10 +144,10 @@ export default defineComponent({
 
     return {
       APP_URL,
-      formatRating,
       fetch,
       fetchState,
       rooms,
+      roomTotal,
       filteredRooms,
       form,
       validateRoomUrl,

@@ -32,8 +32,22 @@ export default {
     return result
   },
 
-  async fetchRooms({ commit }) {
-    const response = await fetch(`${process.env.API}/rooms`, {
+  async fetchRooms({ commit, state }, params) {
+    const { isLoadMore = false, limit, cursor } = params
+
+    const queryDefault = {
+      per_page: 10,
+      cursor: ''
+    }
+
+    const query = {
+      per_page: limit || queryDefault.per_page,
+      cursor: cursor || queryDefault.cursor
+    }
+
+    const queryString = new URLSearchParams(query).toString()
+
+    const response = await fetch(`${process.env.API}/rooms?${queryString}`, {
       method: 'get',
       headers: {
         'Accept-Language': this.$i18n.locale
@@ -44,7 +58,19 @@ export default {
     if (result.success) {
       const rooms = result.data.rooms.map(room => roomTransformer(room))
 
-      commit('SET_ROOMS', rooms)
+      if (isLoadMore) {
+        commit('PUSH_ROOMS', rooms)
+      } else {
+        commit('SET_ROOMS', rooms)
+      }
+
+      const pagination = result.data.pagination
+
+      commit('SET_PAGINATION', pagination)
+
+      const roomTotal = result.data.total
+
+      commit('SET_ROOM_TOTAL', roomTotal)
     }
 
     return result

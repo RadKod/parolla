@@ -1,10 +1,18 @@
 export default {
   rooms(state) {
-    return state.rooms
+    return state.room.list
+  },
+
+  roomsPagination(state) {
+    return state.room.pagination
+  },
+
+  roomTotal(state) {
+    return state.room.total
   },
 
   room(state) {
-    return state.room
+    return state.room.room
   },
 
   isGameOver(state) {

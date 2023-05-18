@@ -1,8 +1,12 @@
 import { GAME_TIME_LIMIT } from '@/system/constant'
 
 export default () => ({
-  rooms: [],
-  room: {},
+  room: {
+    list: [],
+    pagination: {},
+    total: null,
+    room: {}
+  },
   isGameOver: false,
   alphabet: {
     activeIndex: 0,

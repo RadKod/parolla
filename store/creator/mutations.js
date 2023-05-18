@@ -2,11 +2,29 @@ import { GAME_TIME_LIMIT } from '@/system/constant'
 
 export default {
   SET_ROOMS(state, rooms) {
-    state.rooms = rooms
+    state.room.list = rooms
+  },
+
+  PUSH_ROOMS(state, rooms) {
+    state.room.list.push(...rooms)
+  },
+
+  SET_PAGINATION(state, pagination) {
+    state.room.pagination = {
+      ...pagination,
+      cursor: {
+        prev: pagination.prev_page_url?.split('cursor=')[1] || null,
+        next: pagination.next_page_url?.split('cursor=')[1] || null
+      }
+    }
+  },
+
+  SET_ROOM_TOTAL(state, total) {
+    state.room.total = total
   },
 
   SET_ROOM(state, room) {
-    state.room = room
+    state.room.room = room
   },
 
   INCREMENT_ROOM_REVIEW_COUNT(state) {
