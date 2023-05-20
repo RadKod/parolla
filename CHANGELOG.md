@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.7.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.7.0...v2.7.1)
+
+
+### 🩹 Fixes
+
+  - I18n key fixes ([1200ce7](https://github.com/RadKod/parolla/commit/1200ce7))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.7.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.6.0...v2.7.0)
