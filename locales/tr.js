@@ -74,7 +74,7 @@ export default {
     skipAdShowScore: 'Reklamı geç ve skorunu gör ⇥',
     error: {
       fetchQuestions: {
-        title: 'Sorular getirilirken sorun çıktı',
+        description: 'Sorular getirilirken sorun çıktı',
         action: 'Tekrar dene'
       },
       notStartsWithActiveChar: 'CEVAP AKTİF (YUKARDAKİ) KARAKTERLE BAŞLAMALI'
@@ -245,9 +245,11 @@ export default {
       }
     },
     error: {
-      fetch: {
-        description: 'Odalar getirilirken bir sorun çıktı',
-        action: 'Tekrar dene'
+      rooms: {
+        fetch: {
+          description: 'Odalar getirilirken bir sorun çıktı',
+          action: 'Tekrar dene'
+        }
       },
       joinRoom: 'Odaya gidilemedi, lütfen girdiğin bağlantıyı kontrol et'
     }

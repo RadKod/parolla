@@ -39,8 +39,8 @@
           Empty(:description="$t('creatorModeRooms.rooms.pendingRooms')")
 
         template(v-else-if="fetchState.error")
-          Empty(image="error" :description="$t('creatorModeRooms.error.rooms.fetchError.description')")
-            Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetchError.action') }}
+          Empty(image="error" :description="$t('creatorModeRooms.error.rooms.fetch.description')")
+            Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetch.action') }}
 
         template(v-else)
           RoomList(:items="form.rooms.search.length > 0 ? filteredRooms : rooms")

@@ -74,7 +74,7 @@ export default {
     skipAdShowScore: 'Skip the ad and see your score ⇥',
     error: {
       fetchQuestions: {
-        title: 'Trouble fetching questions',
+        description: 'Trouble fetching questions',
         action: 'Try again'
       },
       notStartsWithActiveChar: 'ANSWER MUST BEGIN WITH AN ACTIVE (ABOVE) CHARACTER'
@@ -246,9 +246,11 @@ export default {
       }
     },
     error: {
-      fetch: {
-        description: 'There was a problem getting the rooms',
-        action: 'Try again'
+      rooms: {
+        fetch: {
+          description: 'There was a problem getting the rooms',
+          action: 'Try again'
+        }
       },
       joinRoom: 'Could not go to the room, please check the link you entered'
     }
