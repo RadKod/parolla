@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.7.2
+
+[compare changes](https://github.com/RadKod/parolla/compare/bd01e20...v2.7.2)
+
+
+### 🩹 Fixes
+
+  - My rooms ([92a6756](https://github.com/RadKod/parolla/commit/92a6756))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.7.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.7.0...v2.7.1)
