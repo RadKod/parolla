@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.8.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/a7563c9...v2.8.0)
+
+
+### 🚀 Enhancements
+
+  - Ui improvements ([796a41f](https://github.com/RadKod/parolla/commit/796a41f))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.7.2
 
 [compare changes](https://github.com/RadKod/parolla/compare/bd01e20...v2.7.2)
