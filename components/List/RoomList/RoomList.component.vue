@@ -4,8 +4,10 @@
     v-model="form.search.keyword"
     :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
     :clearable="false"
-    @keypress.enter="handleSearchRoom"
+    @input="handleSearchRoom"
   )
+    template(#right-icon)
+      Loading(v-if="form.search.isBusy" color="var(--color-info-01)" size="16")
 
   template(v-if="items && items.length <= 0")
     Empty(:description="$t('creatorModeRooms.rooms.empty.description')")
@@ -61,7 +63,8 @@
 <script>
 import { defineComponent, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { useFormatter } from '@/hooks'
-import { Search, List, Cell, Button, Empty } from 'vant'
+import { useDebounceFn } from '@vueuse/core'
+import { Search, List, Cell, Button, Empty, Loading } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'
 import StarRating from 'vue-star-rating'
 import { AppIcon } from '@/components/Icon'
@@ -75,6 +78,7 @@ export default defineComponent({
     Cell,
     Button,
     Empty,
+    Loading,
     StarRating,
     AppIcon,
     PlayerAvatar
@@ -122,14 +126,25 @@ export default defineComponent({
 
     const form = reactive({
       search: {
+        isBusy: false,
         keyword: ''
       }
     })
 
+    const fetchRooms = useDebounceFn(
+      async () => {
+        await store.dispatch('creator/fetchRooms', {
+          keyword: form.search.keyword
+        })
+        form.search.isBusy = false
+      },
+      1000,
+      { maxWait: 5000 }
+    )
+
     const handleSearchRoom = async () => {
-      await store.dispatch('creator/fetchRooms', {
-        keyword: form.search.keyword
-      })
+      form.search.isBusy = true
+      await fetchRooms()
     }
 
     return {
