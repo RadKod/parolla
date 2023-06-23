@@ -1,5 +1,12 @@
 <template lang="pug">
 .room-list
+  Search.room-list__searchField(
+    v-model="form.search.keyword"
+    :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
+    :clearable="false"
+    @keypress.enter="handleSearchRoom"
+  )
+
   template(v-if="items && items.length <= 0")
     Empty(:description="$t('creatorModeRooms.rooms.empty.description')")
       Button(
@@ -54,7 +61,7 @@
 <script>
 import { defineComponent, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { useFormatter } from '@/hooks'
-import { List, Cell, Button, Empty } from 'vant'
+import { Search, List, Cell, Button, Empty } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'
 import StarRating from 'vue-star-rating'
 import { AppIcon } from '@/components/Icon'
@@ -62,8 +69,9 @@ import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
-    InfiniteLoading,
+    Search,
     List,
+    InfiniteLoading,
     Cell,
     Button,
     Empty,
@@ -105,17 +113,32 @@ export default defineComponent({
 
       await store.dispatch('creator/fetchRooms', {
         isLoadMore: true,
-        cursor: pagination.value.cursor.next
+        cursor: pagination.value.cursor.next,
+        keyword: form.search.keyword
       })
 
       $state.loaded()
+    }
+
+    const form = reactive({
+      search: {
+        keyword: ''
+      }
+    })
+
+    const handleSearchRoom = async () => {
+      await store.dispatch('creator/fetchRooms', {
+        keyword: form.search.keyword
+      })
     }
 
     return {
       formatRating,
       list,
       pagination,
-      handleInfiniteLoading
+      handleInfiniteLoading,
+      form,
+      handleSearchRoom
     }
   }
 })

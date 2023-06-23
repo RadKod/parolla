@@ -27,36 +27,27 @@
         Button.creator-mode-rooms-page-rooms__refetchButton(icon="replay" size="small" round @click="fetch")
           | {{ $t('creatorModeRooms.rooms.refresh') }}
 
-      Search.creator-mode-rooms-page-rooms__searchField(
-        v-model="form.rooms.search"
-        :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
-        :clearable="false"
-        @input="handleSearchRoom"
-      )
+      template(v-if="fetchState.pending")
+        Empty(:description="$t('creatorModeRooms.rooms.pendingRooms')")
 
-      .room-list
-        template(v-if="fetchState.pending")
-          Empty(:description="$t('creatorModeRooms.rooms.pendingRooms')")
+      template(v-else-if="fetchState.error")
+        Empty(image="error" :description="$t('creatorModeRooms.error.rooms.fetch.description')")
+          Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetch.action') }}
 
-        template(v-else-if="fetchState.error")
-          Empty(image="error" :description="$t('creatorModeRooms.error.rooms.fetch.description')")
-            Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetch.action') }}
-
-        template(v-else)
-          RoomList(:items="form.rooms.search.length > 0 ? filteredRooms : rooms")
+      template(v-else)
+        RoomList(:items="rooms")
 </template>
 
 <script>
 import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { Field, Search, Button, Divider, Empty, Notify } from 'vant'
+import { Field, Button, Divider, Empty, Notify } from 'vant'
 import { AppIcon } from '@/components/Icon'
 import { RoomList } from '@/components/List'
 
 export default defineComponent({
   components: {
     Field,
-    Search,
     Button,
     Divider,
     Empty,
@@ -87,9 +78,6 @@ export default defineComponent({
         isClear: false,
         pattern: /^(https?:\/\/)?(www\.)?parolla\.app\/(oda|en\/room)\?id=.+$/,
         url: ''
-      },
-      rooms: {
-        search: ''
       }
     })
 
@@ -99,21 +87,6 @@ export default defineComponent({
       } else {
         form.roomUrl.isClear = false
       }
-    }
-
-    const handleSearchRoom = () => {
-      const pattern = `.*${form.rooms.search}.*`
-      const regex = new RegExp(pattern, 'i')
-
-      const filtered = rooms.value.filter(
-        room =>
-          // Search In Title
-          regex.test(room.title) ||
-          // Search In Id
-          regex.test(room.id)
-      )
-
-      filteredRooms.value = filtered
     }
 
     const gotoRoom = () => {
@@ -137,7 +110,7 @@ export default defineComponent({
     }
 
     const isEmptyRoomList = computed(() => {
-      if (form.rooms.search.length > 0 ? filteredRooms.value.length <= 0 : rooms.value.length <= 0) {
+      if (rooms.value.length <= 0) {
         return true
       }
     })
@@ -151,7 +124,6 @@ export default defineComponent({
       filteredRooms,
       form,
       validateRoomUrl,
-      handleSearchRoom,
       gotoRoom,
       isEmptyRoomList
     }

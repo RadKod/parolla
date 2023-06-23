@@ -37,23 +37,6 @@
       background-color: var(--color-ui-02);
       border: 1px solid var(--color-border-02);
     }
-
-    &__searchField {
-      $van-search: '.van-search';
-
-      position: relative;
-      margin-bottom: var(--base-m-y);
-      background-color: var(--color-ui-02);
-      border-radius: var(--border-radius-01);
-
-      #{$van-search} {
-        &__content {
-          &--square {
-            background-color: var(--color-ui-02);
-          }
-        }
-      }
-    }
   }
 
   .room-list {

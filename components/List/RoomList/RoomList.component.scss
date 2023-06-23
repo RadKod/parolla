@@ -1,6 +1,28 @@
 .room-list {
   position: relative;
 
+  &__searchField {
+    $van-search: '.van-search';
+    $van-cell: '.van-cell';
+
+    position: relative;
+    margin-bottom: var(--base-m-y);
+    background-color: var(--color-ui-02);
+    border-radius: var(--border-radius-01);
+
+    #{$van-search} {
+      &__content {
+        &--square {
+          background-color: var(--color-ui-02);
+        }
+      }
+    }
+
+    #{$van-cell} {
+      margin-bottom: 0 !important;
+    }
+  }
+
   .van-cell {
     $van-cell: '.van-cell';
 
