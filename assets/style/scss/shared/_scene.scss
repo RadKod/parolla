@@ -273,12 +273,14 @@
   // Field Section
   &__fieldSection {
     position: fixed !important;
-    bottom: 0;
+    bottom: calc(var(--base-m-y) * 2);
     left: 0;
-    width: 100%;
-    max-width: var(--layout-max-width);
+    width: calc(100% - var(--base-p-x) * 2);
+    max-width: calc(var(--layout-max-width) - var(--base-p-x) * 2);
     margin: 0 auto;
     padding-bottom: env(safe-area-inset-bottom);
+    overflow: hidden;
+    border-radius: var(--border-radius-01);
     transform: translate3d(0, 0, 0);
 
     @include center(true, false);
