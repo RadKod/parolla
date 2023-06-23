@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.9.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/3dce861...v2.9.0)
+
+
+### 🚀 Enhancements
+
+  - Api search on rooms ([27cd9a8](https://github.com/RadKod/parolla/commit/27cd9a8))
+  - Ux improvements on rooms search ([d1612d8](https://github.com/RadKod/parolla/commit/d1612d8))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.8.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/a7563c9...v2.8.0)
