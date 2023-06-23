@@ -47,6 +47,7 @@
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/i18n": "^7.3.1",
+    "@vueuse/core": "^10.2.0",
     "bootstrap": "5.2.3",
     "cross-env": "^5.2.0",
     "express": "^4.17.1",

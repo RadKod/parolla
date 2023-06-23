@@ -33,16 +33,20 @@ export default {
   },
 
   async fetchRooms({ commit, state }, params) {
-    const { isLoadMore = false, limit, cursor } = params
+    const { isLoadMore = false, limit, cursor, keyword, locale } = params
 
     const queryDefault = {
       per_page: 10,
-      cursor: ''
+      cursor: '',
+      search: '',
+      locale: this.$i18n.locale
     }
 
     const query = {
       per_page: limit || queryDefault.per_page,
-      cursor: cursor || queryDefault.cursor
+      cursor: cursor || queryDefault.cursor,
+      search: keyword || queryDefault.search,
+      lang: locale || queryDefault.locale
     }
 
     const queryString = new URLSearchParams(query).toString()
