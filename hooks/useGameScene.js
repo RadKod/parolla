@@ -24,6 +24,8 @@ export default () => {
     rootRef.value = element
   }
 
+  const user = computed(() => store.getters['auth/user'])
+
   const isGameStarted = ref(false)
 
   const isGameOver = computed(() => store.getters[`${activeGameMode.value}/isGameOver`])
@@ -35,10 +37,24 @@ export default () => {
     }
   })
 
-  const calculateStats = async () => {
+  const getStats = async () => {
     const correctAnswers = await store.getters[`${activeGameMode.value}/correctAnswers`]
     const wrongAnswers = await store.getters[`${activeGameMode.value}/wrongAnswers`]
     const passedAnswers = await store.getters[`${activeGameMode.value}/passedAnswers`]
+    const remainTime = await store.getters[`${activeGameMode.value}/countdown`].remainTime
+    const remainTimeAsMs = await store.getters[`${activeGameMode.value}/countdown`].time
+
+    return {
+      correctAnswers,
+      wrongAnswers,
+      passedAnswers,
+      remainTime,
+      remainTimeAsMs
+    }
+  }
+
+  const statsWriteToLocalStorage = async () => {
+    const { correctAnswers, wrongAnswers, passedAnswers } = await getStats()
 
     window.localStorage.setItem(`${activeGameMode.value}CorrectAnswers`, JSON.stringify(correctAnswers))
     window.localStorage.setItem(`${activeGameMode.value}WrongAnswers`, JSON.stringify(wrongAnswers))
@@ -51,7 +67,7 @@ export default () => {
     () => alphabet.value.activeIndex,
     async value => {
       await store.commit(`${activeGameMode.value}/SET_ALPHABET_ACTIVE_INDEX`, value)
-      await calculateStats()
+      await statsWriteToLocalStorage()
 
       if (value === -1) {
         endGame()
@@ -412,6 +428,7 @@ export default () => {
     store.commit(`${activeGameMode.value}/SET_IS_GAME_OVER`, {
       isGameOver: true
     })
+
     countdownTimerRef.value.pause()
 
     if (activeGameMode.value === gameModeKeyEnum.UNLIMITED || activeGameMode.value === gameModeKeyEnum.CREATOR) {
@@ -420,12 +437,31 @@ export default () => {
       dialog.stats.isOpen = true
     }
 
+    // Post Stats
+    const { correctAnswers, wrongAnswers, passedAnswers, remainTime, remainTimeAsMs } = await getStats()
+
+    if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
+      const room = computed(() => store.getters['creator/room'])
+
+      store.dispatch('creator/postStats', {
+        relationId: room.value.relationId,
+        user: user.value,
+        stats: {
+          correctAnswers,
+          wrongAnswers,
+          passedAnswers,
+          remainTime,
+          remainTimeAsMs
+        }
+      })
+    }
+
     setTimeout(() => {
       dialog.interstitialAd.isOpen = true
     }, 1000)
   }
 
-  const listenCountdown = async timeData => {
+  const getRemainTimeAsMs = async timeData => {
     let days = timeData.days * 24 * 60 * 60 * 1000
     let hours = timeData.hours * 60 * 60 * 1000
     let minutes = timeData.minutes * 60 * 1000
@@ -434,10 +470,18 @@ export default () => {
 
     let remainTime = days + hours + minutes + seconds + milliseconds
 
-    await store.commit(`${activeGameMode.value}/UPDATE_COUNTDOWN_TIMER`, remainTime)
+    return await remainTime
+  }
+
+  const listenCountdown = async timeData => {
+    let remainTime = timeData
+    let remainTimeAsMs = await getRemainTimeAsMs(timeData)
+
+    await store.commit(`${activeGameMode.value}/UPDATE_COUNTDOWN_REMAIN_TIME`, remainTime)
+    await store.commit(`${activeGameMode.value}/UPDATE_COUNTDOWN_TIMER`, remainTimeAsMs)
 
     if (activeGameMode.value === gameModeKeyEnum.DAILY) {
-      await window.localStorage.setItem('dailyRemainTime', remainTime)
+      await window.localStorage.setItem('dailyRemainTime', remainTimeAsMs)
     }
 
     await countdownTimerRef.value.start()
@@ -557,7 +601,8 @@ export default () => {
     countdown,
     countdownTimerRef,
     myAnswers,
-    calculateStats,
+    getStats,
+    statsWriteToLocalStorage,
     nextLetter,
     handleAnswer,
     handleAnswerField,

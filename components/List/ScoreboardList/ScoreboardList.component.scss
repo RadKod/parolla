@@ -1,0 +1,128 @@
+.scoreboard-list {
+  position: relative;
+
+  &-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    counter-increment: scoreboard-counter;
+
+    &::before {
+      width: 46px;
+      color: var(--color-text-03);
+      content: counter(scoreboard-counter);
+
+      @include font-weight-extra-bold;
+    }
+
+    &:nth-child(1) {
+      &::before {
+        color: var(--color-text-01);
+        content: '1     🏆';
+      }
+    }
+
+    &:nth-child(2) {
+      &::before {
+        color: var(--color-text-01);
+        content: '2    🥈';
+      }
+    }
+
+    &:nth-child(3) {
+      &::before {
+        color: var(--color-text-01);
+        content: '3    🏅';
+      }
+    }
+
+    & > .van-cell__value {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      @include media-breakpoint-down(tablet) {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    &-user {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+
+      @include media-breakpoint-down(mobile) {
+        flex: 100%;
+      }
+
+      &__username {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: flex-start;
+        color: var(--color-text-02);
+        font-size: var(--font-size-text-9);
+        word-wrap: break-word;
+
+        .player-avatar {
+          margin-top: calc(var(--base-m-y) / 8);
+          margin-right: calc(var(--base-m-x) / 2);
+        }
+      }
+
+      small {
+        color: var(--color-text-02);
+
+        .app-icon {
+          display: inline-flex;
+          margin-right: calc(var(--base-m-x) / 4);
+        }
+      }
+    }
+
+    &-result {
+      position: relative;
+
+      @include media-breakpoint-down(mobile) {
+        margin-block-start: calc(var(--base-m-y) / 2);
+      }
+
+      &__item {
+        position: relative;
+        display: inline-flex;
+        width: 50px;
+        color: var(--color-text-02);
+
+        @include media-breakpoint-down(mobile-m) {
+          width: 42px;
+          font-size: 12px;
+        }
+
+        &:first-child {
+          color: var(--color-text-03);
+
+          @include font-weight-medium;
+        }
+      }
+    }
+  }
+
+  .van-empty {
+    $van-empty: '.van-empty';
+
+    @include media-breakpoint-down(tablet) {
+      #{$van-empty} {
+        &__image {
+          width: 92px;
+          height: 92px;
+        }
+
+        &__description {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

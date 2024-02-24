@@ -45,5 +45,9 @@ export default {
 
   dialog(state) {
     return state.dialog
+  },
+
+  scoreboard(state) {
+    return state.scoreboard
   }
 }

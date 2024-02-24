@@ -76,6 +76,16 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
                   | &nbsp;{{ myAnswer({ questionIndex: index }).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
+      Tab(name="scoreboard")
+        template(#title)
+          .stats-dialog-tab-title
+            AppIcon.stats-dialog-tab-title__icon(name="tabler:trophy" :width="20" :height="20")
+            span.stats-dialog-tab-title__value {{ $t('scoreboard.scoreboard') }}
+        template(v-if="pendingScoreboard")
+          Empty(:description="$t('scoreboard.pendingScoreboard')")
+        template(v-else)
+          ScoreboardList(:items="scoreboard")
+
       Tab(name="reviews")
         template(#title)
           .stats-dialog-tab-title
@@ -105,6 +115,7 @@ import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { AppIcon } from '@/components/Icon'
 import { RadKodLogo } from '@/components/Logo'
+import { ScoreboardList } from '@/components/List'
 import { RoomReviewView } from '@/components/View'
 
 export default defineComponent({
@@ -119,6 +130,7 @@ export default defineComponent({
     Empty,
     AppIcon,
     RadKodLogo,
+    ScoreboardList,
     RoomReviewView
   },
   props: {
@@ -246,6 +258,26 @@ export default defineComponent({
       }
     }
 
+    const scoreboard = computed(() => store.getters['creator/scoreboard'])
+    const pendingScoreboard = ref(false)
+
+    watch(
+      () => activeTab.value,
+      async value => {
+        if (value) {
+          if (value === 'scoreboard') {
+            pendingScoreboard.value = true
+
+            await store.dispatch('creator/fetchScoreboard', {
+              relationId: room.value.relationId
+            })
+
+            pendingScoreboard.value = false
+          }
+        }
+      }
+    )
+
     return {
       state,
       activeTab,
@@ -258,7 +290,9 @@ export default defineComponent({
       isGameOver,
       questions,
       answerClasses,
-      myAnswer
+      myAnswer,
+      scoreboard,
+      pendingScoreboard
     }
   }
 })

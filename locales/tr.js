@@ -362,6 +362,10 @@ export default {
       action: 'Yorum ekle'
     }
   },
+  scoreboard: {
+    scoreboard: 'Skor tablosu',
+    pendingScoreboard: 'Skorlar getiriliyor'
+  },
   seo: {
     main: {
       title: 'parolla - Kelime oyunu',

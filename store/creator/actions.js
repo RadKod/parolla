@@ -1,4 +1,4 @@
-import { roomTransformer } from '@/transformers'
+import { roomTransformer, scoreboardTransformer } from '@/transformers'
 
 export default {
   async postQaForm({ commit, state }, { form, user }) {
@@ -124,7 +124,51 @@ export default {
       },
       body: JSON.stringify(transform(form))
     })
+
     const result = await response.json()
+
+    return result
+  },
+
+  async postStats({ commit, state }, params) {
+    const { relationId, user, stats } = params
+
+    const transformBody = model => {
+      return {
+        game_result: model.stats,
+        fingerprint: model.user.fingerprint
+      }
+    }
+
+    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Language': this.$i18n.locale
+      },
+      body: JSON.stringify(
+        transformBody({
+          user,
+          stats
+        })
+      )
+    })
+
+    const result = await response.json()
+
+    return result
+  },
+
+  async fetchScoreboard({ commit, state }, params) {
+    const { relationId } = params
+
+    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics`)
+    const result = await response.json()
+
+    if (result.success) {
+      commit('SET_SCOREBOARD', scoreboardTransformer(result.data))
+    }
 
     return result
   }

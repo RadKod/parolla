@@ -61,6 +61,10 @@ export default {
     state.alphabet.activeIndex = index
   },
 
+  UPDATE_COUNTDOWN_REMAIN_TIME(state, remainTime) {
+    state.countdown.remainTime = remainTime
+  },
+
   UPDATE_COUNTDOWN_TIMER(state, ms) {
     state.countdown.time = ms
   },
@@ -82,5 +86,9 @@ export default {
 
   SET_IS_OPEN_STATS_DIALOG(state, isOpen) {
     state.dialog.stats.isOpen = isOpen
+  },
+
+  SET_SCOREBOARD(state, scoreboard) {
+    state.scoreboard = scoreboard
   }
 }
