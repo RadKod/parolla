@@ -31,9 +31,10 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
         strong.scoreboard-list-gamerAnswers-item__letter {{ question.letter }}
         span.scoreboard-list-gamerAnswers-item__value
           kbd {{ question.answer }}
-          template(v-if="getGamerAnswer({ item, questionIndex })?.field.length > 0")
-            | {{ getGamerAnswer({ item, questionIndex }).field.toLocaleUpperCase('tr') }}
-          template(v-else) -
+          template(v-if="getGamerAnswer({ item, questionIndex })?.field?.length > 0")
+            span {{ getGamerAnswer({ item, questionIndex }).field.toLocaleUpperCase('tr') }}
+          template(v-else)
+            span -
 
     template(v-else)
       p {{ $t('general.noData') }}

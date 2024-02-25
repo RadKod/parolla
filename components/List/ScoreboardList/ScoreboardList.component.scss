@@ -147,10 +147,7 @@
 
     &-item {
       position: relative;
-
-      @include media-breakpoint-down(mobile) {
-        margin-block-end: calc(var(--base-m-y) / 2);
-      }
+      margin-block-end: calc(var(--base-m-y) / 2);
 
       &.answer--correct {
         color: var(--color-success-01);
@@ -165,17 +162,27 @@
       }
 
       &__letter {
+        position: relative;
+        top: 2px;
         display: inline-block;
+        float: left;
         width: calc(var(--base-m-x) * 1.5);
         color: var(--color-text-02);
       }
 
-      kbd {
-        display: inline-block;
-        width: 40%;
-        color: var(--color-text-03);
+      &__value {
+        display: flex;
+        vertical-align: text-top;
 
-        @include media-breakpoint-down(mobile) {
+        kbd {
+          display: inline-block;
+          width: 50%;
+          padding-right: calc(var(--base-p-x) / 4);
+          color: var(--color-text-03);
+        }
+
+        span {
+          display: inline-block;
           width: 50%;
         }
       }
