@@ -1,5 +1,19 @@
 # Changelog
 
+## v2.10.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.9.0...v2.10.0)
+
+
+### 🚀 Enhancements
+
+  - Creator mode scoreboard ([8a6c613](https://github.com/RadKod/parolla/commit/8a6c613))
+  - Ui improvements on creator mode scoreboard ([5a9e1bb](https://github.com/RadKod/parolla/commit/5a9e1bb))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.9.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/3dce861...v2.9.0)
