@@ -13,7 +13,9 @@ List.list.scoreboard-list
           template(v-else)
             span -
     .scoreboard-list-item-result
-      strong.scoreboard-list-item-result__item {{ item.result.remainTime.minutes }}:{{ item.result.remainTime.seconds }}
+      strong.scoreboard-list-item-result__item
+        template {{ item.result.remainTime.minutes }}:{{ item.result.remainTime.seconds }}
+          sup .{{ item.result.remainTime.milliseconds }}
       strong.scoreboard-list-item-result__item 🟩 {{ item.result.correctAnswers.length }}
       strong.scoreboard-list-item-result__item 🟥 {{ item.result.wrongAnswers.length }}
       strong.scoreboard-list-item-result__item 🟨 {{ item.result.passedAnswers.length }}

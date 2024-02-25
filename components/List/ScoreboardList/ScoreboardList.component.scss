@@ -101,9 +101,14 @@
         }
 
         &:first-child {
-          color: var(--color-text-03);
+          width: 70px;
+          color: var(--color-text-02);
 
           @include font-weight-medium;
+        }
+
+        sup {
+          color: var(--color-text-03);
         }
       }
     }
