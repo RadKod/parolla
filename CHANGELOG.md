@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.12.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.11.0...v2.12.0)
+
+
+### 🚀 Enhancements
+
+  - Ui improvements on room scoreboard ([2644810](https://github.com/RadKod/parolla/commit/2644810))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.11.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.10.0...v2.11.0)
