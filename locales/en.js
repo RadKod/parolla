@@ -29,7 +29,8 @@ export default {
     dailyStats: `Today's stats`,
     share: 'Share',
     by: 'By',
-    comments: 'Comments'
+    comments: 'Comments',
+    noData: 'No data'
   },
   introScene: {
     title: 'CHOOSE GAME MODE',
@@ -60,6 +61,7 @@ export default {
     answerKey: 'Answer key',
     correctAnswer: 'Correct answer',
     yourAnswer: 'Your answer',
+    gamerAnswer: `Gamer's answer`,
     halfTime: 'Half of the time is up',
     timeOver: 'Time is over',
     allQuestionsSeen: `If you can't think of an answer, you don't have to wait for the time, you can also type finish and finish it.`,

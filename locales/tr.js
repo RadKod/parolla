@@ -29,7 +29,8 @@ export default {
     dailyStats: 'Bugünün istatistiği',
     share: 'Paylaş',
     by: 'tarafından',
-    comments: 'Yorumlar'
+    comments: 'Yorumlar',
+    noData: 'Veri yok'
   },
   introScene: {
     title: 'OYUN MODU SEÇ',
@@ -60,6 +61,7 @@ export default {
     answerKey: 'Cevap anahtarı',
     correctAnswer: 'Doğru cevap',
     yourAnswer: 'Senin cevabın',
+    gamerAnswer: 'Oyuncunun cevabı',
     halfTime: 'Sürenin yarısı doldu',
     timeOver: 'Süre doldu',
     allQuestionsSeen: 'Aklına bir cevap gelmezse süreyi beklemene gerek yok, bitir yazıp bitirebilirsin de',
