@@ -450,6 +450,7 @@ export default () => {
           correctAnswers,
           wrongAnswers,
           passedAnswers,
+          gamersAnswers: myAnswers.value,
           remainTime,
           remainTimeAsMs
         }

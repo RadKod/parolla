@@ -2,38 +2,57 @@
   position: relative;
 
   &-item {
+    $scoreboard-list-item: '.scoreboard-list-item';
+
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    display: block;
     counter-increment: scoreboard-counter;
 
-    &::before {
-      width: 46px;
-      color: var(--color-text-03);
-      content: counter(scoreboard-counter);
-
-      @include font-weight-extra-bold;
-    }
-
     &:nth-child(1) {
-      &::before {
-        color: var(--color-text-01);
-        content: '1     🏆';
+      #{$scoreboard-list-item} {
+        &-user {
+          &::before {
+            color: var(--color-text-01);
+            content: '1     🏆';
+          }
+        }
       }
     }
 
     &:nth-child(2) {
-      &::before {
-        color: var(--color-text-01);
-        content: '2    🥈';
+      #{$scoreboard-list-item} {
+        &-user {
+          &::before {
+            color: var(--color-text-01);
+            content: '2    🥈';
+          }
+        }
       }
     }
 
     &:nth-child(3) {
-      &::before {
-        color: var(--color-text-01);
-        content: '3    🏅';
+      #{$scoreboard-list-item} {
+        &-user {
+          &::before {
+            color: var(--color-text-01);
+            content: '3    🏅';
+          }
+        }
+      }
+    }
+
+    .van-cell__title {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .van-collapse-item__title {
+      &--disabled {
+        cursor: default;
+
+        .van-icon {
+          visibility: hidden;
+        }
       }
     }
 
@@ -53,9 +72,18 @@
       position: relative;
       display: grid;
       grid-template-columns: 1fr auto;
+      margin-inline-end: auto;
+
+      &::before {
+        width: 46px;
+        color: var(--color-text-03);
+        content: counter(scoreboard-counter);
+
+        @include font-weight-extra-bold;
+      }
 
       @include media-breakpoint-down(mobile) {
-        flex: 100%;
+        margin-right: 100%;
       }
 
       &__username {
@@ -109,6 +137,46 @@
 
         sup {
           color: var(--color-text-03);
+        }
+      }
+    }
+  }
+
+  &-gamerAnswers {
+    position: relative;
+
+    &-item {
+      position: relative;
+
+      @include media-breakpoint-down(mobile) {
+        margin-block-end: calc(var(--base-m-y) / 2);
+      }
+
+      &.answer--correct {
+        color: var(--color-success-01);
+      }
+
+      &.answer--wrong {
+        color: var(--color-danger-01);
+      }
+
+      &.answer--passed {
+        color: var(--color-warning-01);
+      }
+
+      &__letter {
+        display: inline-block;
+        width: calc(var(--base-m-x) * 1.5);
+        color: var(--color-text-02);
+      }
+
+      kbd {
+        display: inline-block;
+        width: 40%;
+        color: var(--color-text-03);
+
+        @include media-breakpoint-down(mobile) {
+          width: 50%;
         }
       }
     }
