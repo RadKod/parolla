@@ -13,8 +13,8 @@
   "scss.validate": false,
   "stylelint.validate": ["css", "scss", "html", "vue"],
   "editor.codeActionsOnSave": {
-    "source.fixAll.stylelint": true,
-    "source.fixAll.eslint": true
+    "source.fixAll.stylelint": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
   "editor.tabSize": 2,
   "explorer.compactFolders": false

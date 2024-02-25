@@ -363,6 +363,10 @@ export default {
       action: 'Add comment'
     }
   },
+  scoreboard: {
+    scoreboard: 'Scoreboard',
+    pendingScoreboard: 'Fetching scores'
+  },
   seo: {
     main: {
       title: 'parolla - Word game',
