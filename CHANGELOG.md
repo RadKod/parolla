@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.11.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.10.0...v2.11.0)
+
+
+### 🚀 Enhancements
+
+  - Gamer's answers on room scoreboard ([110e35b](https://github.com/RadKod/parolla/commit/110e35b))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.10.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.9.0...v2.10.0)
