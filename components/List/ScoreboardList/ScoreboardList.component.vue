@@ -31,10 +31,10 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
         strong.scoreboard-list-gamerAnswers-item__letter {{ question.letter }}
         span.scoreboard-list-gamerAnswers-item__value
           kbd {{ question.answer }}
-          template(v-if="getGamerAnswer({ item, questionIndex })?.field?.length > 0")
-            span {{ getGamerAnswer({ item, questionIndex }).field.toLocaleUpperCase('tr') }}
-          template(v-else)
-            span -
+          span(v-if="getGamerAnswer({ item, questionIndex })?.isPassed") {{ $t('gameScene.pass').toLocaleUpperCase('tr') }}
+          span(v-else-if="getGamerAnswer({ item, questionIndex })?.field?.length > 0")
+            | {{ getGamerAnswer({ item, questionIndex })?.field?.toLocaleUpperCase('tr') }}
+          span(v-else) -
 
     template(v-else)
       p {{ $t('general.noData') }}
@@ -68,7 +68,7 @@ export default defineComponent({
     const toggledScoreItem = ref([0])
 
     const getGamerAnswer = ({ item, questionIndex }) => {
-      return item.result.gamersAnswers?.find(answer => answer.index === questionIndex)
+      return item.result.gamersAnswers?.filter(answer => answer.index === questionIndex).reverse()[0]
     }
 
     const getGamerAnswerClasses = answer => {
