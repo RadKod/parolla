@@ -116,6 +116,9 @@ export default {
     createdRoom: {
       title: 'Room created',
       joinRoom: 'Join room',
+      isListedMessage: `Your room {isListed} has been created. If you published with the wrong option, you can close this window, edit, and send it again.`,
+      public: '<strong>WILL APPEAR IN ROOM LIST</strong>',
+      private: '<strong>PRIVATE</strong>',
       copyUrl: {
         callback: {
           success: 'Copied room URL'

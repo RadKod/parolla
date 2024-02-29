@@ -151,8 +151,9 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
   CreatorModeCreatedRoomDialog(
     :isOpen="dialog.room.isOpen"
-    :cancelButtonText="$t('dialog.createdRoom.joinRoom')"
+    :confirmButtonText="$t('dialog.createdRoom.joinRoom')"
     :room="createdRoom"
+    @onConfirm="handleConfirmRoomDialog"
     @closed="handleCloseRoomDialog"
   )
 </template>
@@ -188,14 +189,15 @@ export default defineComponent({
       isBusy: false,
       isClear: false,
       roomTitle: '',
-      isListed: true,
+      isListed: false,
       isAnon: false,
       qaList: []
     })
 
     const createdRoom = reactive({
       title: '',
-      id: ''
+      id: '',
+      isListed: form.isListed
     })
 
     const dialog = reactive({
@@ -331,10 +333,9 @@ export default defineComponent({
         if (result.success) {
           createdRoom.title = result.data.title
           createdRoom.id = result.data.room
+          createdRoom.isListed = form.isListed
 
           dialog.room.isOpen = true
-
-          resetForm()
 
           let storagedMyRooms = JSON.parse(window.localStorage.getItem('myRooms'))
 
@@ -355,7 +356,7 @@ export default defineComponent({
 
     const resetForm = () => {
       form.roomTitle = ''
-      form.isListed = true
+      form.isListed = false
       form.isAnon = false
       form.qaList = []
     }
@@ -389,13 +390,17 @@ export default defineComponent({
       resetForm()
     }
 
-    const handleCloseRoomDialog = () => {
+    const handleConfirmRoomDialog = () => {
       router.push(
         localePath({
           name: 'CreatorMode-CreatorModeRoom',
           query: { id: createdRoom.id }
         })
       )
+    }
+
+    const handleCloseRoomDialog = () => {
+      dialog.room.isOpen = false
     }
 
     watch(form, value => {
@@ -423,6 +428,7 @@ export default defineComponent({
       deleteDraft,
       createdRoom,
       dialog,
+      handleConfirmRoomDialog,
       handleCloseRoomDialog
     }
   }

@@ -116,6 +116,9 @@ export default {
     createdRoom: {
       title: 'Oda oluşturuldu',
       joinRoom: 'Odaya git',
+      isListedMessage: `Odan {isListed} oluşturuldu. Yanlış seçenekle yayınladıysan bu pencereyi kapattıktan sonra düzenleyip tekrar gönderebilirsin.`,
+      public: '<strong>ODA LİSTESİNDE GÖRÜNECEK</strong> şekilde',
+      private: '<strong>GİZLİ</strong> olarak',
       copyUrl: {
         callback: {
           success: 'Oda bağlantısı kopyalandı'
@@ -273,7 +276,7 @@ export default {
           placeholder: 'Oda başlığı yaz'
         },
         isListed: {
-          label: 'Açık odalarda listensin mi?'
+          label: 'Odan odalar listesinde görünsün mü?'
         },
         isAnon: {
           label: 'Oluşturan oyuncu adın gizlensin mi?'

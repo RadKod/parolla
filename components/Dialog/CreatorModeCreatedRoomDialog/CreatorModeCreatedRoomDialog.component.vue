@@ -2,14 +2,23 @@
 Dialog.dialog.creator-mode-created-room-dialog(
   v-model="state.isOpen"
   :title="$t('dialog.createdRoom.title')"
+  :confirm-button-text="confirmButtonText || $t('general.ok')"
   :cancel-button-text="cancelButtonText || $t('general.close')"
-  :show-confirm-button="false"
+  :show-confirm-button="true"
   :show-cancel-button="true"
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
   @opened="$emit('opened')"
+  @cancel="$emit('onCancel')"
+  @confirm="$emit('onConfirm')"
 )
   h4.creator-mode-created-room-dialog__roomTitle {{ room.title }}
+
+  template(v-if="room.isListed")
+    p(v-html="$t('dialog.createdRoom.isListedMessage', { isListed: $t('dialog.createdRoom.public') })")
+  template(v-else)
+    p(v-html="$t('dialog.createdRoom.isListedMessage', { isListed: $t('dialog.createdRoom.private') })")
+
   Field.creator-mode-created-room-dialog__roomIdField(
     :value="`${APP_URL}${localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })}`"
     disabled
@@ -38,6 +47,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
+    },
+    confirmButtonText: {
+      type: String,
+      required: false,
+      default: null
     },
     cancelButtonText: {
       type: String,
