@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.13.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.12.1...v2.13.0)
+
+
+### 🚀 Enhancements
+
+  - Ux improvements on room compose ([fa32583](https://github.com/RadKod/parolla/commit/fa32583))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.12.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.12.0...v2.12.1)
