@@ -460,10 +460,12 @@ export default () => {
 
     countdownTimerRef.value.pause()
 
-    if (activeGameMode.value === gameModeKeyEnum.UNLIMITED || activeGameMode.value === gameModeKeyEnum.CREATOR) {
+    if (
+      activeGameMode.value === gameModeKeyEnum.DAILY ||
+      activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
+      activeGameMode.value === gameModeKeyEnum.CREATOR
+    ) {
       store.commit(`${activeGameMode.value}/SET_IS_OPEN_STATS_DIALOG`, true)
-    } else {
-      dialog.stats.isOpen = true
     }
 
     // Post Stats

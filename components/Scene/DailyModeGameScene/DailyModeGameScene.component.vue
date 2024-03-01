@@ -78,13 +78,17 @@
   // How To Play Dialog
   HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
   // Stats Dialog
-  DailyModeStatsDialog(:isOpen="dialog.stats.isOpen")
+  DailyModeStatsDialog(
+    :cancelButtonText="$t('general.close')"
+    :isOpen="dailyDialog.stats.isOpen"
+    @onCancel="$store.commit('daily/SET_IS_OPEN_STATS_DIALOG', false)"
+  )
   // Interstital Ad Dialog
   InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
 </template>
 
 <script>
-import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown } from 'vant'
@@ -135,6 +139,8 @@ export default defineComponent({
       handleDontHideKeyboard,
       checkUnsupportedHeight
     } = useGameScene()
+
+    const dailyDialog = computed(() => store.getters['daily/dialog'])
 
     const day = new Date().toLocaleDateString('tr').slice(0, 10)
     const storedDay = persistStore && persistStore.daily.currentDate
@@ -210,6 +216,7 @@ export default defineComponent({
       questions,
       answer,
       dialog,
+      dailyDialog,
       countdown,
       countdownTimerRef,
       alphabetItemClasses,

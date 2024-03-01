@@ -168,5 +168,10 @@ export default () => ({
   countdown: {
     time: GAME_TIME_LIMIT,
     remainTime: {}
+  },
+  dialog: {
+    stats: {
+      isOpen: false
+    }
   }
 })

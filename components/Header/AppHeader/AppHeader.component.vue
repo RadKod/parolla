@@ -28,8 +28,6 @@
 
   // How To Play Dialog
   HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
-  // Stats Dialog
-  DailyModeStatsDialog(:isOpen="dialog.stats.mode.daily.isOpen" @closed="dialog.stats.mode.daily.isOpen = false")
   // Menu Dialog
   MenuDialog(
     :isOpen="dialog.menu.isOpen"
@@ -62,7 +60,6 @@ import { PlayerAvatar } from '@/components/Avatar'
 import { AppLogo } from '@/components/Logo'
 import { AppIcon } from '@/components/Icon'
 import {
-  DailyModeStatsDialog,
   HowToPlayDialog,
   MenuDialog,
   HowToCalculateStatsDialog,
@@ -77,7 +74,6 @@ export default defineComponent({
     PlayerAvatar,
     AppLogo,
     AppIcon,
-    DailyModeStatsDialog,
     HowToPlayDialog,
     MenuDialog,
     HowToCalculateStatsDialog,
@@ -96,13 +92,6 @@ export default defineComponent({
     const { openLeaveDialog } = useDialog()
 
     const dialog = reactive({
-      stats: {
-        mode: {
-          daily: {
-            isOpen: false
-          }
-        }
-      },
       howToPlay: {
         isOpen: false
       },
@@ -126,12 +115,13 @@ export default defineComponent({
       }
     })
 
+    const dailyDialog = computed(() => store.getters['daily/dialog'])
     const unlimitedDialog = computed(() => store.getters['unlimited/dialog'])
-    const creatorDialog = computed(() => store.getters['unlimited/dialog'])
+    const creatorDialog = computed(() => store.getters['creator/dialog'])
 
     const toggleStatsDialog = () => {
       if (activeGameMode.value === gameModeKeyEnum.DAILY) {
-        dialog.stats.mode.daily.isOpen = !dialog.stats.mode.daily.isOpen
+        store.commit('daily/SET_IS_OPEN_STATS_DIALOG', !dailyDialog.value.stats.isOpen)
       }
 
       if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {

@@ -17,6 +17,10 @@ export default {
     state.alphabet.activeIndex = index
   },
 
+  UPDATE_COUNTDOWN_REMAIN_TIME(state, remainTime) {
+    state.countdown.remainTime = remainTime
+  },
+
   UPDATE_COUNTDOWN_TIMER(state, ms) {
     state.countdown.time = ms
   },

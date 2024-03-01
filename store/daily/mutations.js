@@ -17,6 +17,10 @@ export default {
     state.alphabet.activeIndex = index
   },
 
+  UPDATE_COUNTDOWN_REMAIN_TIME(state, remainTime) {
+    state.countdown.remainTime = remainTime
+  },
+
   UPDATE_COUNTDOWN_TIMER(state, ms) {
     state.countdown.time = ms
   },
@@ -33,5 +37,9 @@ export default {
       item.isWrong = false
       item.isCorrect = false
     })
+  },
+
+  SET_IS_OPEN_STATS_DIALOG(state, isOpen) {
+    state.dialog.stats.isOpen = isOpen
   }
 }
