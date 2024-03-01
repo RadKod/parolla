@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.14.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.14.0...v2.14.1)
+
+
+### 🏡 Chore
+
+  - Clean code ([01e96d4](https://github.com/RadKod/parolla/commit/01e96d4))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.14.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.13.0...v2.14.0)
