@@ -315,6 +315,29 @@ export default () => {
     }
   })
 
+  const isActiveSoundFx = computed(() => store.getters['app/isActiveSoundFx'])
+
+  watch(
+    () => isActiveSoundFx.value,
+    value => {
+      if (value) {
+        startSoundFx.mute(false)
+        correctSoundFx.mute(false)
+        wrongSoundFx.mute(false)
+        passSoundFx.mute(false)
+        halfTimeSoundFx.mute(false)
+        radkodEasterEggSoundFx.mute(false)
+      } else {
+        startSoundFx.mute(true)
+        correctSoundFx.mute(true)
+        wrongSoundFx.mute(true)
+        passSoundFx.mute(true)
+        halfTimeSoundFx.mute(true)
+        radkodEasterEggSoundFx.mute(true)
+      }
+    }
+  )
+
   const soundFx = reactive({
     start: null,
     correct: null,
@@ -325,27 +348,33 @@ export default () => {
   })
 
   const startSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/start.wav`]
+    src: [`${WEB_CDN}/assets/sound/fx/start.wav`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   const correctSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/correct.wav`]
+    src: [`${WEB_CDN}/assets/sound/fx/correct.wav`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   const wrongSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/wrong.wav`]
+    src: [`${WEB_CDN}/assets/sound/fx/wrong.wav`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   const passSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/pass.wav`]
+    src: [`${WEB_CDN}/assets/sound/fx/pass.wav`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   const halfTimeSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/half-time.wav`]
+    src: [`${WEB_CDN}/assets/sound/fx/half-time.wav`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   const radkodEasterEggSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`]
+    src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`],
+    mute: isActiveSoundFx.value ? false : true
   })
 
   soundFx.start = startSoundFx

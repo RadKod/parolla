@@ -88,6 +88,7 @@ export default {
       usernameEdit: 'Change the player name',
       menu: 'Menu',
       darkTheme: 'Dark theme',
+      soundFx: 'Sound fx',
       switchLocale: 'Choose language',
       suggestQa: 'Do you want to suggest a question?',
       howToPLay: 'How to play?',
