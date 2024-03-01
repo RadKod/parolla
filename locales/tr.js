@@ -88,6 +88,7 @@ export default {
       usernameEdit: 'Oyuncu adını değiştir',
       menu: 'Menü',
       darkTheme: 'Koyu tema',
+      soundFx: 'Ses efekleri',
       switchLocale: 'Dil değiştir',
       suggestQa: 'Soru önermek ister misin?',
       howToPLay: 'Nasıl oynanır?',

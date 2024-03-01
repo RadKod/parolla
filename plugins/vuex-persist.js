@@ -10,6 +10,9 @@ export default ({ store }) => {
           username: state.auth.user.username
         }
       },
+      app: {
+        soundFx: state.app.soundFx
+      },
       daily: {
         isGameOver: state.daily.isGameOver,
         currentDate: state.daily.currentDate,

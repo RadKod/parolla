@@ -15,6 +15,9 @@ Dialog.dialog.menu-dialog(
     Cell.menu-dialog-nav__item(icon="eye-o" size="large" :title="$t('dialog.menu.darkTheme')")
       template(#right-icon)
         SwitchInput(v-model="isDark" size="22px" @change="toggleDarkTheme")
+    Cell.menu-dialog-nav__item(icon="music-o" size="large" :title="$t('dialog.menu.soundFx')")
+      template(#right-icon)
+        SwitchInput(v-model="isActiveSoundFx" size="22px" @change="toggleSoundFx")
     Cell.menu-dialog-nav__item(
       v-if="$route.path === localePath({ name: 'Main' })"
       icon="font-o"
@@ -153,6 +156,12 @@ export default defineComponent({
       }
     }
 
+    const isActiveSoundFx = computed(() => store.getters['app/isActiveSoundFx'])
+
+    const toggleSoundFx = isChecked => {
+      store.commit('app/SET_IS_ACTIVE_SOUND_FX', isChecked)
+    }
+
     const openSuggestQuestion = () => {
       window.open(
         'https://docs.google.com/forms/d/e/1FAIpQLSec4_MAFiDOjpd9pywfocFsfJQoXfMpLT3HIaHpO0Lz3clnaA/viewform?usp=sf_link',
@@ -217,6 +226,8 @@ export default defineComponent({
       state,
       isDark,
       toggleDarkTheme,
+      isActiveSoundFx,
+      toggleSoundFx,
       openSuggestQuestion,
       openRoomSharer,
       openAppSharer
