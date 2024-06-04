@@ -35,10 +35,23 @@ export default {
   async fetchRooms({ commit, state }, params) {
     const { isLoadMore = false, limit, cursor, keyword, locale } = params
 
+    const getSort = _sort => {
+      if (_sort === 'oldest') {
+        return 'oldest'
+      }
+
+      if (_sort === 'byViewCount') {
+        return 'most_played'
+      }
+
+      return 'newest'
+    }
+
     const queryDefault = {
       per_page: 10,
       cursor: '',
       search: '',
+      sort: state.room.sort,
       locale: this.$i18n.locale
     }
 
@@ -46,6 +59,7 @@ export default {
       per_page: limit || queryDefault.per_page,
       cursor: cursor || queryDefault.cursor,
       search: keyword || queryDefault.search,
+      sort: getSort(state.room.sort) || queryDefault.sort,
       lang: locale || queryDefault.locale
     }
 

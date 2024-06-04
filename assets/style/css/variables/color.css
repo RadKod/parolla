@@ -83,9 +83,9 @@
   --color-icon-01: #aaa;
 
   /* Interactive */
-  --color-hover-01: #fafafa;
-  --color-hover-02: #fff;
-  --color-active-01: #ededed;
+  --color-hover-01: #383838;
+  --color-hover-02: #272727;
+  --color-active-01: #383838;
   --color-selected-01: #121212;
   --color-disabled-01: #626262;
   --color-highlight-01: #ff7878;

@@ -32,6 +32,41 @@
   }
 
   &-rooms {
+    &-head {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @include media-breakpoint-down(mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @include media-breakpoint-down(mobile) {
+          margin-block-end: var(--base-m-y);
+        }
+
+        .filter-dropdown {
+          $v-dropdown-menu: '.v-dropdown-menu';
+
+          #{$v-dropdown-menu} {
+            &__container {
+              @include media-breakpoint-down(mobile) {
+                right: auto;
+                left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
     &__refetchButton {
       color: var(--color-text-02);
       background-color: var(--color-ui-02);

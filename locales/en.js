@@ -30,7 +30,9 @@ export default {
     share: 'Share',
     by: 'By',
     comments: 'Comments',
-    noData: 'No data'
+    noData: 'No data',
+    filter: 'Filter',
+    sort: 'Sort'
   },
   introScene: {
     title: 'CHOOSE GAME MODE',
@@ -242,6 +244,12 @@ export default {
     rooms: {
       pendingRooms: 'Fetching rooms',
       selectFromList: 'SELECT FROM LIST',
+      filters: {
+        title: 'FILTERS',
+        recently: 'Recent rooms',
+        oldest: 'Old rooms',
+        byViewCount: 'Most viewed'
+      },
       refresh: 'REFRESH',
       searchField: {
         placeholder: 'Search room'

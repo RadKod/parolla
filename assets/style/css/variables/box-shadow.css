@@ -1,3 +1,7 @@
 :root {
   --box-shadow-01: 0 5px 30px rgba(156, 160, 171, 0.25);
 }
+
+.dark-mode {
+  --box-shadow-01: 0 5px 30px rgba(0, 0, 0, 0.25);
+}
