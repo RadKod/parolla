@@ -30,7 +30,9 @@ export default {
     share: 'Paylaş',
     by: 'tarafından',
     comments: 'Yorumlar',
-    noData: 'Veri yok'
+    noData: 'Veri yok',
+    filter: 'Filtrele',
+    sort: 'Sırala'
   },
   introScene: {
     title: 'OYUN MODU SEÇ',
@@ -241,6 +243,12 @@ export default {
     rooms: {
       pendingRooms: 'Odalar getiriliyor',
       selectFromList: 'LİSTEDEN SEÇ',
+      filters: {
+        title: 'SIRALA',
+        recently: 'En yeni odalar',
+        oldest: 'En eski odalar',
+        byViewCount: 'En çok oynanan odalar'
+      },
       refresh: 'TAZELE',
       searchField: {
         placeholder: 'Oda ara'

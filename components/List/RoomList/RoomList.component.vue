@@ -22,40 +22,49 @@
   template(v-else)
     List
       template(v-for="room in list.items")
-        Cell.room-list-item(v-if="room.isListed" is-link :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })")
-          template(#title)
-            span.room-list-item__title {{ room.title }}
+        NuxtLink(
+          :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
+          :title="room.title"
+          @click.native.prevent.capture="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
+        )
+          Cell.room-list-item(
+            v-if="room.isListed"
+            is-link
+            :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
+          )
+            template(#title)
+              span.room-list-item__title {{ room.title }}
 
-          template(#label)
-            .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
-              PlayerAvatar(:size="16" :name="room.user.fingerprint")
-              span.room-list-item-badge__value {{ room.user.username }}
-
-            .room-list-item__badges
-              .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
+            template(#label)
+              .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
                 PlayerAvatar(:size="16" :name="room.user.fingerprint")
                 span.room-list-item-badge__value {{ room.user.username }}
 
-              .room-list-item-badge(v-if="room.questionCount")
-                AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="16" :height="16")
-                span.room-list-item-badge__value {{ room.questionCount }}
+              .room-list-item__badges
+                .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
+                  PlayerAvatar(:size="16" :name="room.user.fingerprint")
+                  span.room-list-item-badge__value {{ room.user.username }}
 
-              .room-list-item-badge(v-if="room.viewCount")
-                AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="16" :height="16")
-                span.room-list-item-badge__value {{ room.viewCount }}
+                .room-list-item-badge(v-if="room.questionCount")
+                  AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="16" :height="16")
+                  span.room-list-item-badge__value {{ room.questionCount }}
 
-              .room-list-item-badge.room-list-item-badge--rating(v-if="room.rating")
-                StarRating(
-                  read-only
-                  inline
-                  :show-rating="false"
-                  :rating="room.rating"
-                  :increment="0.1"
-                  :rounded-corners="false"
-                  :star-size="14"
-                )
-                label {{ String(formatRating(room.rating)) }}
-            span.room-list-item__id ID: {{ room.id }}
+                .room-list-item-badge(v-if="room.viewCount")
+                  AppIcon.room-list-item-badge__icon(name="tabler:eye" color="var(--color-text-03)" :width="16" :height="16")
+                  span.room-list-item-badge__value {{ room.viewCount }}
+
+                .room-list-item-badge.room-list-item-badge--rating(v-if="room.rating")
+                  StarRating(
+                    read-only
+                    inline
+                    :show-rating="false"
+                    :rating="room.rating"
+                    :increment="0.1"
+                    :rounded-corners="false"
+                    :star-size="14"
+                  )
+                  label {{ String(formatRating(room.rating)) }}
+              span.room-list-item__id ID: {{ room.id }}
 
   InfiniteLoading(@infinite="handleInfiniteLoading")
 </template>

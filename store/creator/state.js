@@ -5,6 +5,7 @@ export default () => ({
     list: [],
     pagination: {},
     total: null,
+    sort: 'recently',
     room: {}
   },
   isGameOver: false,

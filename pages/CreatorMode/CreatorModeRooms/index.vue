@@ -22,10 +22,17 @@
     Divider {{ $t('creatorModeRooms.divider') }}
 
     .creator-mode-rooms-page-rooms
-      .creator-mode-rooms-page__title.creator-mode-rooms-page__title--rooms
-        h3 {{ $t('creatorModeRooms.rooms.selectFromList') }} ({{ roomTotal }})
-        Button.creator-mode-rooms-page-rooms__refetchButton(icon="replay" size="small" round @click="fetch")
-          | {{ $t('creatorModeRooms.rooms.refresh') }}
+      .creator-mode-rooms-page-rooms-head
+        .creator-mode-rooms-page__title.creator-mode-rooms-page__title--rooms
+          h3 {{ $t('creatorModeRooms.rooms.selectFromList') }} ({{ roomTotal }})
+        .creator-mode-rooms-page-rooms-head__actions
+          Button.creator-mode-rooms-page-rooms__refetchButton.me-1(icon="replay" size="small" round @click="fetch")
+            | {{ $t('creatorModeRooms.rooms.refresh') }}
+          FilterDropdown(
+            :title="$t('creatorModeRooms.rooms.filters.title')"
+            :options="filterOptions"
+            @on-select-option="handleFilterOptionSelect"
+          )
 
       template(v-if="fetchState.pending")
         Empty(:description="$t('creatorModeRooms.rooms.pendingRooms')")
@@ -44,6 +51,7 @@ import { APP_URL } from '@/system/constant'
 import { Field, Button, Divider, Empty, Notify } from 'vant'
 import { AppIcon } from '@/components/Icon'
 import { RoomList } from '@/components/List'
+import { FilterDropdown } from '@/components/Dropdown'
 
 export default defineComponent({
   components: {
@@ -53,7 +61,8 @@ export default defineComponent({
     Empty,
     Notify,
     AppIcon,
-    RoomList
+    RoomList,
+    FilterDropdown
   },
   layout: 'Default/Default.layout',
   setup() {
@@ -70,6 +79,32 @@ export default defineComponent({
 
     const rooms = computed(() => store.getters['creator/rooms'])
     const roomTotal = computed(() => store.getters['creator/roomTotal'])
+
+    const filterOptions = computed(() => {
+      return [
+        {
+          key: 'recently',
+          label: i18n.t('creatorModeRooms.rooms.filters.recently'),
+          icon: 'tabler:clock-up'
+        },
+        {
+          key: 'byViewCount',
+          label: i18n.t('creatorModeRooms.rooms.filters.byViewCount'),
+          icon: 'tabler:chevrons-up'
+        },
+        {
+          key: 'oldest',
+          label: i18n.t('creatorModeRooms.rooms.filters.oldest'),
+          icon: 'tabler:clock-down'
+        }
+      ]
+    })
+
+    const handleFilterOptionSelect = option => {
+      store.commit('creator/SET_ROOMS_SORT', option.key)
+
+      fetch()
+    }
 
     const filteredRooms = ref([])
 
@@ -121,6 +156,8 @@ export default defineComponent({
       fetchState,
       rooms,
       roomTotal,
+      filterOptions,
+      handleFilterOptionSelect,
       filteredRooms,
       form,
       validateRoomUrl,

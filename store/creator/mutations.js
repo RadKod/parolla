@@ -1,6 +1,10 @@
 import { GAME_TIME_LIMIT } from '@/system/constant'
 
 export default {
+  SET_ROOMS_SORT(state, sort) {
+    state.room.sort = sort
+  },
+
   SET_ROOMS(state, rooms) {
     state.room.list = rooms
   },
