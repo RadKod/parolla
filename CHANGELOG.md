@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.15.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.0...v2.15.1)
+
+
+### 🏡 Chore
+
+  - Update env ([b0bb206](https://github.com/RadKod/parolla/commit/b0bb206))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/bea794c131c97a5867da707395ecb7a3ab5e72d5...v2.15.0)
