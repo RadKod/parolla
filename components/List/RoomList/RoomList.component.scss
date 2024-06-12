@@ -36,6 +36,21 @@
 
     position: relative;
 
+    &--ad {
+      position: relative;
+      margin-bottom: var(--base-m-y);
+      background-color: var(--color-ui-03);
+      border: 1px solid var(--color-border-01);
+      border-radius: var(--border-radius-01);
+
+      small {
+        position: absolute;
+        color: var(--color-text-03);
+
+        @include center(true, true);
+      }
+    }
+
     &__title {
       display: block;
       margin-bottom: calc(var(--base-m-y) / 2);

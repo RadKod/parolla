@@ -156,6 +156,9 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     @onConfirm="handleConfirmRoomDialog"
     @closed="handleCloseRoomDialog"
   )
+
+  // Ad
+  AppAd.my-base.pt-base(:data-ad-slot="6048083070")
 </template>
 
 <script>
@@ -164,6 +167,7 @@ import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
 // Absolute path due to bypass for hoisting
 import CreatorModeCreatedRoomDialog from '@/components/Dialog/CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -174,7 +178,8 @@ export default defineComponent({
     Button,
     Empty,
     Dialog,
-    CreatorModeCreatedRoomDialog
+    CreatorModeCreatedRoomDialog,
+    AppAd
   },
   setup() {
     const baseClassName = 'creator-mode-compose-form'

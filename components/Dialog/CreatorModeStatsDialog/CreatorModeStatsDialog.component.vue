@@ -75,6 +75,8 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
                 span(v-if="myAnswer({ questionIndex: index }) && myAnswer({ questionIndex: index }).field.length > 0")
                   | &nbsp;{{ myAnswer({ questionIndex: index }).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
+          // Ad
+          AppAd(:data-ad-slot="9964323575")
 
       Tab(name="scoreboard")
         template(#title)
@@ -117,6 +119,7 @@ import { AppIcon } from '@/components/Icon'
 import { RadKodLogo } from '@/components/Logo'
 import { ScoreboardList } from '@/components/List'
 import { RoomReviewView } from '@/components/View'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -131,7 +134,8 @@ export default defineComponent({
     AppIcon,
     RadKodLogo,
     ScoreboardList,
-    RoomReviewView
+    RoomReviewView,
+    AppAd
   },
   props: {
     isOpen: {

@@ -32,7 +32,8 @@ export default {
     comments: 'Comments',
     noData: 'No data',
     filter: 'Filter',
-    sort: 'Sort'
+    sort: 'Sort',
+    ad: 'Ad'
   },
   introScene: {
     title: 'CHOOSE GAME MODE',

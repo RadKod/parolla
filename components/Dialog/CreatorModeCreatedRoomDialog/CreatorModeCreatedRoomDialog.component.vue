@@ -27,6 +27,9 @@ Dialog.dialog.creator-mode-created-room-dialog(
       AppIcon(name="tabler:link" color="var(--color-icon-01)")
     template(#button)
       Button(type="info" size="small" native-type="button" round @click="copyRoomUrl") {{ $t('clipboard.copy') }}
+
+  // Ad
+  AppAd.my-base.pt-base(:data-ad-slot="9964323575")
 </template>
 
 <script>
@@ -34,13 +37,15 @@ import { defineComponent, useContext, reactive, watch } from '@nuxtjs/compositio
 import { APP_URL } from '@/system/constant'
 import { Dialog, Field, Button, Toast } from 'vant'
 import { AppIcon } from '@/components/Icon'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     Field,
     Button,
-    AppIcon
+    AppIcon,
+    AppAd
   },
   props: {
     isOpen: {

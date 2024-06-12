@@ -67,6 +67,9 @@ Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
                 span(v-if="myAnswer(question) && myAnswer(question).field.length > 0") &nbsp;{{ myAnswer(question).field.toLocaleUpperCase('tr') }}
                 span(v-else) &nbsp;-
 
+          // Ad
+          AppAd(:data-ad-slot="9964323575")
+
     // Footer
     footer.stats-dialog__footer
       i18n.d-flex(path="app.copyright")
@@ -88,6 +91,7 @@ import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 import { RadKodLogo } from '@/components/Logo'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -100,7 +104,8 @@ export default defineComponent({
     Collapse,
     CollapseItem,
     Empty,
-    RadKodLogo
+    RadKodLogo,
+    AppAd
   },
   props: {
     isOpen: {

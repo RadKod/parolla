@@ -32,7 +32,8 @@ export default {
     comments: 'Yorumlar',
     noData: 'Veri yok',
     filter: 'Filtrele',
-    sort: 'Sırala'
+    sort: 'Sırala',
+    ad: 'Reklam'
   },
   introScene: {
     title: 'OYUN MODU SEÇ',
@@ -119,9 +120,10 @@ export default {
     createdRoom: {
       title: 'Oda oluşturuldu',
       joinRoom: 'Odaya git',
-      isListedMessage: `Odan {isListed} oluşturuldu. Yanlış seçenekle yayınladıysan bu pencereyi kapattıktan sonra düzenleyip tekrar gönderebilirsin.`,
-      public: '<strong>ODA LİSTESİNDE GÖRÜNECEK</strong> şekilde',
-      private: '<strong>GİZLİ</strong> olarak',
+      isListedMessage: `Odan {isListed}. <br> <br> Yanlış seçenekle yayınladıysan bu pencereyi kapattıktan sonra düzenleyip tekrar gönderebilirsin.`,
+      public: '<strong>ODA LİSTESİNDE GÖRÜNECEK</strong> şekilde oluşturuldu',
+      private:
+        '<strong>ODA LİSTESİNDE GÖRÜNMEYECEK</strong> şekilde oluşturuldu, ama oda bağlantını bilen arkadaşların hala odana girebilir',
       copyUrl: {
         callback: {
           success: 'Oda bağlantısı kopyalandı'

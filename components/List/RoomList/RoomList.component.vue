@@ -21,7 +21,7 @@
 
   template(v-else)
     List
-      template(v-for="room in list.items")
+      template(v-for="(room, index) in list.items")
         NuxtLink(
           :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })"
           :title="room.title"
@@ -65,6 +65,11 @@
                   )
                   label {{ String(formatRating(room.rating)) }}
               span.room-list-item__id ID: {{ room.id }}
+        // Ad
+        template(v-if="(index + 1) % 5 === 0")
+          .room-list-item.room-list-item--ad
+            small {{ $t('general.ad') }}
+            AppAd(:data-ad-slot="6048083070")
 
   InfiniteLoading(@infinite="handleInfiniteLoading")
 </template>
@@ -78,6 +83,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 import StarRating from 'vue-star-rating'
 import { AppIcon } from '@/components/Icon'
 import { PlayerAvatar } from '@/components/Avatar'
+import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -90,7 +96,8 @@ export default defineComponent({
     Loading,
     StarRating,
     AppIcon,
-    PlayerAvatar
+    PlayerAvatar,
+    AppAd
   },
   props: {
     items: {
