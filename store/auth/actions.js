@@ -1,3 +1,4 @@
+import { RADKOD_API_URL } from '@/system/constant'
 import getBrowserFingerprint from 'get-browser-fingerprint'
 
 const fingerprint = getBrowserFingerprint()
@@ -41,5 +42,50 @@ export default {
     const result = response.json()
 
     return result
+  },
+
+  async getDeviceInfo() {
+    const UAParser = require('ua-parser-js')
+    const parser = new UAParser(navigator.userAgent)
+    const ua = parser.getResult()
+
+    let deviceInfo = {
+      ...ua
+    }
+
+    if (typeof window !== 'undefined') {
+      deviceInfo = {
+        ...deviceInfo,
+        window: {
+          outerWidth: window.outerWidth,
+          outerHeight: window.outerHeight
+        }
+      }
+    }
+
+    if (navigator) {
+      deviceInfo = {
+        ...deviceInfo,
+        language: navigator.language
+      }
+    }
+
+    try {
+      const response = await fetch(`${RADKOD_API_URL}/global/ipinfo.php`)
+      const ipData = await response.json()
+
+      if (ipData) {
+        deviceInfo = {
+          ...deviceInfo,
+          ipData
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching IPData info:', error)
+    }
+
+    return {
+      data: deviceInfo
+    }
   }
 }

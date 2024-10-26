@@ -163,6 +163,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
+import { useDeviceInfo } from '@/hooks'
 import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
 // Absolute path due to bypass for hoisting
@@ -187,6 +188,8 @@ export default defineComponent({
     const router = useRouter()
     const { localePath, i18n } = useContext()
     const store = useStore()
+
+    const { getDeviceInfo } = useDeviceInfo()
 
     const user = computed(() => store.getters['auth/user'])
 
@@ -333,7 +336,9 @@ export default defineComponent({
       }
 
       if (form.isClear) {
-        const result = await store.dispatch('creator/postQaForm', { form, user: user.value })
+        const deviceInfo = await getDeviceInfo()
+
+        const result = await store.dispatch('creator/postQaForm', { form, user: user.value, deviceInfo })
 
         if (result.success) {
           createdRoom.title = result.data.title
