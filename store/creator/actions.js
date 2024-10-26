@@ -1,7 +1,7 @@
 import { roomTransformer, scoreboardTransformer } from '@/transformers'
 
 export default {
-  async postQaForm({ commit, state }, { form, user }) {
+  async postQaForm({ commit, state }, { form, user, deviceInfo }) {
     const transform = form => {
       return {
         room_title: form.roomTitle,
@@ -14,7 +14,8 @@ export default {
           }
         }),
         is_anon: form.isAnon,
-        fingerprint: user.fingerprint
+        fingerprint: user.fingerprint,
+        device_info: JSON.stringify(deviceInfo)
       }
     }
 
