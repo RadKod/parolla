@@ -24,16 +24,8 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { AppPreloader } from '@/components/Preloader'
-import { AppHeader } from '@/components/Header'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
-  components: {
-    AppPreloader,
-    AppHeader,
-    AppAd
-  },
   setup() {}
 })
 </script>

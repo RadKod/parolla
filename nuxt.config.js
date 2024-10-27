@@ -98,7 +98,23 @@ module.exports = {
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
    */
-  components: false,
+  components: [
+    {
+      path: '@/components',
+      pathPrefix: false,
+      extensions: ['vue'],
+      extendComponent(component) {
+        /**
+         * Remove 'Component' suffix for generated component names
+         * e.g.
+         *  components/Xyz.component.vue
+         *    XyzComponent -> Xyz
+         */
+        component.pascalName = component.pascalName.replace('Component', '')
+        component.kebabName = component.kebabName.replace('component', '')
+      }
+    }
+  ],
 
   /*
    ** Nuxt.js dev-modules
@@ -137,6 +153,14 @@ module.exports = {
       '@nuxtjs/color-mode',
       {
         preference: 'light'
+      }
+    ],
+    // https://github.com/antfu/unplugin-auto-import
+    [
+      'unplugin-auto-import/nuxt',
+      {
+        dirs: ['./composables/**'],
+        dts: false
       }
     ]
   ],
@@ -232,6 +256,9 @@ module.exports = {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
+    /* analyze: {
+      analyzerMode: 'static'
+    }, */
     standalone: true, // for ESM import
     extractCSS: process.env.NODE_ENV === 'production',
     babel: {

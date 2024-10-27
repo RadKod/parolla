@@ -6,12 +6,8 @@
 
 <script>
 import { defineComponent, useRoute, useStore, useContext, useMeta, computed } from '@nuxtjs/composition-api'
-import { CreatorModeGameScene } from '@/components/Scene'
 
 export default defineComponent({
-  components: {
-    CreatorModeGameScene
-  },
   layout: 'Default/Default.layout',
   setup() {
     const route = useRoute()

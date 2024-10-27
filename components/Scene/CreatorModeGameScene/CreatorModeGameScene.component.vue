@@ -92,10 +92,7 @@
 <script>
 import { defineComponent, useFetch, useRoute, useStore, useContext, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
-import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown, Notify } from 'vant'
-import { AppIcon } from '@/components/Icon'
-import { HowToPlayDialog, CreatorModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
@@ -103,11 +100,7 @@ export default defineComponent({
     Field,
     Empty,
     CountDown,
-    Notify,
-    AppIcon,
-    HowToPlayDialog,
-    CreatorModeStatsDialog,
-    InterstitialAdDialog
+    Notify
   },
   setup() {
     const route = useRoute()

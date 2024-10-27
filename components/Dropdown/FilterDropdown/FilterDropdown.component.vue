@@ -28,13 +28,11 @@
 import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
 import DropdownMenu from 'v-dropdown-menu'
 import 'v-dropdown-menu/dist/v-dropdown-menu.css'
-import { AppIcon } from '@/components/Icon'
 import { Button } from 'vant'
 
 export default defineComponent({
   components: {
     DropdownMenu,
-    AppIcon,
     Button
   },
   props: {

@@ -15,12 +15,10 @@ Dialog.dialog.room-review-dialog(
 <script>
 import { defineComponent, ref, reactive, watch } from '@nuxtjs/composition-api'
 import { Dialog } from 'vant'
-import { RoomReviewView } from '@/components/View'
 
 export default defineComponent({
   components: {
-    Dialog: Dialog.Component,
-    RoomReviewView
+    Dialog: Dialog.Component
   },
   props: {
     isOpen: {

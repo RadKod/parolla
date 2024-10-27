@@ -113,13 +113,7 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
 <script>
 import { defineComponent, useRoute, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
-import { AppIcon } from '@/components/Icon'
-import { RadKodLogo } from '@/components/Logo'
-import { ScoreboardList } from '@/components/List'
-import { RoomReviewView } from '@/components/View'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -130,12 +124,7 @@ export default defineComponent({
     Button,
     Collapse,
     CollapseItem,
-    Empty,
-    AppIcon,
-    RadKodLogo,
-    ScoreboardList,
-    RoomReviewView,
-    AppAd
+    Empty
   },
   props: {
     isOpen: {

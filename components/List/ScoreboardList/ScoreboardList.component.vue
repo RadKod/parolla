@@ -43,15 +43,13 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
 <script>
 import { defineComponent, useStore, ref, computed } from '@nuxtjs/composition-api'
 import { Collapse, CollapseItem, Empty, Button } from 'vant'
-import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
     Collapse,
     CollapseItem,
     Empty,
-    Button,
-    PlayerAvatar
+    Button
   },
   props: {
     items: {

@@ -24,17 +24,13 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { Form, Button, Field, Notify } from 'vant'
-import { PlayerAvatar } from '@/components/Avatar'
-import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
     Form,
     Button,
     Field,
-    Notify,
-    PlayerAvatar,
-    AppIcon
+    Notify
   },
   setup() {
     const { i18n } = useContext()

@@ -7,12 +7,8 @@
 
 <script>
 import { defineComponent, computed, useStore, onMounted, nextTick } from '@nuxtjs/composition-api'
-import { AppLogo } from '@/components/Logo'
 
 export default defineComponent({
-  components: {
-    AppLogo
-  },
   setup() {
     const store = useStore()
 

@@ -30,20 +30,11 @@ Dialog.dialog.how-to-play-dialog(
 import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode } from '@/hooks'
 import { Dialog } from 'vant'
-import { HowToPlayDailyModeContent, HowToPlayUnlimitedModeContent, HowToPlayCreatorModeContent } from '@/components/Content'
-import { RadKodLogo } from '@/components/Logo'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
-    Dialog: Dialog.Component,
-    HowToPlayDailyModeContent,
-    HowToPlayUnlimitedModeContent,
-    HowToPlayCreatorModeContent,
-    RadKodLogo,
-    AppAd
+    Dialog: Dialog.Component
   },
   props: {
     isOpen: {

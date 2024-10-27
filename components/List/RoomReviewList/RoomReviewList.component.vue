@@ -47,11 +47,8 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useFormatter } from '@/hooks'
 import { List, Cell, Empty, Button } from 'vant'
 import StarRating from 'vue-star-rating'
-import { AppIcon } from '@/components/Icon'
-import { PlayerAvatar } from '@/components/Avatar'
 
 export default defineComponent({
   components: {
@@ -59,9 +56,7 @@ export default defineComponent({
     Cell,
     Empty,
     Button,
-    StarRating,
-    AppIcon,
-    PlayerAvatar
+    StarRating
   },
   props: {
     rating: {

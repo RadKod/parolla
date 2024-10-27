@@ -1,7 +1,6 @@
 import { useContext, useStore, ref, reactive, computed, watch, nextTick } from '@nuxtjs/composition-api'
 import { UNSUPPORTED_HEIGHT, WEB_CDN } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode, useFormatter } from '@/hooks'
 // Swiper
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.min.css'
@@ -405,7 +404,7 @@ export default () => {
     }, 0) // DOM Bypass
 
     const startGameToastMessage = `
-        <img class='start-game-toast__spinner' src="${require('@/assets/img/core/loader.svg')}" />
+        <img class='start-game-toast__spinner' src="img/core/loader.svg" />
         <div class="start-game-toast-info">
           <strong class='start-game-toast-info__title'>${i18n.t('gameScene.toast.startGame.title')}</strong>
           ${i18n.t('gameScene.toast.startGame.description')}

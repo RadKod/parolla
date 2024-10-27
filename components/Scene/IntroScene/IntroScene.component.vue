@@ -2,7 +2,7 @@
 .scene.intro-scene(ref="rootRef" tabindex="1")
   // Scene Inner
   .scene__inner
-    AppLogo
+    LazyAppLogo
     h2.intro-scene__title {{ $t('introScene.title') }}
 
     .intro-scene-mode-list
@@ -32,11 +32,9 @@
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { Button, Notify } from 'vant'
-import { AppLogo } from '@/components/Logo'
 
 export default defineComponent({
   components: {
-    AppLogo,
     Button
   },
   setup() {
