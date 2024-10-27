@@ -163,7 +163,6 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
-import { useDeviceInfo } from '@/hooks'
 import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
 

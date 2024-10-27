@@ -30,7 +30,6 @@ Dialog.dialog.how-to-play-dialog(
 import { defineComponent, reactive, watch } from '@nuxtjs/composition-api'
 import { ALPHABET_LENGTH } from '@/system/constant'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode } from '@/hooks'
 import { Dialog } from 'vant'
 
 export default defineComponent({

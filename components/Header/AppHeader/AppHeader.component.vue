@@ -55,7 +55,6 @@
 <script>
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
-import { useGameMode, useDialog } from '@/hooks'
 
 export default defineComponent({
   setup() {

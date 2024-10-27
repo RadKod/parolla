@@ -91,7 +91,6 @@ Dialog.dialog.menu-dialog(
 <script>
 import { defineComponent, useRoute, useStore, useContext, ref, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { useGameMode } from '@/hooks'
 import { Dialog, CellGroup, Cell, Switch, Toast } from 'vant'
 
 export default defineComponent({

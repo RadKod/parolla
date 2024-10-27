@@ -88,7 +88,6 @@ Dialog.dialog.stats-dialog.unlimited-mode-stats-dialog(
 <script>
 import { defineComponent, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, Icon, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
 
 export default defineComponent({

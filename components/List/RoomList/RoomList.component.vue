@@ -76,7 +76,6 @@
 
 <script>
 import { defineComponent, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
-import { useFormatter } from '@/hooks'
 import { useDebounceFn } from '@vueuse/core'
 import { Search, List, Cell, Button, Empty, Loading } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'

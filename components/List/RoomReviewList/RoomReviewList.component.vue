@@ -47,7 +47,6 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useFormatter } from '@/hooks'
 import { List, Cell, Empty, Button } from 'vant'
 import StarRating from 'vue-star-rating'
 

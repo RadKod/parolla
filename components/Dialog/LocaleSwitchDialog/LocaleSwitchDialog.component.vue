@@ -30,7 +30,6 @@ Dialog.dialog.locale-switch-dialog(
 
 <script>
 import { defineComponent, useRoute, useContext, reactive, ref, watch } from '@nuxtjs/composition-api'
-import { useDialog } from '@/hooks'
 import { Dialog, RadioGroup, CellGroup, Cell, Radio, Toast } from 'vant'
 
 export default defineComponent({

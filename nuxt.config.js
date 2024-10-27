@@ -154,6 +154,14 @@ module.exports = {
       {
         preference: 'light'
       }
+    ],
+    // https://github.com/antfu/unplugin-auto-import
+    [
+      'unplugin-auto-import/nuxt',
+      {
+        dirs: ['./composables/**'],
+        dts: false
+      }
     ]
   ],
 

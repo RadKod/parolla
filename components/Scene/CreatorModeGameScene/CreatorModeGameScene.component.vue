@@ -92,7 +92,6 @@
 <script>
 import { defineComponent, useFetch, useRoute, useStore, useContext, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
-import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown, Notify } from 'vant'
 
 export default defineComponent({
