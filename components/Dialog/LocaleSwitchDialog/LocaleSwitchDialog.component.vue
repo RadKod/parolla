@@ -32,7 +32,6 @@ Dialog.dialog.locale-switch-dialog(
 import { defineComponent, useRoute, useContext, reactive, ref, watch } from '@nuxtjs/composition-api'
 import { useDialog } from '@/hooks'
 import { Dialog, RadioGroup, CellGroup, Cell, Radio, Toast } from 'vant'
-import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
@@ -40,8 +39,7 @@ export default defineComponent({
     RadioGroup,
     CellGroup,
     Cell,
-    Radio,
-    AppIcon
+    Radio
   },
   props: {
     isOpen: {

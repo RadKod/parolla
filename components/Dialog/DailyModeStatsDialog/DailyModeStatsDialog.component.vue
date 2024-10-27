@@ -95,9 +95,6 @@ import { defineComponent, useContext, useStore, ref, reactive, watch, computed }
 import { APP_URL } from '@/system/constant'
 import { useTime } from '@/hooks'
 import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
-import { RadKodLogo } from '@/components/Logo'
-import { AppIcon } from '@/components/Icon'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -108,10 +105,7 @@ export default defineComponent({
     Button,
     Collapse,
     CollapseItem,
-    Empty,
-    RadKodLogo,
-    AppIcon,
-    AppAd
+    Empty
   },
   props: {
     isOpen: {

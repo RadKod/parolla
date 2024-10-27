@@ -33,15 +33,11 @@ import { gameModeKeyEnum } from '@/enums'
 import { useGameMode } from '@/hooks'
 import { roomTransformer, roomReviewTransformer } from '@/transformers'
 import { Button, Empty } from 'vant'
-import { RoomReviewForm } from '@/components/Form'
-import { RoomReviewList } from '@/components/List'
 
 export default defineComponent({
   components: {
     Button,
-    Empty,
-    RoomReviewForm,
-    RoomReviewList
+    Empty
   },
   setup() {
     const store = useStore()

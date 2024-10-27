@@ -6,12 +6,8 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import { DailyModeGameScene } from '@/components/Scene'
 
 export default defineComponent({
-  components: {
-    DailyModeGameScene
-  },
   layout: 'Default/Default.layout',
   setup() {
     const { i18n, redirect, localePath } = useContext()

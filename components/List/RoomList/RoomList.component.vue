@@ -81,9 +81,6 @@ import { useDebounceFn } from '@vueuse/core'
 import { Search, List, Cell, Button, Empty, Loading } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'
 import StarRating from 'vue-star-rating'
-import { AppIcon } from '@/components/Icon'
-import { PlayerAvatar } from '@/components/Avatar'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -94,10 +91,7 @@ export default defineComponent({
     Button,
     Empty,
     Loading,
-    StarRating,
-    AppIcon,
-    PlayerAvatar,
-    AppAd
+    StarRating
   },
   props: {
     items: {

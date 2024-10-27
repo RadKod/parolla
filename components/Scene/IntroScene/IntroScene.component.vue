@@ -32,11 +32,9 @@
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { Button, Notify } from 'vant'
-import { AppLogo } from '@/components/Logo'
 
 export default defineComponent({
   components: {
-    AppLogo,
     Button
   },
   setup() {

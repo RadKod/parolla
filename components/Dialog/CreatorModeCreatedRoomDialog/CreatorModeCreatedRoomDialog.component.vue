@@ -36,16 +36,12 @@ Dialog.dialog.creator-mode-created-room-dialog(
 import { defineComponent, useContext, reactive, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { Dialog, Field, Button, Toast } from 'vant'
-import { AppIcon } from '@/components/Icon'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     Field,
-    Button,
-    AppIcon,
-    AppAd
+    Button
   },
   props: {
     isOpen: {

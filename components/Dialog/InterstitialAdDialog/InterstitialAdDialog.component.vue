@@ -16,12 +16,10 @@ Dialog.dialog.interstitial-ad-dialog(
 <script>
 import { defineComponent, reactive, ref, watch } from '@nuxtjs/composition-api'
 import { Dialog } from 'vant'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
-    Dialog: Dialog.Component,
-    AppAd
+    Dialog: Dialog.Component
   },
   props: {
     isOpen: {

@@ -49,9 +49,6 @@
 import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { Field, Button, Divider, Empty, Notify } from 'vant'
-import { AppIcon } from '@/components/Icon'
-import { RoomList } from '@/components/List'
-import { FilterDropdown } from '@/components/Dropdown'
 
 export default defineComponent({
   components: {
@@ -59,10 +56,7 @@ export default defineComponent({
     Button,
     Divider,
     Empty,
-    Notify,
-    AppIcon,
-    RoomList,
-    FilterDropdown
+    Notify
   },
   layout: 'Default/Default.layout',
   setup() {

@@ -92,19 +92,13 @@ import { defineComponent, useStore, useFetch, ref, onMounted, onUnmounted, compu
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { useGameScene } from '@/hooks'
 import { Button, Field, Empty, CountDown } from 'vant'
-import { AppIcon } from '@/components/Icon'
-import { HowToPlayDialog, DailyModeStatsDialog, InterstitialAdDialog } from '@/components/Dialog'
 
 export default defineComponent({
   components: {
     Button,
     Field,
     Empty,
-    CountDown,
-    AppIcon,
-    HowToPlayDialog,
-    DailyModeStatsDialog,
-    InterstitialAdDialog
+    CountDown
   },
   setup() {
     const rootRef = ref(null)

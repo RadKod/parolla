@@ -5,12 +5,8 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { CreatorModeComposeForm } from '@/components/Form'
 
 export default defineComponent({
-  components: {
-    CreatorModeComposeForm
-  },
   layout: 'Default/Default.layout',
   setup() {}
 })

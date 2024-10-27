@@ -56,32 +56,8 @@
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
 import { useGameMode, useDialog } from '@/hooks'
-import { PlayerAvatar } from '@/components/Avatar'
-import { AppLogo } from '@/components/Logo'
-import { AppIcon } from '@/components/Icon'
-import {
-  HowToPlayDialog,
-  MenuDialog,
-  HowToCalculateStatsDialog,
-  CreditsDialog,
-  ContactDialog,
-  LocaleSwitchDialog,
-  RoomReviewDialog
-} from '@/components/Dialog'
 
 export default defineComponent({
-  components: {
-    PlayerAvatar,
-    AppLogo,
-    AppIcon,
-    HowToPlayDialog,
-    MenuDialog,
-    HowToCalculateStatsDialog,
-    CreditsDialog,
-    ContactDialog,
-    LocaleSwitchDialog,
-    RoomReviewDialog
-  },
   setup() {
     const router = useRouter()
     const route = useRoute()

@@ -36,7 +36,6 @@ Form.room-review-form(@keypress.enter.prevent)
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { Form, Button, Field, Notify } from 'vant'
 import StarRating from 'vue-star-rating'
-import { AppIcon } from '@/components/Icon'
 
 export default defineComponent({
   components: {
@@ -44,8 +43,7 @@ export default defineComponent({
     Button,
     Field,
     Notify,
-    StarRating,
-    AppIcon
+    StarRating
   },
   setup(props, { emit }) {
     const baseClassName = 'room-review-form'

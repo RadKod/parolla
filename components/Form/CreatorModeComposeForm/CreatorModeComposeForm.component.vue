@@ -166,9 +166,6 @@ import { defineComponent, useRouter, useContext, useStore, reactive, set, watch,
 import { useDeviceInfo } from '@/hooks'
 import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
-// Absolute path due to bypass for hoisting
-import CreatorModeCreatedRoomDialog from '@/components/Dialog/CreatorModeCreatedRoomDialog/CreatorModeCreatedRoomDialog.component'
-import { AppAd } from '@/components/Ad'
 
 export default defineComponent({
   components: {
@@ -178,9 +175,7 @@ export default defineComponent({
     VanSwitch: Switch,
     Button,
     Empty,
-    Dialog,
-    CreatorModeCreatedRoomDialog,
-    AppAd
+    Dialog
   },
   setup() {
     const baseClassName = 'creator-mode-compose-form'
