@@ -1,6 +1,6 @@
 <template lang="pug">
 a.radkod-logo(href="https://radkod.com" title="RadKod" :style="`width: ${width}px; height: ${height}`" target="_blank")
-  img.radkod-logo__image(src="@/assets/img/core/radkod-logo-full.png" alt="RadKod" :width="width" :height="height")
+  img.radkod-logo__image(src="img/core/radkod-logo-full.png" loading="lazy" alt="RadKod" :width="width" :height="height")
 </template>
 
 <script>

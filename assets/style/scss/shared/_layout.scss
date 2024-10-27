@@ -58,6 +58,7 @@
     &--pulseBg {
       &::before {
         animation: loopBg 10s var(--motion-01) both infinite;
+        will-change: transform;
       }
     }
 
@@ -68,12 +69,13 @@
       width: 100%;
       height: 100%;
       background-color: var(--color-ui-02);
-      background-image: url(~/assets/img/core/pattern.svg);
+      background-image: url(/img/core/pattern.svg);
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
       opacity: 0.03;
       content: '';
+      will-change: transform;
 
       @include media-breakpoint-down(desktop) {
         transform: scale(2);

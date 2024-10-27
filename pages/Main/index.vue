@@ -1,6 +1,6 @@
 <template lang="pug">
 .page.main-page
-  IntroScene
+  LazyIntroScene
 </template>
 
 <script>

@@ -7,7 +7,7 @@
     template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         AppIcon(name="tabler:arrow-left")
-  AppLogo(type="title" @click.native.prevent.capture="handleClickAppLogo")
+  LazyAppLogo(type="title" @click.native.prevent.capture="handleClickAppLogo")
   nav.app-header-nav
     template(
       v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
@@ -24,12 +24,16 @@
         AppIcon.me-2(v-if="room.reviewCount > 0" name="tabler:message-2" :label="room.reviewCount")
         AppIcon(v-else name="tabler:message-2")
     li.app-header-nav__item(@click="toggleMenuDialog")
-      PlayerAvatar(:name="user.fingerprint")
+      LazyPlayerAvatar(:name="user.fingerprint")
 
   // How To Play Dialog
-  HowToPlayDialog(:cancel-button-text="$t('general.close')" :isOpen="dialog.howToPlay.isOpen" @closed="dialog.howToPlay.isOpen = false")
+  LazyHowToPlayDialog(
+    :cancel-button-text="$t('general.close')"
+    :isOpen="dialog.howToPlay.isOpen"
+    @closed="dialog.howToPlay.isOpen = false"
+  )
   // Menu Dialog
-  MenuDialog(
+  LazyMenuDialog(
     :isOpen="dialog.menu.isOpen"
     @clickedHowToPlay="toggleHowToPlayDialog"
     @clickedHowToCalculateStats="toggleHowToCalculateStatsDialog"
@@ -41,15 +45,15 @@
   )
 
   // How To Calculate Stats Dialog
-  HowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
+  LazyHowToCalculateStatsDialog(:isOpen="dialog.howToCalculateStats.isOpen" @closed="dialog.howToCalculateStats.isOpen = false")
   // Credits Dialog
-  CreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
+  LazyCreditsDialog(:isOpen="dialog.credits.isOpen" @closed="dialog.credits.isOpen = false")
   // Contact Dialog
-  ContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
+  LazyContactDialog(:isOpen="dialog.contact.isOpen" @closed="dialog.contact.isOpen = false")
   // Locale Switch Dialog
-  LocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
+  LazyLocaleSwitchDialog(:isOpen="dialog.localeSwitch.isOpen" @closed="dialog.localeSwitch.isOpen = false")
   // Room Review Dialog
-  RoomReviewDialog(:isOpen="dialog.roomReview.isOpen" @closed="dialog.roomReview.isOpen = false")
+  LazyRoomReviewDialog(:isOpen="dialog.roomReview.isOpen" @closed="dialog.roomReview.isOpen = false")
 </template>
 
 <script>
