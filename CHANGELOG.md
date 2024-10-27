@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.15.3
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.2...v2.15.3)
+
+
+### 💅 Refactors
+
+  - Device info ([7ba5286](https://github.com/RadKod/parolla/commit/7ba5286))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.2
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.1...v2.15.2)
