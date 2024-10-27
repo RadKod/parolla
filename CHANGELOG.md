@@ -1,5 +1,28 @@
 # Changelog
 
+## v2.15.4
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.3...v2.15.4)
+
+
+### 🔥 Performance
+
+  - Performance improvements ([847c8dd](https://github.com/RadKod/parolla/commit/847c8dd))
+
+### 💅 Refactors
+
+  - Components auto import ([ff0cfe9](https://github.com/RadKod/parolla/commit/ff0cfe9))
+  - Composables auto import ([7e4293b](https://github.com/RadKod/parolla/commit/7e4293b))
+  - Seo improvements ([fe0ebb3](https://github.com/RadKod/parolla/commit/fe0ebb3))
+
+### 🎨 Styles
+
+  - Format code ([5c51427](https://github.com/RadKod/parolla/commit/5c51427))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.3
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.2...v2.15.3)
