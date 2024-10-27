@@ -21,7 +21,19 @@ export default defineComponent({
     const room = computed(() => store.getters['creator/room'])
 
     useMeta(() => ({
-      title: room.value?.title ? `${room.value.title} | ${i18n.t('seo.main.title')}` : i18n.t('seo.main.title')
+      title: room.value?.title && `${room.value.title}`,
+      meta: [
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          content: room.value?.title && `${room.value.title} - ${i18n.t('seo.main.title')}`
+        },
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: room.value?.title && `${room.value.title} - ${i18n.t('seo.main.title')}`
+        }
+      ]
     }))
   },
   head: {}

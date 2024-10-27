@@ -1,4 +1,7 @@
+const head = require('./nuxt-config/head')
+
 module.exports = {
+  watch: ['nuxt-config/**/*'],
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -23,17 +26,7 @@ module.exports = {
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
    */
-  head: {
-    htmlAttrs: {
-      lang: 'tr'
-    },
-    title: 'parolla - Kelime oyunu',
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
-      { rel: 'dns-prefetch', href: '//api.radkod.com' },
-      { rel: 'manifest', href: '/manifest.json' }
-    ]
-  },
+  head,
 
   /*
    ** Global Styles (Do not import actual styles)
@@ -89,7 +82,7 @@ module.exports = {
     { src: '~/plugins/vuex-persist', ssr: false }, // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
-    { src: '~/plugins/global-meta-tags-setter', ssr: false },
+    { src: '~/plugins/dynamic-head', ssr: false },
     { src: '~/plugins/iconify', ssr: false }, // https://www.npmjs.com/package/@iconify/vue
     { src: '~/plugins/vue-timeago', ssr: false } // https://vue-timeago.egoist.sh
   ],
@@ -277,11 +270,10 @@ module.exports = {
     postcss: {
       postcssOptions: {
         plugins: {
-          'postcss-preset-env': this.preset
+          'postcss-preset-env': {
+            stage: 2
+          }
         }
-      },
-      preset: {
-        stage: 2
       }
     }
   },
