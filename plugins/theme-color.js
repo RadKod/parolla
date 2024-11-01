@@ -5,9 +5,9 @@ export default ({ $colorMode }) => {
 
       setTimeout(() => {
         if ($colorMode.preference === 'dark') {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#161616')
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#161616')
         } else {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#eeeeee')
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#eeeeee')
         }
       }, SETTER_DELAY)
     }

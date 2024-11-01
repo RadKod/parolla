@@ -194,7 +194,7 @@ export default () => {
 
     if (!answerField.startsWith(encodeEnglish(item.letter.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')))) {
       Notify({
-        message: i18n.t('gameScene.error.notStartsWithActiveChar'),
+        message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar: item.letter }),
         color: 'var(--color-text-04)',
         background: 'var(--color-danger-01)'
       })

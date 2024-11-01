@@ -155,7 +155,9 @@ module.exports = {
         dirs: ['./composables/**'],
         dts: false
       }
-    ]
+    ],
+    // https://github.com/nuxt-modules/partytown
+    ['@nuxtjs/partytown', {}]
   ],
 
   /*
@@ -253,7 +255,18 @@ module.exports = {
       analyzerMode: 'static'
     }, */
     standalone: true, // for ESM import
-    extractCSS: process.env.NODE_ENV === 'production',
+    extractCSS:
+      process.env.NODE_ENV === 'production'
+        ? {
+            ignoreOrder: true
+          }
+        : false,
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 244000
+      }
+    },
     babel: {
       plugins: [
         [

@@ -74,6 +74,7 @@
     "@nuxt/kit": "^3.13.2",
     "@nuxtjs/color-mode": "2.1.0",
     "@nuxtjs/eslint-module": "^3.0.0",
+    "@nuxtjs/partytown": "^1.5.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@prettier/plugin-pug": "^1.10.0",
