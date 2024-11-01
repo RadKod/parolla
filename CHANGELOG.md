@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.15.5
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.4...v2.15.5)
+
+
+### 💅 Refactors
+
+  - Ux improvements ([e6ca887](https://github.com/RadKod/parolla/commit/e6ca887))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.4
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.3...v2.15.4)
