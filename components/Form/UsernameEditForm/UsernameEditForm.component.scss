@@ -11,6 +11,7 @@
     #{$van-field} {
       &__label {
         display: flex;
+        flex: 0;
         align-items: center;
 
         @include media-breakpoint-down(tablet) {

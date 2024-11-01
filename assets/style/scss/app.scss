@@ -20,11 +20,73 @@
 
 // > Bootstrap Partials
 
+$utilities: (
+  'align': null,
+  'float': null,
+  'opacity': null,
+  'overflow': null,
+  'shadow': null,
+  'position': null,
+  'top': null,
+  'bottom': null,
+  'start': null,
+  'end': null,
+  'translate-middle': null,
+  'border': null,
+  'border-top': null,
+  'border-end': null,
+  'border-bottom': null,
+  'border-start': null,
+  'border-color': null,
+  'border-width': null,
+  'border-opacity': null,
+  'width': null,
+  'max-width': null,
+  'viewport-width': null,
+  'min-viewport-width': null,
+  'height': null,
+  'max-height': null,
+  'viewport-height': null,
+  'min-viewport-height': null,
+  'flex': null,
+  'flex-direction': null,
+  'flex-grow': null,
+  'flex-shrink': null,
+  'flex-wrap': null,
+  'justify-content': null,
+  'align-items': null,
+  'align-content': null,
+  'align-self': null,
+  'order': null,
+  'gap': null,
+  'font-family': null,
+  'font-size': null,
+  'font-style': null,
+  'font-weight': null,
+  'line-height': null,
+  'text-align': null,
+  'text-decoration': null,
+  'text-transform': null,
+  'white-space': null,
+  'word-wrap': null,
+  'color': null,
+  'text-opacity': null,
+  'background-color': null,
+  'bg-opacity': null,
+  'gradient': null,
+  'user-select': null,
+  'pointer-events': null,
+  'rounded': null,
+  'rounded-top': null,
+  'rounded-end': null,
+  'rounded-bottom': null,
+  'rounded-start': null,
+  'visibility': null
+);
+
 @import 'bootstrap/scss/maps';
 @import 'bootstrap/scss/utilities';
 @import 'bootstrap/scss/utilities/api';
-@import 'bootstrap/scss/grid';
-@import 'bootstrap/scss/containers';
 
 // Base
 @import 'base/general';
@@ -37,6 +99,5 @@
 @import 'shared/layout';
 @import 'shared/transition';
 @import 'shared/scene';
-@import 'shared/countdown';
 @import 'shared/toast';
 @import 'shared/dialog';

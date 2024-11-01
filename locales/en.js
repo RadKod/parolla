@@ -36,10 +36,13 @@ export default {
     ad: 'Ad'
   },
   introScene: {
-    title: 'CHOOSE GAME MODE',
+    title: 'Word game',
+    subtitle: 'Daily word game',
+    description: 'Solve daily questions and join the competition. Create your own Q&A set and solve fun questions created by players',
     modeList: {
       daily: {
-        title: 'COMPETITIVE (DAILY)'
+        title: 'DAILY',
+        subtitle: 'COMPETITIVE'
       },
       unlimited: {
         title: 'UNLIMITED'
@@ -82,7 +85,7 @@ export default {
         description: 'Trouble fetching questions',
         action: 'Try again'
       },
-      notStartsWithActiveChar: 'ANSWER MUST BEGIN WITH AN ACTIVE (ABOVE) CHARACTER'
+      notStartsWithActiveChar: 'ANSWER MUST START WITH THE CHARACTER ({activeChar}) ABOVE'
     }
   },
   dialog: {

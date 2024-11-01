@@ -9,6 +9,8 @@
 
   // Inner
   .layout__inner(:class="{ 'layout__inner--pulseBg': $route.path === localePath({ name: 'Main' }) }")
+    img.layout__bg(src="img/core/pattern.svg" loading="lazy" alt="pattern" width="100%" height="100%")
+
     // App Header
     AppHeader
 

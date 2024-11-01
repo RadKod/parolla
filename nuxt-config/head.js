@@ -7,14 +7,20 @@ module.exports = {
   title,
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
+    { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
+    { rel: 'dns-prefetch', href: '//fonts.gstatic.com' },
     { rel: 'dns-prefetch', href: '//api.radkod.com' },
+    { rel: 'dns-prefetch', href: '//pagead2.googlesyndication.com' },
+    { rel: 'dns-prefetch', href: '//googleads.g.doubleclick.net' },
+    { rel: 'dns-prefetch', href: '//www.googletagmanager.com' },
     { rel: 'manifest', href: '/manifest.json' }
   ],
   meta: [
     { charset: 'utf-8' },
     {
+      hid: 'viewport',
       name: 'viewport',
-      content: 'width=device-width, initial-scale=1.0, interactive-widget=resizes-content, user-scalable=no'
+      content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content'
     },
     {
       hid: 'robots',
@@ -32,10 +38,12 @@ module.exports = {
       content: '#eee'
     },
     {
+      hid: 'apple-mobile-web-app-capable',
       name: 'apple-mobile-web-app-capable',
       content: 'yes'
     },
     {
+      hid: 'apple-mobile-web-app-status-bar-style',
       name: 'apple-mobile-web-app-status-bar-style',
       content: 'black-translucent'
     },

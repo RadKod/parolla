@@ -36,10 +36,13 @@ export default {
     ad: 'Reklam'
   },
   introScene: {
-    title: 'OYUN MODU SEÇ',
+    title: 'Kelime oyunu',
+    subtitle: 'Günlük kelime oyunu',
+    description: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz',
     modeList: {
       daily: {
-        title: 'REKABETÇİ (GÜNLÜK)'
+        title: 'GÜNLÜK',
+        subtitle: 'REKABETÇİ'
       },
       unlimited: {
         title: 'LİMİTSİZ'
@@ -82,7 +85,7 @@ export default {
         description: 'Sorular getirilirken sorun çıktı',
         action: 'Tekrar dene'
       },
-      notStartsWithActiveChar: 'CEVAP AKTİF (YUKARDAKİ) KARAKTERLE BAŞLAMALI'
+      notStartsWithActiveChar: 'CEVAP YUKARDAKİ KARAKTERLE ({activeChar}) BAŞLAMALI'
     }
   },
   dialog: {

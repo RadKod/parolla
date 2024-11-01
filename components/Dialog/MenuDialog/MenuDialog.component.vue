@@ -146,10 +146,10 @@ export default defineComponent({
     const toggleDarkTheme = isChecked => {
       if (isChecked) {
         $colorMode.preference = 'dark'
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#161616')
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#161616')
       } else {
         $colorMode.preference = 'light'
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#eeeeee')
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#eeeeee')
       }
     }
 

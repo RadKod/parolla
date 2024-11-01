@@ -12,7 +12,9 @@
         :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
         @click="localeAvailabilityMessage"
       )
-        | {{ $t('introScene.modeList.daily.title') }}
+        a(href="https://parolla.app" :title="$t('introScene.subtitle')" @click.prevent.stop.capture)
+          | {{ $t('introScene.modeList.daily.title') }}
+        span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
         label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
         span.intro-scene-mode-list-item__icon 📅
       Button.intro-scene-mode-list-item(
@@ -27,6 +29,10 @@
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
         span.intro-scene-mode-list-item__icon 📝
         | {{ $t('introScene.modeList.creator.title') }}
+
+    .intro-scene__keywords.d-none
+      h3.intro-scene__subtitle {{ $t('introScene.subtitle') }}
+      p.intro-scene__description {{ $t('introScene.description') }}
 </template>
 
 <script>

@@ -1177,6 +1177,11 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
+"@builder.io/partytown@^0.10.0":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.10.2.tgz#102c909f805c945a638e249275003ef6ba828287"
+  integrity sha512-A9U+4PREWcS+CCYzKGIPovtGB/PBgnH/8oQyCE6Nr9drDJk6cMPpLQIEajpGPmG9tYF7N3FkRvhXm/AS9+0iKg==
+
 "@commitlint/cli@^17.5.1":
   version "17.5.1"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-17.5.1.tgz#db176538db7b4140c8856c88a46bd15ec705f881"
@@ -2114,7 +2119,7 @@
     node-html-parser "^6.1.5"
     ufo "^1.1.2"
 
-"@nuxt/kit@^3.13.2":
+"@nuxt/kit@^3.11.1", "@nuxt/kit@^3.13.2":
   version "3.13.2"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.13.2.tgz#4c019a87e08c33ec14d1059497ba40568b82bfed"
   integrity sha512-KvRw21zU//wdz25IeE1E5m/aFSzhJloBRAQtv+evcFeZvuroIxpIQuUqhbzuwznaUwpiWbmwlcsp5uOWmi4vwA==
@@ -2401,6 +2406,17 @@
     lodash.merge "^4.6.2"
     ufo "^0.8.5"
     vue-i18n "^8.27.2"
+
+"@nuxtjs/partytown@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/partytown/-/partytown-1.5.0.tgz#f76fcc813bef042b7f97a6ab551ca12b7176b525"
+  integrity sha512-3qJXEXoHydCEEiHZCy4Q80kHTqKD0T9Ryj8kjh0bwTfNHGQ5auC7pqJxy6+CFOqfZZRcGalqGb0MhhRc8GdTdw==
+  dependencies:
+    "@builder.io/partytown" "^0.10.0"
+    "@nuxt/kit" "^3.11.1"
+    knitwork "^1.0.0"
+    serve-static "^1.15.0"
+    ufo "^1.5.3"
 
 "@nuxtjs/style-resources@^1.0.0":
   version "1.2.1"
@@ -7795,7 +7811,7 @@ klona@^2.0.4, klona@^2.0.5, klona@^2.0.6:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.6.tgz#85bffbf819c03b2f53270412420a4555ef882e22"
   integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
 
-knitwork@^1.1.0:
+knitwork@^1.0.0, knitwork@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/knitwork/-/knitwork-1.1.0.tgz#d8c9feafadd7ee744ff64340b216a52c7199c417"
   integrity sha512-oHnmiBUVHz1V+URE77PNot2lv3QiYU2zQf1JjOVkMt3YDKGbu8NAFr+c4mcNOhdsGrB/VpVbRwPwhiXrPhxQbw==
@@ -12936,7 +12952,7 @@ ufo@^1.1.0, ufo@^1.1.1:
   resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.1.1.tgz#e70265e7152f3aba425bd013d150b2cdf4056d7c"
   integrity sha512-MvlCc4GHrmZdAllBc0iUDowff36Q9Ndw/UzqmEKyrfSzokTd9ZCy1i+IIk5hrYKkjoYVQyNbrw7/F8XJ2rEwTg==
 
-ufo@^1.1.2, ufo@^1.5.4:
+ufo@^1.1.2, ufo@^1.5.3, ufo@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.5.4.tgz#16d6949674ca0c9e0fbbae1fa20a71d7b1ded754"
   integrity sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==
