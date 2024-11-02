@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.15.6
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.5...v2.15.6)
+
+
+### 💅 Refactors
+
+  - Seo improvements ([00db896](https://github.com/RadKod/parolla/commit/00db896))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.5
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.4...v2.15.5)
