@@ -1,0 +1,87 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # veya yayınlamak istediğin başka bir
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          config-inline: |
+            [registry."${{secrets.PROD_DOCKER_REGISTRY}}"]
+               http = false
+               insecure = false
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d_%H-%M')" >> $GITHUB_OUTPUT
+
+
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.PROD_DOCKER_REGISTRY_PASS }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+
+      # Create the .env file
+      - name: Create .env file
+        run: |
+          echo "APP_ENV=PRODUCTION" > .env
+          echo "PORT=8081" >> .env
+          echo "MONGO_QUESTIONSDB_URL=mongodb://45.143.99.5:27017/" >> .env
+          echo "MONGO_QUESTIONSDB_NAME=questions" >> .env
+          echo "MONGO_QUESTIONSDB_COLLECTION=sets" >> .env
+          echo "MONGO_QUESTIONSDB_USER=mongoadmin" >> .env
+          echo "MONGO_QUESTIONSDB_PASSWORD=cokgizli1sifre@" >> .env
+          echo "LOG_LEVEL=info" >> .env
+          echo "API_KEY=$API_KEY" >> .env
+
+
+      - name: Build the Docker image
+        run: docker build -t ${{secrets.PROD_DOCKER_REGISTRY}}/frontend:${{ steps.date.outputs.date }} .
+
+      - name: Push the Docker image
+        run: docker push ${{secrets.PROD_DOCKER_REGISTRY}}/frontend:${{ steps.date.outputs.date }}
+
+      - name: Setup Ssh
+        env:
+          SSH_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+        id: ssh
+        run: |
+          mkdir -p $HOME/.ssh &&
+          echo "$SSH_KEY" > $HOME/.ssh/id_rsa
+          chmod 0600 $HOME/.ssh/id_rsa
+          ssh-keyscan -H ${{secrets.SSH_HOST}} 2> /dev/null 1> ~/.ssh/known_hosts
+          printf "Host *\n  StrictHostKeyChecking no" >> $HOME/.ssh/config
+          echo "docker_host=ssh://${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}" >> $GITHUB_OUTPUT
+
+      - name: Deploy Container
+        run: |
+          scp docker-stack.yml ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/tmp/frontend-docker-stack.yml
+          ssh ${{ steps.ssh.outputs.docker_host }} bash <<EOF
+          echo ${{ secrets.PROD_DOCKER_REGISTRY_PASS }} | docker login ${{secrets.PROD_DOCKER_REGISTRY}} -u ${{ github.actor }} --password-stdin
+          APP_IMAGE=${{secrets.PROD_DOCKER_REGISTRY}}/frontend:${{ steps.date.outputs.date }} docker stack deploy --with-registry-auth -c /tmp/frontend-docker-stack.yml frontend
+          rm /tmp/frontend-docker-stack.yml
+
+          # Yayına alma sonrası eski konteynerleri kaldır
+            old_containers=\$(docker ps -q --filter "name=frontend" --filter "status=exited")
+            if [ -n "\$old_containers" ]; then
+                docker rm \$old_containers
+            fi
+            docker image prune -a -f
+          EOF
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf $HOME/.ssh
+

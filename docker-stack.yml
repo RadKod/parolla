@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  frontend:
+    image: ${PROD_DOCKER_REGISTRY}/frontend:${DATE}
+    stop_grace_period: 30s
+    ports:
+      - "8081:8081"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "2"
+          memory: "2G"
+
