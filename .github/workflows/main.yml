@@ -73,12 +73,6 @@ jobs:
           APP_IMAGE=${{secrets.PROD_DOCKER_REGISTRY}}/frontend:${{ steps.date.outputs.date }} docker stack deploy --with-registry-auth -c /tmp/frontend-docker-stack.yml frontend
           rm /tmp/frontend-docker-stack.yml
 
-          # Yayına alma sonrası eski konteynerleri kaldır
-            old_containers=\$(docker ps -q --filter "name=frontend" --filter "status=exited")
-            if [ -n "\$old_containers" ]; then
-                docker rm \$old_containers
-            fi
-            docker image prune -a -f
           EOF
       - name: Cleanup
         if: always()
