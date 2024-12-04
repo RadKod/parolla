@@ -19,7 +19,7 @@ module.exports = {
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-env
    */
   env: {
-    API: process.env.API || 'https://api.radkod.com/parolla/api/v1'
+    API: process.env.API || 'https://thealphabetgame.com/api',
   },
 
   /*
