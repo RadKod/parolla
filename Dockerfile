@@ -12,5 +12,6 @@ COPY . .
 
 RUN yarn build
 
+
 EXPOSE 8081
 CMD nginx && yarn start
