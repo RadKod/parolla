@@ -49,6 +49,10 @@ export default {
       },
       creator: {
         title: 'YARATICI'
+      },
+      tour: {
+        title: 'TUR',
+        subtitle: 'YENİ 🥳'
       }
     }
   },

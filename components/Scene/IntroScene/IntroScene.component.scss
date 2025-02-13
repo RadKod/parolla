@@ -56,12 +56,38 @@
       width: 100%;
       height: 64px;
       margin: 0 auto;
-      margin-bottom: calc(var(--base-m-y) / 1.5);
+      margin-bottom: calc(var(--base-m-y) / 1.2);
       padding-left: var(--base-p-x);
       color: var(--color-text-02);
       text-align: left;
       background-color: var(--color-ui-02);
+      border: 0;
       border-radius: var(--border-radius-01);
+      box-shadow: var(--box-shadow-02);
+
+      .van-button {
+        &__content {
+          width: 100%;
+        }
+
+        &__text {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+      }
+
+      .prepend {
+        display: flex;
+        align-items: center;
+      }
+
+      .append {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
 
       a {
         color: var(--color-text-02);
@@ -74,24 +100,63 @@
       }
 
       &__label {
-        position: absolute;
-        right: calc(var(--base-m-x) * 4);
+        position: relative;
         padding: calc(var(--base-p-y) / 4) calc(var(--base-p-x) / 4);
         color: var(--color-text-04);
         font-size: var(--font-size-text-10);
-        background-color: var(--color-info-01);
+        background-color: var(--color-warning-01);
         border-radius: calc(var(--border-radius-01) / 4);
-
-        @include media-breakpoint-down(tablet) {
-          display: none;
-        }
+        box-shadow: var(--box-shadow-03);
+        margin-inline-end: calc(var(--base-m-x) / 2);
       }
 
       &__icon {
-        position: absolute;
+        position: relative;
         right: var(--base-m-x);
         margin: 0 var(--base-m-x);
       }
+
+      &-liveCount {
+        position: relative;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding: 4px 8px;
+        font-size: 10px;
+        background-color: var(--color-ui-02);
+        border-radius: var(--border-radius-01);
+        box-shadow: var(--box-shadow-03);
+        margin-inline-start: calc(var(--base-m-x) / 2);
+
+        .pulse {
+          width: 8px;
+          height: 8px;
+          background-color: var(--color-brand-02);
+          border-radius: 50%;
+          animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        .count {
+          color: var(--color-text-02);
+        }
+      }
     }
+  }
+}
+
+@keyframes livePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 120, 120, 0.7);
+    transform: scale(1);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    transform: scale(1);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    transform: scale(1);
   }
 }

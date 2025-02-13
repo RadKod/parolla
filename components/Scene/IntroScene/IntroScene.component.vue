@@ -12,23 +12,43 @@
         :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
         @click="localeAvailabilityMessage"
       )
-        a(href="https://parolla.app" :title="$t('introScene.subtitle')" @click.prevent.stop.capture)
-          | {{ $t('introScene.modeList.daily.title') }}
-        span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
-        label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
-        span.intro-scene-mode-list-item__icon 📅
+        .prepend
+          a.intro-scene-mode-list-item-title(href="https://parolla.app" :title="$t('introScene.subtitle')" @click.prevent.stop.capture)
+            | {{ $t('introScene.modeList.daily.title') }}
+          span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
+        .append
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          span.intro-scene-mode-list-item__icon 📅
+
       Button.intro-scene-mode-list-item(
         size="large"
         :to="$i18n.locale === $i18n.defaultLocale ? localePath({ name: 'UnlimitedMode' }) : localePath('/')"
         :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
         @click="localeAvailabilityMessage"
       )
-        span.intro-scene-mode-list-item__icon 🔁
-        | {{ $t('introScene.modeList.unlimited.title') }}
-        label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+        .prepend
+          span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
+        .append
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          span.intro-scene-mode-list-item__icon 🔁
+
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
-        span.intro-scene-mode-list-item__icon 📝
-        | {{ $t('introScene.modeList.creator.title') }}
+        .prepend
+          span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.creator.title') }}
+        .append
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          span.intro-scene-mode-list-item__icon 📝
+
+      Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
+        .prepend
+          span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.tour.title') }}
+          span.intro-scene-mode-list-item-liveCount
+            span.pulse
+            span.count 576 oyuncu
+
+        .append
+          label.intro-scene-mode-list-item__label {{ $t('introScene.modeList.tour.subtitle') }}
+          span.intro-scene-mode-list-item__icon 🔄
 
     .intro-scene__keywords.d-none
       h3.intro-scene__subtitle {{ $t('introScene.subtitle') }}

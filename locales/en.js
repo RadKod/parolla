@@ -49,6 +49,10 @@ export default {
       },
       creator: {
         title: 'CREATOR'
+      },
+      tour: {
+        title: 'TOUR',
+        subtitle: 'NEW 🥳'
       }
     }
   },
