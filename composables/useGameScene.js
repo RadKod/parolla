@@ -62,23 +62,25 @@ export default () => {
 
   const alphabet = computed(() => store.getters[`${activeGameMode.value}/alphabet`])
 
-  watch(
-    () => alphabet.value.activeIndex,
-    async value => {
-      await store.commit(`${activeGameMode.value}/SET_ALPHABET_ACTIVE_INDEX`, value)
-      await statsWriteToLocalStorage()
+  if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+    watch(
+      () => alphabet.value.activeIndex,
+      async value => {
+        await store.commit(`${activeGameMode.value}/SET_ALPHABET_ACTIVE_INDEX`, value)
+        await statsWriteToLocalStorage()
 
-      if (value === -1) {
-        endGame()
+        if (value === -1) {
+          endGame()
 
-        return false
+          return false
+        }
+
+        carousels.alphabet.slideTo(value)
+        resetAnswer()
+        questionFitText()
       }
-
-      carousels.alphabet.slideTo(value)
-      resetAnswer()
-      questionFitText()
-    }
-  )
+    )
+  }
 
   const alphabetItemClasses = (item, index) => {
     if (index === alphabet.value.activeIndex) {

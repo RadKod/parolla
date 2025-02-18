@@ -17,7 +17,7 @@
             | {{ $t('introScene.modeList.daily.title') }}
           span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
         .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
           span.intro-scene-mode-list-item__icon 📅
 
       Button.intro-scene-mode-list-item(
@@ -29,17 +29,17 @@
         .prepend
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
         .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
           span.intro-scene-mode-list-item__icon 🔁
 
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
         .prepend
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.creator.title') }}
         .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Currently only available for TR
+          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
           span.intro-scene-mode-list-item__icon 📝
 
-      Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
+      Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'TourMode-TourModeGame' })")
         .prepend
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.tour.title') }}
           span.intro-scene-mode-list-item-liveCount

@@ -227,6 +227,10 @@ module.exports = {
           'CreatorMode/CreatorModeRoom/index': {
             tr: '/oda',
             en: '/room'
+          },
+          'TourMode/TourModeGame/index': {
+            tr: '/tur/oyun',
+            en: '/tour/game'
           }
         }
       }

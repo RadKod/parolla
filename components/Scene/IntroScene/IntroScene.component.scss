@@ -9,6 +9,10 @@
       flex-direction: column;
       justify-content: center;
       margin: 0 auto;
+
+      @include media-breakpoint-down(tablet) {
+        padding-block-end: 15vh;
+      }
     }
   }
 

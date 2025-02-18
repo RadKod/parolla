@@ -2,6 +2,8 @@
   $game-scene: '.game-scene';
 
   --motion: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --answer-field-height: 54px;
+  --answer-field-height--small: 40px;
 
   outline: none;
 
@@ -48,20 +50,7 @@
   @at-root html[ua-is-from-ios='true'] {
     #{$game-scene} {
       &--osk {
-        .questions {
-          padding-block-end: calc(var(--base-p-y) - 4px);
-        }
-
-        #{$game-scene} {
-          &__fieldSection {
-            position: relative !important;
-            top: 0 !important;
-            left: 0 !important;
-            display: block;
-            margin-block: 0 !important;
-            transform: none !important;
-          }
-        }
+        /*  osk style for ios */
       }
     }
   }
@@ -69,13 +58,7 @@
   @at-root html[ua-browser='Safari'] {
     #{$game-scene} {
       &--osk {
-        #{$game-scene} {
-          @include media-breakpoint-down(wide) {
-            &__fieldSection {
-              position: relative !important;
-            }
-          }
-        }
+        /*  osk safari style */
       }
     }
   }
@@ -279,15 +262,13 @@
   // Field Section
   &__fieldSection {
     position: fixed !important;
-    bottom: calc(var(--base-m-y) * 2);
-    left: 0;
-    width: calc(100% - var(--base-p-x) * 2);
+    top: calc(var(--vh) - var(--answer-field-height) - var(--base-p-y));
+    left: calc(var(--base-p-x) / 2);
+    width: calc(100% - var(--base-p-x));
     max-width: calc(var(--layout-max-width) - var(--base-p-x) * 2);
     margin: 0 auto;
-    padding-bottom: env(safe-area-inset-bottom);
     overflow: hidden;
     border-radius: var(--border-radius-01);
-    transform: translate3d(0, 0, 0);
 
     @include center(true, false);
 
@@ -299,13 +280,11 @@
 
   // Answer Field
   .answer-field {
-    --field-height: 54px;
-    --field-height--small: 40px;
     --action-button-width: 100px;
 
     position: relative;
     width: 100%;
-    height: var(--field-height);
+    height: var(--answer-field-height);
     box-shadow: var(--box-shadow-01);
 
     @mixin readonly {
@@ -316,7 +295,7 @@
 
     @at-root .unsupported-height {
       .answer-field {
-        height: var(--field-height--small);
+        height: var(--answer-field-height--small);
       }
     }
 
@@ -324,13 +303,14 @@
       $answer-field-input: '.answer-field__input';
 
       width: 100%;
-      height: var(--field-height);
+      height: var(--answer-field-height);
       padding: 0 var(--base-p-x);
       padding-right: calc(var(--action-button-width) + var(--base-p-x));
       color: var(--color-text-02);
       font-size: var(--font-size-text-7);
       background-color: var(--color-field-01);
       border: 0;
+      border-radius: var(--border-radius-01);
       outline: none;
 
       @include font-weight-bold;
@@ -344,7 +324,7 @@
 
       @at-root .unsupported-height {
         #{$answer-field-input} {
-          height: var(--field-height--small);
+          height: var(--answer-field-height--small);
           font-size: var(--font-size-text-9);
         }
       }
@@ -406,7 +386,7 @@
 
       right: calc(var(--base-m-x) / 2);
       width: var(--action-button-width);
-      height: calc(var(--field-height) - (var(--base-p-y) / 2));
+      height: calc(var(--answer-field-height) - (var(--base-p-y) / 2));
       border-radius: var(--border-radius-01);
       cursor: pointer;
 
@@ -427,7 +407,7 @@
 
       @at-root .unsupported-height {
         #{$answer-field-button} {
-          height: calc(var(--field-height--small) - (var(--base-p-y) / 2));
+          height: calc(var(--answer-field-height--small) - (var(--base-p-y) / 2));
         }
       }
     }
