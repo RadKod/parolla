@@ -33,7 +33,8 @@ export default {
     noData: 'No data',
     filter: 'Filter',
     sort: 'Sort',
-    ad: 'Ad'
+    ad: 'Ad',
+    send: 'Send'
   },
   introScene: {
     title: 'Word game',
@@ -388,6 +389,10 @@ export default {
   scoreboard: {
     scoreboard: 'Scoreboard',
     pendingScoreboard: 'Fetching scores'
+  },
+  chat: {
+    chat: 'Sohbet',
+    online: 'Online'
   },
   seo: {
     main: {

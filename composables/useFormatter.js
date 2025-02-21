@@ -1,4 +1,8 @@
+import { useContext } from '@nuxtjs/composition-api'
+
 export default () => {
+  const context = useContext()
+
   /**
    * Turkish to english char converter
    * @param {string} value
@@ -38,8 +42,26 @@ export default () => {
     }
   }
 
+  /**
+   * Formats a number into a string representation with appropriate suffixes.
+   * @param {number} value - The number to format.
+   * @returns {string} The formatted number with 'B' for thousands, 'M' for millions, or the number itself if less than 1000.
+   */
+  const formatMillions = value => {
+    const decimal = Number(value)
+
+    if (decimal >= 1000000) {
+      return (decimal / 1000000).toFixed(0) + 'M' // For millions
+    } else if (decimal >= 1000) {
+      return (decimal / 1000).toFixed(0) + (context.i18n.locale === 'tr' ? 'B' : 'K') // For thousands
+    } else {
+      return decimal.toFixed(0) // For values less than 1000
+    }
+  }
+
   return {
     encodeEnglish,
-    formatRating
+    formatRating,
+    formatMillions
   }
 }

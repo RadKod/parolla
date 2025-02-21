@@ -313,6 +313,9 @@ export default () => {
     },
     interstitialAd: {
       isOpen: false
+    },
+    tourModeOnline: {
+      isOpen: false
     }
   })
 

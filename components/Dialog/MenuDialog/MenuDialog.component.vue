@@ -8,8 +8,14 @@ Dialog.dialog.menu-dialog(
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
 )
-  span.menu-dialog__title {{ $t('dialog.menu.usernameEdit') }}
+  span.menu-dialog__title Profil
+
+  // Auth
   UsernameEditForm.mb-base
+
+  // Login Form
+  LoginForm
+
   span.menu-dialog__title {{ $t('dialog.menu.title') }}
   CellGroup.menu-dialog-nav
     Cell.menu-dialog-nav__item(icon="eye-o" size="large" :title="$t('dialog.menu.darkTheme')")

@@ -23,6 +23,12 @@
       li.app-header-nav__item.app-header-nav__item--roomReviews(@click="toggleRoomReviewDialog")
         AppIcon.me-2(v-if="room.reviewCount > 0" name="tabler:message-2" :label="room.reviewCount")
         AppIcon(v-else name="tabler:message-2")
+
+    // Tour Mode
+    template(v-if="activeGameMode === gameModeKeyEnum.TOUR")
+      li.app-header-nav__item.app-header-nav__item--tourModeOnline.me-3(@click="openTourModeOnlineDialog")
+        AppIcon(name="tabler:users-group" :label="formatMillions(876)")
+
     li.app-header-nav__item(@click="toggleMenuDialog")
       LazyPlayerAvatar(:name="user.fingerprint")
 
@@ -59,6 +65,7 @@
 <script>
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
+import useFormatter from '@/composables/useFormatter'
 
 export default defineComponent({
   setup() {
@@ -66,6 +73,8 @@ export default defineComponent({
     const route = useRoute()
     const { localePath } = useContext()
     const store = useStore()
+
+    const { formatMillions } = useFormatter()
 
     const { activeGameMode } = useGameMode()
     const { openLeaveDialog } = useDialog()
@@ -140,6 +149,10 @@ export default defineComponent({
       dialog.roomReview.isOpen = !dialog.roomReview.isOpen
     }
 
+    const openTourModeOnlineDialog = () => {
+      store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', true)
+    }
+
     const handleClickBackButton = () => {
       const triggerRoute = () => {
         if (
@@ -191,7 +204,8 @@ export default defineComponent({
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeIntro' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
-        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' }) ||
+        route.value.path === localePath({ name: 'TourMode-TourModeGame' })
       ) {
         return true
       }
@@ -204,6 +218,7 @@ export default defineComponent({
       gameModeKeyEnum,
       activeGameMode,
       dialog,
+      formatMillions,
       toggleStatsDialog,
       toggleHowToPlayDialog,
       toggleMenuDialog,
@@ -212,6 +227,7 @@ export default defineComponent({
       toggleContactDialog,
       toggleLocaleSwitchDialog,
       toggleRoomReviewDialog,
+      openTourModeOnlineDialog,
       handleClickBackButton,
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,

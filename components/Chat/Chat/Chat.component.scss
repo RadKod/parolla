@@ -1,0 +1,90 @@
+.chat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: transparent;
+
+  &__messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  &__message {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-inline-end: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__message-avatar {
+    flex-shrink: 0;
+  }
+
+  &__message-content {
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    padding: 4px;
+    background-color: transparent;
+    border-radius: 8px;
+  }
+
+  &__message-sender {
+    color: var(--color-text-01);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  &__message-text {
+    color: var(--color-text-02);
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  &__message-time {
+    display: none;
+    margin-top: 4px;
+    color: var(--color-text-03);
+    font-size: 12px;
+  }
+
+  &__input {
+    padding-block-start: $spacer * 4;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+
+    .van-field {
+      padding: 0;
+      background-color: transparent;
+
+      input {
+        padding: 8px 16px;
+        border: 1px solid var(--color-border-01);
+        border-radius: var(--border-radius-01);
+      }
+    }
+
+    .van-field__button {
+      padding-left: 8px;
+    }
+  }
+
+  &__button {
+    &--send {
+      height: 42px;
+      border-radius: var(--border-radius-01);
+
+      .van-icon {
+        color: #fff;
+      }
+    }
+  }
+}

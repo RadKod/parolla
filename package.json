@@ -3,6 +3,10 @@
   "version": "2.15.6",
   "description": "Kelime oyunu",
   "private": true,
+  "engines": {
+    "node": "22.11.0"
+  },
+  "packageManager": "yarn@4.6.0",
   "keywords": [
     "kelime oyunu",
     "bulmaca",

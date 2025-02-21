@@ -2,7 +2,9 @@
 Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
   Field.username-edit-form__usernameField(maxlength="28" :disabled="form.isBusy")
     template(#label)
-      PlayerAvatar(:size="36" :name="user.fingerprint")
+      .username-edit-form__label
+        Badge.username-edit-form__avatarBadge(type="primary" content="Ziyaretçi")
+        PlayerAvatar(:size="36" :name="user.fingerprint")
 
     template(#input)
       input(
@@ -14,23 +16,22 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
         :disabled="form.isBusy"
         @input="e => handleUsernameInput(e)"
       )
-
-    template(#button)
       Button.username-edit-form-submit-button(native-type="button" :loading="form.isBusy" :disabled="form.isBusy" @click="handleSubmit")
         AppIcon.username-edit-form-submit-button__icon(name="tabler:check" color="var(--color-text-04)" :width="20" :height="20")
-        span.username-edit-form-submit-button__title {{ $t('form.usernameEdit.submit') }}
+        span.username-edit-form-submit-button__title
 </template>
 
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
-import { Form, Button, Field, Notify } from 'vant'
+import { Form, Button, Field, Notify, Badge } from 'vant'
 
 export default defineComponent({
   components: {
     Form,
     Button,
     Field,
-    Notify
+    Notify,
+    Badge
   },
   setup() {
     const { i18n } = useContext()

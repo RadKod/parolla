@@ -33,7 +33,8 @@ export default {
     noData: 'Veri yok',
     filter: 'Filtrele',
     sort: 'Sırala',
-    ad: 'Reklam'
+    ad: 'Reklam',
+    send: 'Gönder'
   },
   introScene: {
     title: 'Kelime oyunu',
@@ -199,6 +200,9 @@ export default {
           action: 'Tekrar dene'
         }
       }
+    },
+    tourModeOnline: {
+      title: 'Tur'
     }
   },
   clipboard: {
@@ -388,6 +392,13 @@ export default {
   scoreboard: {
     scoreboard: 'Skor tablosu',
     pendingScoreboard: 'Skorlar getiriliyor'
+  },
+  chat: {
+    chat: 'Sohbet',
+    online: 'Online'
+  },
+  tourMode: {
+    onlineUsers: 'Online oyuncular'
   },
   seo: {
     main: {

@@ -50,6 +50,14 @@
           display: none;
         }
       }
+
+      &--tourModeOnline {
+        .app-icon {
+          &__label {
+            background-color: var(--color-warning-01);
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,105 @@
+.tour-mode-user-list {
+  position: relative;
+  display: block;
+  max-height: 50vh;
+  padding: var(--base-p-y) 0;
+  overflow: auto;
+
+  &-item {
+    $tour-mode-user-list-item: '.tour-mode-user-list-item';
+
+    position: relative;
+    display: block;
+    counter-increment: user-counter;
+
+    .van-cell__title {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    & > .van-cell__value {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      @include media-breakpoint-down(tablet) {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    &-user {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      margin-inline-end: auto;
+
+      &::before {
+        width: 46px;
+        color: var(--color-text-03);
+        content: counter(user-counter);
+
+        @include font-weight-extra-bold;
+      }
+
+      @include media-breakpoint-down(mobile) {
+        margin-right: 100%;
+      }
+
+      &__username {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: flex-start;
+        color: var(--color-text-02);
+        font-size: var(--font-size-text-9);
+        word-wrap: break-word;
+
+        .player-avatar {
+          margin-top: calc(var(--base-m-y) / 8);
+          margin-right: calc(var(--base-m-x) / 2);
+        }
+      }
+
+      small {
+        color: var(--color-text-02);
+
+        .app-icon {
+          display: inline-flex;
+          margin-right: calc(var(--base-m-x) / 4);
+        }
+      }
+    }
+
+    &-score {
+      padding: 0 $spacer * 4;
+      color: var(--color-text-03);
+      font-size: var(--font-size-text-9);
+      background-color: var(--color-ui-02);
+      border-radius: var(--border-radius-01);
+      box-shadow: var(--box-shadow-03);
+
+      strong {
+        color: var(--color-text-02);
+        margin-inline-end: calc(var(--base-m-x) / 4);
+      }
+    }
+  }
+
+  .van-empty {
+    $van-empty: '.van-empty';
+
+    @include media-breakpoint-down(tablet) {
+      #{$van-empty} {
+        &__image {
+          width: 92px;
+          height: 92px;
+        }
+
+        &__description {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

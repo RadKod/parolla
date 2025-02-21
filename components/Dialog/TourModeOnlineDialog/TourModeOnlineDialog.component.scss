@@ -1,0 +1,22 @@
+.tour-mode-online-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--mobile);
+
+  .van-tabs {
+    &__content {
+      position: relative;
+    }
+  }
+
+  .chat {
+    &__messages {
+      position: relative;
+      display: block;
+      max-height: 50vh;
+      padding: var(--base-p-y) 0;
+      overflow: auto;
+    }
+  }
+}

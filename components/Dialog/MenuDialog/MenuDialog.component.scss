@@ -27,4 +27,8 @@
 
     @include font-weight-semi-bold;
   }
+
+  .login-form {
+    margin-block-end: calc(var(--base-m-y) * 2);
+  }
 }
