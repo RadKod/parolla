@@ -8,7 +8,7 @@
   &__messages {
     flex: 1;
     padding: 16px;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
   &__message {
