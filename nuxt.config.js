@@ -19,7 +19,8 @@ module.exports = {
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-env
    */
   env: {
-    API: process.env.API || 'https://api.radkod.com/parolla/api/v1'
+    API: process.env.API || 'https://api.radkod.com/parolla/api/v1',
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID
   },
 
   /*
@@ -164,6 +165,34 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+    // https://axios.nuxtjs.org
+    '@nuxtjs/axios',
+    // https://auth.nuxtjs.org
+    [
+      '@nuxtjs/auth-next',
+      {
+        vuex: {
+          namespace: 'nuxtAuth'
+        },
+        localStorage: false,
+        cookie: {
+          prefix: 'auth.'
+        },
+        strategies: {
+          google: {
+            clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+            codeChallengeMethod: '',
+            responseType: 'code',
+            redirectUri: 'http://localhost:3000/auth/google/callback',
+            endpoints: {
+              token: false, // your backend url to resolve your auth with google and give you the token back
+              userInfo: false // your endpoint to get the user info after you received the token
+            }
+          }
+        },
+        plugins: ['@/plugins/auth-lang-redirect.js']
+      }
+    ],
     // https://i18n.nuxtjs.org
     [
       '@nuxtjs/i18n',

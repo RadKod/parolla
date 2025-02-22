@@ -15,24 +15,23 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import { Form, Button, Field, Notify } from 'vant'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { Button } from 'vant'
 
 export default defineComponent({
   components: {
-    Form,
-    Button,
-    Field,
-    Notify
+    Button
   },
   setup() {
+    const context = useContext()
+
     const handleGoogleLogin = () => {
-      // Implement Google login logic here
       console.log('Google login clicked')
+
+      context.$auth.loginWith('google')
     }
 
     const handleAppleLogin = () => {
-      // Implement Apple login logic here
       console.log('Apple login clicked')
     }
 

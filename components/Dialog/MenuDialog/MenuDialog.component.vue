@@ -14,7 +14,8 @@ Dialog.dialog.menu-dialog(
   UsernameEditForm.mb-base
 
   // Login Form
-  LoginForm
+  Button.menu-dialog__logoutButton(v-if="$auth.loggedIn && $auth.user" @click="$store.dispatch('auth/logout')") Çıkış Yap
+  LoginForm(v-else)
 
   span.menu-dialog__title {{ $t('dialog.menu.title') }}
   CellGroup.menu-dialog-nav
@@ -97,14 +98,15 @@ Dialog.dialog.menu-dialog(
 <script>
 import { defineComponent, useRoute, useStore, useContext, ref, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { Dialog, CellGroup, Cell, Switch, Toast } from 'vant'
+import { Dialog, CellGroup, Cell, Switch, Toast, Button } from 'vant'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     CellGroup,
     Cell,
-    SwitchInput: Switch
+    SwitchInput: Switch,
+    Button
   },
   props: {
     isOpen: {
@@ -121,7 +123,7 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const store = useStore()
-    const { localePath, i18n, $colorMode } = useContext()
+    const { localePath, i18n, $colorMode, $auth } = useContext()
 
     const { activeGameMode } = useGameMode()
 

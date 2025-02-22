@@ -9,11 +9,40 @@ export default {
   },
 
   async fetchMe({ commit, state }) {
+    const headers = {
+      'Accept-Language': this.$i18n.locale
+    }
+
+    const token = this.$auth.strategy.token.get()
+
+    if (token) {
+      headers.Authorization = token
+    }
+
     const response = await fetch(`${process.env.API}/auth/me?fingerprint=${state.user.fingerprint}`, {
       method: 'get',
+      headers
+    })
+
+    const result = response.json()
+
+    return result
+  },
+
+  async googleRegister({ commit, state }, params) {
+    const { code, state: stateParam, fingerprint } = params
+
+    const response = await fetch(`${process.env.API}/auth/google/callback`, {
+      method: 'post',
       headers: {
-        'Accept-Language': this.$i18n.locale
-      }
+        'Accept-Language': this.$i18n.locale,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        code,
+        state: stateParam,
+        fingerprint
+      })
     })
 
     const result = response.json()
@@ -22,13 +51,21 @@ export default {
   },
 
   async updateUser({ commit, state }, username) {
+    const headers = {
+      'Accept-Language': this.$i18n.locale,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+
+    const token = this.$auth.strategy.token.get()
+
+    if (token) {
+      headers.Authorization = token
+    }
+
     const response = await fetch(`${process.env.API}/auth/me`, {
       method: 'put',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Language': this.$i18n.locale
-      },
+      headers: headers,
       body: username
         ? JSON.stringify({
             fingerprint: state.user.fingerprint,
@@ -42,6 +79,10 @@ export default {
     const result = response.json()
 
     return result
+  },
+
+  async logout({ commit, state }) {
+    commit('LOGOUT')
   },
 
   async getDeviceInfo() {

@@ -3,7 +3,7 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
   Field.username-edit-form__usernameField(maxlength="28" :disabled="form.isBusy")
     template(#label)
       .username-edit-form__label
-        Badge.username-edit-form__avatarBadge(type="primary" content="Ziyaretçi")
+        Badge.username-edit-form__avatarBadge(v-if="!$auth.loggedIn" type="primary" content="Ziyaretçi")
         PlayerAvatar(:size="36" :name="user.fingerprint")
 
     template(#input)
@@ -13,10 +13,16 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
         :placeholder="$t('form.usernameEdit.usernameField.placeholder')"
         rows="1"
         maxlength="28"
+        autocomplete="off"
         :disabled="form.isBusy"
         @input="e => handleUsernameInput(e)"
       )
-      Button.username-edit-form-submit-button(native-type="button" :loading="form.isBusy" :disabled="form.isBusy" @click="handleSubmit")
+      Button.username-edit-form-submit-button(
+        native-type="button"
+        :loading="form.isBusy"
+        :disabled="form.isBusy || !isUsernameChanged"
+        @click="handleSubmit"
+      )
         AppIcon.username-edit-form-submit-button__icon(name="tabler:check" color="var(--color-text-04)" :width="20" :height="20")
         span.username-edit-form-submit-button__title
 </template>
@@ -42,7 +48,11 @@ export default defineComponent({
     const form = reactive({
       isBusy: false,
       isClear: false,
-      username: ''
+      username: user.value.username
+    })
+
+    const isUsernameChanged = computed(() => {
+      return form.username !== user.value.username
     })
 
     const handleUsernameInput = e => {
@@ -84,7 +94,7 @@ export default defineComponent({
           })
         } else {
           Notify({
-            message: result.message,
+            message: result.data.error,
             color: 'var(--color-text-04)',
             background: 'var(--color-danger-01)',
             duration: 1000
@@ -105,6 +115,7 @@ export default defineComponent({
     return {
       user,
       form,
+      isUsernameChanged,
       handleUsernameInput,
       handleFailed,
       handleSubmit
