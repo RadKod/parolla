@@ -8,7 +8,7 @@
   .scene__inner.game-scene__inner
     // Countdown
     .tour-mode-game-scene-countdown
-      Progress(color="var(--color-brand-02)" :pivot-text="String(countdown.seconds)" :percentage="countdown.percentage")
+      Progress(color="var(--color-brand-02)" :pivot-text="String(tour.countdown.seconds)" :percentage="tour.countdown.percentage")
 
     // Fetch State
     template(v-if="fetchState.pending")
@@ -51,7 +51,8 @@
           ) {{ $t('gameScene.answerField.submit') }}
 
   // Tour Results View
-  TourModeResultsView
+  transition(name="slide-fade")
+    TourModeResultsView(v-if="tour.isEnded" :tour="tour")
 
   // How To Play Dialog
   //HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -75,6 +76,7 @@
 import { defineComponent, useStore, useFetch, ref, reactive, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { Button, Field, Empty, CountDown, Progress } from 'vant'
+import useWs from '@/composables/useWs'
 
 export default defineComponent({
   components: {
@@ -87,6 +89,7 @@ export default defineComponent({
   setup() {
     const rootRef = ref(null)
     const store = useStore()
+    const ws = useWs()
 
     const {
       setRootRef,
@@ -109,27 +112,14 @@ export default defineComponent({
       await store.dispatch('unlimited/fetchQuestions')
     })
 
-    const countdown = reactive({
-      percentage: 0,
-      seconds: 30
+    const tour = reactive({
+      countdown: {
+        percentage: 0,
+        seconds: 30
+      },
+      waitingNextSeconds: 10,
+      isEnded: false
     })
-
-    const countdownInterval = setInterval(() => {
-      countdown.percentage += 100 / 30
-      countdown.seconds -= 1
-
-      // Check if countdown has reached 0
-      if (countdown.seconds <= 0) {
-        clearInterval(countdownInterval)
-        onCountdownComplete() // Call the method when countdown reaches 0
-      }
-    }, 1000)
-
-    // New method to be triggered
-    const onCountdownComplete = () => {
-      // Implement the logic you want to execute when countdown reaches 0
-      console.log('Countdown has reached zero!')
-    }
 
     onMounted(() => {
       setRootRef(rootRef.value)
@@ -160,14 +150,48 @@ export default defineComponent({
       if (isTouchEnabled) {
         rootRef.value?.removeEventListener('touchend', handleDontHideKeyboard)
       }
-
-      clearInterval(countdownInterval)
     })
 
     const isTourModeOnlineDialogOpen = computed(() => store.getters['tour/dialog'].tourModeOnline.isOpen)
 
     const closeTourModeOnlineDialog = () => {
       store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', false)
+    }
+
+    const onTimeUpdate = ({ time }) => {
+      tour.countdown.seconds = Math.floor(time.remaining / 1000)
+      tour.countdown.percentage = time.percentage
+    }
+
+    const onTimeUp = () => {
+      console.log('Countdown has reached zero!')
+      tour.isEnded = true
+      tour.countdown.seconds = 30
+      tour.countdown.percentage = 0
+    }
+
+    const onWaitingNext = ({ time }) => {
+      tour.waitingNextSeconds = Math.floor(time.remaining / 1000)
+
+      if (time.remaining <= 1000) {
+        tour.isEnded = false
+      }
+    }
+
+    ws.onmessage = data => {
+      const { type, time } = JSON.parse(data.data)
+
+      if (type === 'time_update') {
+        onTimeUpdate({ time })
+      }
+
+      if (type === 'time_up') {
+        onTimeUp()
+      }
+
+      if (type === 'waiting_next') {
+        onWaitingNext({ time })
+      }
     }
 
     return {
@@ -181,9 +205,9 @@ export default defineComponent({
       handleAnswerField,
       handleAnswer,
       isTouchEnabled,
-      countdown,
       isTourModeOnlineDialogOpen,
-      closeTourModeOnlineDialog
+      closeTourModeOnlineDialog,
+      tour
     }
   }
 })

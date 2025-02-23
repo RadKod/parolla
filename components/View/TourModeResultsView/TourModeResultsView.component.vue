@@ -34,7 +34,7 @@
 
     TourModeUserList(:items="scorers.slice(3)")
 
-    Button.tour-mode-results-view-waiting(loading loading-text=`Yeni tur başlamadan önce ${'10'} saniye bekleyiniz.`)
+    Button.tour-mode-results-view-waiting(loading :loading-text="`Yeni tur başlamadan önce ${tour.waitingNextSeconds} saniye bekleyiniz.`")
 </template>
 
 <script>
@@ -46,6 +46,12 @@ export default defineComponent({
   name: 'TourModeResultsView',
   components: {
     Button
+  },
+  props: {
+    tour: {
+      type: Object,
+      required: true
+    }
   },
   setup() {
     const scorers = ref([

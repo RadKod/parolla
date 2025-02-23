@@ -3521,6 +3521,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@types/cookie@npm:0.3.3"
+  checksum: 10c0/96521593ca46d865d03b04b4af0324a45a1da8312b13aa2026d97a284cd6f559cc0d695a4f3255405cd301a8c93c13b22e77400ad42a0b903e06056202d49fed
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^7.29.0":
   version: 7.29.0
   resolution: "@types/eslint@npm:7.29.0"
@@ -6287,6 +6294,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie-universal-nuxt@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "cookie-universal-nuxt@npm:2.2.2"
+  dependencies:
+    "@types/cookie": "npm:^0.3.3"
+    cookie-universal: "npm:^2.2.2"
+  checksum: 10c0/67abf6d0ecf557435fd59078ad7ef73840b9ae567b68e83a532644c34927eb1087a633ed6828330894554487a1176529dd30f0175f378e598264dd07f843bae9
+  languageName: node
+  linkType: hard
+
+"cookie-universal@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "cookie-universal@npm:2.2.2"
+  dependencies:
+    "@types/cookie": "npm:^0.3.3"
+    cookie: "npm:^0.4.0"
+  checksum: 10c0/0b4f5e7b9a94f482169b879b3dbc9b302253eeff424e030715b3b782a5f9f37b0e0bdb88bba81e09442bed76766ff6e472e41bbda721964442d412fd7dfd5074
+  languageName: node
+  linkType: hard
+
 "cookie@npm:0.5.0, cookie@npm:^0.5.0":
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
@@ -6301,7 +6328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.2":
+"cookie@npm:^0.4.0, cookie@npm:^0.4.2":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: 10c0/beab41fbd7c20175e3a2799ba948c1dcc71ef69f23fe14eeeff59fc09f50c517b0f77098db87dbb4c55da802f9d86ee86cdc1cd3efd87760341551838d53fca2
@@ -10696,6 +10723,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-ws@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "isomorphic-ws@npm:5.0.0"
+  peerDependencies:
+    ws: "*"
+  checksum: 10c0/a058ac8b5e6efe9e46252cb0bc67fd325005d7216451d1a51238bc62d7da8486f828ef017df54ddf742e0fffcbe4b1bcc2a66cc115b027ed0180334cd18df252
+  languageName: node
+  linkType: hard
+
 "jackspeak@npm:^3.1.2":
   version: 3.4.3
   resolution: "jackspeak@npm:3.4.3"
@@ -13119,6 +13155,7 @@ __metadata:
     canvas-confetti: "npm:^1.9.3"
     changelogen: "npm:^0.5.2"
     commitizen: "npm:^4.3.0"
+    cookie-universal-nuxt: "npm:^2.2.2"
     cross-env: "npm:^5.2.0"
     cz-conventional-changelog: "npm:^3.3.0"
     eslint: "npm:^7.10.0"
@@ -13130,6 +13167,7 @@ __metadata:
     get-browser-fingerprint: "npm:^3.0.0"
     howler: "npm:^2.2.3"
     husky: "npm:^4.2.5"
+    isomorphic-ws: "npm:^5.0.0"
     lint-staged: "npm:^10.2.11"
     nuxt: "npm:2.17.1"
     nuxt-client-init-module: "npm:^0.3.0"
