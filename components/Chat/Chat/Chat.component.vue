@@ -3,9 +3,9 @@
   .chat__messages
     .chat__message(v-for="message in messages" :key="message.id")
       .chat__message-avatar
-        PlayerAvatar(:name="message.sender" :size="24")
+        PlayerAvatar(:user="message.sender" :size="24")
       .chat__message-content
-        .chat__message-sender {{ message.sender }}:
+        .chat__message-sender {{ message.sender.username }}:
         .chat__message-text {{ message.text }}
         .chat__message-time {{ message.time }}
 
@@ -37,37 +37,55 @@ export default defineComponent({
     const messages = ref([
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       },
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       },
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       },
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       },
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       },
       {
         id: 1,
-        sender: 'John',
+        sender: {
+          username: 'John',
+          fingerprint: '1234567890'
+        },
         text: 'Hello everyone!',
         time: '10:00'
       }

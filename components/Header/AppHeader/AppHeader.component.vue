@@ -30,7 +30,7 @@
         AppIcon(name="tabler:users-group" :label="formatMillions(876)")
 
     li.app-header-nav__item(@click="toggleMenuDialog")
-      LazyPlayerAvatar(:name="user.fingerprint")
+      LazyPlayerAvatar(:user="user")
 
   // How To Play Dialog
   LazyHowToPlayDialog(

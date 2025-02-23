@@ -4,7 +4,7 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
     template(#label)
       .username-edit-form__label
         Badge.username-edit-form__avatarBadge(v-if="!$auth.loggedIn" type="primary" content="Ziyaretçi")
-        PlayerAvatar(:size="36" :name="user.fingerprint")
+        PlayerAvatar(:size="36" :user="user")
 
     template(#input)
       input(

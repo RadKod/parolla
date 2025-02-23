@@ -1,26 +1,33 @@
 <template lang="pug">
 .tour-mode-user-list
-  Cell.tour-mode-user-list-item(v-for="i in 876" :key="i")
+  Cell.tour-mode-user-list-item(v-for="item in items" :key="item.username")
     template(#title)
       .tour-mode-user-list-item-user
         strong.tour-mode-user-list-item-user__username
-          template(v-if="user")
-            PlayerAvatar(:size="20" :name="user.fingerprint")
-            span {{ user.username }}
-          template(v-else)
-            template(v-if="user.fingerprint")
-              PlayerAvatar(:size="20" :name="user.fingerprint")
-              span {{ user.fingerprint }}
-            template(v-else)
-              span -
-      .tour-mode-user-list-item-score
+          PlayerAvatar(with-username :size="20" :user="item")
+
+      .tour-mode-user-list-item-time(v-if="item.time")
+        AppIcon.tour-mode-user-list-item-time__icon(name="tabler:clock" :width="16" :height="16")
+        span.tour-mode-user-list-item-time__value
+          strong {{ item.time.split(':')[0] }}
+          | :
+          strong {{ item.time.split(':')[1] }}
+          | .
+          sub {{ item.time.split(':')[2] }}
+
+      .tour-mode-user-list-item-score(v-if="item.score")
         span.tour-mode-user-list-item-score__value
-          strong 1286
+          strong +{{ item.score }}
+          | puan
+
+      .tour-mode-user-list-item-score(v-if="item.globalScore")
+        span.tour-mode-user-list-item-score__value
+          strong {{ item.globalScore }}
           | puan
 </template>
 
 <script>
-import { defineComponent, useStore, computed } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { Cell } from 'vant'
 
 export default defineComponent({
@@ -28,15 +35,21 @@ export default defineComponent({
   components: {
     Cell
   },
-  setup() {
-    const store = useStore()
-
-    const user = computed(() => store.getters['auth/user'])
-
-    return {
-      user
+  props: {
+    items: {
+      type: Array,
+      required: false,
+      default: () => [
+        ...Array.from({ length: 200 }, (_, index) => ({
+          username: `gamer${5135 + index}`,
+          fingerprint: 5616516531 + index,
+          globalScore: 1286 + index,
+          rank: index + 1
+        }))
+      ]
     }
-  }
+  },
+  setup() {}
 })
 </script>
 

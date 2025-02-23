@@ -398,7 +398,11 @@ export default {
     online: 'Online'
   },
   tourMode: {
-    onlineUsers: 'Online oyuncular'
+    onlineUsers: 'Online oyuncular',
+    results: {
+      title: 'Tur Sonuçları',
+      correctAnswer: 'Doğru Cevap:'
+    }
   },
   seo: {
     main: {

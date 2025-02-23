@@ -71,13 +71,46 @@
       }
     }
 
+    &-time {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      &__value {
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: var(--color-text-02);
+        font-size: var(--font-size-text-9);
+
+        sub {
+          position: relative;
+          color: var(--color-text-03);
+        }
+      }
+
+      &__icon {
+        position: relative;
+        bottom: 1px;
+        left: 0;
+        margin-inline-end: $spacer;
+        color: var(--color-icon-01);
+      }
+    }
+
     &-score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 92px;
       padding: 0 $spacer * 4;
       color: var(--color-text-03);
       font-size: var(--font-size-text-9);
+      text-align: center;
       background-color: var(--color-ui-02);
       border-radius: var(--border-radius-01);
       box-shadow: var(--box-shadow-03);
+      margin-inline-start: $spacer * 4;
 
       strong {
         color: var(--color-text-02);

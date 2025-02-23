@@ -50,6 +50,9 @@
             @click="handleAnswer"
           ) {{ $t('gameScene.answerField.submit') }}
 
+  // Tour Results View
+  TourModeResultsView
+
   // How To Play Dialog
   //HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
 

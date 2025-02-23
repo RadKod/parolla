@@ -4,15 +4,9 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
     template(#title)
       .scoreboard-list-item-user
         strong.scoreboard-list-item-user__username
-          template(v-if="item.user")
-            PlayerAvatar(:size="20" :name="item.user.fingerprint")
-            span {{ item.user.username }}
-          template(v-else)
-            template(v-if="item.fingerprint")
-              PlayerAvatar(:size="20" :name="item.fingerprint")
-              span {{ item.fingerprint }}
-            template(v-else)
-              span -
+          PlayerAvatar(:size="20" :user="item.user")
+          span {{ item.user.username }}
+
       .scoreboard-list-item-result
         strong.scoreboard-list-item-result__item
           template {{ item.result.remainTime.minutes }}:{{ item.result.remainTime.seconds }}

@@ -1,4 +1,13 @@
 .player-avatar {
   position: relative;
   display: flex;
+  align-items: center;
+
+  &__avatar {
+    position: relative;
+  }
+
+  &__username {
+    margin-inline-start: $spacer * 2;
+  }
 }

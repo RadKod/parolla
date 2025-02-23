@@ -1,6 +1,7 @@
 <template lang="pug">
-.player-avatar
-  Avatar.player-avatar__avatar(variant="beam" :name="name" :size="size")
+.player-avatar(v-if="user")
+  Avatar.player-avatar__avatar(variant="beam" :name="user.username" :size="size")
+  span.player-avatar__username(v-if="withUsername") {{ user.username }}
 </template>
 
 <script>
@@ -17,10 +18,15 @@ export default defineComponent({
       required: false,
       default: 32
     },
-    name: {
-      type: String,
+    user: {
+      type: Object,
       required: false,
-      default: 'Player'
+      default: null
+    },
+    withUsername: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   setup() {}
