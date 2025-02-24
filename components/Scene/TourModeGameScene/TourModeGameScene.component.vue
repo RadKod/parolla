@@ -18,11 +18,11 @@
       Empty(image="error" :description="$t('gameScene.error.fetchQuestions.description')")
         Button(@click="reFetch") {{ $t('gameScene.error.fetchQuestions.action') }}
 
-    template(v-else)
+    template(v-if="tour.question")
       // Questions
       .questions
         .question(:class="{ 'question--osk': answer.isFocused }")
-          strong.question__title Bir şehir veya bir bölge avukatlarının bağlı oldukları meslek kuruluşu
+          strong.question__title {{ tour.question.question }}
 
       // Field Section
       section.game-scene__fieldSection
@@ -75,6 +75,7 @@
 <script>
 import { defineComponent, useStore, useFetch, ref, reactive, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
+import { wsTypeEnum } from '@/enums'
 import { Button, Field, Empty, CountDown, Progress } from 'vant'
 import useWs from '@/composables/useWs'
 
@@ -113,6 +114,7 @@ export default defineComponent({
     })
 
     const tour = reactive({
+      question: null,
       countdown: {
         percentage: 0,
         seconds: 30
@@ -158,16 +160,21 @@ export default defineComponent({
       store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', false)
     }
 
+    const onQuestionGot = ({ question }) => {
+      console.log('Question got:', question)
+      tour.question = question
+    }
+
     const onTimeUpdate = ({ time }) => {
       tour.countdown.seconds = Math.floor(time.remaining / 1000)
       tour.countdown.percentage = time.percentage
     }
 
-    const onTimeUp = () => {
-      console.log('Countdown has reached zero!')
+    const onTimeUp = ({ correctAnswer }) => {
       tour.isEnded = true
       tour.countdown.seconds = 30
       tour.countdown.percentage = 0
+      tour.correctAnswer = correctAnswer
     }
 
     const onWaitingNext = ({ time }) => {
@@ -179,17 +186,21 @@ export default defineComponent({
     }
 
     ws.onmessage = data => {
-      const { type, time } = JSON.parse(data.data)
+      const { type, question, correctAnswer, time } = JSON.parse(data.data)
 
-      if (type === 'time_update') {
+      if (type === wsTypeEnum.QUESTION) {
+        onQuestionGot({ question })
+      }
+
+      if (type === wsTypeEnum.TIME_UPDATE) {
         onTimeUpdate({ time })
       }
 
-      if (type === 'time_up') {
-        onTimeUp()
+      if (type === wsTypeEnum.TIME_UP) {
+        onTimeUp({ correctAnswer })
       }
 
-      if (type === 'waiting_next') {
+      if (type === wsTypeEnum.WAITING_NEXT) {
         onWaitingNext({ time })
       }
     }

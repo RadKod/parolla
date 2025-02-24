@@ -8,14 +8,13 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
 
     template(#input)
       input(
+        v-model="form.username"
         name="username"
-        :value="user.username"
         :placeholder="$t('form.usernameEdit.usernameField.placeholder')"
         rows="1"
         maxlength="28"
         autocomplete="off"
         :disabled="form.isBusy"
-        @input="e => handleUsernameInput(e)"
       )
       Button.username-edit-form-submit-button(
         native-type="button"
@@ -47,7 +46,6 @@ export default defineComponent({
 
     const form = reactive({
       isBusy: false,
-      isClear: false,
       username: user.value.username
     })
 
@@ -55,18 +53,10 @@ export default defineComponent({
       return form.username !== user.value.username
     })
 
-    const handleUsernameInput = e => {
-      const value = e.target.value
+    const validateUsername = username => {
+      const regex = /^.{0,27}\S.+$/
 
-      const regex = /^. {0,27}\S.+$/
-
-      if (regex.test(value)) {
-        form.isClear = true
-      } else {
-        form.isClear = false
-      }
-
-      form.username = value
+      return regex.test(username)
     }
 
     const handleFailed = errorInfo => {
@@ -80,29 +70,34 @@ export default defineComponent({
     const handleSubmit = async () => {
       form.isBusy = true
 
-      if (form.isClear) {
-        const result = await store.dispatch('auth/updateUser', form.username)
-
-        if (result.success) {
-          store.commit('auth/SET_USERNAME', result.data.username)
-
-          Notify({
-            message: i18n.t('form.usernameEdit.callback.success'),
-            color: 'var(--color-text-04)',
-            background: 'var(--color-success-01)',
-            duration: 1000
-          })
-        } else {
-          Notify({
-            message: result.data.error,
-            color: 'var(--color-text-04)',
-            background: 'var(--color-danger-01)',
-            duration: 1000
-          })
-        }
-      } else {
+      if (!validateUsername(form.username)) {
         Notify({
           message: i18n.t('form.usernameEdit.error.submit'),
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 1000
+        })
+        form.isBusy = false
+
+        return
+      }
+
+      const result = await store.dispatch('auth/updateUser', { username: form.username })
+
+      if (result.success) {
+        store.commit('auth/SET_USER', {
+          ...result.data
+        })
+
+        Notify({
+          message: i18n.t('form.usernameEdit.callback.success'),
+          color: 'var(--color-text-04)',
+          background: 'var(--color-success-01)',
+          duration: 1000
+        })
+      } else {
+        Notify({
+          message: result.data.error,
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
           duration: 1000
@@ -116,7 +111,6 @@ export default defineComponent({
       user,
       form,
       isUsernameChanged,
-      handleUsernameInput,
       handleFailed,
       handleSubmit
     }

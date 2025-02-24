@@ -5,15 +5,13 @@ export const actions = {
 
       const fetchMeResult = await dispatch('auth/fetchMe')
 
-      commit('auth/SET_USER', fetchMeResult.data)
-
       if (fetchMeResult.success) {
-        commit('auth/SET_USERNAME', fetchMeResult.data.username)
+        commit('auth/SET_USER', fetchMeResult.data)
       } else {
         const updateUserResult = await dispatch('auth/updateUser')
 
         if (updateUserResult.success) {
-          commit('auth/SET_USERNAME', updateUserResult.data.username)
+          commit('auth/SET_USER', updateUserResult.data)
         }
       }
     }

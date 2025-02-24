@@ -9,7 +9,7 @@
 
     .tour-mode-results-view-correct-answer
       span.tour-mode-results-view-correct-answer__title {{ $t('tourMode.results.correctAnswer') }}
-      span.tour-mode-results-view-correct-answer__answer Ödeme yapma, Ödeme yapmak, Ödeme, Ödemek
+      span.tour-mode-results-view-correct-answer__answer {{ tour.correctAnswer }}
 
     .top-scorer-list
       .top-scorer-list-item(v-for="(scorer, index) in scorers.slice(0, 3)" :key="scorer.username" :data-rank="index + 1")

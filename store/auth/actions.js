@@ -50,7 +50,9 @@ export default {
     return result
   },
 
-  async updateUser({ commit, state }, username) {
+  async updateUser({ commit, state }, user) {
+    const { username } = user
+
     const headers = {
       'Accept-Language': this.$i18n.locale,
       Accept: 'application/json',
