@@ -28,6 +28,18 @@
       section.game-scene__fieldSection
         // Answer Field
         .answer-field
+          Popover.answer-field-max-lives(
+            v-model="tour.popover.maxLives.isOpen"
+            placement="top-start"
+            trigger="click"
+            close-on-click-outside
+          )
+            template(#reference)
+              .answer-field-max-lives__button(role="button")
+                AppIcon(name="fluent-emoji:heart-suit" :label="String(tour.maxLives)" :width="32" :height="32")
+
+            .answer-field-max-lives__content
+              p Tahmin hakkın
           input.answer-field__input(
             type="text"
             :value="answer.field"
@@ -36,11 +48,11 @@
             spellcheck="false"
             autocomplete="off"
             :maxlength="ANSWER_CHAR_LENGTH"
+            :disabled="tour.maxLives <= 0"
             @input="handleAnswerField"
             @focus="answer.isFocused = true"
             @blur="answer.isFocused = false"
             @keypress.enter="handleAnswer"
-            @keydown.tab.prevent="pass"
           )
           Button.answer-field__button.answer-field__button--send.do-not-hide-keyboard.do-not-hide-keyboard--send(
             color="var(--color-brand-02)"
@@ -76,7 +88,7 @@
 import { defineComponent, useStore, useFetch, ref, reactive, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
-import { Button, Field, Empty, CountDown, Progress } from 'vant'
+import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
 import useWs from '@/composables/useWs'
 
 export default defineComponent({
@@ -85,7 +97,9 @@ export default defineComponent({
     Field,
     Empty,
     CountDown,
-    Progress
+    Progress,
+    Popover,
+    Notify
   },
   setup() {
     const rootRef = ref(null)
@@ -94,18 +108,19 @@ export default defineComponent({
 
     const {
       setRootRef,
-      questions,
       answer,
-      handleAnswer,
-      handleAnswerField,
-      initCarousels,
       dialog,
       questionFitText,
       handleBeforeUnload,
       scrollTop,
       isTouchEnabled,
       handleDontHideKeyboard,
-      checkUnsupportedHeight
+      handleTabKey,
+      checkUnsupportedHeight,
+      formatAnswerField,
+      wrongAnimateAnswerField,
+      resetAnswerField,
+      soundFx
     } = useGameScene()
 
     // Fetch Questions
@@ -119,14 +134,18 @@ export default defineComponent({
         percentage: 0,
         seconds: 30
       },
+      maxLives: 3,
       waitingNextSeconds: 10,
-      isEnded: false
+      isEnded: false,
+      popover: {
+        maxLives: {
+          isOpen: false
+        }
+      }
     })
 
     onMounted(() => {
       setRootRef(rootRef.value)
-
-      initCarousels()
 
       window.addEventListener('keyup', event => handleTabKey(event))
 
@@ -161,7 +180,6 @@ export default defineComponent({
     }
 
     const onQuestionGot = ({ question }) => {
-      console.log('Question got:', question)
       tour.question = question
     }
 
@@ -172,36 +190,96 @@ export default defineComponent({
 
     const onTimeUp = ({ correctAnswer }) => {
       tour.isEnded = true
+      tour.correctAnswer = correctAnswer
       tour.countdown.seconds = 30
       tour.countdown.percentage = 0
-      tour.correctAnswer = correctAnswer
+      tour.maxLives = 3
+
+      resetAnswerField()
     }
 
     const onWaitingNext = ({ time }) => {
       tour.waitingNextSeconds = Math.floor(time.remaining / 1000)
 
       if (time.remaining <= 1000) {
-        tour.isEnded = false
+        if (tour.isEnded) {
+          setTimeout(() => {
+            tour.isEnded = false
+          }, 1000)
+        }
       }
     }
 
-    ws.onmessage = data => {
-      const { type, question, correctAnswer, time } = JSON.parse(data.data)
+    const onAnswerResult = params => {
+      const { correct, lives, score } = params
 
-      if (type === wsTypeEnum.QUESTION) {
+      if (correct) {
+        Notify({
+          message: 'Doğru cevap, lütfen tur bitene kadar bekle',
+          color: 'var(--color-text-04)',
+          background: 'var(--color-success-01)',
+          duration: 30000
+        })
+
+        soundFx.correct.play()
+      } else {
+        wrongAnimateAnswerField()
+
+        Notify({
+          message: 'Yanlış cevap',
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 1500
+        })
+
+        soundFx.wrong.play()
+      }
+
+      tour.maxLives = lives
+
+      if (lives <= 0) {
+        Notify({
+          message: 'Tahmin hakkın bitti, lütfen tur bitene kadar bekle',
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 30000
+        })
+      }
+
+      resetAnswerField()
+    }
+
+    const handleAnswer = () => {
+      const answerField = formatAnswerField()
+
+      ws.send(JSON.stringify({ type: wsTypeEnum.TOUR_ANSWER, answer: answerField }))
+    }
+
+    const handleAnswerField = $event => {
+      answer.field = $event.target.value
+    }
+
+    ws.onmessage = data => {
+      const { type, question, correctAnswer, time, correct, lives, score } = JSON.parse(data.data)
+
+      if (type === wsTypeEnum.TOUR_QUESTION) {
         onQuestionGot({ question })
       }
 
-      if (type === wsTypeEnum.TIME_UPDATE) {
+      if (type === wsTypeEnum.TOUR_TIME_UPDATE) {
         onTimeUpdate({ time })
       }
 
-      if (type === wsTypeEnum.TIME_UP) {
+      if (type === wsTypeEnum.TOUR_TIME_UP) {
         onTimeUp({ correctAnswer })
       }
 
-      if (type === wsTypeEnum.WAITING_NEXT) {
+      if (type === wsTypeEnum.TOUR_WAITING_NEXT) {
         onWaitingNext({ time })
+      }
+
+      if (type === wsTypeEnum.TOUR_ANSWER_RESULT) {
+        onAnswerResult({ correct, lives, score })
       }
     }
 
@@ -210,11 +288,11 @@ export default defineComponent({
       ANSWER_CHAR_LENGTH,
       fetch,
       fetchState,
-      questions,
       answer,
       dialog,
       handleAnswerField,
       handleAnswer,
+      handleTabKey,
       isTouchEnabled,
       isTourModeOnlineDialogOpen,
       closeTourModeOnlineDialog,

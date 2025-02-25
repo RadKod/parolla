@@ -26,6 +26,42 @@
     margin-block-start: var(--base-m-y);
   }
 
+  .answer-field {
+    &-max-lives {
+      position: absolute;
+      left: $spacer * 4;
+
+      @include center(false, true);
+
+      &__button {
+        cursor: pointer;
+
+        .app-icon {
+          &__label {
+            padding: 0;
+            color: #fff;
+            font-size: var(--font-size-text-10);
+            text-align: center;
+            margin-block-start: 1px;
+            text-shadow: 1px 1px #222;
+            background-color: transparent;
+
+            @include center(true, true);
+          }
+        }
+      }
+
+      @at-root .answer-field-max-lives__content {
+        padding: $spacer $spacer * 4;
+        color: var(--color-text-01);
+      }
+    }
+
+    &__input {
+      padding-inline-start: $spacer * 15 !important;
+    }
+  }
+
   .tour-mode-results-view {
     position: absolute;
     top: 0;

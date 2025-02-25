@@ -76,7 +76,7 @@ export default () => {
         }
 
         carousels.alphabet.slideTo(value)
-        resetAnswer()
+        resetAnswerField()
         questionFitText()
       }
     )
@@ -156,6 +156,17 @@ export default () => {
     return index
   }
 
+  const wrongAnimateAnswerField = () => {
+    rootRef.value.querySelector('.answer-field__input').classList.add('answer-field__input--errorAnimation')
+    setTimeout(() => {
+      rootRef.value.querySelector('.answer-field__input').classList.remove('answer-field__input--errorAnimation')
+    }, 400)
+  }
+
+  const formatAnswerField = () => {
+    return encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+  }
+
   const handleAnswer = () => {
     if (isGameOver.value || answer.field.trim().length <= 0) return false
 
@@ -163,26 +174,28 @@ export default () => {
 
     item.isPassed = false
 
-    const answerField = encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+    const answerField = formatAnswerField()
     const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
     const passKeywords = ['pas', 'pass']
     const endGameKeywords = ['bitir', 'finish']
     const radkodKeyword = 'radkod'
 
-    if (passKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
-      pass()
+    if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+      if (passKeywords.includes(answerField)) {
+        pass()
 
-      return false
+        return false
+      }
+
+      if (endGameKeywords.includes(answerField)) {
+        endGame()
+
+        return false
+      }
     }
 
-    if (endGameKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
-      endGame()
-
-      return false
-    }
-
-    if (answerField === radkodKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
+    if (answerField === radkodKeyword) {
       Notify({
         message: i18n.t('gameScene.radkodNotify'),
         color: 'var(--color-text-04)',
@@ -201,12 +214,9 @@ export default () => {
         background: 'var(--color-danger-01)'
       })
 
-      resetAnswer()
+      resetAnswerField()
 
-      rootRef.value.querySelector('.answer-field__input').classList.add('answer-field__input--errorAnimation')
-      setTimeout(() => {
-        rootRef.value.querySelector('.answer-field__input').classList.remove('answer-field__input--errorAnimation')
-      }, 400)
+      wrongAnimateAnswerField()
 
       return false
     }
@@ -252,12 +262,20 @@ export default () => {
     answer.isFocused = true
   }
 
-  const resetAnswer = () => {
+  const resetAnswerField = () => {
     answer.field = ''
   }
 
   const handleTabKey = event => {
     event.preventDefault()
+
+    if (activeGameMode.value === gameModeKeyEnum.TOUR) {
+      if (!answer.isFocused) {
+        focusToAnswerFieldInput()
+      }
+
+      return false
+    }
 
     if (!isGameStarted.value) return false
 
@@ -402,7 +420,7 @@ export default () => {
 
     dialog.howToPlay.isOpen = false
 
-    resetAnswer()
+    resetAnswerField()
 
     setTimeout(() => {
       questionFitText()
@@ -608,7 +626,7 @@ export default () => {
     let isPassButton = target.classList.contains('do-not-hide-keyboard--pass')
     let isSendButton = target.classList.contains('do-not-hide-keyboard--send')
 
-    // On iOS tapping anywhere doesn’t
+    // On iOS tapping anywhere doesn't
     // automatically discard keyboard
     if (dontDiscardKeyboard) {
       event.preventDefault()
@@ -642,6 +660,9 @@ export default () => {
     nextLetter,
     handleAnswer,
     handleAnswerField,
+    wrongAnimateAnswerField,
+    formatAnswerField,
+    resetAnswerField,
     handleTabKey,
     pass,
     carousels,
