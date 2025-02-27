@@ -185,7 +185,7 @@ module.exports = {
             clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
             codeChallengeMethod: '',
             responseType: 'code',
-            redirectUri: 'http://localhost:3000/auth/google/callback',
+            redirectUri: process.env.GOOGLE_AUTH_REDIRECT_URI,
             endpoints: {
               token: false, // your backend url to resolve your auth with google and give you the token back
               userInfo: false // your endpoint to get the user info after you received the token

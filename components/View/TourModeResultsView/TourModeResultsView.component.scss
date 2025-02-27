@@ -3,6 +3,10 @@
   padding: calc(var(--base-p-y) * 2) calc(var(--base-p-x) * 2);
   background-color: var(--color-ui-01);
 
+  @include media-breakpoint-down(tablet) {
+    padding: $spacer * 4;
+  }
+
   &::before {
     position: absolute;
     top: 0;
@@ -23,10 +27,18 @@
     text-align: center;
     margin-block-end: calc(var(--base-m-y) * 2);
 
+    @include media-breakpoint-down(tablet) {
+      margin-block-end: var(--base-m-y);
+    }
+
     &__title {
       color: var(--color-text-02);
       font-weight: 500;
       font-size: var(--font-size-text-2);
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-8);
+      }
     }
   }
 
@@ -41,6 +53,10 @@
     box-shadow: var(--box-shadow-03);
     margin-block-end: $spacer * 4;
 
+    @include media-breakpoint-down(tablet) {
+      padding: $spacer * 3 $spacer * 4;
+    }
+
     &__title {
       display: inline-flex;
       color: var(--color-text-03);
@@ -48,6 +64,10 @@
       font-size: var(--font-size-text-5);
       text-align: center;
       margin-block-end: $spacer * 3;
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-9);
+      }
     }
 
     &__answer {
@@ -55,6 +75,10 @@
       font-weight: 800;
       font-size: var(--font-size-text-1);
       text-transform: uppercase;
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-7);
+      }
     }
   }
 
@@ -64,10 +88,19 @@
     justify-content: center;
     margin-block-start: calc(var(--base-m-y) * 6);
 
+    @include media-breakpoint-down(tablet) {
+      margin-block-start: calc(var(--base-m-y) * 4);
+      gap: calc(var(--base-p-x) * 2);
+    }
+
     &-item {
       $top-scorer-list-item: '.top-scorer-list-item';
 
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
 
       .player-avatar {
         position: relative;
@@ -76,11 +109,24 @@
 
         &__avatar {
           border-radius: 100%;
+
+          @include media-breakpoint-down(tablet) {
+            width: 40px;
+            height: 40px;
+            border-width: 2px !important;
+          }
         }
 
         &__username {
-          margin-block-start: $spacer * 2;
+          max-width: 120px;
           font-weight: 600;
+          word-wrap: break-word;
+          margin-block-start: $spacer * 2;
+
+          @include media-breakpoint-down(tablet) {
+            max-width: 92px;
+            font-size: var(--font-size-text-10);
+          }
         }
       }
 
@@ -146,6 +192,10 @@
           color: var(--color-text-02);
           font-size: var(--font-size-text-9);
 
+          @include media-breakpoint-down(tablet) {
+            font-size: var(--font-size-text-10);
+          }
+
           sub {
             position: relative;
             color: var(--color-text-03);
@@ -156,8 +206,8 @@
           position: relative;
           bottom: 1px;
           left: 0;
-          margin-inline-end: $spacer;
           color: var(--color-icon-01);
+          margin-inline-end: $spacer;
         }
       }
 
@@ -174,6 +224,12 @@
         box-shadow: var(--box-shadow-03);
         margin-block-start: $spacer * 4;
         margin-block-end: $spacer * 3;
+
+        @include media-breakpoint-down(tablet) {
+          font-size: var(--font-size-text-10);
+          margin-block-start: $spacer * 3;
+          margin-block-end: $spacer * 2;
+        }
 
         strong {
           color: var(--color-text-02);
@@ -194,19 +250,37 @@
         margin-block-start: $spacer * 4;
         padding-block-start: $spacer * 2;
 
+        @include media-breakpoint-down(tablet) {
+          height: 64px;
+        }
+
+        @include media-breakpoint-down(mobile-m) {
+          padding-block-start: 0;
+          height: 24px;
+        }
+
         &__number {
           color: var(--color-text-02);
           font-weight: 600;
           font-size: var(--font-size-text-5);
           text-transform: uppercase;
+
+          @include media-breakpoint-down(tablet) {
+            font-size: var(--font-size-text-8);
+          }
+
+          @include media-breakpoint-down(mobile-m) {
+            font-size: var(--font-size-text-10);
+          }
         }
       }
     }
   }
 
   .tour-mode-user-list {
-    margin-block-end: var(--base-m-y);
+    max-height: 25vh;
     counter-reset: user-counter 3;
+    margin-block-end: var(--base-m-y);
 
     &-item {
       background-color: transparent !important;
@@ -228,6 +302,19 @@
     background-color: transparent;
     border: 0;
     margin-block-start: calc(var(--base-m-y) * 2);
+
+    @include media-breakpoint-down(tablet) {
+      margin-block-start: var(--base-m-y);
+      font-size: var(--font-size-text-9);
+    }
+
+    @include media-breakpoint-down(mobile-m) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: var(--font-size-text-10);
+    }
 
     .van-loading {
       transform: scale(1.3);

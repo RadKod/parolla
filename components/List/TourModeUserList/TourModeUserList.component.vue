@@ -18,12 +18,12 @@
       .tour-mode-user-list-item-score(v-if="item.score")
         span.tour-mode-user-list-item-score__value
           strong +{{ item.score }}
-          | puan
+          label puan
 
       .tour-mode-user-list-item-score(v-if="item.globalScore")
         span.tour-mode-user-list-item-score__value
           strong {{ item.globalScore }}
-          | puan
+          label puan
 </template>
 
 <script>

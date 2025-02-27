@@ -71,6 +71,10 @@
   }
 
   .chat-panel {
+    @include media-breakpoint-down(tablet) {
+      display: none;
+    }
+
     &__content {
       display: flex;
       flex-direction: column;

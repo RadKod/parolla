@@ -2,6 +2,7 @@
   position: fixed;
   right: var(--base-m-x);
   bottom: 0;
+  z-index: var(--z-index-sticky);
   width: var(--mobile-l);
   height: 42px;
   background-color: #fff;
