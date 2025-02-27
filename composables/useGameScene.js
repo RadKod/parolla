@@ -662,6 +662,7 @@ export default () => {
     handleAnswerField,
     wrongAnimateAnswerField,
     formatAnswerField,
+    focusToAnswerFieldInput,
     resetAnswerField,
     handleTabKey,
     pass,

@@ -19,9 +19,13 @@
         Button(@click="reFetch") {{ $t('gameScene.error.fetchQuestions.action') }}
 
     template(v-if="tour.question")
+      // Letter
+      .letter
+        .letter__value {{ tour.question.letter }}
+
       // Questions
       .questions
-        .question(:class="{ 'question--osk': answer.isFocused }")
+        .question.question--active(:class="{ 'question--osk': answer.isFocused }")
           strong.question__title {{ tour.question.question }}
 
       // Field Section
@@ -119,6 +123,7 @@ export default defineComponent({
       checkUnsupportedHeight,
       formatAnswerField,
       wrongAnimateAnswerField,
+      focusToAnswerFieldInput,
       resetAnswerField,
       soundFx
     } = useGameScene()
@@ -205,6 +210,7 @@ export default defineComponent({
         if (tour.isEnded) {
           setTimeout(() => {
             tour.isEnded = false
+            focusToAnswerFieldInput()
           }, 1000)
         }
       }

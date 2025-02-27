@@ -26,13 +26,7 @@
 
     .van-cell__title {
       display: flex;
-      flex-wrap: wrap;
-
-      @include media-breakpoint-down(tablet) {
-        display: grid;
-        grid-template-columns: 1fr auto auto;
-        align-items: flex-start;
-      }
+      flex-wrap: unset;
     }
 
     & > .van-cell__value {
@@ -66,10 +60,6 @@
           top: 2px;
           width: 32px;
         }
-      }
-
-      @include media-breakpoint-down(mobile) {
-        margin-right: 100%;
       }
 
       &__username {
@@ -113,7 +103,7 @@
 
     &-time {
       position: relative;
-      right: -28px;
+      right: -32px;
       display: flex;
       align-items: center;
       width: 120px;
@@ -121,12 +111,19 @@
 
       @include media-breakpoint-down(tablet) {
         position: relative;
+        right: 0;
+        width: 92px;
+      }
+
+      @include media-breakpoint-down(mobile) {
+        width: 72px;
       }
 
       &__value {
         position: relative;
         display: flex;
         align-items: center;
+        font-variant-numeric: tabular-nums;
         color: var(--color-text-02);
         font-size: var(--font-size-text-9);
 
@@ -142,6 +139,10 @@
         left: 0;
         color: var(--color-icon-01);
         margin-inline-end: $spacer;
+
+        @include media-breakpoint-down(mobile) {
+          display: none;
+        }
       }
     }
 
@@ -159,10 +160,10 @@
       border-radius: var(--border-radius-01);
       box-shadow: var(--box-shadow-03);
       margin-inline-start: $spacer * 4;
+      font-variant-numeric: tabular-nums;
 
       @include media-breakpoint-down(tablet) {
-        width: 42px;
-        min-width: unset;
+        min-width: 52px;
         height: 24px;
         padding: 0 $spacer;
         font-size: var(--font-size-text-10);

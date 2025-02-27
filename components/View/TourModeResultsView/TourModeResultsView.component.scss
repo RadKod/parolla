@@ -87,6 +87,7 @@
     gap: calc(var(--base-p-x) * 4);
     justify-content: center;
     margin-block-start: calc(var(--base-m-y) * 6);
+    margin-block-end: var(--base-m-y);
 
     @include media-breakpoint-down(tablet) {
       margin-block-start: calc(var(--base-m-y) * 4);
@@ -204,7 +205,7 @@
 
         &__icon {
           position: relative;
-          bottom: 1px;
+          bottom: 0;
           left: 0;
           color: var(--color-icon-01);
           margin-inline-end: $spacer;
@@ -231,6 +232,12 @@
           margin-block-end: $spacer * 2;
         }
 
+        @include media-breakpoint-down(mobile) {
+          height: 24px;
+          font-size: var(--font-size-text-10);
+          line-height: 24px;
+        }
+
         strong {
           color: var(--color-text-02);
           margin-inline-end: calc(var(--base-m-x) / 4);
@@ -254,9 +261,9 @@
           height: 64px;
         }
 
-        @include media-breakpoint-down(mobile-m) {
+        @include media-breakpoint-down(mobile) {
+          height: 32px;
           padding-block-start: 0;
-          height: 24px;
         }
 
         &__number {
@@ -308,12 +315,13 @@
       font-size: var(--font-size-text-9);
     }
 
-    @include media-breakpoint-down(mobile-m) {
+    @include media-breakpoint-down(mobile) {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      font-size: var(--font-size-text-10);
+      height: 64px;
+      font-size: var(--font-size-text-9);
     }
 
     .van-loading {
@@ -321,6 +329,10 @@
       transform-origin: right;
       margin-block-end: $spacer;
       margin-inline-end: $spacer * 2;
+
+      @include media-breakpoint-down(mobile) {
+        transform: scale(1);
+      }
     }
   }
 }
