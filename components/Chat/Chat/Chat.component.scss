@@ -17,6 +17,10 @@
     margin-bottom: 16px;
     margin-inline-end: 16px;
 
+    &--system {
+      border: 1px solid var(--color-border-01);
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -50,8 +54,8 @@
   }
 
   &__message-time {
-    display: none;
-    margin-top: 4px;
+    margin-block-start: 3px;
+    margin-inline-start: auto;
     color: var(--color-text-03);
     font-size: 12px;
   }
@@ -62,7 +66,7 @@
     border-top: 1px solid #eee;
 
     .van-field {
-      padding: 0;
+      padding: 2px 0;
       background-color: transparent;
 
       input {

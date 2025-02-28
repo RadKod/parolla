@@ -1,13 +1,13 @@
 <template lang="pug">
 .chat
-  .chat__messages
-    .chat__message(v-for="message in messages" :key="message.id")
+  .chat__messages(ref="messagesRef")
+    .chat__message(v-for="message in chatMessages" :key="message.timestamp" :class="{ 'chat__message--system': message.isSystem }")
       .chat__message-avatar
-        PlayerAvatar(:user="message.sender" :size="24")
+        PlayerAvatar(v-if="!message.isSystem" :user="message.playerName" :size="24")
       .chat__message-content
-        .chat__message-sender {{ message.sender.username }}:
-        .chat__message-text {{ message.text }}
-        .chat__message-time {{ message.time }}
+        .chat__message-sender {{ message.playerName }}:
+        .chat__message-text {{ message.message }}
+        .chat__message-time {{ isoToHumanDate(message.timestamp) }}
 
   .chat__input
     Field(v-model="messageText" placeholder="Type a message..." :border="false" @keypress.enter="sendMessage")
@@ -23,8 +23,10 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed, useStore, onMounted, onUnmounted } from '@nuxtjs/composition-api'
 import { Field, Button } from 'vant'
+import { wsTypeEnum } from '@/enums'
+import useFormatter from '@/composables/useFormatter'
 
 export default defineComponent({
   name: 'Chat',
@@ -32,82 +34,99 @@ export default defineComponent({
     Field,
     Button
   },
-  setup() {
+  setup(_, { emit }) {
+    const store = useStore()
+
+    const { isoToHumanDate } = useFormatter()
+
+    const messagesRef = ref(null)
+
     const messageText = ref('')
-    const messages = ref([
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
-      },
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
-      },
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
-      },
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
-      },
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
-      },
-      {
-        id: 1,
-        sender: {
-          username: 'John',
-          fingerprint: '1234567890'
-        },
-        text: 'Hello everyone!',
-        time: '10:00'
+
+    const chatMessages = computed(() => store.getters['tour/chatMessages'])
+
+    const ws = computed(() => store.getters['tour/ws'])
+
+    const handleWsMessage = data => {
+      const { type, chatHistory, playerId, playerName, message, isSystem, timestamp } = JSON.parse(data.data)
+
+      if (type === wsTypeEnum.CONNECTED) {
+        store.commit('tour/SET_CHAT_MESSAGES', chatHistory)
+
+        setTimeout(() => {
+          scrollToBottom()
+        }, 0)
+
+        emit('on-connected-ws')
       }
-    ])
+
+      if (type === wsTypeEnum.CHAT_MESSAGE) {
+        const isDuplicate = chatMessages.value.some(msg => msg.timestamp === timestamp)
+
+        if (!isDuplicate) {
+          store.commit('tour/SET_CHAT_MESSAGES', [
+            ...chatMessages.value,
+            {
+              isSystem,
+              playerId,
+              playerName,
+              message,
+              timestamp
+            }
+          ])
+
+          setTimeout(() => {
+            scrollToBottom()
+          }, 0)
+        }
+
+        emit('on-chat-message-ws')
+      }
+    }
+
+    onMounted(() => {
+      if (ws.value) {
+        ws.value.addEventListener('message', handleWsMessage)
+      }
+    })
+
+    onUnmounted(() => {
+      if (ws.value) {
+        ws.value.removeEventListener('message', handleWsMessage)
+      }
+    })
+
+    const scrollToBottom = () => {
+      if (messagesRef.value) {
+        setTimeout(() => {
+          messagesRef.value.scrollTo({
+            top: messagesRef.value.scrollHeight,
+            behavior: 'smooth'
+          })
+        }, 0)
+      }
+    }
 
     const sendMessage = () => {
       if (!messageText.value.trim()) return
 
-      messages.value.push({
-        id: Date.now(),
-        sender: 'You',
-        text: messageText.value,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      })
+      ws.value.send(
+        JSON.stringify({
+          type: wsTypeEnum.CHAT_MESSAGE,
+          message: messageText.value
+        })
+      )
 
       messageText.value = ''
     }
 
     return {
+      messagesRef,
       messageText,
-      messages,
-      sendMessage
+      chatMessages,
+      sendMessage,
+      isoToHumanDate,
+      scrollToBottom
     }
   }
 })

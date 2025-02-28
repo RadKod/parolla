@@ -19,7 +19,7 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
         .stats-dialog-tab-title
           AppIcon.stats-dialog-tab-title__icon(name="tabler:message" :width="20" :height="20")
           span.stats-dialog-tab-title__value {{ $t('chat.chat') }}
-      Chat
+      Chat(ref="chatRef" @on-connected-ws="onConnectedWs" @on-chat-message-ws="onChatMessageWs")
 
     // Online Tab
     Tab(name="online")
@@ -41,7 +41,7 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
 </template>
 
 <script>
-import { defineComponent, reactive, ref, watch, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, ref, watch, useStore, nextTick } from '@nuxtjs/composition-api'
 import { Dialog, Tabs, Tab, Cell } from 'vant'
 
 export default defineComponent({
@@ -76,19 +76,42 @@ export default defineComponent({
       isOpen: props.isOpen
     })
 
+    const chatRef = ref(null)
+
     watch(
       () => props.isOpen,
       value => {
         state.isOpen = value
+
+        if (value) {
+          nextTick(() => {
+            chatRef.value?.scrollToBottom()
+          })
+
+          setTimeout(() => {
+            chatRef.value?.scrollToBottom()
+          }, 100)
+        }
       }
     )
 
     const activeTab = ref('chat')
 
+    const onConnectedWs = () => {
+      chatRef.value.scrollToBottom()
+    }
+
+    const onChatMessageWs = () => {
+      chatRef.value.scrollToBottom()
+    }
+
     return {
+      user,
       state,
+      chatRef,
       activeTab,
-      user
+      onConnectedWs,
+      onChatMessageWs
     }
   }
 })

@@ -59,9 +59,62 @@ export default () => {
     }
   }
 
+  /**
+   * Converts a timestamp to a human-readable date and time format with customizable components
+   * @param {number|string} timestamp - The timestamp in milliseconds or ISO string
+   * @param {Object} options - Formatting options
+   * @param {boolean} options.showHour - Whether to show hours (default: true)
+   * @param {boolean} options.showMinute - Whether to show minutes (default: true)
+   * @param {boolean} options.showSecond - Whether to show seconds (default: false)
+   * @param {boolean} options.showDay - Whether to show day (default: false)
+   * @param {boolean} options.showMonth - Whether to show month (default: false)
+   * @param {boolean} options.showYear - Whether to show year (default: false)
+   * @returns {string} Formatted date and time according to specified options
+   */
+  const isoToHumanDate = (timestamp, options = {}) => {
+    // Default options
+    const defaultOptions = {
+      showHour: true,
+      showMinute: true,
+      showSecond: false,
+      showDay: false,
+      showMonth: false,
+      showYear: false
+    }
+
+    // Merge default options with provided options
+    const formatOptions = { ...defaultOptions, ...options }
+
+    // Check if timestamp is a number (milliseconds)
+    const date = typeof timestamp === 'number' ? new Date(timestamp) : new Date(timestamp)
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return 'Invalid date'
+    }
+
+    // Build formatting options for toLocaleString
+    const localeOptions = {}
+
+    if (formatOptions.showHour) localeOptions.hour = '2-digit'
+
+    if (formatOptions.showMinute) localeOptions.minute = '2-digit'
+
+    if (formatOptions.showSecond) localeOptions.second = '2-digit'
+
+    if (formatOptions.showDay) localeOptions.day = '2-digit'
+
+    if (formatOptions.showMonth) localeOptions.month = '2-digit'
+
+    if (formatOptions.showYear) localeOptions.year = 'numeric'
+
+    return date.toLocaleString(context.i18n.locale, localeOptions)
+  }
+
   return {
     encodeEnglish,
     formatRating,
-    formatMillions
+    formatMillions,
+    isoToHumanDate
   }
 }

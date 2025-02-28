@@ -289,6 +289,8 @@ export default defineComponent({
       }
     }
 
+    store.commit('tour/SET_WS', ws)
+
     return {
       rootRef,
       ANSWER_CHAR_LENGTH,
