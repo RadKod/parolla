@@ -10,14 +10,6 @@
     .tour-mode-game-scene-countdown
       Progress(color="var(--color-brand-02)" :pivot-text="String(tour.countdown.seconds)" :percentage="tour.countdown.percentage")
 
-    // Fetch State
-    template(v-if="fetchState.pending")
-      Empty(:description="$t('gameScene.pendingQuestions')")
-
-    template(v-else-if="fetchState.error")
-      Empty(image="error" :description="$t('gameScene.error.fetchQuestions.description')")
-        Button(@click="reFetch") {{ $t('gameScene.error.fetchQuestions.action') }}
-
     template(v-if="tour.question")
       // Letter
       .letter
@@ -29,7 +21,7 @@
           strong.question__title {{ tour.question.question }}
 
       // Field Section
-      section.game-scene__fieldSection
+      section.game-scene__fieldSection(:class="{ 'game-scene__fieldSection--disabled': tour.isPlayerFinishedTheTour }")
         // Answer Field
         .answer-field
           Popover.answer-field-max-lives(
@@ -52,7 +44,7 @@
             spellcheck="false"
             autocomplete="off"
             :maxlength="ANSWER_CHAR_LENGTH"
-            :disabled="tour.maxLives <= 0"
+            :disabled="tour.isPlayerFinishedTheTour"
             @input="handleAnswerField"
             @focus="answer.isFocused = true"
             @blur="answer.isFocused = false"
@@ -68,7 +60,7 @@
 
   // Tour Results View
   transition(name="slide-fade")
-    TourModeResultsView(v-if="tour.isEnded" :tour="tour")
+    TourModeResultsView(v-if="tour.isTimeUp" :tour="tour")
 
   // How To Play Dialog
   //HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
@@ -89,11 +81,12 @@
 </template>
 
 <script>
-import { defineComponent, useStore, useFetch, ref, reactive, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, ref, reactive, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
-import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
 import useWs from '@/composables/useWs'
+import textfit from 'textfit'
+import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
 
 export default defineComponent({
   components: {
@@ -114,7 +107,6 @@ export default defineComponent({
       setRootRef,
       answer,
       dialog,
-      questionFitText,
       handleBeforeUnload,
       scrollTop,
       isTouchEnabled,
@@ -125,13 +117,9 @@ export default defineComponent({
       wrongAnimateAnswerField,
       focusToAnswerFieldInput,
       resetAnswerField,
-      soundFx
+      soundFx,
+      questionFitText
     } = useGameScene()
-
-    // Fetch Questions
-    const { fetch, fetchState } = useFetch(async () => {
-      await store.dispatch('unlimited/fetchQuestions')
-    })
 
     const tour = reactive({
       question: null,
@@ -141,7 +129,8 @@ export default defineComponent({
       },
       maxLives: 3,
       waitingNextSeconds: 10,
-      isEnded: false,
+      isTimeUp: false,
+      isPlayerFinishedTheTour: false,
       popover: {
         maxLives: {
           isOpen: false
@@ -149,10 +138,42 @@ export default defineComponent({
       }
     })
 
+    watch(
+      () => tour.question,
+      newQuestion => {
+        if (newQuestion) {
+          nextTick(() => {
+            questionFitText({ originalContent: newQuestion.question })
+          })
+        }
+      },
+      { deep: true }
+    )
+
+    const handleKeyUp = event => {
+      const activeElement = document.activeElement
+      const isInputFocused =
+        activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable)
+
+      if (!isInputFocused) {
+        const pressedKey = event.key
+
+        // Only process single character keys (excluding special keys)
+        if (pressedKey && pressedKey.length === 1) {
+          focusToAnswerFieldInput()
+          // After focusing, add the pressed character to the input
+          answer.field = pressedKey + answer.field
+        } else {
+          // Only focus for special keys
+          focusToAnswerFieldInput()
+        }
+      }
+    }
+
     onMounted(() => {
       setRootRef(rootRef.value)
 
-      window.addEventListener('keyup', event => handleTabKey(event))
+      window.addEventListener('keyup', handleKeyUp)
 
       window.addEventListener('resize', questionFitText)
       window.addEventListener('beforeunload', event => handleBeforeUnload(event))
@@ -168,6 +189,8 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
+      window.removeEventListener('keyup', handleKeyUp)
+
       window.removeEventListener('resize', questionFitText)
       window.removeEventListener('beforeunload', handleBeforeUnload)
 
@@ -185,7 +208,10 @@ export default defineComponent({
     }
 
     const onQuestionGot = ({ question }) => {
-      tour.question = question
+      tour.question = {
+        letter: question.letter,
+        question: question.question
+      }
     }
 
     const onTimeUpdate = ({ time }) => {
@@ -194,11 +220,11 @@ export default defineComponent({
     }
 
     const onTimeUp = ({ correctAnswer }) => {
-      tour.isEnded = true
+      tour.isTimeUp = true
       tour.correctAnswer = correctAnswer
-      tour.countdown.seconds = 30
-      tour.countdown.percentage = 0
-      tour.maxLives = 3
+
+      // Focus out of all focused inputs and close the mobile keyboard
+      document.activeElement.blur()
 
       resetAnswerField()
     }
@@ -207,10 +233,13 @@ export default defineComponent({
       tour.waitingNextSeconds = Math.floor(time.remaining / 1000)
 
       if (time.remaining <= 1000) {
-        if (tour.isEnded) {
+        if (tour.isTimeUp) {
           setTimeout(() => {
-            tour.isEnded = false
-            focusToAnswerFieldInput()
+            tour.isTimeUp = false
+            tour.isPlayerFinishedTheTour = false
+            tour.countdown.seconds = 30
+            tour.countdown.percentage = 0
+            tour.maxLives = 3
           }, 1000)
         }
       }
@@ -220,11 +249,13 @@ export default defineComponent({
       const { correct, lives, score } = params
 
       if (correct) {
+        tour.isPlayerFinishedTheTour = true
+
         Notify({
           message: 'Doğru cevap, lütfen tur bitene kadar bekle',
           color: 'var(--color-text-04)',
           background: 'var(--color-success-01)',
-          duration: 30000
+          duration: 10000
         })
 
         soundFx.correct.play()
@@ -244,11 +275,13 @@ export default defineComponent({
       tour.maxLives = lives
 
       if (lives <= 0) {
+        tour.isPlayerFinishedTheTour = true
+
         Notify({
           message: 'Tahmin hakkın bitti, lütfen tur bitene kadar bekle',
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
-          duration: 30000
+          duration: 10000
         })
       }
 
@@ -294,8 +327,6 @@ export default defineComponent({
     return {
       rootRef,
       ANSWER_CHAR_LENGTH,
-      fetch,
-      fetchState,
       answer,
       dialog,
       handleAnswerField,

@@ -273,6 +273,7 @@
     @include center(true, false);
 
     &--disabled {
+      opacity: 0.5;
       user-select: none;
       pointer-events: none;
     }

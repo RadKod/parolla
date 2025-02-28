@@ -253,6 +253,7 @@ export default () => {
         questionFitText()
       } else {
         document.querySelector('html').classList.remove('osk')
+        questionFitText()
       }
     }
   )
@@ -268,14 +269,6 @@ export default () => {
 
   const handleTabKey = event => {
     event.preventDefault()
-
-    if (activeGameMode.value === gameModeKeyEnum.TOUR) {
-      if (!answer.isFocused) {
-        focusToAnswerFieldInput()
-      }
-
-      return false
-    }
 
     if (!isGameStarted.value) return false
 
@@ -572,11 +565,23 @@ export default () => {
     }
   }
 
-  const questionFitText = async () => {
+  const questionFitText = async (params = {}) => {
+    const { originalContent = '' } = params
+
     await nextTick()
 
-    if (!!rootRef.value.querySelectorAll('.question--active')[0]) {
-      textfit(rootRef.value.querySelectorAll('.question--active')[0], {
+    const activeQuestion = rootRef.value.querySelectorAll('.question--active')[0]
+
+    if (!activeQuestion) return
+
+    const titleElement = activeQuestion.querySelector('.question__title')
+
+    if (titleElement) {
+      if (originalContent.length > 0) {
+        titleElement.innerHTML = originalContent
+      }
+
+      textfit(activeQuestion, {
         minFontSize: 16,
         maxFontSize: 30
       })
