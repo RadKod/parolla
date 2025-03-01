@@ -11,6 +11,8 @@
     height: 100%;
 
     .van-progress {
+      background-color: var(--color-ui-03);
+
       &__portion {
         transition: width 0.3s ease-in-out;
       }

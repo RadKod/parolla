@@ -29,8 +29,8 @@
       li.app-header-nav__item.app-header-nav__item--tourModeOnline.me-3(@click="openTourModeOnlineDialog")
         AppIcon(name="tabler:users-group" :label="formatMillions(876)")
 
-    li.app-header-nav__item(@click="toggleMenuDialog")
-      LazyPlayerAvatar(:user="user")
+    li.app-header-nav__item.app-header-nav__item--menu(@click="toggleMenuDialog")
+      LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
 
   // How To Play Dialog
   LazyHowToPlayDialog(

@@ -18,7 +18,7 @@
           span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
-          span.intro-scene-mode-list-item__icon 📅
+          AppIcon.intro-scene-mode-list-item__icon(name="noto:calendar" :width="24" :height="24")
 
       Button.intro-scene-mode-list-item(
         size="large"
@@ -30,14 +30,14 @@
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
-          span.intro-scene-mode-list-item__icon 🔁
+          AppIcon.intro-scene-mode-list-item__icon(name="noto:infinity" :width="24" :height="24")
 
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
         .prepend
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.creator.title') }}
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
-          span.intro-scene-mode-list-item__icon 📝
+          AppIcon.intro-scene-mode-list-item__icon(name="noto:pencil" :width="24" :height="24")
 
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'TourMode-TourModeGame' })")
         .prepend
@@ -48,7 +48,7 @@
 
         .append
           label.intro-scene-mode-list-item__label {{ $t('introScene.modeList.tour.subtitle') }}
-          span.intro-scene-mode-list-item__icon 🔄
+          AppIcon.intro-scene-mode-list-item__icon(name="noto:repeat-button" :width="24" :height="24")
 
     .intro-scene__keywords.d-none
       h3.intro-scene__subtitle {{ $t('introScene.subtitle') }}

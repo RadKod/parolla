@@ -1,5 +1,7 @@
 <template lang="pug">
 .player-avatar(v-if="user")
+  .player-avatar-badge(v-if="isVisitor")
+    AppIcon.player-avatar-badge__icon(name="hugeicons:anonymous" color="#fff" :width="16" :height="16")
   Avatar.player-avatar__avatar(variant="beam" :name="user.username" :size="size")
   span.player-avatar__username(v-if="withUsername") {{ user.username }}
 </template>
@@ -24,6 +26,11 @@ export default defineComponent({
       default: null
     },
     withUsername: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    isVisitor: {
       type: Boolean,
       required: false,
       default: false

@@ -148,7 +148,7 @@ module.exports = {
     [
       '@nuxtjs/color-mode',
       {
-        preference: 'light'
+        preference: 'system'
       }
     ],
     // https://github.com/antfu/unplugin-auto-import
