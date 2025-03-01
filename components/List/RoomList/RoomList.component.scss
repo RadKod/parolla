@@ -23,18 +23,29 @@
     }
   }
 
-  .van-cell {
-    $van-cell: '.van-cell';
+  .van-list {
+    .van-cell {
+      $van-cell: '.van-cell';
 
-    margin-bottom: var(--base-m-y);
-    overflow: hidden;
-    border-radius: var(--border-radius-01);
+      margin-bottom: var(--base-m-y);
+      overflow: hidden;
+      border-radius: var(--border-radius-01);
+      box-shadow: var(--box-shadow-02);
+    }
   }
 
   &-item {
     $room-list-item: '.room-list-item';
 
     position: relative;
+
+    &:hover {
+      #{$room-list-item} {
+        &__title {
+          color: var(--color-text-01);
+        }
+      }
+    }
 
     &--ad {
       position: relative;
