@@ -1,4 +1,6 @@
 .login-form {
+  $login-form: '.login-form';
+
   position: relative;
   padding-inline: var(--base-p-x);
   display: grid;
@@ -7,6 +9,26 @@
   align-items: center;
   justify-content: space-between;
   padding-inline-end: 0;
+
+  &--full {
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 0;
+
+    #{$login-form} {
+      &__social-buttons {
+        flex-direction: column;
+      }
+
+      &__social-button {
+        width: 100%;
+
+        &-text {
+          display: block;
+        }
+      }
+    }
+  }
 
   &__title {
     position: relative;
@@ -42,6 +64,10 @@
     border-radius: var(--border-radius-01);
     box-shadow: var(--box-shadow-02);
 
+    &:hover {
+      background-color: var(--color-hover-01);
+    }
+
     #{$van-button} {
       &__text {
         display: flex;
@@ -51,6 +77,15 @@
 
     &-icon {
       position: relative;
+    }
+
+    &-text {
+      position: relative;
+      display: none;
+      margin-inline-start: var(--base-m-x);
+      margin-block-start: $spacer / 1.6;
+
+      @include font-weight-semi-bold;
     }
   }
 }

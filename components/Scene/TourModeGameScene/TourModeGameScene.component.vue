@@ -21,7 +21,7 @@
           strong.question__title {{ tour.question.question }}
 
       // Field Section
-      section.game-scene__fieldSection(:class="{ 'game-scene__fieldSection--disabled': tour.isPlayerFinishedTheTour }")
+      section.game-scene__fieldSection(auth-control :class="{ 'game-scene__fieldSection--disabled': tour.isPlayerFinishedTheTour }")
         // Answer Field
         .answer-field
           Popover.answer-field-max-lives(
@@ -43,6 +43,7 @@
             tabindex="-1"
             spellcheck="false"
             autocomplete="off"
+            :readonly="!$auth.loggedIn"
             :maxlength="ANSWER_CHAR_LENGTH"
             :disabled="tour.isPlayerFinishedTheTour"
             @input="handleAnswerField"
@@ -61,9 +62,6 @@
   // Tour Results View
   transition(name="slide-fade")
     TourModeResultsView(v-if="tour.isTimeUp" :tour="tour")
-
-  // How To Play Dialog
-  //HowToPlayDialog(v-if="!isGameOver" :isOpen="dialog.howToPlay.isOpen" @closed="startGame")
 
   // Interstital Ad Dialog
   InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
@@ -85,7 +83,6 @@ import { defineComponent, useStore, ref, reactive, onMounted, onUnmounted, compu
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
 import useWs from '@/composables/useWs'
-import textfit from 'textfit'
 import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
 
 export default defineComponent({

@@ -1,0 +1,77 @@
+.auth-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--tablet);
+
+  #{$van-dialog} {
+    &__content {
+      position: relative;
+      display: block;
+      max-height: 75vh;
+      padding: var(--base-p-y) calc(var(--base-p-x) * 1.8);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  label {
+    display: block;
+    margin: var(--base-m-y) 0;
+
+    a {
+      display: flex;
+      color: var(--color-link-01);
+    }
+  }
+
+  &__cover {
+    width: 100%;
+    height: 20vh;
+    object-fit: contain;
+    object-position: center;
+    border-radius: var(--base-border-radius);
+    margin-block: var(--base-m-y);
+
+    @include media-breakpoint-up(tablet) {
+      transform: scale(1.5);
+    }
+
+    @include media-breakpoint-down(tablet) {
+      height: 30vh;
+      object-fit: cover;
+    }
+
+    @include media-breakpoint-down(mobile) {
+      height: 20vh;
+      object-fit: cover;
+    }
+  }
+
+  &-list {
+    position: relative;
+    top: 0;
+    padding: var(--base-p-y) 0;
+    text-align: center;
+    padding-block-end: calc(var(--base-p-y) * 2);
+
+    &__title {
+      display: block;
+      color: var(--color-text-01);
+      font-size: var(--font-size-text-6);
+      margin-block-end: var(--base-m-y);
+
+      @include font-weight-semi-bold;
+    }
+
+    &-item {
+      position: relative;
+      margin-block: $spacer * 2;
+      color: var(--color-text-02);
+    }
+  }
+
+  .login-form {
+    position: relative;
+  }
+}

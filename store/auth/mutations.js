@@ -13,5 +13,9 @@ export default {
 
   LOGOUT(state) {
     this.$auth.logout()
+  },
+
+  SET_AUTH_DIALOG_IS_OPEN(state, isOpen) {
+    state.dialog.auth.isOpen = isOpen
   }
 }

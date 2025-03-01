@@ -230,7 +230,10 @@
     }
 
     &__title {
+      display: block;
+      width: 100%;
       color: var(--color-text-01);
+
       @include font-weight-bold;
     }
 

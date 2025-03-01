@@ -203,6 +203,11 @@ export default {
     },
     tourModeOnline: {
       title: 'Tur'
+    },
+    auth: {
+      title: 'Giriş yap',
+      login: 'Giriş yap',
+      register: 'Kayıt ol'
     }
   },
   clipboard: {
@@ -395,7 +400,8 @@ export default {
   },
   chat: {
     chat: 'Sohbet',
-    online: 'Online'
+    online: 'Online',
+    messagesEmpty: 'Henüz mesaj yok'
   },
   tourMode: {
     onlineUsers: 'Online oyuncular',

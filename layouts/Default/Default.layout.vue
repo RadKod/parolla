@@ -22,10 +22,13 @@
   .layout__ad.layout__ad--right
     // image_vertical_flex_right
     AppAd(:data-ad-slot="8500032812")
+
+  // Auth Dialog
+  AuthDialog
 </template>
 
 <script>
-import { defineComponent, onMounted, onBeforeUnmount, ref, reactive } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, onBeforeUnmount, reactive, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
@@ -56,6 +59,7 @@ export default defineComponent({
       if ('visualViewport' in window) {
         window.visualViewport.addEventListener('resize', setVisualViewportHeight)
       }
+
       window.addEventListener('resize', setVisualViewportHeight)
       window.addEventListener('scroll', setVisualViewportHeight)
     })
@@ -64,6 +68,7 @@ export default defineComponent({
       if ('visualViewport' in window) {
         window.visualViewport.removeEventListener('resize', setVisualViewportHeight)
       }
+
       window.removeEventListener('resize', setVisualViewportHeight)
       window.removeEventListener('scroll', setVisualViewportHeight)
     })

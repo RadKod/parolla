@@ -1,16 +1,20 @@
 <template lang="pug">
 .chat
   .chat__messages(ref="messagesRef")
-    .chat__message(v-for="message in chatMessages" :key="message.timestamp" :class="{ 'chat__message--system': message.isSystem }")
-      .chat__message-avatar
-        PlayerAvatar(v-if="!message.isSystem" :user="message.playerName" :size="24")
-      .chat__message-content
-        .chat__message-sender {{ message.playerName }}:
-        .chat__message-text {{ message.message }}
-        .chat__message-time {{ isoToHumanDate(message.timestamp) }}
+    template(v-if="chatMessages?.length > 0")
+      .chat__message(v-for="message in chatMessages" :key="message.timestamp" :class="{ 'chat__message--system': message.isSystem }")
+        .chat__message-avatar
+          PlayerAvatar(v-if="!message.isSystem" :user="message.playerName" :size="24")
+        .chat__message-content
+          .chat__message-sender {{ message.playerName }}:
+          .chat__message-text {{ message.message }}
+          .chat__message-time {{ isoToHumanDate(message.timestamp) }}
 
-  .chat__input
-    Field(v-model="messageText" placeholder="Type a message..." :border="false" @keypress.enter="sendMessage")
+    template(v-else)
+      Empty(:description="$t('chat.messagesEmpty')")
+
+  .chat__input(auth-control)
+    Field(v-model="messageText" placeholder="Type a message..." :border="false" :readonly="!$auth.loggedIn" @keypress.enter="sendMessage")
       template(#button)
         Button.chat__button.chat__button--send(
           color="var(--color-brand-02)"
@@ -24,7 +28,7 @@
 
 <script>
 import { defineComponent, ref, computed, useStore, onMounted, onUnmounted } from '@nuxtjs/composition-api'
-import { Field, Button } from 'vant'
+import { Field, Button, Empty } from 'vant'
 import { wsTypeEnum } from '@/enums'
 import useFormatter from '@/composables/useFormatter'
 
@@ -32,7 +36,8 @@ export default defineComponent({
   name: 'Chat',
   components: {
     Field,
-    Button
+    Button,
+    Empty
   },
   setup(_, { emit }) {
     const store = useStore()

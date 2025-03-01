@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useStore, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, useContext, useRouter, onMounted } from '@nuxtjs/composition-api'
 const { getQuery } = require('ufo')
 
 export default defineComponent({
@@ -14,6 +14,7 @@ export default defineComponent({
     const query = getQuery(window.location.href)
     const context = useContext()
     const store = useStore()
+    const router = useRouter()
 
     const user = store.getters['auth/user']
 
@@ -37,7 +38,13 @@ export default defineComponent({
       store.commit('auth/SET_USER', user)
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      const redirectPath = context.$cookies.get('authNextRedirect')
+
+      if (redirectPath) {
+        await router.push(redirectPath)
+      }
+
       runGoogleRegister()
     })
   }
