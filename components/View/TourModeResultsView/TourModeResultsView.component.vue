@@ -11,28 +11,7 @@
       span.tour-mode-results-view-correct-answer__title {{ $t('tourMode.results.correctAnswer') }}
       span.tour-mode-results-view-correct-answer__answer {{ tour.correctAnswer }}
 
-    .top-scorer-list
-      .top-scorer-list-item(v-for="(scorer, index) in scorers.slice(0, 3)" :key="scorer.username" :data-rank="index + 1")
-        PlayerAvatar(with-username :size="48" :user="scorer")
-
-        .top-scorer-list-item-score(v-if="scorer.score")
-          span.top-scorer-list-item-score__value
-            strong +{{ scorer.score }}
-            | puan
-
-        .top-scorer-list-item-time(v-if="scorer.time")
-          AppIcon.top-scorer-list-item-time__icon(name="tabler:clock" :width="16" :height="16")
-          span.top-scorer-list-item-time__value
-            strong {{ scorer.time.split(':')[0] }}
-            | :
-            strong {{ scorer.time.split(':')[1] }}
-            | .
-            sub {{ scorer.time.split(':')[2] }}
-
-        .top-scorer-list-item-rank
-          .top-scorer-list-item-rank__number {{ index + 1 }}
-
-    TourModeUserList(:items="scorers.slice(3)")
+    Leaderboard(:scorers="scorers")
 
     Button.tour-mode-results-view-waiting(loading :loading-text="`Yeni tur başlamadan önce ${tour.waitingNextSeconds} saniye bekleyiniz.`")
 </template>
@@ -58,7 +37,7 @@ export default defineComponent({
       ...Array.from({ length: 10 }, (_, index) => ({
         username: `gamer${5135 + index}`,
         fingerprint: 5616516531 + index,
-        score: 10 - index,
+        score: `+${10 - index}`,
         time: `00:09:${992 + index}`,
         rank: index + 1
       }))

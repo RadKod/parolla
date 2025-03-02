@@ -13,7 +13,6 @@ Dialog.dialog.menu-dialog(
   // Auth
   UsernameEditForm.mb-base
 
-  // Login Form
   Button.menu-dialog__logoutButton(v-if="$auth.loggedIn && $auth.user" @click="$store.dispatch('auth/logout')") Çıkış Yap
   LoginForm(v-else)
 
@@ -42,6 +41,7 @@ Dialog.dialog.menu-dialog(
       @click.native="$emit('clickedHowToPlay')"
     )
     Cell.menu-dialog-nav__item(
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
       icon="bar-chart-o"
       size="large"
       is-link
@@ -98,6 +98,7 @@ Dialog.dialog.menu-dialog(
 <script>
 import { defineComponent, useRoute, useStore, useContext, ref, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
+import { gameModeKeyEnum } from '@/enums'
 import { Dialog, CellGroup, Cell, Switch, Toast, Button } from 'vant'
 
 export default defineComponent({
@@ -152,13 +153,14 @@ export default defineComponent({
     )
 
     const toggleDarkTheme = isChecked => {
-      if (isChecked) {
-        $colorMode.preference = 'dark'
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#161616')
-      } else {
-        $colorMode.preference = 'light'
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#eeeeee')
-      }
+      $colorMode.preference = isChecked ? 'dark' : 'light'
+      // Theme color'ı hemen güncelle
+      const themeColor = isChecked ? '#161616' : '#eeeeee'
+      const statusBarStyle = isChecked ? 'black' : 'default'
+
+      // Meta etiketlerini güncelle
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', statusBarStyle)
     }
 
     const isActiveSoundFx = computed(() => store.getters['app/isActiveSoundFx'])
@@ -227,6 +229,7 @@ export default defineComponent({
     }
 
     return {
+      gameModeKeyEnum,
       activeGameMode,
       state,
       isDark,

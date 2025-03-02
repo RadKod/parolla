@@ -33,19 +33,9 @@ module.exports = {
       content: 'RadKod'
     },
     {
-      hid: 'theme-color',
-      name: 'theme-color',
-      content: '#eee'
-    },
-    {
       hid: 'apple-mobile-web-app-capable',
       name: 'apple-mobile-web-app-capable',
       content: 'yes'
-    },
-    {
-      hid: 'apple-mobile-web-app-status-bar-style',
-      name: 'apple-mobile-web-app-status-bar-style',
-      content: 'black-translucent'
     },
     { name: 'Classification', content: 'Game' },
     { name: 'Rating', content: 'General' },

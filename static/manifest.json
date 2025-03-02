@@ -4,9 +4,7 @@
   "description": "Kelime oyunu",
   "lang": "tr-TR",
   "start_url": "https://parolla.app",
-  "background_color": "#eeeeee",
   "display": "standalone",
-  "theme_color": "#eeeeee",
   "icons": [
     {
       "src": "/meta/icon/android-icon-36x36.png",

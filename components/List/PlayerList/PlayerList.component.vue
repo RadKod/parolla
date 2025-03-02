@@ -1,27 +1,27 @@
 <template lang="pug">
-.tour-mode-user-list
-  Cell.tour-mode-user-list-item(v-for="item in items" :key="item.username")
+.player-list
+  Cell.player-list-item(v-for="item in items" :key="item.username")
     template(#title)
-      .tour-mode-user-list-item-user
-        strong.tour-mode-user-list-item-user__username
+      .player-list-item-user
+        strong.player-list-item-user__username
           PlayerAvatar(with-username :size="20" :user="item")
 
-      .tour-mode-user-list-item-time(v-if="item.time")
-        AppIcon.tour-mode-user-list-item-time__icon(name="tabler:clock" :width="16" :height="16")
-        span.tour-mode-user-list-item-time__value
+      .player-list-item-time(v-if="item.time")
+        AppIcon.player-list-item-time__icon(name="tabler:clock" :width="16" :height="16")
+        span.player-list-item-time__value
           strong {{ item.time.split(':')[0] }}
           | :
           strong {{ item.time.split(':')[1] }}
           | .
           sub {{ item.time.split(':')[2] }}
 
-      .tour-mode-user-list-item-score(v-if="item.score")
-        span.tour-mode-user-list-item-score__value
-          strong +{{ item.score }}
+      .player-list-item-score(v-if="item.score")
+        span.player-list-item-score__value
+          strong {{ item.score }}
           label puan
 
-      .tour-mode-user-list-item-score(v-if="item.globalScore")
-        span.tour-mode-user-list-item-score__value
+      .player-list-item-score(v-if="item.globalScore")
+        span.player-list-item-score__value
           strong {{ item.globalScore }}
           label puan
 </template>
@@ -31,7 +31,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import { Cell } from 'vant'
 
 export default defineComponent({
-  name: 'TourModeUserList',
+  name: 'PlayerList',
   components: {
     Cell
   },
@@ -53,4 +53,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" src="./TourModeUserList.component.scss"></style>
+<style lang="scss" src="./PlayerList.component.scss"></style>

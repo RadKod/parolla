@@ -1,4 +1,4 @@
-.tour-mode-user-list {
+.player-list {
   position: relative;
   display: block;
   max-height: 50vh;
@@ -18,7 +18,7 @@
   }
 
   &-item {
-    $tour-mode-user-list-item: '.tour-mode-user-list-item';
+    $player-list-item: '.player-list-item';
 
     position: relative;
     display: block;

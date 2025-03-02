@@ -1,0 +1,48 @@
+<template lang="pug">
+.leaderboard
+  strong.leaderboard__title(v-if="title") {{ title }}
+
+  .top-scorer-list
+    .top-scorer-list-item(v-for="(scorer, index) in scorers.slice(0, 3)" :key="scorer.username" :data-rank="index + 1")
+      PlayerAvatar(with-username :size="48" :user="scorer")
+
+      .top-scorer-list-item-score(v-if="scorer.score")
+        span.top-scorer-list-item-score__value
+          strong {{ scorer.score }}
+          | puan
+
+      .top-scorer-list-item-time(v-if="scorer.time")
+        AppIcon.top-scorer-list-item-time__icon(name="tabler:clock" :width="16" :height="16")
+        span.top-scorer-list-item-time__value
+          strong {{ scorer.time.split(':')[0] }}
+          | :
+          strong {{ scorer.time.split(':')[1] }}
+          | .
+          sub {{ scorer.time.split(':')[2] }}
+
+      .top-scorer-list-item-rank
+        .top-scorer-list-item-rank__number {{ index + 1 }}
+
+  PlayerList(v-if="scorers.length > 3" :items="scorers.slice(3)")
+</template>
+
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'Leaderboard',
+  props: {
+    title: {
+      type: String,
+      required: false,
+      default: null
+    },
+    scorers: {
+      type: Array,
+      required: true
+    }
+  }
+})
+</script>
+
+<style lang="scss" src="./Leaderboard.component.scss"></style>

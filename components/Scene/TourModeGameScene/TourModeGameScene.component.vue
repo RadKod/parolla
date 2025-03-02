@@ -61,7 +61,7 @@
 
   // Tour Results View
   transition(name="slide-fade")
-    TourModeResultsView(v-if="tour.isTimeUp" :tour="tour")
+    TourModeResultsView(v-if="true" :tour="tour")
 
   // Interstital Ad Dialog
   InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
@@ -74,7 +74,7 @@
     template(#content-prepend)
       .section-title Son cevaplar
       .last-answers
-        TourModeUserList
+        PlayerList
       .section-title Sohbet
 </template>
 

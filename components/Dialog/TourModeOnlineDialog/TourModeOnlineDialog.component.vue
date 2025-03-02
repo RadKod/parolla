@@ -28,7 +28,7 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
           AppIcon.stats-dialog-tab-title__icon(name="tabler:users-group" :width="20" :height="20")
           span.stats-dialog-tab-title__value {{ $t('tourMode.onlineUsers') }}
 
-      TourModeUserList
+      PlayerList
 
     // Last answers Tab
     Tab(name="last-answers")
@@ -37,7 +37,7 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
           AppIcon.stats-dialog-tab-title__icon(name="tabler:pencil-question" :width="20" :height="20")
           span.stats-dialog-tab-title__value Son cevaplar
 
-      TourModeUserList
+      PlayerList
 </template>
 
 <script>
