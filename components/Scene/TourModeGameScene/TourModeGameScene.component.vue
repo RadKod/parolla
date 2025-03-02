@@ -61,7 +61,7 @@
 
   // Tour Results View
   transition(name="slide-fade")
-    TourModeResultsView(v-if="true" :tour="tour")
+    TourModeResultsView(v-if="tour.isTimeUp" :tour="tour")
 
   // Interstital Ad Dialog
   InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
