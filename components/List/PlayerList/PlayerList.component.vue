@@ -1,6 +1,6 @@
 <template lang="pug">
 .player-list
-  Cell.player-list-item(v-for="item in items" :key="item.username")
+  Cell.player-list-item(v-for="item in items" :key="item.username" :class="[answerStatusClass(item.isCorrect)]")
     template(#title)
       .player-list-item-user
         strong.player-list-item-user__username
@@ -20,7 +20,7 @@
           strong {{ item.score }}
           label puan
 
-      .player-list-item-score(v-if="item.globalScore")
+      .player-list-item-score(v-if="item.globalScore !== null || item.globalScore !== undefined")
         span.player-list-item-score__value
           strong {{ item.globalScore }}
           label puan
@@ -49,7 +49,15 @@ export default defineComponent({
       ]
     }
   },
-  setup() {}
+  setup() {
+    const answerStatusClass = isCorrect => {
+      return isCorrect ? 'player-list-item--correct' : 'player-list-item--wrong'
+    }
+
+    return {
+      answerStatusClass
+    }
+  }
 })
 </script>
 

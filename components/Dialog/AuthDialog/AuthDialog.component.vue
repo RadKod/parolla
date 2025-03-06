@@ -11,8 +11,6 @@ Dialog.dialog.auth-dialog(
   @closed="onClosed"
   @opened="$emit('opened')"
 )
-  img.auth-dialog__cover(src="/img/elements/loginwall.svg" draggable="false")
-
   ul.auth-dialog-list
     strong.auth-dialog-list__title Giriş yaparak
 

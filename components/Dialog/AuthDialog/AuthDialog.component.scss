@@ -5,6 +5,10 @@
   max-width: var(--tablet);
 
   #{$van-dialog} {
+    &__header {
+      display: none;
+    }
+
     &__content {
       position: relative;
       display: block;
@@ -25,35 +29,13 @@
     }
   }
 
-  &__cover {
-    width: 100%;
-    height: 20vh;
-    object-fit: contain;
-    object-position: center;
-    border-radius: var(--base-border-radius);
-    margin-block: var(--base-m-y);
-
-    @include media-breakpoint-up(tablet) {
-      transform: scale(1.5);
-    }
-
-    @include media-breakpoint-down(tablet) {
-      height: 30vh;
-      object-fit: cover;
-    }
-
-    @include media-breakpoint-down(mobile) {
-      height: 20vh;
-      object-fit: cover;
-    }
-  }
-
   &-list {
     position: relative;
     top: 0;
-    padding: var(--base-p-y) 0;
     text-align: center;
-    padding-block-end: calc(var(--base-p-y) * 2);
+    padding-block-start: calc(var(--base-p-y) * 2);
+    padding-block-end: calc(var(--base-p-y) * 4);
+    padding-inline: 0;
 
     &__title {
       display: block;

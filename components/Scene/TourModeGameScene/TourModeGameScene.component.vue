@@ -74,7 +74,7 @@
     template(#content-prepend)
       .section-title Son cevaplar
       .last-answers
-        PlayerList
+        PlayerList(:items="tour.recentAnswers")
       .section-title Sohbet
 </template>
 
@@ -128,6 +128,8 @@ export default defineComponent({
       waitingNextSeconds: 10,
       isTimeUp: false,
       isPlayerFinishedTheTour: false,
+      recentAnswers: [],
+      roundScores: [],
       popover: {
         maxLives: {
           isOpen: false
@@ -295,8 +297,40 @@ export default defineComponent({
       answer.field = $event.target.value
     }
 
+    const onRecentAnswers = ({ answers }) => {
+      const mappedAnswers = answers.map(answer => ({
+        username: answer.playerName,
+        globalScore: answer.totalScore,
+        isCorrect: answer.isCorrect
+      }))
+
+      tour.recentAnswers = mappedAnswers
+    }
+
+    const formatTimestamp = ms => {
+      if (ms === null || ms === undefined) return '00:00:000'
+
+      const minutes = Math.floor(ms / 60000)
+      const seconds = Math.floor((ms % 60000) / 1000)
+      const milliseconds = ms % 1000
+
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`
+    }
+
+    const onRoundScores = ({ scores }) => {
+      const mappedScores = scores.map(scorer => ({
+        username: scorer.playerName,
+        score: `+${scorer.baseScore}`,
+        time: formatTimestamp(scorer.responseTime),
+        attemptCount: scorer.attemptCount,
+        rank: scorer.rank
+      }))
+
+      tour.roundScores = mappedScores
+    }
+
     ws.onmessage = data => {
-      const { type, question, correctAnswer, time, correct, lives, score } = JSON.parse(data.data)
+      const { type, question, correctAnswer, time, correct, lives, score, answers, scores } = JSON.parse(data.data)
 
       if (type === wsTypeEnum.TOUR_QUESTION) {
         onQuestionGot({ question })
@@ -316,6 +350,14 @@ export default defineComponent({
 
       if (type === wsTypeEnum.TOUR_ANSWER_RESULT) {
         onAnswerResult({ correct, lives, score })
+      }
+
+      if (type === wsTypeEnum.TOUR_RECENT_ANSWERS) {
+        onRecentAnswers({ answers })
+      }
+
+      if (type === wsTypeEnum.ROUND_SCORES) {
+        onRoundScores({ scores })
       }
     }
 

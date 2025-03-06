@@ -6,5 +6,7 @@ export default Object.freeze({
   TOUR_TIME_UP: 'time_up',
   TOUR_WAITING_NEXT: 'waiting_next',
   TOUR_ANSWER: 'answer',
-  TOUR_ANSWER_RESULT: 'answer_result'
+  TOUR_ANSWER_RESULT: 'answer_result',
+  TOUR_RECENT_ANSWERS: 'recent_answers',
+  ROUND_SCORES: 'round_scores'
 })

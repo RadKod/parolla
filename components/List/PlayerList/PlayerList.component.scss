@@ -24,6 +24,14 @@
     display: block;
     counter-increment: user-counter;
 
+    &--correct {
+      background-color: var(--color-success-01) !important;
+    }
+
+    &--wrong {
+      background-color: var(--color-danger-01) !important;
+    }
+
     .van-cell__title {
       display: flex;
       flex-wrap: unset;

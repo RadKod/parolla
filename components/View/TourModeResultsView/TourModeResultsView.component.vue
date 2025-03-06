@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, computed } from '@nuxtjs/composition-api'
 import { Button } from 'vant'
 import confetti from 'canvas-confetti'
 
@@ -32,17 +32,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    const scorers = ref([
-      ...Array.from({ length: 10 }, (_, index) => ({
-        username: `gamer${5135 + index}`,
-        fingerprint: 5616516531 + index,
-        score: `+${10 - index}`,
-        time: `00:09:${992 + index}`,
-        rank: index + 1
-      }))
-    ])
-
+  setup(props) {
     const setConfettiCanvas = () => {
       const myCanvas = document.getElementById('canvas-confetti')
 
@@ -72,6 +62,10 @@ export default defineComponent({
       setConfettiCanvas()
 
       explodeConfetti()
+    })
+
+    const scorers = computed(() => {
+      return props.tour.roundScores
     })
 
     return {
