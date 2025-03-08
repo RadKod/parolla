@@ -12,7 +12,8 @@
   }
 
   &__message {
-    display: flex;
+    position: relative;
+    display: inline;
     gap: 12px;
     margin-bottom: 16px;
     margin-inline-end: 16px;
@@ -26,38 +27,49 @@
     }
   }
 
-  &__message-avatar {
-    flex-shrink: 0;
+  .player-avatar {
+    display: inline-flex;
+    float: left;
+    margin-inline-end: 8px;
+
+    &__username {
+      color: var(--color-text-01);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 19px;
+    }
   }
 
   &__message-content {
-    display: flex;
-    flex: 1;
+    position: relative;
+    display: inline;
     gap: 8px;
     padding: 4px;
     background-color: transparent;
     border-radius: 8px;
-  }
-
-  &__message-sender {
-    color: var(--color-text-01);
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 19px;
+    inset-block-start: -20px;
   }
 
   &__message-text {
     color: var(--color-text-02);
     font-size: 14px;
-    line-height: 1.4;
+    line-height: 1.5;
+    text-align: left;
     word-break: break-word;
+
+    &::first-line {
+      line-height: 2;
+    }
   }
 
   &__message-time {
-    margin-block-start: 3px;
-    margin-inline-start: auto;
+    position: relative;
+    display: inline-block;
     color: var(--color-text-03);
     font-size: 12px;
+    margin-inline-start: 4px;
+    margin-inline-end: -4px;
+    margin-block-start: 1px;
   }
 
   &__input {
@@ -92,5 +104,9 @@
         filter: unset !important;
       }
     }
+  }
+
+  .van-empty {
+    opacity: 0.6;
   }
 }

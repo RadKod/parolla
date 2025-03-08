@@ -24,15 +24,33 @@
     display: block;
     counter-increment: user-counter;
 
-    &--correct {
-      background-color: var(--color-success-01) !important;
+    &::before {
+      position: absolute;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      opacity: 0.2;
+      content: '';
+      inset-block-start: 0;
+      inset-inline-start: 0;
     }
 
-    &--wrong {
-      background-color: var(--color-danger-01) !important;
+    &--success {
+      &::before {
+        background-color: var(--color-success-01) !important;
+      }
+    }
+
+    &--danger {
+      &::before {
+        background-color: var(--color-danger-01) !important;
+      }
     }
 
     .van-cell__title {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-wrap: unset;
     }

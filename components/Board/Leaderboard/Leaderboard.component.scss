@@ -220,4 +220,20 @@
       }
     }
   }
+
+  &__empty {
+    .van-empty {
+      &__image {
+        width: auto;
+        height: 25vh;
+        opacity: 0.8;
+        -webkit-user-drag: none;
+      }
+
+      &__description {
+        font-size: var(--font-size-text-8);
+        margin-block-start: $spacer * 6;
+      }
+    }
+  }
 }

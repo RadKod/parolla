@@ -12,19 +12,22 @@
       span.tour-mode-results-view-correct-answer__answer {{ tour.correctAnswer }}
 
     Leaderboard(:scorers="scorers")
+      template(#empty)
+        Empty(image="/img/elements/man-think-illustration.svg" :description="$t('tourMode.results.empty.description')")
 
     Button.tour-mode-results-view-waiting(loading :loading-text="`Yeni tur başlamadan önce ${tour.waitingNextSeconds} saniye bekleyiniz.`")
 </template>
 
 <script>
 import { defineComponent, onMounted, computed } from '@nuxtjs/composition-api'
-import { Button } from 'vant'
+import { Button, Empty } from 'vant'
 import confetti from 'canvas-confetti'
 
 export default defineComponent({
   name: 'TourModeResultsView',
   components: {
-    Button
+    Button,
+    Empty
   },
   props: {
     tour: {

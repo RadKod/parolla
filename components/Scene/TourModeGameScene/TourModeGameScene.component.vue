@@ -75,6 +75,8 @@
       .section-title Son cevaplar
       .last-answers
         PlayerList(:items="tour.recentAnswers")
+          template(#empty)
+            Empty(:description="$t('tourMode.lastAnswers.empty.description')")
       .section-title Sohbet
 </template>
 

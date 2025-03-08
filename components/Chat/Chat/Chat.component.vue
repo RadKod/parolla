@@ -3,18 +3,23 @@
   .chat__messages(ref="messagesRef")
     template(v-if="chatMessages?.length > 0")
       .chat__message(v-for="message in chatMessages" :key="message.timestamp" :class="{ 'chat__message--system': message.isSystem }")
-        .chat__message-avatar
-          PlayerAvatar(v-if="!message.isSystem" :user="message.playerName" :size="24")
+        PlayerAvatar(v-if="!message.isSystem" with-username :user="{ username: message.playerName }" :size="24")
+          template(#append)
+            .chat__message-time {{ isoToHumanDate(message.timestamp) }}
         .chat__message-content
-          .chat__message-sender {{ message.playerName }}:
-          .chat__message-text {{ message.message }}
-          .chat__message-time {{ isoToHumanDate(message.timestamp) }}
+          .chat__message-text : {{ message.message }}
 
     template(v-else)
       Empty(:description="$t('chat.messagesEmpty')")
 
   .chat__input(auth-control)
-    Field(v-model="messageText" placeholder="Type a message..." :border="false" :readonly="!$auth.loggedIn" @keypress.enter="sendMessage")
+    Field(
+      v-model="messageText"
+      :placeholder="$t('chat.messageField.placeholder')"
+      :border="false"
+      :readonly="!$auth.loggedIn"
+      @keypress.enter="sendMessage"
+    )
       template(#button)
         Button.chat__button.chat__button--send(
           color="var(--color-brand-02)"

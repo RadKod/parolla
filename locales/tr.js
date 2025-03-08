@@ -401,13 +401,26 @@ export default {
   chat: {
     chat: 'Sohbet',
     online: 'Online',
-    messagesEmpty: 'Henüz mesaj yok'
+    messagesEmpty: 'Henüz mesaj yok',
+    messageField: {
+      placeholder: 'Mesajını buraya yaz...'
+    }
   },
   tourMode: {
     onlineUsers: 'Online oyuncular',
     results: {
       title: 'Tur Sonuçları',
-      correctAnswer: 'Doğru Cevap:'
+      correctAnswer: 'Doğru Cevap:',
+      empty: {
+        description: 'Cevabı kimse bilemedi'
+      }
+    },
+    lastAnswers: {
+      title: 'Son cevaplar',
+      empty: {
+        title: '',
+        description: 'Henüz kimse cevap vermedi'
+      }
     }
   },
   seo: {
