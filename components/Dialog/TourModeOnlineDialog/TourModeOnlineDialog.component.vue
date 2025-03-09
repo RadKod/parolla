@@ -37,25 +37,32 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
           AppIcon.stats-dialog-tab-title__icon(name="tabler:pencil-question" :width="20" :height="20")
           span.stats-dialog-tab-title__value Son cevaplar
 
-      PlayerList
+      PlayerList(:items="tour.recentAnswers")
+        template(#empty)
+          Empty(:description="$t('tourMode.lastAnswers.empty.description')")
 </template>
 
 <script>
 import { defineComponent, reactive, ref, watch, useStore, nextTick } from '@nuxtjs/composition-api'
-import { Dialog, Tabs, Tab, Cell } from 'vant'
+import { Dialog, Tabs, Tab, Cell, Empty } from 'vant'
 
 export default defineComponent({
   components: {
     Dialog: Dialog.Component,
     Tabs,
     Tab,
-    Cell
+    Cell,
+    Empty
   },
   props: {
     isOpen: {
       type: Boolean,
       required: false,
       default: false
+    },
+    tour: {
+      type: Object,
+      required: true
     },
     cancelButtonText: {
       type: String,

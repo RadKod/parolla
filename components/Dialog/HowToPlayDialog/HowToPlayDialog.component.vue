@@ -12,6 +12,7 @@ Dialog.dialog.how-to-play-dialog(
     HowToPlayDailyModeContent(v-if="activeGameMode === gameModeKeyEnum.DAILY")
     HowToPlayUnlimitedModeContent(v-if="activeGameMode === gameModeKeyEnum.UNLIMITED")
     HowToPlayCreatorModeContent(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
+    HowToPlayTourModeContent(v-if="activeGameMode === gameModeKeyEnum.TOUR")
     .how-to-play-dialog__ad
       AppAd(:data-ad-slot="9964323575")
 

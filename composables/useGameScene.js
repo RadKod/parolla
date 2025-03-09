@@ -341,6 +341,8 @@ export default () => {
         wrongSoundFx.mute(false)
         passSoundFx.mute(false)
         halfTimeSoundFx.mute(false)
+        hurryUpSoundFx.mute(false)
+        countdownFinishSoundFx.mute(false)
         radkodEasterEggSoundFx.mute(false)
       } else {
         startSoundFx.mute(true)
@@ -348,6 +350,8 @@ export default () => {
         wrongSoundFx.mute(true)
         passSoundFx.mute(true)
         halfTimeSoundFx.mute(true)
+        hurryUpSoundFx.mute(true)
+        countdownFinishSoundFx.mute(true)
         radkodEasterEggSoundFx.mute(true)
       }
     }
@@ -359,6 +363,8 @@ export default () => {
     wrong: null,
     pass: null,
     halfTime: null,
+    hurryUp: null,
+    countdownFinish: null,
     radkodEasterEgg: null
   })
 
@@ -387,6 +393,17 @@ export default () => {
     mute: isActiveSoundFx.value ? false : true
   })
 
+  const hurryUpSoundFx = new Howl({
+    src: [`${WEB_CDN}/assets/sound/fx/tick-tock.wav`],
+    mute: isActiveSoundFx.value ? false : true,
+    volume: 0.3
+  })
+
+  const countdownFinishSoundFx = new Howl({
+    src: [`${WEB_CDN}/assets/sound/fx/notification1.wav`],
+    mute: isActiveSoundFx.value ? false : true
+  })
+
   const radkodEasterEggSoundFx = new Howl({
     src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`],
     mute: isActiveSoundFx.value ? false : true
@@ -397,6 +414,8 @@ export default () => {
   soundFx.wrong = wrongSoundFx
   soundFx.pass = passSoundFx
   soundFx.halfTime = halfTimeSoundFx
+  soundFx.hurryUp = hurryUpSoundFx
+  soundFx.countdownFinish = countdownFinishSoundFx
   soundFx.radkodEasterEgg = radkodEasterEggSoundFx
 
   const startGame = async () => {

@@ -1,5 +1,5 @@
 <template lang="pug">
-.tour-mode-results-view
+.tour-mode-results-view(ref="rootRef")
   canvas#canvas-confetti.confetti-canvas
 
   .tour-mode-results-view__inner
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
 import { Button, Empty } from 'vant'
 import confetti from 'canvas-confetti'
 
@@ -36,8 +36,10 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const rootRef = ref(null)
+
     const setConfettiCanvas = () => {
-      const myCanvas = document.getElementById('canvas-confetti')
+      const myCanvas = rootRef.value.querySelector('#canvas-confetti')
 
       // Set canvas size and position
       myCanvas.style.position = 'absolute'
@@ -47,6 +49,10 @@ export default defineComponent({
       myCanvas.style.height = '100%'
       myCanvas.style.pointerEvents = 'none'
       myCanvas.style.zIndex = '999'
+    }
+
+    const destroyConfettiCanvas = () => {
+      confetti.reset()
     }
 
     const explodeConfetti = () => {
@@ -63,8 +69,11 @@ export default defineComponent({
 
     onMounted(() => {
       setConfettiCanvas()
-
       explodeConfetti()
+    })
+
+    onUnmounted(() => {
+      destroyConfettiCanvas()
     })
 
     const scorers = computed(() => {
@@ -72,6 +81,7 @@ export default defineComponent({
     })
 
     return {
+      rootRef,
       scorers
     }
   }

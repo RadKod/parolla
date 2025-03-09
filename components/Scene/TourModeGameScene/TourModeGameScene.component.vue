@@ -67,7 +67,7 @@
   InterstitialAdDialog(:cancelButtonText="$t('gameScene.skipAdShowScore')" :isOpen="dialog.interstitialAd.isOpen")
 
   // Tour Mode Online Dialog
-  LazyTourModeOnlineDialog(:isOpen="isTourModeOnlineDialogOpen" @closed="closeTourModeOnlineDialog")
+  LazyTourModeOnlineDialog(:isOpen="isTourModeOnlineDialogOpen" :tour="tour" @closed="closeTourModeOnlineDialog")
 
   // Chat Panel
   ChatPanel
@@ -216,11 +216,23 @@ export default defineComponent({
     }
 
     const onTimeUpdate = ({ time }) => {
-      tour.countdown.seconds = Math.floor(time.remaining / 1000)
-      tour.countdown.percentage = time.percentage
+      const remainingTimeAsSeconds = Math.floor(time.remaining / 1000)
+
+      tour.countdown.seconds = remainingTimeAsSeconds
+      tour.countdown.percentage = time.percentage + 4
+
+      if (remainingTimeAsSeconds === 5) {
+        soundFx.hurryUp.play()
+
+        setTimeout(() => {
+          soundFx.hurryUp.stop()
+        }, 6000)
+      }
     }
 
     const onTimeUp = ({ correctAnswer }) => {
+      soundFx.countdownFinish.play()
+
       tour.isTimeUp = true
       tour.correctAnswer = correctAnswer
 
@@ -241,6 +253,8 @@ export default defineComponent({
             tour.countdown.seconds = 30
             tour.countdown.percentage = 0
             tour.maxLives = 3
+
+            soundFx.start.play()
           }, 1000)
         }
       }
@@ -364,6 +378,10 @@ export default defineComponent({
     }
 
     store.commit('tour/SET_WS', ws)
+
+    onUnmounted(() => {
+      ws.close()
+    })
 
     return {
       rootRef,

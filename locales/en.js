@@ -162,6 +162,12 @@ export default {
         extra:
           'This Q&A set was created by another player <br> There are {questionCount} questions and {questionCount} answers. You can play this mod over and over again.'
       },
+      tour: {
+        extra: `You have to find the answer to the question corresponding to each character, the answer starts with that character.<br><br>
+        For example: <strong>The fruit that fell on Newton's head?</strong> active character in question <strong>A</strong> and the answer is <strong>Apple</strong>.<br><br>
+        <strong>Parolla</strong> tour mode is a game mode where multiple players see the same question in each round and try to give the same correct answer. The question changes each round and players collect points by trying to give the correct answer in each round.<br><br>
+        Each round is <strong>30</strong> seconds and you have <strong>3</strong> chances to give the correct answer each round.`
+      },
       cancelButtonText: 'Close and Play'
     },
     stats: {

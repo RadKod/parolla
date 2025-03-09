@@ -17,6 +17,8 @@ Dialog.dialog.auth-dialog(
     li.auth-dialog-list-item
       span.auth-dialog-list-item__title Tur modunu oyna
     li.auth-dialog-list-item
+      span.auth-dialog-list-item__title Liderlik tablosunda yer al
+    li.auth-dialog-list-item
       span.auth-dialog-list-item__title Kalıcı oyuncu adı al
     li.auth-dialog-list-item
       span.auth-dialog-list-item__title Sohbete katıl

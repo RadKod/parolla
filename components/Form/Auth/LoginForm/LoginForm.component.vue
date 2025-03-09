@@ -10,9 +10,10 @@
       AppIcon.login-form__social-button-icon(name="devicon:google" :width="20" :height="20")
       span.login-form__social-button-text Google ile Giriş Yap
 
-    Button.login-form__social-button.login-form__social-button--apple(native-type="button" @click="handleAppleLogin")
-      AppIcon.login-form__social-button-icon(name="devicon:apple" :width="20" :height="20")
-      span.login-form__social-button-text Apple ile Giriş Yap
+    // Apple login button
+      Button.login-form__social-button.login-form__social-button--apple(native-type="button" @click="handleAppleLogin")
+        AppIcon.login-form__social-button-icon(name="devicon:apple" :width="20" :height="20")
+        span.login-form__social-button-text Apple ile Giriş Yap
 </template>
 
 <script>
