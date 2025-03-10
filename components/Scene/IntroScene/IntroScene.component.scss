@@ -58,16 +58,102 @@
       position: relative;
       display: flex;
       width: 100%;
-      height: 64px;
+      height: auto;
       margin: 0 auto;
       margin-bottom: calc(var(--base-m-y) / 1.2);
-      padding-left: var(--base-p-x);
+      padding-inline: var(--base-p-x);
       color: var(--color-text-02);
       text-align: left;
       background-color: var(--color-ui-02);
       border: 0;
       border-radius: var(--border-radius-01);
       box-shadow: var(--box-shadow-02);
+      padding-block: $spacer * 3;
+
+      &__footer {
+        display: flex;
+        gap: $spacer * 4;
+        align-items: center;
+        padding: 0;
+        box-shadow: none;
+        margin-block-start: $spacer * 4;
+        margin-block-end: 0;
+      }
+
+      &--tour {
+        position: relative;
+
+        .top-scorer {
+          position: relative;
+          display: inline-flex;
+          flex-wrap: wrap;
+          align-items: center;
+          overflow: hidden;
+          font-size: var(--font-size-text-9);
+          background-color: color-mix(in oklab, var(--color-warning-02), transparent 90%);
+          border-radius: calc(var(--border-radius-01) / 2);
+          box-shadow: var(--box-shadow-03);
+          margin-block: $spacer * 3;
+          margin-block-end: $spacer * 3;
+
+          @include font-weight-medium;
+
+          &__content {
+            position: relative;
+            display: flex;
+            height: 32px;
+            padding: $spacer * 2 $spacer * 3;
+          }
+
+          &__avatar {
+            height: 32px;
+            padding: $spacer * 2 $spacer * 3;
+            border-left: 1px solid
+              light-dark(
+                color-mix(in oklab, var(--color-warning-02), transparent 75%),
+                color-mix(in oklab, var(--color-warning-02), transparent 95%)
+              );
+          }
+
+          &__icon {
+            margin-inline-end: $spacer * 2;
+          }
+        }
+
+        .play-now-button {
+          height: 36px;
+          color: #fff;
+          background: linear-gradient(180deg, #ff7878 0%, #ff4d4d 100%);
+          border: 0;
+          border-radius: var(--border-radius-01);
+        }
+
+        .avatar-group {
+          display: flex;
+          align-items: center;
+
+          .player-avatar {
+            margin-inline: -6px;
+
+            &__avatar {
+              border: 2px solid light-dark(var(--color-border-01), #888);
+              border-radius: 100%;
+            }
+
+            @for $i from 1 through 4 {
+              &:nth-child(#{$i}) {
+                z-index: #{5 - $i};
+              }
+            }
+          }
+
+          &__moreCount {
+            margin-inline-start: 16px;
+
+            @include font-weight-medium;
+          }
+        }
+      }
 
       .van-button {
         &__content {
@@ -83,8 +169,8 @@
       }
 
       .prepend {
-        display: flex;
-        align-items: center;
+        display: block;
+        margin-inline-start: calc(var(--base-m-x) * 2.5);
       }
 
       .append {
@@ -103,6 +189,17 @@
         opacity: 0.4;
       }
 
+      &-title {
+        padding-block-start: 2px;
+        display: flex;
+        font-size: var(--font-size-text-7);
+      }
+
+      .title-group {
+        display: flex;
+        align-items: center;
+      }
+
       &__label {
         position: relative;
         padding: calc(var(--base-p-y) / 4) calc(var(--base-p-x) / 4);
@@ -115,22 +212,32 @@
       }
 
       &__icon {
-        position: relative;
-        right: var(--base-m-x);
-        margin: 0 var(--base-m-x);
+        position: absolute;
+        top: $spacer * 3;
+        left: var(--base-m-x);
+      }
+
+      &__description {
+        margin: 0;
+        color: var(--color-text-03);
+        font-size: var(--font-size-text-9);
+        margin-block-start: $spacer;
+
+        @include font-weight-medium;
       }
 
       &-liveCount {
         position: relative;
-        display: flex;
+        display: inline-flex;
         gap: 6px;
         align-items: center;
         padding: 4px 8px;
-        font-size: 10px;
+        inset-block-end: 2px;
+        font-size: var(--font-size-text-11);
+        margin-inline-start: $spacer * 3;
         background-color: var(--color-ui-02);
         border-radius: var(--border-radius-01);
         box-shadow: var(--box-shadow-03);
-        margin-inline-start: calc(var(--base-m-x) / 2);
 
         .pulse {
           width: 8px;
