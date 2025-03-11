@@ -51,8 +51,10 @@
 
   &-mode-list {
     position: relative;
+    overflow: hidden;
 
     &-item {
+      $intro-scene-mode-list-item: '.intro-scene-mode-list-item';
       $van-button: '.van-button';
 
       position: relative;
@@ -61,20 +63,21 @@
       height: auto;
       margin: 0 auto;
       margin-bottom: calc(var(--base-m-y) / 1.2);
-      padding-inline: var(--base-p-x);
       color: var(--color-text-02);
       text-align: left;
       background-color: var(--color-ui-02);
       border: 0;
       border-radius: var(--border-radius-01);
       box-shadow: var(--box-shadow-02);
+      padding-inline: var(--base-p-x);
       padding-block: $spacer * 3;
 
       &__footer {
         display: flex;
-        gap: $spacer * 4;
+        gap: $spacer * 7;
         align-items: center;
         padding: 0;
+        background-color: transparent;
         box-shadow: none;
         margin-block-start: $spacer * 4;
         margin-block-end: 0;
@@ -82,31 +85,131 @@
 
       &--tour {
         position: relative;
+        overflow: hidden;
+        color: #fff;
+        background: linear-gradient(to right, #2563eb, #9333ea, #ec4899);
+
+        &::before {
+          position: absolute;
+          z-index: 0;
+          width: 200px;
+          height: 200px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 100%;
+          transform: unset;
+          opacity: 1;
+          content: '';
+          inset-inline-start: -41px;
+          inset-block-start: unset;
+          inset-block-end: -88px;
+        }
+
+        &::after {
+          position: absolute;
+          z-index: 0;
+          width: 200px;
+          height: 200px;
+          background: rgba(168, 85, 247, 0.2);
+          border-radius: 100%;
+          content: '';
+          inset-inline-end: -50px;
+          inset-block-start: -90px;
+        }
+
+        #{$intro-scene-mode-list-item} {
+          &__icon {
+            padding: $spacer * 3;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-color: #e5e7eb;
+            border-radius: calc(var(--border-radius-01) / 2);
+          }
+
+          &-title {
+            color: #fff;
+            padding-inline-start: 64px;
+          }
+
+          &__description {
+            color: #ddd;
+            margin-inline-start: $spacer;
+          }
+
+          &__label {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            min-width: 92px;
+            padding: $spacer * 2 $spacer * 4;
+            color: rgb(17, 24, 39);
+            background-color: #facc15;
+            border-radius: var(--border-radius-01);
+            inset-inline-end: $spacer * 2;
+            inset-block-start: $spacer * 3;
+
+            .app-icon {
+              margin-inline-end: $spacer;
+            }
+          }
+        }
+
+        .prepend {
+          z-index: 2;
+          width: 100%;
+          margin-inline: 0 !important;
+        }
+
+        .live-count {
+          position: relative;
+          display: inline-flex;
+          gap: 6px;
+          align-items: center;
+          width: 100%;
+          padding: 0;
+          font-size: var(--font-size-text-11);
+          background-color: transparent;
+          border-radius: var(--border-radius-01);
+          margin-inline-start: 64px;
+          margin-block-start: $spacer;
+
+          .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: rgb(0, 161, 54);
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+          }
+
+          .count {
+            color: #fff;
+          }
+        }
 
         .top-scorer {
           position: relative;
           display: inline-flex;
           flex-wrap: wrap;
           align-items: center;
+          width: 100%;
           overflow: hidden;
           font-size: var(--font-size-text-9);
-          background-color: color-mix(in oklab, var(--color-warning-02), transparent 90%);
+          background-color: rgba(255, 255, 255, 0.1);
           border-radius: calc(var(--border-radius-01) / 2);
-          box-shadow: var(--box-shadow-03);
-          margin-block: $spacer * 3;
-          margin-block-end: $spacer * 3;
+          backdrop-filter: blur(4px);
+          margin-block: $spacer * 4;
+          margin-block-end: $spacer * 6;
 
           @include font-weight-medium;
 
           &__content {
             position: relative;
             display: flex;
-            height: 32px;
+            align-items: center;
+            height: 40px;
             padding: $spacer * 2 $spacer * 3;
           }
 
           &__avatar {
-            height: 32px;
+            height: 40px;
             padding: $spacer * 2 $spacer * 3;
             border-left: 1px solid
               light-dark(
@@ -121,22 +224,26 @@
         }
 
         .play-now-button {
-          height: 36px;
-          color: #fff;
-          background: linear-gradient(180deg, #ff7878 0%, #ff4d4d 100%);
+          height: 42px;
+          color: var(--color-brand-02);
+          background-color: rgb(255, 255, 255);
           border: 0;
-          border-radius: var(--border-radius-01);
+          border-radius: calc(var(--border-radius-01) / 2);
+          padding-inline: $spacer * 5;
+
+          @include font-weight-semi-bold;
         }
 
         .avatar-group {
           display: flex;
           align-items: center;
+          background-color: transparent;
 
           .player-avatar {
             margin-inline: -6px;
 
             &__avatar {
-              border: 2px solid light-dark(var(--color-border-01), #888);
+              border: 2px solid #ddd;
               border-radius: 100%;
             }
 
@@ -148,6 +255,7 @@
           }
 
           &__moreCount {
+            color: #ddd;
             margin-inline-start: 16px;
 
             @include font-weight-medium;
@@ -174,6 +282,7 @@
       }
 
       .append {
+        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -190,9 +299,9 @@
       }
 
       &-title {
-        padding-block-start: 2px;
         display: flex;
         font-size: var(--font-size-text-7);
+        padding-block-start: 2px;
       }
 
       .title-group {
@@ -225,39 +334,13 @@
 
         @include font-weight-medium;
       }
-
-      &-liveCount {
-        position: relative;
-        display: inline-flex;
-        gap: 6px;
-        align-items: center;
-        padding: 4px 8px;
-        inset-block-end: 2px;
-        font-size: var(--font-size-text-11);
-        margin-inline-start: $spacer * 3;
-        background-color: var(--color-ui-02);
-        border-radius: var(--border-radius-01);
-        box-shadow: var(--box-shadow-03);
-
-        .pulse {
-          width: 8px;
-          height: 8px;
-          background-color: #f00;
-          border-radius: 50%;
-          animation: livePulse 1.5s ease-in-out infinite;
-        }
-
-        .count {
-          color: var(--color-text-02);
-        }
-      }
     }
   }
 }
 
 @keyframes livePulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 120, 120, 0.7);
+    box-shadow: 0 0 0 0 rgb(12, 125, 50);
     transform: scale(1);
   }
 

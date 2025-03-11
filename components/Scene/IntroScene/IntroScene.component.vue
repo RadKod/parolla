@@ -8,13 +8,15 @@
     .intro-scene-mode-list
       Button.intro-scene-mode-list-item.intro-scene-mode-list-item--tour(size="large" :to="localePath({ name: 'TourMode-TourModeGame' })")
         .prepend
-          AppIcon.intro-scene-mode-list-item__icon(name="noto:repeat-button" :width="24" :height="24")
+          AppIcon.intro-scene-mode-list-item__icon(name="tabler:world" color="#fff" :width="24" :height="24")
           span.intro-scene-mode-list-item-title
             | {{ $t('introScene.modeList.tour.title') }}
-            span.intro-scene-mode-list-item-liveCount
-              span.pulse
-              AppIcon.icon(name="tabler:users" :width="16" :height="16")
-              span.count 576 aktif oyuncu
+
+          span.live-count
+            AppIcon.icon(name="tabler:users" :width="16" :height="16")
+            span.count 576 aktif oyuncu
+            span.pulse
+
           .top-scorer
             .top-scorer__content
               AppIcon.top-scorer__icon(name="noto:trophy" :width="16" :height="16")
@@ -22,6 +24,7 @@
                 strong &nbsp; 476 &nbsp;
               | puan
             PlayerAvatar.top-scorer__avatar(with-username :user="$auth.user" :size="22")
+
           p.intro-scene-mode-list-item__description Her tur diğer oyuncularla anlık rekabet
 
           .intro-scene-mode-list-item.intro-scene-mode-list-item__footer
@@ -29,6 +32,11 @@
             .avatar-group
               PlayerAvatar(v-for="i in 5" :name="String(i)")
               .avatar-group__moreCount +572
+
+        .append
+          label.intro-scene-mode-list-item__label
+            AppIcon(name="tabler:sparkles" :width="16" :height="16")
+            | YENİ MOD
 
       Button.intro-scene-mode-list-item(
         size="large"
