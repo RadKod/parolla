@@ -1,3 +1,13 @@
 .main-page {
   position: relative;
+
+  .scene {
+    &__inner {
+      @include media-breakpoint-down(mobile) {
+        height: auto;
+        padding-block-start: 5vh;
+        padding-block-end: 25vh;
+      }
+    }
+  }
 }

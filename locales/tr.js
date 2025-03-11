@@ -47,7 +47,9 @@ export default {
         description: 'Her tur diğer oyuncularla anlık rekabet',
         liveCount: `{count} aktif oyuncu`,
         label: 'YENİ MOD',
-        todaysBestScore: `Günün en iyi skoru {by} tarafından {score} puan`
+        todaysBestScoreByLabel: 'tarafından',
+        todaysBestScoreLabel: 'Bugünün en iyi skoru',
+        todaysBestScore: `{label} {by} {byLabel} {score} puan`
       },
       daily: {
         title: 'GÜNLÜK',

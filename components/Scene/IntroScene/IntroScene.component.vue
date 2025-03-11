@@ -21,8 +21,12 @@
             .top-scorer__content
               AppIcon.top-scorer__icon(name="noto:trophy" :width="16" :height="16")
               i18n(tag="p" path="introScene.modeList.tour.todaysBestScore")
+                template(#label)
+                  label.best-score-label {{ $t('introScene.modeList.tour.todaysBestScoreLabel') }}
                 template(#by)
                   PlayerAvatar.top-scorer__avatar(with-username :user="$auth.user" :size="22")
+                template(#byLabel)
+                  label.by-label {{ $t('introScene.modeList.tour.todaysBestScoreByLabel') }}
                 template(#score)
                   strong &nbsp; 476 &nbsp;
 
