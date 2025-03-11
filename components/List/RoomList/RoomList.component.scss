@@ -38,13 +38,10 @@
     $room-list-item: '.room-list-item';
 
     position: relative;
+    transition: transform 0.1s var(--motion-01);
 
     &:hover {
-      #{$room-list-item} {
-        &__title {
-          color: var(--color-text-01);
-        }
-      }
+      transform: scale(1.02);
     }
 
     &--ad {

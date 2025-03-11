@@ -49,8 +49,13 @@
       border: 0;
       border-radius: var(--border-radius-01);
       box-shadow: var(--box-shadow-02);
+      transition: transform 0.1s var(--motion-01);
 
       @include font-weight-semi-bold;
+
+      &:hover {
+        transform: scale(1.02);
+      }
 
       &__icon {
         position: absolute;
