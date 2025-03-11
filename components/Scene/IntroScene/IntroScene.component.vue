@@ -8,27 +8,28 @@
     .intro-scene-mode-list
       Button.intro-scene-mode-list-item.intro-scene-mode-list-item--tour(size="large" :to="localePath({ name: 'TourMode-TourModeGame' })")
         .prepend
-          AppIcon.intro-scene-mode-list-item__icon(name="tabler:world" color="#fff" :width="24" :height="24")
+          AppIcon.intro-scene-mode-list-item__icon(name="akar-icons:arrow-cycle" color="#fff" :width="24" :height="24")
           span.intro-scene-mode-list-item-title
             | {{ $t('introScene.modeList.tour.title') }}
 
           span.live-count
             AppIcon.icon(name="tabler:users" :width="16" :height="16")
-            span.count 576 aktif oyuncu
+            span.count {{ $t('introScene.modeList.tour.liveCount', { count: 576 }) }}
             span.pulse
 
           .top-scorer
             .top-scorer__content
               AppIcon.top-scorer__icon(name="noto:trophy" :width="16" :height="16")
-              span Günün en iyi skoru
-                strong &nbsp; 476 &nbsp;
-              | puan
-            PlayerAvatar.top-scorer__avatar(with-username :user="$auth.user" :size="22")
+              i18n(tag="p" path="introScene.modeList.tour.todaysBestScore")
+                template(#by)
+                  PlayerAvatar.top-scorer__avatar(with-username :user="$auth.user" :size="22")
+                template(#score)
+                  strong &nbsp; 476 &nbsp;
 
-          p.intro-scene-mode-list-item__description Her tur diğer oyuncularla anlık rekabet
+          p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.tour.description') }}
 
           .intro-scene-mode-list-item.intro-scene-mode-list-item__footer
-            Button.play-now-button Hemen Oyna
+            Button.play-now-button {{ $t('general.playNow') }}
             .avatar-group
               PlayerAvatar(v-for="i in 5" :name="String(i)")
               .avatar-group__moreCount +572
@@ -36,7 +37,7 @@
         .append
           label.intro-scene-mode-list-item__label
             AppIcon(name="tabler:sparkles" :width="16" :height="16")
-            | YENİ MOD
+            | {{ $t('introScene.modeList.tour.label') }}
 
       Button.intro-scene-mode-list-item(
         size="large"
@@ -50,7 +51,7 @@
             a.intro-scene-mode-list-item-title(href="https://parolla.app" :title="$t('introScene.subtitle')" @click.prevent.stop.capture)
               | {{ $t('introScene.modeList.daily.title') }}
             span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
-          p.intro-scene-mode-list-item__description Bugünün soru setini oyna
+          p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.daily.description') }}
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 
@@ -63,7 +64,7 @@
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="noto:infinity" :width="24" :height="24")
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
-          p.intro-scene-mode-list-item__description Sınırsız soru seti
+          p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.unlimited.description') }}
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 
@@ -71,7 +72,7 @@
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="noto:pencil" :width="24" :height="24")
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.creator.title') }}
-          p.intro-scene-mode-list-item__description Diğer oyuncuların oluşturduğu soru setlerini oyna
+          p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.creator.description') }}
         .append
           label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 

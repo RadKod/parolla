@@ -34,26 +34,33 @@ export default {
     filter: 'Filtrele',
     sort: 'Sırala',
     ad: 'Reklam',
-    send: 'Gönder'
+    send: 'Gönder',
+    playNow: 'Hemen Oyna'
   },
   introScene: {
     title: 'Kelime oyunu',
     subtitle: 'Günlük kelime oyunu',
     description: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz',
     modeList: {
-      daily: {
-        title: 'GÜNLÜK',
-        subtitle: 'REKABETÇİ'
-      },
-      unlimited: {
-        title: 'LİMİTSİZ'
-      },
-      creator: {
-        title: 'YARATICI'
-      },
       tour: {
         title: 'TUR',
-        subtitle: 'YENİ 🥳'
+        description: 'Her tur diğer oyuncularla anlık rekabet',
+        liveCount: `{count} aktif oyuncu`,
+        label: 'YENİ MOD',
+        todaysBestScore: `Günün en iyi skoru {by} tarafından {score} puan`
+      },
+      daily: {
+        title: 'GÜNLÜK',
+        subtitle: 'REKABETÇİ',
+        description: 'Bugünün soru setini oyna'
+      },
+      unlimited: {
+        title: 'LİMİTSİZ',
+        description: 'Sınırsız soru seti'
+      },
+      creator: {
+        title: 'YARATICI',
+        description: 'Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       }
     }
   },
