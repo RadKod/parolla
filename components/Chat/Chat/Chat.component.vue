@@ -7,7 +7,10 @@
           template(#append)
             .chat__message-time {{ isoToHumanDate(message.timestamp) }}
         .chat__message-content
-          .chat__message-text : {{ message.message }}
+          .chat__message-text(v-if="message.isSystem")
+            .chat__message-time {{ $t('chat.system') }} - {{ isoToHumanDate(message.timestamp) }}
+            | &nbsp;&nbsp;: &nbsp;{{ message.message }}
+          .chat__message-text(v-else) : {{ message.message }}
 
     template(v-else)
       Empty(:description="$t('chat.messagesEmpty')")

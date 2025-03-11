@@ -398,7 +398,8 @@ export default {
   },
   chat: {
     chat: 'Sohbet',
-    online: 'Online'
+    online: 'Online',
+    system: 'System'
   },
   seo: {
     main: {

@@ -4,13 +4,29 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, onMounted } from '@nuxtjs/composition-api'
 const { getQuery } = require('ufo')
 import { Notify } from 'vant'
+import useWs from '@/composables/useWs'
 
 export default defineComponent({
   layout: 'Default/Default.layout',
   setup() {
+    const ws = useWs()
+    const store = useStore()
+
+    store.commit('tour/SET_WS', ws)
+
+    onMounted(() => {
+      ws.onmessage = data => {
+        const { type, players, totalCount, viewerCount } = JSON.parse(data.data)
+
+        if (type === 'user_list') {
+          store.commit('tour/SET_USER_LIST', { players, totalCount, totalViewers: viewerCount })
+        }
+      }
+    })
+
     const query = getQuery(window.location.href)
 
     if (query.code) {

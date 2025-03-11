@@ -417,6 +417,7 @@ export default {
   chat: {
     chat: 'Sohbet',
     online: 'Online',
+    system: 'Sistem',
     messagesEmpty: 'Henüz mesaj yok',
     messageField: {
       placeholder: 'Mesajını buraya yaz...'
