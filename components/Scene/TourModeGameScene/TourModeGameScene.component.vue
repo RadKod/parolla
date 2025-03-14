@@ -70,18 +70,18 @@
   LazyTourModeOnlineDialog(:isOpen="isTourModeOnlineDialogOpen" :tour="tour" @closed="closeTourModeOnlineDialog")
 
   // Chat Panel
-  ChatPanel
+  ChatPanel(:title="`${$t('chat.chat')} (${userList.totalPlayers})`")
     template(#content-prepend)
-      .section-title Son cevaplar
+      .section-title {{ $t('tourMode.lastAnswers.title') }}
       .last-answers
         PlayerList(:items="tour.recentAnswers")
           template(#empty)
             Empty(:description="$t('tourMode.lastAnswers.empty.description')")
-      .section-title Sohbet
+      .section-title {{ $t('chat.chat') }}
 </template>
 
 <script>
-import { defineComponent, useStore, ref, reactive, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, ref, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
 import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
@@ -99,6 +99,8 @@ export default defineComponent({
   setup() {
     const rootRef = ref(null)
     const store = useStore()
+
+    const userList = computed(() => store.getters['tour/userList'])
 
     const {
       setRootRef,
@@ -192,8 +194,6 @@ export default defineComponent({
     }
 
     const onQuestionGot = ({ question }) => {
-      console.log('onQuestionGot', question)
-
       store.commit('tour/SET_TOUR', {
         question: {
           letter: question.letter,
@@ -397,7 +397,8 @@ export default defineComponent({
       isTouchEnabled,
       isTourModeOnlineDialogOpen,
       closeTourModeOnlineDialog,
-      tour
+      tour,
+      userList
     }
   }
 })

@@ -49,6 +49,10 @@ export default defineComponent({
   },
   setup() {
     const answerStatusClass = isCorrect => {
+      if (isCorrect == null || isCorrect == undefined) {
+        return null
+      }
+
       return isCorrect ? 'player-list-item--success' : 'player-list-item--danger'
     }
 

@@ -26,16 +26,18 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
       template(#title)
         .stats-dialog-tab-title
           AppIcon.stats-dialog-tab-title__icon(name="tabler:users-group" :width="20" :height="20")
-          span.stats-dialog-tab-title__value {{ $t('tourMode.onlineUsers') }}
+          span.stats-dialog-tab-title__value {{ $t('tourMode.onlineUsers') }} ({{ userList.totalPlayers + userList.totalViewers }})
 
-      PlayerList
+      .tour-mode-online-dialog__onlineTab
+        small {{ userList.totalPlayers }} {{ $t('tourMode.player') }}, {{ userList.totalViewers }} {{ $t('tourMode.viewer') }}
+        PlayerList(:items="userList.players")
 
     // Last answers Tab
     Tab(name="last-answers")
       template(#title)
         .stats-dialog-tab-title
           AppIcon.stats-dialog-tab-title__icon(name="tabler:pencil-question" :width="20" :height="20")
-          span.stats-dialog-tab-title__value Son cevaplar
+          span.stats-dialog-tab-title__value {{ $t('tourMode.lastAnswers.title') }}
 
       PlayerList(:items="tour.recentAnswers")
         template(#empty)
@@ -43,7 +45,7 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
 </template>
 
 <script>
-import { defineComponent, reactive, ref, watch, useStore, nextTick } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, ref, watch, useStore, nextTick, computed } from '@nuxtjs/composition-api'
 import { Dialog, Tabs, Tab, Cell, Empty } from 'vant'
 
 export default defineComponent({
@@ -78,6 +80,8 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
     const user = store.getters['auth/user']
+
+    const userList = computed(() => store.getters['tour/userList'])
 
     const state = reactive({
       isOpen: props.isOpen
@@ -118,7 +122,8 @@ export default defineComponent({
       chatRef,
       activeTab,
       onConnectedWs,
-      onChatMessageWs
+      onChatMessageWs,
+      userList
     }
   }
 })

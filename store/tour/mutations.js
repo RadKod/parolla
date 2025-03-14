@@ -7,7 +7,15 @@ export default {
   },
 
   SET_USER_LIST(state, userList) {
-    state.userList.players = userList.players
+    const mappedPlayers = userList.players.map(player => ({
+      id: player.id,
+      username: player.name,
+      avatarUrl: player.avatarUrl,
+      globalScore: player.apiScore,
+      lives: player.lives
+    }))
+
+    state.userList.players = mappedPlayers
     state.userList.totalPlayers = userList.totalCount
     state.userList.totalViewers = userList.totalViewers
   },

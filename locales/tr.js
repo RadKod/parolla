@@ -425,6 +425,8 @@ export default {
   },
   tourMode: {
     onlineUsers: 'Online oyuncular',
+    player: 'Oyuncu',
+    viewer: 'İzleyici',
     results: {
       title: 'Tur Sonuçları',
       correctAnswer: 'Doğru Cevap:',

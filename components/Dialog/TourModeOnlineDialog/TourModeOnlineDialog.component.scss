@@ -19,4 +19,12 @@
       overflow: auto;
     }
   }
+
+  &__onlineTab {
+    small {
+      display: block;
+      padding: $spacer * 4 $spacer * 3;
+      color: var(--color-text-03);
+    }
+  }
 }

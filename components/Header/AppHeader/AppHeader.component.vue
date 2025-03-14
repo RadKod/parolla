@@ -15,7 +15,7 @@
       v-if="activeGameMode === gameModeKeyEnum.TOUR"
       @click="openTourModeOnlineDialog"
     )
-      AppIcon(name="tabler:users-group" :label="formatMillions(876)")
+      AppIcon(name="tabler:users-group" :label="formatMillions(userList.totalPlayers + userList.totalViewers)")
 
     li.app-header-nav__item(v-if="isVisibleHowToPlay" @click="toggleHowToPlayDialog")
       AppIcon(name="tabler:info-circle")
@@ -78,6 +78,8 @@ export default defineComponent({
     const route = useRoute()
     const { localePath } = useContext()
     const store = useStore()
+
+    const userList = computed(() => store.getters['tour/userList'])
 
     const { formatMillions } = useFormatter()
 
@@ -248,7 +250,8 @@ export default defineComponent({
       isVisibleLocaleSwitchButton,
       isVisibleBackButton,
       user,
-      room
+      room,
+      userList
     }
   }
 })

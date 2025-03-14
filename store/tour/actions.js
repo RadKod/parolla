@@ -33,7 +33,5 @@ export default {
     const leaderboardResult = await leaderboardResponse.json()
 
     commit('SET_LEADERBOARD', leaderboardResult.data)
-
-    console.log('leaderboardResult', leaderboardResult.data)
   }
 }
