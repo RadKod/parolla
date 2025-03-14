@@ -156,43 +156,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      setRootRef(rootRef.value)
-
-      window.addEventListener('keyup', handleKeyUp)
-
-      window.addEventListener('resize', questionFitText)
-      window.addEventListener('beforeunload', event => handleBeforeUnload(event))
-
-      window.addEventListener('scroll', scrollTop)
-
-      if (isTouchEnabled) {
-        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
-      }
-
-      // Unsupported screen height
-      checkUnsupportedHeight()
-    })
-
-    onUnmounted(() => {
-      window.removeEventListener('keyup', handleKeyUp)
-
-      window.removeEventListener('resize', questionFitText)
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-
-      window.removeEventListener('scroll', scrollTop)
-
-      if (isTouchEnabled) {
-        rootRef.value?.removeEventListener('touchend', handleDontHideKeyboard)
-      }
-    })
-
-    const isTourModeOnlineDialogOpen = computed(() => store.getters['tour/dialog'].tourModeOnline.isOpen)
-
-    const closeTourModeOnlineDialog = () => {
-      store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', false)
-    }
-
     const onQuestionGot = ({ question }) => {
       store.commit('tour/SET_TOUR', {
         question: {
@@ -354,36 +317,73 @@ export default defineComponent({
       })
     }
 
-    ws.onmessage = data => {
-      const { type, question, correctAnswer, time, correct, lives, score, answers, scores } = JSON.parse(data.data)
+    const handleWsEvent = event => {
+      const { type, data } = event.detail
 
       if (type === wsTypeEnum.TOUR_QUESTION) {
-        onQuestionGot({ question })
+        onQuestionGot(data)
       }
 
       if (type === wsTypeEnum.TOUR_TIME_UPDATE) {
-        onTimeUpdate({ time })
+        onTimeUpdate(data)
       }
 
       if (type === wsTypeEnum.TOUR_TIME_UP) {
-        onTimeUp({ correctAnswer })
+        onTimeUp(data)
       }
 
       if (type === wsTypeEnum.TOUR_WAITING_NEXT) {
-        onWaitingNext({ time })
+        onWaitingNext(data)
       }
 
       if (type === wsTypeEnum.TOUR_ANSWER_RESULT) {
-        onAnswerResult({ correct, lives, score })
+        onAnswerResult(data)
       }
 
       if (type === wsTypeEnum.TOUR_RECENT_ANSWERS) {
-        onRecentAnswers({ answers })
+        onRecentAnswers(data)
       }
 
       if (type === wsTypeEnum.TOUR_ROUND_SCORES) {
-        onRoundScores({ scores })
+        onRoundScores(data)
       }
+    }
+
+    onMounted(() => {
+      window.addEventListener('ws-event', handleWsEvent)
+
+      setRootRef(rootRef.value)
+
+      window.addEventListener('keyup', handleKeyUp)
+      window.addEventListener('resize', questionFitText)
+      window.addEventListener('beforeunload', event => handleBeforeUnload(event))
+      window.addEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
+      }
+
+      // Unsupported screen height
+      checkUnsupportedHeight()
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('ws-event', handleWsEvent)
+
+      window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('resize', questionFitText)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      window.removeEventListener('scroll', scrollTop)
+
+      if (isTouchEnabled) {
+        rootRef.value?.removeEventListener('touchend', handleDontHideKeyboard)
+      }
+    })
+
+    const isTourModeOnlineDialogOpen = computed(() => store.getters['tour/dialog'].tourModeOnline.isOpen)
+
+    const closeTourModeOnlineDialog = () => {
+      store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', false)
     }
 
     return {
