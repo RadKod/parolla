@@ -8,6 +8,6 @@ export default Object.freeze({
   TOUR_ANSWER: 'answer',
   TOUR_ANSWER_RESULT: 'answer_result',
   TOUR_RECENT_ANSWERS: 'recent_answers',
-  ROUND_SCORES: 'round_scores',
-  USER_LIST: 'user_list'
+  TOUR_ROUND_SCORES: 'round_scores',
+  TOUR_USER_LIST: 'user_list'
 })

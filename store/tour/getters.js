@@ -1,6 +1,6 @@
 export default {
-  ws(state) {
-    return state.ws
+  tour(state) {
+    return state.tour
   },
 
   userList(state) {

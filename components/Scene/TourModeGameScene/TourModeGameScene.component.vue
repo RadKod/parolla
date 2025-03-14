@@ -84,7 +84,6 @@
 import { defineComponent, useStore, ref, reactive, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
-import useWs from '@/composables/useWs'
 import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
 
 export default defineComponent({
@@ -100,7 +99,6 @@ export default defineComponent({
   setup() {
     const rootRef = ref(null)
     const store = useStore()
-    const ws = useWs()
 
     const {
       setRootRef,
@@ -120,27 +118,12 @@ export default defineComponent({
       questionFitText
     } = useGameScene()
 
-    const tour = reactive({
-      question: null,
-      countdown: {
-        percentage: 0,
-        seconds: 30
-      },
-      maxLives: 3,
-      waitingNextSeconds: 10,
-      isTimeUp: false,
-      isPlayerFinishedTheTour: false,
-      recentAnswers: [],
-      roundScores: [],
-      popover: {
-        maxLives: {
-          isOpen: false
-        }
-      }
-    })
+    const ws = store.getters['app/ws']
+
+    const tour = computed(() => store.getters['tour/tour'])
 
     watch(
-      () => tour.question,
+      () => tour.value.question,
       newQuestion => {
         if (newQuestion) {
           nextTick(() => {
@@ -209,17 +192,25 @@ export default defineComponent({
     }
 
     const onQuestionGot = ({ question }) => {
-      tour.question = {
-        letter: question.letter,
-        question: question.question
-      }
+      console.log('onQuestionGot', question)
+
+      store.commit('tour/SET_TOUR', {
+        question: {
+          letter: question.letter,
+          question: question.question
+        }
+      })
     }
 
     const onTimeUpdate = ({ time }) => {
       const remainingTimeAsSeconds = Math.floor(time.remaining / 1000)
 
-      tour.countdown.seconds = remainingTimeAsSeconds
-      tour.countdown.percentage = time.percentage + 4
+      store.commit('tour/SET_TOUR', {
+        countdown: {
+          seconds: remainingTimeAsSeconds,
+          percentage: time.percentage + 4
+        }
+      })
 
       if (remainingTimeAsSeconds === 5) {
         soundFx.hurryUp.play()
@@ -233,8 +224,10 @@ export default defineComponent({
     const onTimeUp = ({ correctAnswer }) => {
       soundFx.countdownFinish.play()
 
-      tour.isTimeUp = true
-      tour.correctAnswer = correctAnswer
+      store.commit('tour/SET_TOUR', {
+        isTimeUp: true,
+        correctAnswer
+      })
 
       // Focus out of all focused inputs and close the mobile keyboard
       document.activeElement.blur()
@@ -243,16 +236,22 @@ export default defineComponent({
     }
 
     const onWaitingNext = ({ time }) => {
-      tour.waitingNextSeconds = Math.floor(time.remaining / 1000)
+      store.commit('tour/SET_TOUR', {
+        waitingNextSeconds: Math.floor(time.remaining / 1000)
+      })
 
       if (time.remaining <= 1000) {
-        if (tour.isTimeUp) {
+        if (tour.value.isTimeUp) {
           setTimeout(() => {
-            tour.isTimeUp = false
-            tour.isPlayerFinishedTheTour = false
-            tour.countdown.seconds = 30
-            tour.countdown.percentage = 0
-            tour.maxLives = 3
+            store.commit('tour/SET_TOUR', {
+              isTimeUp: false,
+              isPlayerFinishedTheTour: false,
+              countdown: {
+                seconds: 30,
+                percentage: 0
+              },
+              maxLives: 3
+            })
 
             soundFx.start.play()
           }, 1000)
@@ -264,7 +263,9 @@ export default defineComponent({
       const { correct, lives, score } = params
 
       if (correct) {
-        tour.isPlayerFinishedTheTour = true
+        store.commit('tour/SET_TOUR', {
+          isPlayerFinishedTheTour: true
+        })
 
         Notify({
           message: 'Doğru cevap, lütfen tur bitene kadar bekle',
@@ -287,10 +288,14 @@ export default defineComponent({
         soundFx.wrong.play()
       }
 
-      tour.maxLives = lives
+      store.commit('tour/SET_TOUR', {
+        maxLives: lives
+      })
 
       if (lives <= 0) {
-        tour.isPlayerFinishedTheTour = true
+        store.commit('tour/SET_TOUR', {
+          isPlayerFinishedTheTour: true
+        })
 
         Notify({
           message: 'Tahmin hakkın bitti, lütfen tur bitene kadar bekle',
@@ -320,7 +325,9 @@ export default defineComponent({
         isCorrect: answer.isCorrect
       }))
 
-      tour.recentAnswers = mappedAnswers
+      store.commit('tour/SET_TOUR', {
+        recentAnswers: mappedAnswers
+      })
     }
 
     const formatTimestamp = ms => {
@@ -342,7 +349,9 @@ export default defineComponent({
         rank: scorer.rank
       }))
 
-      tour.roundScores = mappedScores
+      store.commit('tour/SET_TOUR', {
+        roundScores: mappedScores
+      })
     }
 
     ws.onmessage = data => {
@@ -372,16 +381,10 @@ export default defineComponent({
         onRecentAnswers({ answers })
       }
 
-      if (type === wsTypeEnum.ROUND_SCORES) {
+      if (type === wsTypeEnum.TOUR_ROUND_SCORES) {
         onRoundScores({ scores })
       }
     }
-
-    store.commit('tour/SET_WS', ws)
-
-    onUnmounted(() => {
-      ws.close()
-    })
 
     return {
       rootRef,

@@ -58,7 +58,7 @@ export default defineComponent({
 
     const chatMessages = computed(() => store.getters['tour/chatMessages'])
 
-    const ws = computed(() => store.getters['tour/ws'])
+    const ws = store.getters['app/ws']
 
     const handleWsMessage = data => {
       const { type, chatHistory, playerId, playerName, message, isSystem, timestamp } = JSON.parse(data.data)
@@ -98,14 +98,8 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (ws.value) {
-        ws.value.addEventListener('message', handleWsMessage)
-      }
-    })
-
-    onUnmounted(() => {
-      if (ws.value) {
-        ws.value.removeEventListener('message', handleWsMessage)
+      if (ws) {
+        ws.addEventListener('message', handleWsMessage)
       }
     })
 
@@ -123,7 +117,7 @@ export default defineComponent({
     const sendMessage = () => {
       if (!messageText.value.trim()) return
 
-      ws.value.send(
+      ws.send(
         JSON.stringify({
           type: wsTypeEnum.CHAT_MESSAGE,
           message: messageText.value

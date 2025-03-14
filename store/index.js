@@ -1,5 +1,5 @@
 export const actions = {
-  async nuxtClientInit({ dispatch, commit }) {
+  async nuxtClientInit({ dispatch, commit, getters }) {
     if (process.browser) {
       await dispatch('auth/generateFingerprint')
 
@@ -14,6 +14,9 @@ export const actions = {
           commit('auth/SET_USER', updateUserResult.data)
         }
       }
+
+      await dispatch('app/initWs')
+      await dispatch('tour/listenWs', { ws: getters['app/ws'] })
     }
   }
 }

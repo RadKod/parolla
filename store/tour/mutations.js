@@ -1,6 +1,9 @@
 export default {
-  SET_WS(state, ws) {
-    state.ws = ws
+  SET_TOUR(state, tour) {
+    state.tour = {
+      ...state.tour,
+      ...tour
+    }
   },
 
   SET_USER_LIST(state, userList) {
