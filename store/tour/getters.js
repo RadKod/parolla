@@ -12,7 +12,7 @@ export default {
   },
 
   todaysBestScorer(state) {
-    return state.leaderboard.daily[0]
+    return state.leaderboard?.daily?.[0]
   },
 
   chatMessages(state) {

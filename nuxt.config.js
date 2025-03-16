@@ -261,8 +261,12 @@ module.exports = {
             en: '/room'
           },
           'TourMode/TourModeGame/index': {
-            tr: '/tur/oyun',
-            en: '/tour/game'
+            tr: '/tur',
+            en: '/tour'
+          },
+          'Leaderboard/index': {
+            tr: '/liderlik',
+            en: '/leaderboard'
           }
         }
       }

@@ -96,6 +96,7 @@
         padding-block: $spacer * 5;
         padding-block-end: $spacer * 3;
         background: linear-gradient(to right, #2563eb, #9333ea, #ec4899);
+        transform: unset !important;
 
         &::before {
           position: absolute;
@@ -221,17 +222,20 @@
           flex-wrap: wrap;
           align-items: center;
           width: 100%;
-          overflow: hidden;
+          overflow: visible;
           font-size: var(--font-size-text-9);
           background-color: rgba(255, 255, 255, 0.1);
           border-radius: calc(var(--border-radius-01) / 2);
+          border-bottom-right-radius: 0;
           backdrop-filter: blur(4px);
           margin-block: $spacer * 4;
-          margin-block-end: $spacer * 6;
+          margin-block-end: $spacer * 8;
 
           @include media-breakpoint-down(tablet) {
             overflow: visible;
+            border-top-right-radius: 0;
             border-bottom-right-radius: 0;
+            margin-block-end: $spacer * 12;
           }
 
           @include font-weight-medium;
@@ -239,14 +243,13 @@
           .best-score-label {
             @include media-breakpoint-down(tablet) {
               position: absolute;
-              padding: $spacer / 2 $spacer * 3;
+              padding: calc(#{$spacer} / 2) $spacer * 3;
               font-size: var(--font-size-text-11);
               background-color: rgba(255, 255, 255, 0.2);
-              border-top: 1px solid rgba(255, 255, 255, 0.1);
+              border-block-end: 1px solid rgba(255, 255, 255, 0.1);
               border-top-left-radius: 4px;
-              border-bottom-right-radius: 4px;
-              border-bottom-left-radius: 4px;
-              inset-block-end: -16px;
+              border-top-right-radius: 4px;
+              inset-block-start: -17px;
               inset-inline-end: 0;
             }
           }
@@ -273,6 +276,7 @@
             position: relative;
             display: flex;
             align-items: center;
+            width: 100%;
             height: 40px;
             padding: $spacer * 2 $spacer * 3;
 
@@ -316,8 +320,13 @@
           border: 0;
           border-radius: calc(var(--border-radius-01) / 2);
           padding-inline: $spacer * 5;
+          transition: transform 0.1s var(--motion-01);
 
           @include font-weight-semi-bold;
+
+          &:hover {
+            transform: scale(1.08);
+          }
         }
 
         .avatar-group {
@@ -349,6 +358,48 @@
             @include media-breakpoint-down(tablet) {
               margin-inline-start: $spacer * 3;
               font-size: var(--font-size-text-9);
+            }
+          }
+        }
+
+        .leaderboard-button {
+          position: absolute;
+          height: 32px;
+          color: #fff;
+          font-size: var(--font-size-text-10);
+          white-space: nowrap;
+          background-color: rgba(255, 255, 255, 0.1) !important;
+          border: 0;
+          border-radius: calc(var(--border-radius-01) / 2);
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          inset-inline-end: 0;
+          inset-block-end: -31px;
+          border-block-start: 0;
+          margin-inline-start: auto;
+          padding-inline: $spacer * 4;
+
+          @include font-weight-medium;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+          }
+
+          @include media-breakpoint-down(tablet) {
+            font-size: var(--font-size-text-10);
+          }
+
+          &__icon {
+            margin-inline-end: $spacer;
+
+            @include media-breakpoint-down(tablet) {
+              width: 14px;
+              height: 14px;
+
+              svg {
+                width: 100% !important;
+                height: 100% !important;
+              }
             }
           }
         }

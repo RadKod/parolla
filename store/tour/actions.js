@@ -20,7 +20,6 @@ export default {
       }
 
       if (type === wsTypeEnum.TOUR_USER_LIST) {
-        console.log('players', players)
         commit('SET_USER_LIST', { players, totalCount, totalViewers: viewerCount })
       }
 
@@ -28,13 +27,14 @@ export default {
     }
   },
 
-  async fetchLeaderboard({ commit }, { type, limit }) {
+  async fetchLeaderboard({ commit }, { type = 'all', limit = 10 }) {
     const leaderboardResponse = await fetch(`${process.env.API}/tour/leaderboard?type=${type}&limit=${limit}`, {
       method: 'get',
       headers: {
         'Accept-Language': this.$i18n.locale
       }
     })
+
     const leaderboardResult = await leaderboardResponse.json()
 
     commit('SET_LEADERBOARD', leaderboardResult.data)

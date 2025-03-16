@@ -6,7 +6,7 @@
     h2.intro-scene__title {{ $t('introScene.title') }}
 
     .intro-scene-mode-list
-      Button.intro-scene-mode-list-item.intro-scene-mode-list-item--tour(size="large" :to="localePath({ name: 'TourMode-TourModeGame' })")
+      .intro-scene-mode-list-item.intro-scene-mode-list-item--tour(size="large")
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="akar-icons:arrow-cycle" color="#fff" :width="24" :height="24")
           span.intro-scene-mode-list-item-title
@@ -19,7 +19,7 @@
 
           .top-scorer(v-if="todaysTourBestScorer")
             .top-scorer__content
-              AppIcon.top-scorer__icon(name="noto:trophy" :width="16" :height="16")
+              AppIcon.top-scorer__icon(name="tabler:trophy" :width="16" :height="16")
               i18n(tag="p" path="introScene.modeList.tour.todaysBestScore")
                 template(#label)
                   label.best-score-label {{ $t('introScene.modeList.tour.todaysBestScoreLabel') }}
@@ -29,11 +29,14 @@
                   label.by-label {{ $t('introScene.modeList.tour.todaysBestScoreByLabel') }}
                 template(#score)
                   strong &nbsp; {{ todaysTourBestScorer.score }} &nbsp;
+              Button.leaderboard-button(size="small" plain :to="localePath({ name: 'Leaderboard' })")
+                AppIcon.leaderboard-button__icon(name="noto:trophy" :width="16" :height="16")
+                | Liderlik tablosu
 
           p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.tour.description') }}
 
           .intro-scene-mode-list-item.intro-scene-mode-list-item__footer
-            Button.play-now-button {{ $t('general.playNow') }}
+            Button.play-now-button(:to="localePath({ name: 'TourMode-TourModeGame' })") {{ $t('general.playNow') }}
             .avatar-group(v-if="userList.players.length > 0")
               PlayerAvatar(v-for="player in userList.players" :key="player.id" :user="{ username: player.username }")
               .avatar-group__moreCount(v-if="userList.totalPlayers > 4") +{{ userList.totalPlayers - 4 }}
@@ -86,7 +89,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext, useStore, onMounted, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore, onMounted, computed, useRouter } from '@nuxtjs/composition-api'
 import { Button, Notify } from 'vant'
 
 export default defineComponent({
@@ -95,6 +98,7 @@ export default defineComponent({
   },
   setup() {
     const { i18n } = useContext()
+    const router = useRouter()
     const store = useStore()
 
     const localeAvailabilityMessage = () => {

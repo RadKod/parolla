@@ -442,6 +442,31 @@ export default {
       }
     }
   },
+  leaderboard: {
+    modeTitle: '{mode} modu lider sıralaması',
+    daily: {
+      short: 'Günlük',
+      full: 'Günlük lider sıralaması'
+    },
+    weekly: {
+      short: 'Haftalık',
+      full: 'Haftalık lider sıralaması'
+    },
+    monthly: {
+      short: 'Aylık',
+      full: 'Aylık lider sıralaması'
+    },
+    pending: 'Sıralama getiriliyor',
+    error: {
+      fetch: {
+        description: 'Sıralama getirilemedi',
+        action: 'Tekrar dene'
+      }
+    },
+    empty: {
+      description: 'Henüz kimse sıralamaya girmedi'
+    }
+  },
   seo: {
     main: {
       title: 'parolla - Kelime oyunu',
