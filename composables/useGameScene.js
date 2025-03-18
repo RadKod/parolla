@@ -163,8 +163,34 @@ export default () => {
     }, 400)
   }
 
-  const formatAnswerField = () => {
-    return encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+  const formatAnswer = value => {
+    return encodeEnglish(value.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+  }
+
+  const handleRadKodKeyword = () => {
+    Notify({
+      message: i18n.t('gameScene.radkodNotify'),
+      color: 'var(--color-text-04)',
+      background: 'var(--color-brand-radkod)'
+    })
+
+    radkodEasterEggSoundFx.play()
+
+    return false
+  }
+
+  const handleNotStartsWithActiveChar = ({ activeChar }) => {
+    Notify({
+      message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar }),
+      color: 'var(--color-text-04)',
+      background: 'var(--color-danger-01)'
+    })
+
+    resetAnswerField()
+
+    wrongAnimateAnswerField()
+
+    return false
   }
 
   const handleAnswer = () => {
@@ -174,7 +200,7 @@ export default () => {
 
     item.isPassed = false
 
-    const answerField = formatAnswerField()
+    const answerField = formatAnswer(answer.field)
     const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
     const passKeywords = ['pas', 'pass']
@@ -193,32 +219,18 @@ export default () => {
 
         return false
       }
-    }
 
-    if (answerField === radkodKeyword) {
-      Notify({
-        message: i18n.t('gameScene.radkodNotify'),
-        color: 'var(--color-text-04)',
-        background: 'var(--color-brand-radkod)'
-      })
+      if (answerField === radkodKeyword) {
+        handleRadKodKeyword()
 
-      radkodEasterEggSoundFx.play()
+        return false
+      }
 
-      return false
-    }
+      if (!answerField.startsWith(formatAnswer(item.letter))) {
+        handleNotStartsWithActiveChar({ activeChar: item.letter })
 
-    if (!answerField.startsWith(encodeEnglish(item.letter.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')))) {
-      Notify({
-        message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar: item.letter }),
-        color: 'var(--color-text-04)',
-        background: 'var(--color-danger-01)'
-      })
-
-      resetAnswerField()
-
-      wrongAnimateAnswerField()
-
-      return false
+        return false
+      }
     }
 
     const isCorrect = correctAnswers.some(answer => {
@@ -684,8 +696,10 @@ export default () => {
     nextLetter,
     handleAnswer,
     handleAnswerField,
+    handleRadKodKeyword,
+    handleNotStartsWithActiveChar,
     wrongAnimateAnswerField,
-    formatAnswerField,
+    formatAnswer,
     focusToAnswerFieldInput,
     resetAnswerField,
     handleTabKey,

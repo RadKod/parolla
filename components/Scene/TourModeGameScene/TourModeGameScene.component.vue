@@ -112,7 +112,9 @@ export default defineComponent({
       handleDontHideKeyboard,
       handleTabKey,
       checkUnsupportedHeight,
-      formatAnswerField,
+      formatAnswer,
+      handleRadKodKeyword,
+      handleNotStartsWithActiveChar,
       wrongAnimateAnswerField,
       focusToAnswerFieldInput,
       resetAnswerField,
@@ -267,12 +269,24 @@ export default defineComponent({
           duration: 10000
         })
       }
-
-      resetAnswerField()
     }
 
     const handleAnswer = () => {
-      const answerField = formatAnswerField()
+      const answerField = formatAnswer(answer.field)
+
+      resetAnswerField()
+
+      if (answerField === 'radkod') {
+        handleRadKodKeyword()
+
+        return false
+      }
+
+      if (!answerField.startsWith(formatAnswer(tour.value.question.letter))) {
+        handleNotStartsWithActiveChar({ activeChar: tour.value.question.letter })
+
+        return false
+      }
 
       ws.send(JSON.stringify({ type: wsTypeEnum.TOUR_ANSWER, answer: answerField }))
     }

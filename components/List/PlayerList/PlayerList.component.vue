@@ -1,7 +1,7 @@
 <template lang="pug">
 .player-list
   template(v-if="items?.length > 0")
-    Cell.player-list-item(v-for="item in items" :key="item.username" :class="[answerStatusClass(item.isCorrect)]")
+    Cell.player-list-item(v-for="(item, index) in items" :key="index" :class="[answerStatusClass(item.isCorrect)]")
       template(#title)
         .player-list-item-user
           strong.player-list-item-user__username
