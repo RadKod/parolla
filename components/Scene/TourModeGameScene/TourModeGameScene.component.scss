@@ -100,6 +100,11 @@
     &__input {
       padding-inline-start: $spacer * 15 !important;
     }
+
+    &__button {
+      z-index: 2;
+      cursor: pointer;
+    }
   }
 
   .tour-mode-results-view {

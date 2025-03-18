@@ -397,7 +397,10 @@ export default defineComponent({
       window.addEventListener('scroll', scrollTop)
 
       if (isTouchEnabled) {
-        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event))
+        const tourModeHandlers = {
+          handleSend: handleAnswer
+        }
+        rootRef.value?.addEventListener('touchend', event => handleDontHideKeyboard(event, tourModeHandlers))
       }
 
       // Unsupported screen height
@@ -413,7 +416,10 @@ export default defineComponent({
       window.removeEventListener('scroll', scrollTop)
 
       if (isTouchEnabled) {
-        rootRef.value?.removeEventListener('touchend', handleDontHideKeyboard)
+        const tourModeHandlers = {
+          handleSend: handleAnswer
+        }
+        rootRef.value?.removeEventListener('touchend', event => handleDontHideKeyboard(event, tourModeHandlers))
       }
     })
 

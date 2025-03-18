@@ -655,7 +655,7 @@ export default () => {
     return tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA' || elem.isContentEditable || elem.tabIndex >= 0
   }
 
-  const handleDontHideKeyboard = event => {
+  const handleDontHideKeyboard = (event, customHandlers = null) => {
     let target = event.target
     let dontDiscardKeyboard = target.classList.contains('do-not-hide-keyboard')
 
@@ -667,13 +667,30 @@ export default () => {
     if (dontDiscardKeyboard) {
       event.preventDefault()
 
-      // DO ACTION HERE
-      if (isPassButton) {
-        pass()
+      // Check if custom handlers are provided and execute if applicable
+      if (customHandlers) {
+        if (isSendButton && customHandlers.handleSend) {
+          customHandlers.handleSend()
+
+          return
+        }
+
+        if (isPassButton && customHandlers.handlePass) {
+          customHandlers.handlePass()
+
+          return
+        }
       }
 
-      if (isSendButton) {
-        handleAnswer()
+      // Default behavior
+      if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+        if (isPassButton) {
+          pass()
+        }
+
+        if (isSendButton) {
+          handleAnswer()
+        }
       }
     } else if (!acceptsInput(target)) {
       document.activeElement.blur()
