@@ -41,6 +41,15 @@ export default {
     subtitle: 'Daily word game',
     description: 'Solve daily questions and join the competition. Create your own Q&A set and solve fun questions created by players',
     modeList: {
+      tour: {
+        title: 'TOUR',
+        description: 'Play with other players in real time',
+        liveCount: `{count} active player`,
+        label: 'NEW 🥳',
+        todaysBestScoreByLabel: 'by',
+        todaysBestScoreLabel: "Today's best score",
+        todaysBestScore: `{label} {by} {byLabel} {score} points`
+      },
       daily: {
         title: 'DAILY',
         subtitle: 'COMPETITIVE'
@@ -49,11 +58,8 @@ export default {
         title: 'UNLIMITED'
       },
       creator: {
-        title: 'CREATOR'
-      },
-      tour: {
-        title: 'TOUR',
-        subtitle: 'NEW 🥳'
+        title: 'CREATOR',
+        description: 'Create your own Q&A set and solve fun questions created by players'
       }
     }
   },

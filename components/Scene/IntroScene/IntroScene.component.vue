@@ -6,7 +6,7 @@
     h2.intro-scene__title {{ $t('introScene.title') }}
 
     .intro-scene-mode-list
-      .intro-scene-mode-list-item.intro-scene-mode-list-item--tour(size="large")
+      .intro-scene-mode-list-item.intro-scene-mode-list-item--tour(v-if="$i18n.locale === $i18n.defaultLocale" size="large")
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="akar-icons:arrow-cycle" color="#fff" :width="24" :height="24")
           span.intro-scene-mode-list-item-title
@@ -47,6 +47,7 @@
             | {{ $t('introScene.modeList.tour.label') }}
 
       Button.intro-scene-mode-list-item(
+        v-if="$i18n.locale === $i18n.defaultLocale"
         size="large"
         :to="$i18n.locale === $i18n.defaultLocale ? localePath({ name: 'DailyMode' }) : localePath('/')"
         :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
@@ -59,10 +60,9 @@
               | {{ $t('introScene.modeList.daily.title') }}
             span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
           p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.daily.description') }}
-        .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 
       Button.intro-scene-mode-list-item(
+        v-if="$i18n.locale === $i18n.defaultLocale"
         size="large"
         :to="$i18n.locale === $i18n.defaultLocale ? localePath({ name: 'UnlimitedMode' }) : localePath('/')"
         :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
@@ -72,16 +72,12 @@
           AppIcon.intro-scene-mode-list-item__icon(name="noto:infinity" :width="24" :height="24")
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
           p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.unlimited.description') }}
-        .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="noto:pencil" :width="24" :height="24")
           span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.creator.title') }}
           p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.creator.description') }}
-        .append
-          label.intro-scene-mode-list-item__label(v-if="$i18n.locale !== $i18n.defaultLocale") Only TR
 
     .intro-scene__keywords.d-none
       h3.intro-scene__subtitle {{ $t('introScene.subtitle') }}
