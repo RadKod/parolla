@@ -440,6 +440,18 @@ export default {
         title: '',
         description: 'Henüz kimse cevap vermedi'
       }
+    },
+    guessingChance: {
+      title: 'TAHMİN HAKKIN'
+    },
+    correctAnswer: {
+      description: `<h2>✅ &nbsp; DOĞRU CEVAP!</h2> <p>Diğer oyuncuların cevaplarını bekle</p>`
+    },
+    wrongAnswer: {
+      description: `YANLIŞ CEVAP`
+    },
+    playerFinishedTheTour: {
+      description: `<h2>💔 &nbsp; TAHMİN HAKKIN BİTTİ!</h2> <p>Turun bitmesine kadar bekle</p>`
     }
   },
   leaderboard: {

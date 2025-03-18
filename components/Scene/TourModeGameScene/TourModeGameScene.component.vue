@@ -35,7 +35,7 @@
                 AppIcon(name="fluent-emoji:heart-suit" :label="String(tour.maxLives)" :width="32" :height="32")
 
             .answer-field-max-lives__content
-              p Tahmin hakkın
+              p {{ $t('tourMode.guessingChance.title') }}
           input.answer-field__input(
             type="text"
             :value="answer.field"
@@ -81,10 +81,10 @@
 </template>
 
 <script>
-import { defineComponent, useStore, ref, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore, ref, onMounted, onUnmounted, computed, nextTick, watch } from '@nuxtjs/composition-api'
 import { ANSWER_CHAR_LENGTH } from '@/system/constant'
 import { wsTypeEnum } from '@/enums'
-import { Button, Field, Empty, CountDown, Progress, Popover, Notify } from 'vant'
+import { Button, Field, Empty, CountDown, Progress, Popover, Notify, Toast } from 'vant'
 
 export default defineComponent({
   components: {
@@ -94,10 +94,13 @@ export default defineComponent({
     CountDown,
     Progress,
     Popover,
-    Notify
+    Notify,
+    Toast
   },
   setup() {
     const rootRef = ref(null)
+
+    const context = useContext()
     const store = useStore()
 
     const userList = computed(() => store.getters['tour/userList'])
@@ -198,6 +201,8 @@ export default defineComponent({
       document.activeElement.blur()
 
       resetAnswerField()
+
+      Toast.clear()
     }
 
     const onWaitingNext = ({ time }) => {
@@ -224,6 +229,34 @@ export default defineComponent({
       }
     }
 
+    const showCorrectToast = () => {
+      Toast({
+        type: 'html',
+        className: 'toast-correct',
+        forbidClick: false,
+        overlay: false,
+        transition: 'answer-result',
+        closeOnClickOverlay: false,
+        position: 'bottom',
+        message: context.i18n.t('tourMode.correctAnswer.description'),
+        duration: 0
+      })
+    }
+
+    const showPlayerFinishedTheTourToast = () => {
+      Toast({
+        type: 'html',
+        className: 'toast-wrong',
+        forbidClick: false,
+        overlay: false,
+        transition: 'answer-result',
+        closeOnClickOverlay: false,
+        position: 'bottom',
+        message: context.i18n.t('tourMode.playerFinishedTheTour.description'),
+        duration: 0
+      })
+    }
+
     const onAnswerResult = params => {
       const { correct, lives, score } = params
 
@@ -232,19 +265,14 @@ export default defineComponent({
           isPlayerFinishedTheTour: true
         })
 
-        Notify({
-          message: 'Doğru cevap, lütfen tur bitene kadar bekle',
-          color: 'var(--color-text-04)',
-          background: 'var(--color-success-01)',
-          duration: 10000
-        })
+        showCorrectToast()
 
         soundFx.correct.play()
       } else {
         wrongAnimateAnswerField()
 
         Notify({
-          message: 'Yanlış cevap',
+          message: context.i18n.t('tourMode.wrongAnswer.description'),
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
           duration: 1500
@@ -262,12 +290,7 @@ export default defineComponent({
           isPlayerFinishedTheTour: true
         })
 
-        Notify({
-          message: 'Tahmin hakkın bitti, lütfen tur bitene kadar bekle',
-          color: 'var(--color-text-04)',
-          background: 'var(--color-danger-01)',
-          duration: 10000
-        })
+        showPlayerFinishedTheTourToast()
       }
     }
 
