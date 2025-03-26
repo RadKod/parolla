@@ -21,7 +21,8 @@ module.exports = {
   env: {
     API: process.env.API || 'https://api.radkod.com/parolla/api/v1',
     WS_URL: process.env.WS_URL,
-    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
+    GOOGLE_AUTH_REDIRECT_URI: process.env.GOOGLE_AUTH_REDIRECT_URI
   },
 
   /*
