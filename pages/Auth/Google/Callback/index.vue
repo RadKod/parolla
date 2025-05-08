@@ -36,6 +36,10 @@ export default defineComponent({
       await context.$auth.setUserToken(token)
 
       store.commit('auth/SET_USER', user)
+
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 1000)
     }
 
     onMounted(async () => {
@@ -46,8 +50,6 @@ export default defineComponent({
       }
 
       runGoogleRegister()
-
-      window.location.href = '/'
     })
   }
 })
