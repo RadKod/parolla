@@ -1,6 +1,6 @@
 <template lang="pug">
 .auth-google-callback-page
-  span auth google callback page
+  p.text ...
 </template>
 
 <script lang="ts">
@@ -46,6 +46,8 @@ export default defineComponent({
       }
 
       runGoogleRegister()
+
+      router.push('/')
     })
   }
 })

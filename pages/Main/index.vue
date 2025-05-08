@@ -1,11 +1,10 @@
 <template lang="pug">
 .page.main-page
-  h4 {{ envValue }}
   LazyIntroScene
 </template>
 
 <script>
-import { defineComponent, useStore, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 const { getQuery } = require('ufo')
 import { Notify } from 'vant'
 
@@ -25,14 +24,6 @@ export default defineComponent({
           duration: 1000
         })
       }, 1000)
-    }
-
-    const envValue = `GOOGLE_AUTH_REDIRECT_URI=${process.env.GOOGLE_AUTH_REDIRECT_URI}`
-
-    console.log(envValue)
-
-    return {
-      envValue
     }
   }
 })
