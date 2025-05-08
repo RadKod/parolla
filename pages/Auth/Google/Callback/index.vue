@@ -47,7 +47,7 @@ export default defineComponent({
 
       runGoogleRegister()
 
-      router.push('/')
+      window.location.href = '/'
     })
   }
 })
