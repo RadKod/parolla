@@ -1,10 +1,12 @@
 <template lang="pug">
 .auth-google-callback-page
-  p.text ...
+  p {{ $t('auth.google.callback.redirecting') }}
+  small(v-html="$t('auth.google.callback.ifNoRedirect')")
 </template>
 
 <script lang="ts">
-import { defineComponent, useStore, useContext, useRouter, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, useContext, onMounted } from '@nuxtjs/composition-api'
+import { Notify } from 'vant'
 const { getQuery } = require('ufo')
 
 export default defineComponent({
@@ -14,7 +16,6 @@ export default defineComponent({
     const query = getQuery(window.location.href)
     const context = useContext()
     const store = useStore()
-    const router = useRouter()
 
     const user = store.getters['auth/user']
 
@@ -25,10 +26,25 @@ export default defineComponent({
         fingerprint: user.fingerprint
       })
 
-      await setGoogleUser({
-        token: result.data.token,
-        user: result.data.user
-      })
+      if (result.success) {
+        await setGoogleUser({
+          token: result.data.token,
+          user: result.data.user
+        })
+      } else {
+        console.error(result)
+
+        Notify({
+          message: `${context.i18n.t('auth.error.title')}: ${result.message}`,
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 5000
+        })
+
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 5000)
+      }
     }
 
     const setGoogleUser = async ({ token, user }) => {
@@ -37,20 +53,18 @@ export default defineComponent({
 
       store.commit('auth/SET_USER', user)
 
+      const redirectPath = context.$cookies.get('authNextRedirect')
+
       setTimeout(() => {
-        window.location.href = '/'
+        window.location.href = redirectPath || '/'
       }, 1000)
     }
 
-    onMounted(async () => {
-      const redirectPath = context.$cookies.get('authNextRedirect')
-
-      if (redirectPath) {
-        await router.push(redirectPath)
-      }
-
+    onMounted(() => {
       runGoogleRegister()
     })
   }
 })
 </script>
+
+<style lang="scss" src="./AuthGoogleCallback.page.scss"></style>
