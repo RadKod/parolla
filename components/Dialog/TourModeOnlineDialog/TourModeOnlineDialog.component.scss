@@ -3,6 +3,11 @@
 
   width: 90%;
   max-width: var(--mobile);
+  margin-block-start: calc(var(--base-m-y) * 2);
+
+  &.chat-osk {
+    top: 0;
+  }
 
   .van-tabs {
     &__content {
@@ -20,7 +25,8 @@
     }
   }
 
-  &__onlineTab {
+  &__onlineTab,
+  &__lastAnswersTab {
     small {
       display: block;
       padding: $spacer * 4 $spacer * 3;

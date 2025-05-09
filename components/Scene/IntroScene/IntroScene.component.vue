@@ -38,7 +38,7 @@
           .intro-scene-mode-list-item.intro-scene-mode-list-item__footer
             Button.play-now-button(:to="localePath({ name: 'TourMode-TourModeGame' })") {{ $t('general.playNow') }}
             .avatar-group(v-if="userList.players.length > 0")
-              PlayerAvatar(v-for="player in userList.players" :key="player.id" :user="{ username: player.username }")
+              PlayerAvatar(v-for="player in userList.players.slice(0, 4)" :key="player.id" :user="{ username: player.username }")
               .avatar-group__moreCount(v-if="userList.totalPlayers > 4") +{{ userList.totalPlayers - 4 }}
 
         .append

@@ -1,6 +1,7 @@
 <template lang="pug">
-Dialog.dialog.stats-dialog.tour-mode-online-dialog(
+Dialog.stats-dialog.dialog.tour-mode-online-dialog(
   v-model="state.isOpen"
+  :class="[chatOskClass]"
   :title="$t('dialog.tourModeOnline.title')"
   :cancel-button-text="cancelButtonText || $t('general.close')"
   :confirm-button-text="confirmButtonText || $t('general.apply')"
@@ -19,7 +20,13 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
         .stats-dialog-tab-title
           AppIcon.stats-dialog-tab-title__icon(name="tabler:message" :width="20" :height="20")
           span.stats-dialog-tab-title__value {{ $t('chat.chat') }}
-      Chat(ref="chatRef" @on-connected-ws="onConnectedWs" @on-chat-message-ws="onChatMessageWs")
+      Chat(
+        ref="chatRef"
+        @on-connected-ws="onConnectedWs"
+        @on-chat-message-ws="onChatMessageWs"
+        @on-focus="onChatFocus"
+        @on-blur="onChatBlur"
+      )
 
     // Online Tab
     Tab(name="online")
@@ -39,9 +46,11 @@ Dialog.dialog.stats-dialog.tour-mode-online-dialog(
           AppIcon.stats-dialog-tab-title__icon(name="tabler:pencil-question" :width="20" :height="20")
           span.stats-dialog-tab-title__value {{ $t('tourMode.lastAnswers.title') }}
 
-      PlayerList(:items="tour.recentAnswers")
-        template(#empty)
-          Empty(:description="$t('tourMode.lastAnswers.empty.description')")
+      .tour-mode-online-dialog__lastAnswersTab
+        small {{ $t('tourMode.lastAnswers.title') }}
+        PlayerList(:items="tour.recentAnswers")
+          template(#empty)
+            Empty(:description="$t('tourMode.lastAnswers.empty.description')")
 </template>
 
 <script>
@@ -116,6 +125,20 @@ export default defineComponent({
       chatRef.value.scrollToBottom()
     }
 
+    const isChatFocused = ref(false)
+
+    const chatOskClass = computed(() => {
+      return isChatFocused.value && 'chat-osk'
+    })
+
+    const onChatFocus = () => {
+      isChatFocused.value = true
+    }
+
+    const onChatBlur = () => {
+      isChatFocused.value = false
+    }
+
     return {
       user,
       state,
@@ -123,7 +146,10 @@ export default defineComponent({
       activeTab,
       onConnectedWs,
       onChatMessageWs,
-      userList
+      userList,
+      chatOskClass,
+      onChatFocus,
+      onChatBlur
     }
   }
 })

@@ -3,6 +3,12 @@
   padding: var(--base-p-y) var(--base-p-x);
   text-align: center;
 
+  &-header {
+    &__title {
+      font-size: var(--font-size-text-4);
+    }
+  }
+
   .button-group {
     display: flex;
     gap: $spacer * 4;
