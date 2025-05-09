@@ -1,0 +1,59 @@
+.auth-dialog {
+  $van-dialog: '.van-dialog';
+
+  width: 90%;
+  max-width: var(--tablet);
+
+  #{$van-dialog} {
+    &__header {
+      display: none;
+    }
+
+    &__content {
+      position: relative;
+      display: block;
+      max-height: 75vh;
+      padding: var(--base-p-y) calc(var(--base-p-x) * 1.8);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  label {
+    display: block;
+    margin: var(--base-m-y) 0;
+
+    a {
+      display: flex;
+      color: var(--color-link-01);
+    }
+  }
+
+  &-list {
+    position: relative;
+    top: 0;
+    text-align: center;
+    padding-block-start: calc(var(--base-p-y) * 2);
+    padding-block-end: calc(var(--base-p-y) * 4);
+    padding-inline: 0;
+
+    &__title {
+      display: block;
+      color: var(--color-text-01);
+      font-size: var(--font-size-text-6);
+      margin-block-end: var(--base-m-y);
+
+      @include font-weight-semi-bold;
+    }
+
+    &-item {
+      position: relative;
+      margin-block: $spacer * 2;
+      color: var(--color-text-02);
+    }
+  }
+
+  .login-form {
+    position: relative;
+  }
+}

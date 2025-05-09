@@ -7,27 +7,38 @@
     template(v-if="isVisibleBackButton")
       li.app-header-nav__item(@click="handleClickBackButton")
         AppIcon(name="tabler:arrow-left")
+
   LazyAppLogo(type="title" @click.native.prevent.capture="handleClickAppLogo")
+
   nav.app-header-nav
-    template(
-      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+    li.app-header-nav__item.app-header-nav__item--tourModeOnline.me-3(
+      v-if="activeGameMode === gameModeKeyEnum.TOUR"
+      @click="openTourModeOnlineDialog"
     )
-      li.app-header-nav__item(
-        v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED"
-        @click="toggleHowToPlayDialog"
-      )
-        AppIcon(name="tabler:info-circle")
-      li.app-header-nav__item.app-header-nav__item--stats(@click="toggleStatsDialog")
-        AppIcon(name="tabler:chart-bar")
-    template(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
-      li.app-header-nav__item.app-header-nav__item--roomReviews(@click="toggleRoomReviewDialog")
-        AppIcon.me-2(v-if="room.reviewCount > 0" name="tabler:message-2" :label="room.reviewCount")
-        AppIcon(v-else name="tabler:message-2")
-    li.app-header-nav__item(@click="toggleMenuDialog")
-      LazyPlayerAvatar(:name="user.fingerprint")
+      AppIcon(name="tabler:users-group" :label="formatMillions(userList.totalPlayers + userList.totalViewers)")
+
+    li.app-header-nav__item(v-if="isVisibleHowToPlay" @click="toggleHowToPlayDialog")
+      AppIcon(name="tabler:info-circle")
+
+    li.app-header-nav__item.app-header-nav__item--stats(
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+      @click="toggleStatsDialog"
+    )
+      AppIcon(name="tabler:chart-bar")
+
+    li.app-header-nav__item.app-header-nav__item--roomReviews(
+      v-if="activeGameMode === gameModeKeyEnum.CREATOR"
+      @click="toggleRoomReviewDialog"
+    )
+      AppIcon.me-2(v-if="room.reviewCount > 0" name="tabler:message-2" :label="room.reviewCount")
+      AppIcon(v-else name="tabler:message-2")
+
+    li.app-header-nav__item.app-header-nav__item--menu(@click="toggleMenuDialog")
+      LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
 
   // How To Play Dialog
   LazyHowToPlayDialog(
+    v-if="isVisibleHowToPlay"
     :cancel-button-text="$t('general.close')"
     :isOpen="dialog.howToPlay.isOpen"
     @closed="dialog.howToPlay.isOpen = false"
@@ -59,6 +70,7 @@
 <script>
 import { defineComponent, useRouter, useRoute, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
+import useFormatter from '@/composables/useFormatter'
 
 export default defineComponent({
   setup() {
@@ -66,6 +78,10 @@ export default defineComponent({
     const route = useRoute()
     const { localePath } = useContext()
     const store = useStore()
+
+    const userList = computed(() => store.getters['tour/userList'])
+
+    const { formatMillions } = useFormatter()
 
     const { activeGameMode } = useGameMode()
     const { openLeaveDialog } = useDialog()
@@ -112,6 +128,15 @@ export default defineComponent({
       }
     }
 
+    const isVisibleHowToPlay = computed(() => {
+      return (
+        activeGameMode.value === gameModeKeyEnum.DAILY ||
+        activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
+        activeGameMode.value === gameModeKeyEnum.CREATOR ||
+        activeGameMode.value === gameModeKeyEnum.TOUR
+      )
+    })
+
     const toggleHowToPlayDialog = () => {
       dialog.howToPlay.isOpen = !dialog.howToPlay.isOpen
     }
@@ -138,6 +163,10 @@ export default defineComponent({
 
     const toggleRoomReviewDialog = () => {
       dialog.roomReview.isOpen = !dialog.roomReview.isOpen
+    }
+
+    const openTourModeOnlineDialog = () => {
+      store.commit('tour/SET_IS_OPEN_TOUR_MODE_ONLINE_DIALOG', true)
     }
 
     const handleClickBackButton = () => {
@@ -191,7 +220,8 @@ export default defineComponent({
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeIntro' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
-        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' })
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' }) ||
+        route.value.path === localePath({ name: 'TourMode-TourModeGame' })
       ) {
         return true
       }
@@ -204,7 +234,9 @@ export default defineComponent({
       gameModeKeyEnum,
       activeGameMode,
       dialog,
+      formatMillions,
       toggleStatsDialog,
+      isVisibleHowToPlay,
       toggleHowToPlayDialog,
       toggleMenuDialog,
       toggleHowToCalculateStatsDialog,
@@ -212,12 +244,14 @@ export default defineComponent({
       toggleContactDialog,
       toggleLocaleSwitchDialog,
       toggleRoomReviewDialog,
+      openTourModeOnlineDialog,
       handleClickBackButton,
       handleClickAppLogo,
       isVisibleLocaleSwitchButton,
       isVisibleBackButton,
       user,
-      room
+      room,
+      userList
     }
   }
 })

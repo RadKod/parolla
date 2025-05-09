@@ -1,0 +1,25 @@
+.leaderboard-page {
+  position: relative;
+  padding: var(--base-p-y) var(--base-p-x);
+  text-align: center;
+
+  .button-group {
+    display: flex;
+    gap: $spacer * 4;
+    justify-content: center;
+    margin-block-end: $spacer * 4;
+
+    .van-button {
+      padding: $spacer * 2 $spacer * 4;
+      color: var(--color-text-01);
+      background-color: var(--color-ui-02);
+      border: 0;
+      border-radius: var(--border-radius-01);
+    }
+
+    .active {
+      color: light-dark(#fff, #222);
+      background-color: light-dark(#222, #fff);
+    }
+  }
+}

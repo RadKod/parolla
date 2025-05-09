@@ -1,5 +1,5 @@
 <template lang="pug">
-.layout.default-layout
+.layout.default-layout(:style="`--vh: ${visualViewport.current.height}px; --init-vh: ${visualViewport.initialize.height}px`")
   // Preloader
   AppPreloader
 
@@ -22,13 +22,61 @@
   .layout__ad.layout__ad--right
     // image_vertical_flex_right
     AppAd(:data-ad-slot="8500032812")
+
+  // Auth Dialog
+  AuthDialog
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, onBeforeUnmount, reactive, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup() {}
+  setup() {
+    const visualViewport = reactive({
+      initialize: {
+        height: 0
+      },
+      current: {
+        height: 0
+      }
+    })
+
+    const setVisualViewportHeight = () => {
+      if ('visualViewport' in window) {
+        visualViewport.current.height = window.visualViewport.height
+      } else {
+        visualViewport.current.height = window.innerHeight
+      }
+
+      visualViewport.initialize.height = window.innerHeight
+    }
+
+    onMounted(() => {
+      setTimeout(() => {
+        setVisualViewportHeight()
+      }, 0)
+
+      if ('visualViewport' in window) {
+        window.visualViewport.addEventListener('resize', setVisualViewportHeight)
+      }
+
+      window.addEventListener('resize', setVisualViewportHeight)
+      window.addEventListener('scroll', setVisualViewportHeight)
+    })
+
+    onBeforeUnmount(() => {
+      if ('visualViewport' in window) {
+        window.visualViewport.removeEventListener('resize', setVisualViewportHeight)
+      }
+
+      window.removeEventListener('resize', setVisualViewportHeight)
+      window.removeEventListener('scroll', setVisualViewportHeight)
+    })
+
+    return {
+      visualViewport
+    }
+  }
 })
 </script>
 

@@ -1,0 +1,120 @@
+.tour-mode-results-view {
+  position: relative;
+  padding: calc(var(--base-p-y) * 2) calc(var(--base-p-x) * 2);
+  background-color: var(--color-ui-01);
+
+  @include media-breakpoint-down(tablet) {
+    padding: $spacer * 4;
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    content: '';
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  &-header {
+    display: block;
+    text-align: center;
+    margin-block-end: calc(var(--base-m-y) * 2);
+
+    @include media-breakpoint-down(tablet) {
+      margin-block-end: var(--base-m-y);
+    }
+
+    &__title {
+      color: var(--color-text-02);
+      font-weight: 500;
+      font-size: var(--font-size-text-2);
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-8);
+      }
+    }
+  }
+
+  &-correct-answer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $spacer * 4 $spacer * 6;
+    background-color: var(--color-ui-02);
+    border-radius: var(--border-radius-01);
+    box-shadow: var(--box-shadow-03);
+    margin-block-end: $spacer * 4;
+
+    @include media-breakpoint-down(tablet) {
+      padding: $spacer * 3 $spacer * 4;
+    }
+
+    &__title {
+      display: inline-flex;
+      color: var(--color-text-03);
+      font-weight: 600;
+      font-size: var(--font-size-text-5);
+      text-align: center;
+      margin-block-end: $spacer * 3;
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-9);
+      }
+    }
+
+    &__answer {
+      color: var(--color-text-01);
+      font-weight: 800;
+      font-size: var(--font-size-text-1);
+      text-transform: uppercase;
+
+      @include media-breakpoint-down(tablet) {
+        font-size: var(--font-size-text-7);
+      }
+    }
+  }
+
+  &-waiting {
+    position: relative;
+    width: 100%;
+    color: var(--color-text-02);
+    font-weight: 600;
+    font-size: var(--font-size-text-5);
+    background-color: transparent;
+    border: 0;
+    margin-block-start: calc(var(--base-m-y) * 2);
+
+    @include media-breakpoint-down(tablet) {
+      font-size: var(--font-size-text-9);
+      margin-block-start: var(--base-m-y);
+    }
+
+    @include media-breakpoint-down(mobile) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      font-size: var(--font-size-text-9);
+    }
+
+    .van-loading {
+      transform: scale(1.3);
+      transform-origin: right;
+      margin-block-end: $spacer;
+      margin-inline-end: $spacer * 2;
+
+      @include media-breakpoint-down(mobile) {
+        transform: scale(1);
+      }
+    }
+  }
+}

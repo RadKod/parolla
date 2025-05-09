@@ -1,4 +1,23 @@
 .player-avatar {
   position: relative;
   display: flex;
+  align-items: center;
+
+  &-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    z-index: 2;
+    padding: 2px 4px;
+    background: linear-gradient(to top, #000, #444);
+    border-radius: var(--border-radius-01);
+  }
+
+  &__avatar {
+    position: relative;
+  }
+
+  &__username {
+    margin-inline-start: $spacer * 2;
+  }
 }

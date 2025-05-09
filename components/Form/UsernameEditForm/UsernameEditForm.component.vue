@@ -2,35 +2,41 @@
 Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
   Field.username-edit-form__usernameField(maxlength="28" :disabled="form.isBusy")
     template(#label)
-      PlayerAvatar(:size="36" :name="user.fingerprint")
+      .username-edit-form__label
+        Badge.username-edit-form__avatarBadge(v-if="!$auth.loggedIn" type="primary" content="Ziyaretçi")
+        PlayerAvatar(:size="36" :user="user")
 
     template(#input)
       input(
+        v-model="form.username"
         name="username"
-        :value="user.username"
         :placeholder="$t('form.usernameEdit.usernameField.placeholder')"
         rows="1"
         maxlength="28"
+        autocomplete="off"
         :disabled="form.isBusy"
-        @input="e => handleUsernameInput(e)"
       )
-
-    template(#button)
-      Button.username-edit-form-submit-button(native-type="button" :loading="form.isBusy" :disabled="form.isBusy" @click="handleSubmit")
+      Button.username-edit-form-submit-button(
+        native-type="button"
+        :loading="form.isBusy"
+        :disabled="form.isBusy || !isUsernameChanged"
+        @click="handleSubmit"
+      )
         AppIcon.username-edit-form-submit-button__icon(name="tabler:check" color="var(--color-text-04)" :width="20" :height="20")
-        span.username-edit-form-submit-button__title {{ $t('form.usernameEdit.submit') }}
+        span.username-edit-form-submit-button__title
 </template>
 
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
-import { Form, Button, Field, Notify } from 'vant'
+import { Form, Button, Field, Notify, Badge } from 'vant'
 
 export default defineComponent({
   components: {
     Form,
     Button,
     Field,
-    Notify
+    Notify,
+    Badge
   },
   setup() {
     const { i18n } = useContext()
@@ -40,22 +46,17 @@ export default defineComponent({
 
     const form = reactive({
       isBusy: false,
-      isClear: false,
-      username: ''
+      username: user.value.username
     })
 
-    const handleUsernameInput = e => {
-      const value = e.target.value
+    const isUsernameChanged = computed(() => {
+      return form.username !== user.value.username
+    })
 
-      const regex = /^. {0,27}\S.+$/
+    const validateUsername = username => {
+      const regex = /^.{0,27}\S.+$/
 
-      if (regex.test(value)) {
-        form.isClear = true
-      } else {
-        form.isClear = false
-      }
-
-      form.username = value
+      return regex.test(username)
     }
 
     const handleFailed = errorInfo => {
@@ -69,29 +70,34 @@ export default defineComponent({
     const handleSubmit = async () => {
       form.isBusy = true
 
-      if (form.isClear) {
-        const result = await store.dispatch('auth/updateUser', form.username)
-
-        if (result.success) {
-          store.commit('auth/SET_USERNAME', result.data.username)
-
-          Notify({
-            message: i18n.t('form.usernameEdit.callback.success'),
-            color: 'var(--color-text-04)',
-            background: 'var(--color-success-01)',
-            duration: 1000
-          })
-        } else {
-          Notify({
-            message: result.message,
-            color: 'var(--color-text-04)',
-            background: 'var(--color-danger-01)',
-            duration: 1000
-          })
-        }
-      } else {
+      if (!validateUsername(form.username)) {
         Notify({
           message: i18n.t('form.usernameEdit.error.submit'),
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 1000
+        })
+        form.isBusy = false
+
+        return
+      }
+
+      const result = await store.dispatch('auth/updateUser', { username: form.username })
+
+      if (result.success) {
+        store.commit('auth/SET_USER', {
+          ...result.data
+        })
+
+        Notify({
+          message: i18n.t('form.usernameEdit.callback.success'),
+          color: 'var(--color-text-04)',
+          background: 'var(--color-success-01)',
+          duration: 1000
+        })
+      } else {
+        Notify({
+          message: result.data.error,
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
           duration: 1000
@@ -104,7 +110,7 @@ export default defineComponent({
     return {
       user,
       form,
-      handleUsernameInput,
+      isUsernameChanged,
       handleFailed,
       handleSubmit
     }

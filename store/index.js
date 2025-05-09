@@ -1,25 +1,22 @@
 export const actions = {
-  async nuxtClientInit({ dispatch, commit }) {
+  async nuxtClientInit({ dispatch, commit, getters }) {
     if (process.browser) {
-      const persistStore = JSON.parse(window.localStorage.getItem('persistStore'))
+      await dispatch('auth/generateFingerprint')
 
-      const storedFingerprint = persistStore && persistStore.auth?.user?.fingerprint
+      const fetchMeResult = await dispatch('auth/fetchMe')
 
-      if (!storedFingerprint || storedFingerprint.length <= 0) {
-        await dispatch('auth/generateFingerprint')
+      if (fetchMeResult.success) {
+        commit('auth/SET_USER', fetchMeResult.data)
+      } else {
+        const updateUserResult = await dispatch('auth/updateUser')
 
-        const fetchMeResult = await dispatch('auth/fetchMe')
-
-        if (fetchMeResult.success) {
-          commit('auth/SET_USERNAME', fetchMeResult.data.username)
-        } else {
-          const updateUserResult = await dispatch('auth/updateUser')
-
-          if (updateUserResult.success) {
-            commit('auth/SET_USERNAME', updateUserResult.data.username)
-          }
+        if (updateUserResult.success) {
+          commit('auth/SET_USER', updateUserResult.data)
         }
       }
+
+      await dispatch('app/initWs')
+      await dispatch('tour/listenWs', { ws: getters['app/ws'] })
     }
   }
 }

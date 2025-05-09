@@ -1,12 +1,27 @@
 .username-edit-form {
   position: relative;
 
+  &__label {
+    position: relative;
+  }
+
+  &__avatarBadge {
+    position: absolute;
+    top: -14px;
+    right: -64px;
+    z-index: 2;
+    padding: 2px 4px;
+    color: var(--color-text-04);
+    background-color: #000;
+  }
+
   &__usernameField {
     $van-field: '.van-field';
 
     position: relative;
     display: grid;
     grid-template-columns: calc(46px + var(--base-m-x) / 2) 1fr auto;
+    padding-inline-end: 0;
 
     #{$van-field} {
       &__label {
@@ -44,20 +59,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 96px;
-    height: 46px;
+    width: 46px;
+    height: 48px;
     margin-left: calc(var(--base-m-x) / 2);
     color: var(--color-text-04);
     background-color: var(--color-field-02);
     border: 0;
     border: 2px solid var(--color-field-02);
     border-radius: var(--border-radius-01);
-
-    @include media-breakpoint-down(tablet) {
-      height: 40px;
-      margin-top: calc(var(--base-m-y) / 2);
-      margin-left: auto;
-    }
 
     #{$van-button} {
       &__text {

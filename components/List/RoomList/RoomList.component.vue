@@ -37,12 +37,12 @@
 
             template(#label)
               .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
-                PlayerAvatar(:size="16" :name="room.user.fingerprint")
+                PlayerAvatar(:size="16" :user="room.user")
                 span.room-list-item-badge__value {{ room.user.username }}
 
               .room-list-item__badges
                 .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
-                  PlayerAvatar(:size="16" :name="room.user.fingerprint")
+                  PlayerAvatar(:size="16" :user="room.user")
                   span.room-list-item-badge__value {{ room.user.username }}
 
                 .room-list-item-badge(v-if="room.questionCount")

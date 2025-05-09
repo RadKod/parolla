@@ -23,10 +23,8 @@
         .room-review-list-item__head
           .room-review-list-item-user
             strong.room-review-list-item-user__username
-              template(v-if="item.user")
-                PlayerAvatar(:size="20" :name="item.user.fingerprint")
-                span {{ item.user.username }}
-              template(v-else) -
+              PlayerAvatar(:size="20" :user="item.user")
+              span {{ item.user.username }}
             small &nbsp; (
               AppIcon(name="tabler:star-filled" color="var(--color-text-03)" :width="10" :height="10")
               | {{ String(formatRating(item.rating)) }}

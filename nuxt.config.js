@@ -19,7 +19,10 @@ module.exports = {
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-env
    */
   env: {
-    API: process.env.API || 'https://api.radkod.com/parolla/api/v1'
+    API: process.env.API || 'https://api.radkod.com/parolla/api/v1',
+    WS_URL: process.env.WS_URL,
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
+    GOOGLE_AUTH_REDIRECT_URI: process.env.GOOGLE_AUTH_REDIRECT_URI
   },
 
   /*
@@ -79,6 +82,7 @@ module.exports = {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    { src: '~/plugins/auth-control', ssr: false }, // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/vuex-persist', ssr: false }, // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
@@ -145,7 +149,7 @@ module.exports = {
     [
       '@nuxtjs/color-mode',
       {
-        preference: 'light'
+        preference: 'system'
       }
     ],
     // https://github.com/antfu/unplugin-auto-import
@@ -164,6 +168,35 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+    'cookie-universal-nuxt',
+    // https://axios.nuxtjs.org
+    '@nuxtjs/axios',
+    // https://auth.nuxtjs.org
+    [
+      '@nuxtjs/auth-next',
+      {
+        vuex: {
+          namespace: 'nuxtAuth'
+        },
+        localStorage: false,
+        cookie: {
+          prefix: 'auth.'
+        },
+        strategies: {
+          google: {
+            clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+            codeChallengeMethod: '',
+            responseType: 'code',
+            redirectUri: process.env.GOOGLE_AUTH_REDIRECT_URI,
+            endpoints: {
+              token: false, // your backend url to resolve your auth with google and give you the token back
+              userInfo: false // your endpoint to get the user info after you received the token
+            }
+          }
+        },
+        plugins: ['@/plugins/auth-lang-redirect.js']
+      }
+    ],
     // https://i18n.nuxtjs.org
     [
       '@nuxtjs/i18n',
@@ -227,6 +260,14 @@ module.exports = {
           'CreatorMode/CreatorModeRoom/index': {
             tr: '/oda',
             en: '/room'
+          },
+          'TourMode/TourModeGame/index': {
+            tr: '/tur',
+            en: '/tour'
+          },
+          'Leaderboard/index': {
+            tr: '/liderlik',
+            en: '/leaderboard'
           }
         }
       }

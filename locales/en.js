@@ -33,13 +33,23 @@ export default {
     noData: 'No data',
     filter: 'Filter',
     sort: 'Sort',
-    ad: 'Ad'
+    ad: 'Ad',
+    send: 'Send'
   },
   introScene: {
     title: 'Word game',
     subtitle: 'Daily word game',
     description: 'Solve daily questions and join the competition. Create your own Q&A set and solve fun questions created by players',
     modeList: {
+      tour: {
+        title: 'TOUR',
+        description: 'Play with other players in real time',
+        liveCount: `{count} active player`,
+        label: 'NEW 🥳',
+        todaysBestScoreByLabel: 'by',
+        todaysBestScoreLabel: "Today's best score",
+        todaysBestScore: `{label} {by} {byLabel} {score} points`
+      },
       daily: {
         title: 'DAILY',
         subtitle: 'COMPETITIVE'
@@ -48,7 +58,8 @@ export default {
         title: 'UNLIMITED'
       },
       creator: {
-        title: 'CREATOR'
+        title: 'CREATOR',
+        description: 'Create your own Q&A set and solve fun questions created by players'
       }
     }
   },
@@ -156,6 +167,12 @@ export default {
       creator: {
         extra:
           'This Q&A set was created by another player <br> There are {questionCount} questions and {questionCount} answers. You can play this mod over and over again.'
+      },
+      tour: {
+        extra: `You have to find the answer to the question corresponding to each character, the answer starts with that character.<br><br>
+        For example: <strong>The fruit that fell on Newton's head?</strong> active character in question <strong>A</strong> and the answer is <strong>Apple</strong>.<br><br>
+        <strong>Parolla</strong> tour mode is a game mode where multiple players see the same question in each round and try to give the same correct answer. The question changes each round and players collect points by trying to give the correct answer in each round.<br><br>
+        Each round is <strong>30</strong> seconds and you have <strong>3</strong> chances to give the correct answer each round.`
       },
       cancelButtonText: 'Close and Play'
     },
@@ -384,6 +401,11 @@ export default {
   scoreboard: {
     scoreboard: 'Scoreboard',
     pendingScoreboard: 'Fetching scores'
+  },
+  chat: {
+    chat: 'Sohbet',
+    online: 'Online',
+    system: 'System'
   },
   seo: {
     main: {

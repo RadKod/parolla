@@ -62,23 +62,25 @@ export default () => {
 
   const alphabet = computed(() => store.getters[`${activeGameMode.value}/alphabet`])
 
-  watch(
-    () => alphabet.value.activeIndex,
-    async value => {
-      await store.commit(`${activeGameMode.value}/SET_ALPHABET_ACTIVE_INDEX`, value)
-      await statsWriteToLocalStorage()
+  if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+    watch(
+      () => alphabet.value.activeIndex,
+      async value => {
+        await store.commit(`${activeGameMode.value}/SET_ALPHABET_ACTIVE_INDEX`, value)
+        await statsWriteToLocalStorage()
 
-      if (value === -1) {
-        endGame()
+        if (value === -1) {
+          endGame()
 
-        return false
+          return false
+        }
+
+        carousels.alphabet.slideTo(value)
+        resetAnswerField()
+        questionFitText()
       }
-
-      carousels.alphabet.slideTo(value)
-      resetAnswer()
-      questionFitText()
-    }
-  )
+    )
+  }
 
   const alphabetItemClasses = (item, index) => {
     if (index === alphabet.value.activeIndex) {
@@ -154,6 +156,43 @@ export default () => {
     return index
   }
 
+  const wrongAnimateAnswerField = () => {
+    rootRef.value.querySelector('.answer-field__input').classList.add('answer-field__input--errorAnimation')
+    setTimeout(() => {
+      rootRef.value.querySelector('.answer-field__input').classList.remove('answer-field__input--errorAnimation')
+    }, 400)
+  }
+
+  const formatAnswer = value => {
+    return encodeEnglish(value.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+  }
+
+  const handleRadKodKeyword = () => {
+    Notify({
+      message: i18n.t('gameScene.radkodNotify'),
+      color: 'var(--color-text-04)',
+      background: 'var(--color-brand-radkod)'
+    })
+
+    radkodEasterEggSoundFx.play()
+
+    return false
+  }
+
+  const handleNotStartsWithActiveChar = ({ activeChar }) => {
+    Notify({
+      message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar }),
+      color: 'var(--color-text-04)',
+      background: 'var(--color-danger-01)'
+    })
+
+    resetAnswerField()
+
+    wrongAnimateAnswerField()
+
+    return false
+  }
+
   const handleAnswer = () => {
     if (isGameOver.value || answer.field.trim().length <= 0) return false
 
@@ -161,52 +200,37 @@ export default () => {
 
     item.isPassed = false
 
-    const answerField = encodeEnglish(answer.field.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
+    const answerField = formatAnswer(answer.field)
     const correctAnswers = questions.value[alphabet.value.activeIndex].answer.split(',')
 
     const passKeywords = ['pas', 'pass']
     const endGameKeywords = ['bitir', 'finish']
     const radkodKeyword = 'radkod'
 
-    if (passKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
-      pass()
+    if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+      if (passKeywords.includes(answerField)) {
+        pass()
 
-      return false
-    }
+        return false
+      }
 
-    if (endGameKeywords.includes(answerField.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))) {
-      endGame()
+      if (endGameKeywords.includes(answerField)) {
+        endGame()
 
-      return false
-    }
+        return false
+      }
 
-    if (answerField === radkodKeyword.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')) {
-      Notify({
-        message: i18n.t('gameScene.radkodNotify'),
-        color: 'var(--color-text-04)',
-        background: 'var(--color-brand-radkod)'
-      })
+      if (answerField === radkodKeyword) {
+        handleRadKodKeyword()
 
-      radkodEasterEggSoundFx.play()
+        return false
+      }
 
-      return false
-    }
+      if (!answerField.startsWith(formatAnswer(item.letter))) {
+        handleNotStartsWithActiveChar({ activeChar: item.letter })
 
-    if (!answerField.startsWith(encodeEnglish(item.letter.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')))) {
-      Notify({
-        message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar: item.letter }),
-        color: 'var(--color-text-04)',
-        background: 'var(--color-danger-01)'
-      })
-
-      resetAnswer()
-
-      rootRef.value.querySelector('.answer-field__input').classList.add('answer-field__input--errorAnimation')
-      setTimeout(() => {
-        rootRef.value.querySelector('.answer-field__input').classList.remove('answer-field__input--errorAnimation')
-      }, 400)
-
-      return false
+        return false
+      }
     }
 
     const isCorrect = correctAnswers.some(answer => {
@@ -241,6 +265,7 @@ export default () => {
         questionFitText()
       } else {
         document.querySelector('html').classList.remove('osk')
+        questionFitText()
       }
     }
   )
@@ -250,7 +275,7 @@ export default () => {
     answer.isFocused = true
   }
 
-  const resetAnswer = () => {
+  const resetAnswerField = () => {
     answer.field = ''
   }
 
@@ -311,6 +336,9 @@ export default () => {
     },
     interstitialAd: {
       isOpen: false
+    },
+    tourModeOnline: {
+      isOpen: false
     }
   })
 
@@ -325,6 +353,8 @@ export default () => {
         wrongSoundFx.mute(false)
         passSoundFx.mute(false)
         halfTimeSoundFx.mute(false)
+        hurryUpSoundFx.mute(false)
+        countdownFinishSoundFx.mute(false)
         radkodEasterEggSoundFx.mute(false)
       } else {
         startSoundFx.mute(true)
@@ -332,6 +362,8 @@ export default () => {
         wrongSoundFx.mute(true)
         passSoundFx.mute(true)
         halfTimeSoundFx.mute(true)
+        hurryUpSoundFx.mute(true)
+        countdownFinishSoundFx.mute(true)
         radkodEasterEggSoundFx.mute(true)
       }
     }
@@ -343,6 +375,8 @@ export default () => {
     wrong: null,
     pass: null,
     halfTime: null,
+    hurryUp: null,
+    countdownFinish: null,
     radkodEasterEgg: null
   })
 
@@ -371,6 +405,17 @@ export default () => {
     mute: isActiveSoundFx.value ? false : true
   })
 
+  const hurryUpSoundFx = new Howl({
+    src: [`${WEB_CDN}/assets/sound/fx/tick-tock.wav`],
+    mute: isActiveSoundFx.value ? false : true,
+    volume: 0.3
+  })
+
+  const countdownFinishSoundFx = new Howl({
+    src: [`${WEB_CDN}/assets/sound/fx/notification1.wav`],
+    mute: isActiveSoundFx.value ? false : true
+  })
+
   const radkodEasterEggSoundFx = new Howl({
     src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`],
     mute: isActiveSoundFx.value ? false : true
@@ -381,6 +426,8 @@ export default () => {
   soundFx.wrong = wrongSoundFx
   soundFx.pass = passSoundFx
   soundFx.halfTime = halfTimeSoundFx
+  soundFx.hurryUp = hurryUpSoundFx
+  soundFx.countdownFinish = countdownFinishSoundFx
   soundFx.radkodEasterEgg = radkodEasterEggSoundFx
 
   const startGame = async () => {
@@ -397,7 +444,7 @@ export default () => {
 
     dialog.howToPlay.isOpen = false
 
-    resetAnswer()
+    resetAnswerField()
 
     setTimeout(() => {
       questionFitText()
@@ -549,11 +596,23 @@ export default () => {
     }
   }
 
-  const questionFitText = async () => {
+  const questionFitText = async (params = {}) => {
+    const { originalContent = '' } = params
+
     await nextTick()
 
-    if (!!rootRef.value.querySelectorAll('.question--active')[0]) {
-      textfit(rootRef.value.querySelectorAll('.question--active')[0], {
+    const activeQuestion = rootRef.value.querySelectorAll('.question--active')[0]
+
+    if (!activeQuestion) return
+
+    const titleElement = activeQuestion.querySelector('.question__title')
+
+    if (titleElement) {
+      if (originalContent.length > 0) {
+        titleElement.innerHTML = originalContent
+      }
+
+      textfit(activeQuestion, {
         minFontSize: 16,
         maxFontSize: 30
       })
@@ -596,25 +655,42 @@ export default () => {
     return tag == 'INPUT' || tag == 'SELECT' || tag == 'TEXTAREA' || elem.isContentEditable || elem.tabIndex >= 0
   }
 
-  const handleDontHideKeyboard = event => {
+  const handleDontHideKeyboard = (event, customHandlers = null) => {
     let target = event.target
     let dontDiscardKeyboard = target.classList.contains('do-not-hide-keyboard')
 
     let isPassButton = target.classList.contains('do-not-hide-keyboard--pass')
     let isSendButton = target.classList.contains('do-not-hide-keyboard--send')
 
-    // On iOS tapping anywhere doesn’t
+    // On iOS tapping anywhere doesn't
     // automatically discard keyboard
     if (dontDiscardKeyboard) {
       event.preventDefault()
 
-      // DO ACTION HERE
-      if (isPassButton) {
-        pass()
+      // Check if custom handlers are provided and execute if applicable
+      if (customHandlers) {
+        if (isSendButton && customHandlers.handleSend) {
+          customHandlers.handleSend()
+
+          return
+        }
+
+        if (isPassButton && customHandlers.handlePass) {
+          customHandlers.handlePass()
+
+          return
+        }
       }
 
-      if (isSendButton) {
-        handleAnswer()
+      // Default behavior
+      if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
+        if (isPassButton) {
+          pass()
+        }
+
+        if (isSendButton) {
+          handleAnswer()
+        }
       }
     } else if (!acceptsInput(target)) {
       document.activeElement.blur()
@@ -637,6 +713,12 @@ export default () => {
     nextLetter,
     handleAnswer,
     handleAnswerField,
+    handleRadKodKeyword,
+    handleNotStartsWithActiveChar,
+    wrongAnimateAnswerField,
+    formatAnswer,
+    focusToAnswerFieldInput,
+    resetAnswerField,
     handleTabKey,
     pass,
     carousels,

@@ -27,6 +27,11 @@ html {
   min-height: 100%;
   overflow: hidden !important;
   touch-action: manipulation;
+  color-scheme: light;
+
+  &.dark-mode {
+    color-scheme: dark;
+  }
 }
 
 body {

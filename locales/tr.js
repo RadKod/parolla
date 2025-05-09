@@ -33,22 +33,36 @@ export default {
     noData: 'Veri yok',
     filter: 'Filtrele',
     sort: 'Sırala',
-    ad: 'Reklam'
+    ad: 'Reklam',
+    send: 'Gönder',
+    playNow: 'Hemen Oyna'
   },
   introScene: {
     title: 'Kelime oyunu',
     subtitle: 'Günlük kelime oyunu',
     description: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz',
     modeList: {
+      tour: {
+        title: 'TUR',
+        description: 'Her tur diğer oyuncularla anlık rekabet',
+        liveCount: `{count} aktif oyuncu`,
+        label: 'YENİ MOD',
+        todaysBestScoreByLabel: 'tarafından',
+        todaysBestScoreLabel: 'Bugünün en iyi skoru',
+        todaysBestScore: `{label} {by} {byLabel} {score} puan`
+      },
       daily: {
         title: 'GÜNLÜK',
-        subtitle: 'REKABETÇİ'
+        subtitle: 'REKABETÇİ',
+        description: 'Bugünün soru setini oyna'
       },
       unlimited: {
-        title: 'LİMİTSİZ'
+        title: 'LİMİTSİZ',
+        description: 'Sınırsız soru seti'
       },
       creator: {
-        title: 'YARATICI'
+        title: 'YARATICI',
+        description: 'Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
       }
     }
   },
@@ -157,6 +171,13 @@ export default {
         extra:
           'Bu soru cevap seti başka bir oyuncu tarafından hazırlandı <br> {questionCount} soru ve {questionCount} cevap var. Bu modu tekrar tekrar oynayabilirsin.'
       },
+      tour: {
+        extra: `
+        Her karaktere karşılık gelen sorunun cevabını bulmalısın, cevap o karakter ile başlar.<br><br>
+        Örneğin: <strong>Bal yapan hayvan?</strong> sorusunda aktif karakter <strong>A</strong> ve bunun cevabı <strong>Arı</strong>'dır gibi.<br><br>
+        <strong>parolla</strong> tur modu aynı anda birden fazla oyuncunun her turda aynı soruyu gördüğü ve aynı doğru cevabı vermeye çalıştığı, her tur sorunun değiştiği ve her tur oyuncuların doğru cevabı vermeye çalışıp puan topladığı bir oyun modudur.<br><br>
+        Her tur <strong>30</strong> saniyedir ve her tur doğru cevabı vermek için <strong>3</strong> hakkın vardır.`
+      },
       cancelButtonText: 'Kapat ve Başla'
     },
     stats: {
@@ -195,6 +216,14 @@ export default {
           action: 'Tekrar dene'
         }
       }
+    },
+    tourModeOnline: {
+      title: 'Tur'
+    },
+    auth: {
+      title: 'Giriş yap',
+      login: 'Giriş yap',
+      register: 'Kayıt ol'
     }
   },
   clipboard: {
@@ -384,6 +413,71 @@ export default {
   scoreboard: {
     scoreboard: 'Skor tablosu',
     pendingScoreboard: 'Skorlar getiriliyor'
+  },
+  chat: {
+    chat: 'Sohbet',
+    online: 'Online',
+    system: 'Sistem',
+    messagesEmpty: 'Henüz mesaj yok',
+    messageField: {
+      placeholder: 'Mesajını buraya yaz...'
+    }
+  },
+  tourMode: {
+    onlineUsers: 'Online oyuncular',
+    player: 'Oyuncu',
+    viewer: 'İzleyici',
+    results: {
+      title: 'Tur Sonuçları',
+      correctAnswer: 'Doğru Cevap:',
+      empty: {
+        description: 'Cevabı kimse bilemedi'
+      }
+    },
+    lastAnswers: {
+      title: 'Son cevaplar',
+      empty: {
+        title: '',
+        description: 'Henüz kimse cevap vermedi'
+      }
+    },
+    guessingChance: {
+      title: 'TAHMİN HAKKIN'
+    },
+    correctAnswer: {
+      description: `<h2>✅ &nbsp; DOĞRU CEVAP!</h2> <p>Diğer oyuncuların cevaplarını bekle</p>`
+    },
+    wrongAnswer: {
+      description: `YANLIŞ CEVAP`
+    },
+    playerFinishedTheTour: {
+      description: `<h2>💔 &nbsp; TAHMİN HAKKIN BİTTİ!</h2> <p>Turun bitmesine kadar bekle</p>`
+    }
+  },
+  leaderboard: {
+    modeTitle: '{mode} modu lider sıralaması',
+    daily: {
+      short: 'Günlük',
+      full: 'Günlük lider sıralaması'
+    },
+    weekly: {
+      short: 'Haftalık',
+      full: 'Haftalık lider sıralaması'
+    },
+    monthly: {
+      short: 'Aylık',
+      full: 'Aylık lider sıralaması'
+    },
+    pending: 'Sıralama getiriliyor',
+    error: {
+      fetch: {
+        description: 'Sıralama getirilemedi',
+        action: 'Tekrar dene'
+      }
+    },
+    empty: {
+      description: 'Henüz kimse sıralamaya girmedi'
+    }
   },
   seo: {
     main: {

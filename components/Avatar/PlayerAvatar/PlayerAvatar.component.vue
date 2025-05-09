@@ -1,6 +1,13 @@
 <template lang="pug">
 .player-avatar
-  Avatar.player-avatar__avatar(variant="beam" :name="name" :size="size")
+  slot(name="prepend")
+
+  .player-avatar-badge(v-if="isVisitor")
+    AppIcon.player-avatar-badge__icon(name="hugeicons:anonymous" color="#fff" :width="16" :height="16")
+  Avatar.player-avatar__avatar(variant="beam" :name="name || user.username" :size="size")
+  span.player-avatar__username(v-if="withUsername") {{ user.username }}
+
+  slot(name="append")
 </template>
 
 <script>
@@ -20,7 +27,22 @@ export default defineComponent({
     name: {
       type: String,
       required: false,
-      default: 'Player'
+      default: null
+    },
+    user: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    withUsername: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    isVisitor: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   setup() {}

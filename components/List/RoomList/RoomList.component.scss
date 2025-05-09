@@ -23,18 +23,26 @@
     }
   }
 
-  .van-cell {
-    $van-cell: '.van-cell';
+  .van-list {
+    .van-cell {
+      $van-cell: '.van-cell';
 
-    margin-bottom: var(--base-m-y);
-    overflow: hidden;
-    border-radius: var(--border-radius-01);
+      margin-bottom: var(--base-m-y);
+      overflow: hidden;
+      border-radius: var(--border-radius-01);
+      box-shadow: var(--box-shadow-02);
+    }
   }
 
   &-item {
     $room-list-item: '.room-list-item';
 
     position: relative;
+    transition: transform 0.1s var(--motion-01);
+
+    &:hover {
+      transform: scale(1.02);
+    }
 
     &--ad {
       position: relative;
@@ -45,7 +53,7 @@
 
       small {
         position: absolute;
-        color: var(--color-text-03);
+        color: #222;
 
         @include center(true, true);
       }

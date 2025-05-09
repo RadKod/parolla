@@ -27,4 +27,18 @@
 
     @include font-weight-semi-bold;
   }
+
+  &__logoutButton {
+    display: block;
+    color: #fff;
+    background-color: var(--color-danger-01);
+    border-radius: var(--border-radius-01);
+    box-shadow: var(--box-shadow-02);
+    margin-block-end: var(--base-m-y);
+    margin-inline-start: auto;
+  }
+
+  .login-form {
+    margin-block-end: calc(var(--base-m-y) * 2);
+  }
 }
