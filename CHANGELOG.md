@@ -1,5 +1,63 @@
 # Changelog
 
+## v2.16.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.15.6...v2.16.0)
+
+
+### 🚀 Enhancements
+
+  - Add tour mode link ([6540950](https://github.com/RadKod/parolla/commit/6540950))
+  - Tour structure ([3cd541c](https://github.com/RadKod/parolla/commit/3cd541c))
+  - Ui improvements ([3af0b43](https://github.com/RadKod/parolla/commit/3af0b43))
+  - Google auth ([5ec2988](https://github.com/RadKod/parolla/commit/5ec2988))
+  - Tour mode results ui ([622346e](https://github.com/RadKod/parolla/commit/622346e))
+  - Ws structure ([a425a22](https://github.com/RadKod/parolla/commit/a425a22))
+  - Ui improvements on tour mode ([540eddd](https://github.com/RadKod/parolla/commit/540eddd))
+  - Socket chat structure ([cead883](https://github.com/RadKod/parolla/commit/cead883))
+  - Ui improvements ([f692fe2](https://github.com/RadKod/parolla/commit/f692fe2))
+  - Ui improvements ([951ed8c](https://github.com/RadKod/parolla/commit/951ed8c))
+  - Ui improvements on tour ([e2d63a6](https://github.com/RadKod/parolla/commit/e2d63a6))
+  - Ux improvements ([eaaaf6a](https://github.com/RadKod/parolla/commit/eaaaf6a))
+  - Ui improvements ([9ec7749](https://github.com/RadKod/parolla/commit/9ec7749))
+  - Ui improvements ([516cbe1](https://github.com/RadKod/parolla/commit/516cbe1))
+  - Ui improvements ([1b53e38](https://github.com/RadKod/parolla/commit/1b53e38))
+  - Ui improvements ([a83a82c](https://github.com/RadKod/parolla/commit/a83a82c))
+  - Ui improvements ([96f1fb5](https://github.com/RadKod/parolla/commit/96f1fb5))
+  - Ui updates on tour mode ([167a16a](https://github.com/RadKod/parolla/commit/167a16a))
+  - Leaderboard ([09405f9](https://github.com/RadKod/parolla/commit/09405f9))
+  - Ui improvements ([89b5c03](https://github.com/RadKod/parolla/commit/89b5c03))
+  - Ui improvements on tour mode ([2d4379a](https://github.com/RadKod/parolla/commit/2d4379a))
+  - Ux improvements ([c993f00](https://github.com/RadKod/parolla/commit/c993f00))
+  - Ux improvements ([fc12454](https://github.com/RadKod/parolla/commit/fc12454))
+
+### 🩹 Fixes
+
+  - Fix ui on tour ([2528d80](https://github.com/RadKod/parolla/commit/2528d80))
+  - Define env ([e7d95f5](https://github.com/RadKod/parolla/commit/e7d95f5))
+  - Fix auth redirect ([6f99789](https://github.com/RadKod/parolla/commit/6f99789))
+  - Auth redirect ([edbaa03](https://github.com/RadKod/parolla/commit/edbaa03))
+
+### 💅 Refactors
+
+  - Upgrade node engine ([392f22a](https://github.com/RadKod/parolla/commit/392f22a))
+  - Fixed answer field section ([8405633](https://github.com/RadKod/parolla/commit/8405633))
+  - Updates on tour structure ([2501ca4](https://github.com/RadKod/parolla/commit/2501ca4))
+  - Tour ui updates ([e9f7053](https://github.com/RadKod/parolla/commit/e9f7053))
+  - Ui updates on tour mode ([09c1c91](https://github.com/RadKod/parolla/commit/09c1c91))
+  - Ui updates on tour mode ([27e245b](https://github.com/RadKod/parolla/commit/27e245b))
+  - Ui updates on tour ([76f104b](https://github.com/RadKod/parolla/commit/76f104b))
+  - Clean code ([37f1a6c](https://github.com/RadKod/parolla/commit/37f1a6c))
+  - Ws updates on tour mode ([35473d7](https://github.com/RadKod/parolla/commit/35473d7))
+  - Tour mode updates ([ae5dc80](https://github.com/RadKod/parolla/commit/ae5dc80))
+  - Update ws structure ([f26606c](https://github.com/RadKod/parolla/commit/f26606c))
+  - Update ws structure ([0b1d860](https://github.com/RadKod/parolla/commit/0b1d860))
+  - Update ui ([f4d752d](https://github.com/RadKod/parolla/commit/f4d752d))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.15.6
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.5...v2.15.6)
