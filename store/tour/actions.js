@@ -27,8 +27,10 @@ export default {
     }
   },
 
-  async fetchLeaderboard({ commit }, { type = 'all', limit = 10 }) {
-    const leaderboardResponse = await fetch(`${process.env.API}/tour/leaderboard?type=${type}&limit=${limit}`, {
+  async fetchLeaderboard({ commit }, { type = 'allTime', limit = 10 }) {
+    const _type = type === 'allTime' ? 'all_time' : type
+
+    const leaderboardResponse = await fetch(`${process.env.API}/tour/leaderboard?type=${_type}&limit=${limit}`, {
       method: 'get',
       headers: {
         'Accept-Language': this.$i18n.locale

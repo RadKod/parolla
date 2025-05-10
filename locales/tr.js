@@ -479,6 +479,10 @@ export default {
       short: 'Aylık',
       full: 'Aylık lider sıralaması'
     },
+    allTime: {
+      short: 'Tüm zamanlar',
+      full: 'Tüm zamanlar lider sıralaması'
+    },
     pending: 'Sıralama getiriliyor',
     error: {
       fetch: {

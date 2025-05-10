@@ -26,7 +26,7 @@ export default () => ({
     daily: [],
     weekly: [],
     monthly: [],
-    all: []
+    allTime: []
   },
   chat: {
     messages: []
