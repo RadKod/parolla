@@ -37,6 +37,17 @@ export default {
     send: 'Gönder',
     playNow: 'Hemen Oyna'
   },
+  auth: {
+    google: {
+      callback: {
+        redirecting: 'Yönlendiriliyorsun, lütfen bekle...',
+        ifNoRedirect: 'Bu sayfada takılı kaldıysan anasayfaya gitmek için <a href="/" title="kelime oyunu">buraya tıkla</a>'
+      }
+    },
+    error: {
+      title: 'Giriş yapılamadı, tekrar dene'
+    }
+  },
   introScene: {
     title: 'Kelime oyunu',
     subtitle: 'Günlük kelime oyunu',
@@ -467,6 +478,10 @@ export default {
     monthly: {
       short: 'Aylık',
       full: 'Aylık lider sıralaması'
+    },
+    allTime: {
+      short: 'Tüm zamanlar',
+      full: 'Tüm zamanlar lider sıralaması'
     },
     pending: 'Sıralama getiriliyor',
     error: {

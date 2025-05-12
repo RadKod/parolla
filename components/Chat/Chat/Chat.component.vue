@@ -22,6 +22,8 @@
       :border="false"
       :readonly="!$auth.loggedIn"
       @keypress.enter="sendMessage"
+      @focus="handleFocus"
+      @blur="handleBlur"
     )
       template(#button)
         Button.chat__button.chat__button--send(
@@ -127,13 +129,23 @@ export default defineComponent({
       messageText.value = ''
     }
 
+    const handleFocus = () => {
+      emit('on-focus')
+    }
+
+    const handleBlur = () => {
+      emit('on-blur')
+    }
+
     return {
       messagesRef,
       messageText,
       chatMessages,
       sendMessage,
       isoToHumanDate,
-      scrollToBottom
+      scrollToBottom,
+      handleFocus,
+      handleBlur
     }
   }
 })

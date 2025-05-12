@@ -36,6 +36,17 @@ export default {
     ad: 'Ad',
     send: 'Send'
   },
+  auth: {
+    google: {
+      callback: {
+        redirecting: 'Redirecting, please wait...',
+        ifNoRedirect: 'If you stuck on this page, click <a href="/" title="word game">here</a> to go to the home page'
+      }
+    },
+    error: {
+      title: 'Login failed, try again'
+    }
+  },
   introScene: {
     title: 'Word game',
     subtitle: 'Daily word game',

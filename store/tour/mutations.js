@@ -32,7 +32,7 @@ export default {
     state.leaderboard.daily = mappedLeaderboard(leaderboard.daily)
     state.leaderboard.weekly = mappedLeaderboard(leaderboard.weekly)
     state.leaderboard.monthly = mappedLeaderboard(leaderboard.monthly)
-    state.leaderboard.all = mappedLeaderboard(leaderboard.all)
+    state.leaderboard.allTime = mappedLeaderboard(leaderboard['all_time'])
   },
 
   SET_CHAT_MESSAGES(state, messages) {

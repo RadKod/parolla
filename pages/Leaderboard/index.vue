@@ -1,17 +1,21 @@
 <template lang="pug">
 .page.leaderboard-page
   .leaderboard-page-header
-    h1.leaderboard-page-header__title.mb-base.pb-base {{ $t('leaderboard.modeTitle', { mode: $t('introScene.modeList.tour.title') }) }}
+    h1.leaderboard-page-header__title.mb-base {{ $t('leaderboard.modeTitle', { mode: $t('introScene.modeList.tour.title') }) }}
+    p.leaderboard-page-header__description.mb-base {{ pageDescription }}
 
   .button-group
-    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'monthly' }" @click="fetchLeaderboard('monthly')")
-      | {{ $t('leaderboard.monthly.short') }}
+    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'daily' }" @click="fetchLeaderboard('daily')")
+      | {{ $t('leaderboard.daily.short') }}
 
     Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'weekly' }" @click="fetchLeaderboard('weekly')")
       | {{ $t('leaderboard.weekly.short') }}
 
-    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'daily' }" @click="fetchLeaderboard('daily')")
-      | {{ $t('leaderboard.daily.short') }}
+    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'monthly' }" @click="fetchLeaderboard('monthly')")
+      | {{ $t('leaderboard.monthly.short') }}
+
+    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'allTime' }" @click="fetchLeaderboard('allTime')")
+      | {{ $t('leaderboard.allTime.short') }}
 
   template(v-if="fetchState.pending")
     Empty(:description="$t('leaderboard.pending')")
@@ -28,8 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useStore, useContext, useRouter, onMounted, useFetch, computed } from '@nuxtjs/composition-api'
-const { getQuery } = require('ufo')
+import { defineComponent, ref, useStore, useFetch, computed } from '@nuxtjs/composition-api'
 import { Empty, Button } from 'vant'
 
 export default defineComponent({
@@ -40,12 +43,9 @@ export default defineComponent({
   },
   layout: 'Default/Default.layout',
   setup() {
-    const query = getQuery(window.location.href)
-    const context = useContext()
     const store = useStore()
-    const router = useRouter()
 
-    const activeLeaderboardType = ref('monthly')
+    const activeLeaderboardType = ref('daily')
 
     const leaderboard = computed(() => store.getters['tour/leaderboard'])
 
@@ -58,12 +58,25 @@ export default defineComponent({
       await store.dispatch('tour/fetchLeaderboard', { type: activeLeaderboardType.value, limit: 100 })
     })
 
+    const pageDescription = computed(() => {
+      if (activeLeaderboardType.value === 'daily') {
+        return `Bugün kazanılan puanlar`
+      } else if (activeLeaderboardType.value === 'weekly') {
+        return `Bu hafta kazanılan puanlar`
+      } else if (activeLeaderboardType.value === 'monthly') {
+        return `Bu ay kazanılan puanlar`
+      } else if (activeLeaderboardType.value === 'allTime') {
+        return `Tüm zamanlarda kazanılan puanlar`
+      }
+    })
+
     return {
       fetch,
       fetchState,
       fetchLeaderboard,
       leaderboard,
-      activeLeaderboardType
+      activeLeaderboardType,
+      pageDescription
     }
   }
 })

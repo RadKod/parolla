@@ -168,6 +168,10 @@ export default defineComponent({
           question: question.question
         }
       })
+
+      setTimeout(() => {
+        focusToAnswerFieldInput()
+      }, 0)
     }
 
     const onTimeUpdate = ({ time }) => {

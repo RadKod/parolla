@@ -178,9 +178,16 @@ module.exports = {
         vuex: {
           namespace: 'nuxtAuth'
         },
-        localStorage: false,
+        localStorage: true,
+        tokenRequired: true,
+        tokenType: 'Bearer',
         cookie: {
-          prefix: 'auth.'
+          prefix: 'auth.',
+          options: {
+            path: '/',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24 * 7
+          }
         },
         strategies: {
           google: {
