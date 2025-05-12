@@ -1,5 +1,24 @@
 # Changelog
 
+## v2.17.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.16.0...v2.17.0)
+
+
+### 🚀 Enhancements
+
+  - Ui improvements ([e9477ba](https://github.com/RadKod/parolla/commit/e9477ba))
+  - Ux improvements ([07d38c0](https://github.com/RadKod/parolla/commit/07d38c0))
+  - Ux improvements ([c551394](https://github.com/RadKod/parolla/commit/c551394))
+
+### 💅 Refactors
+
+  - Update auth config ([ae71292](https://github.com/RadKod/parolla/commit/ae71292))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.16.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.15.6...v2.16.0)
