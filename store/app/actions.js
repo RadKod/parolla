@@ -21,5 +21,12 @@ export default {
     }
 
     commit('SET_WS', ws)
+  },
+
+  closeWs({ commit, state }) {
+    if (state.ws) {
+      state.ws.close(1000, 'Client disconnecting')
+    }
+    commit('SET_WS', null)
   }
 }

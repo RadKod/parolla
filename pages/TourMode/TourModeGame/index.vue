@@ -5,11 +5,31 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, onMounted, onBeforeUnmount } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   layout: 'Default/Default.layout',
-  setup() {}
+  setup() {
+    // TODO: Implement this after tour mode socket channel is implemented
+    /* const store = useStore()
+
+    const setupWs = async () => {
+      await store.dispatch('app/initWs')
+      await store.dispatch('tour/listenWs', { ws: store.getters['app/ws'] })
+    }
+
+    const destroyWs = async () => {
+      await store.dispatch('app/closeWs')
+    }
+
+    onMounted(async () => {
+      await setupWs()
+    })
+
+    onBeforeUnmount(async () => {
+      await destroyWs()
+    }) */
+  }
 })
 </script>
 

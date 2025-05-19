@@ -15,6 +15,7 @@ export const actions = {
         }
       }
 
+      // TODO: Remove this after tour mode socket channel is implemented
       await dispatch('app/initWs')
       await dispatch('tour/listenWs', { ws: getters['app/ws'] })
     }
