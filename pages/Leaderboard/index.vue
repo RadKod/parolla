@@ -14,9 +14,6 @@
     Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'monthly' }" @click="fetchLeaderboard('monthly')")
       | {{ $t('leaderboard.monthly.short') }}
 
-    Button(type="primary" size="small" :class="{ active: activeLeaderboardType === 'allTime' }" @click="fetchLeaderboard('allTime')")
-      | {{ $t('leaderboard.allTime.short') }}
-
   template(v-if="fetchState.pending")
     Empty(:description="$t('leaderboard.pending')")
 
@@ -65,8 +62,6 @@ export default defineComponent({
         return `Bu hafta kazanılan puanlar`
       } else if (activeLeaderboardType.value === 'monthly') {
         return `Bu ay kazanılan puanlar`
-      } else if (activeLeaderboardType.value === 'allTime') {
-        return `Tüm zamanlarda kazanılan puanlar`
       }
     })
 

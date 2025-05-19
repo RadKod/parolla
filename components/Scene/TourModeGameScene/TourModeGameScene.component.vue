@@ -325,7 +325,6 @@ export default defineComponent({
     const onRecentAnswers = ({ answers }) => {
       const mappedAnswers = answers.map(answer => ({
         username: answer.playerName,
-        globalScore: answer.totalScore,
         isCorrect: answer.isCorrect
       }))
 

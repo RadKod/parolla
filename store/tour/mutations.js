@@ -11,7 +11,6 @@ export default {
       id: player.id,
       username: player.name,
       avatarUrl: player.avatarUrl,
-      globalScore: player.apiScore,
       lives: player.lives
     }))
 

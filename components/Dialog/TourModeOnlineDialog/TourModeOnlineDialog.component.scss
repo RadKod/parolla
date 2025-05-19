@@ -33,4 +33,14 @@
       color: var(--color-text-03);
     }
   }
+
+  &__lastAnswersTab {
+    .player-list {
+      &-item-user {
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
 }

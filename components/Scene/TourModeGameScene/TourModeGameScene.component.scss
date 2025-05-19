@@ -164,6 +164,12 @@
         }
       }
 
+      &-item-user {
+        &::before {
+          display: none;
+        }
+      }
+
       &__empty {
         .van-empty {
           &__image {
