@@ -319,6 +319,7 @@ export default defineComponent({
 
     const onRecentAnswers = ({ answers }) => {
       const mappedAnswers = answers.map(answer => ({
+        id: answer.playerId,
         username: answer.playerName,
         isCorrect: answer.isCorrect
       }))
@@ -341,6 +342,7 @@ export default defineComponent({
     const mapRoundScores = ({ scores }) => {
       const mappedScores = scores.map(scorer => ({
         username: scorer.playerName,
+        id: scorer.playerId,
         score: `+${scorer.baseScore}`,
         time: formatTimestamp(scorer.responseTime),
         attemptCount: scorer.attemptCount,

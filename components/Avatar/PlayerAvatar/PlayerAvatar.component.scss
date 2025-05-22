@@ -1,7 +1,19 @@
 .player-avatar {
+  $player-avatar: '.player-avatar';
+
   position: relative;
   display: flex;
   align-items: center;
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      #{$player-avatar}__username {
+        text-decoration: underline !important;
+      }
+    }
+  }
 
   &-badge {
     position: absolute;

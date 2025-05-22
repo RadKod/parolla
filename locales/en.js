@@ -34,7 +34,9 @@ export default {
     filter: 'Filter',
     sort: 'Sort',
     ad: 'Ad',
-    send: 'Send'
+    send: 'Send',
+    playNow: 'Play now',
+    joined: 'Joined'
   },
   auth: {
     google: {

@@ -5,7 +5,7 @@
   template(v-if="scorers?.length > 0")
     .top-scorer-list
       .top-scorer-list-item(v-for="(scorer, index) in scorers.slice(0, 3)" :key="scorer.username" :data-rank="index + 1")
-        PlayerAvatar(with-username :size="48" :user="scorer")
+        PlayerAvatar(with-username open-player-dialog-on-click :size="48" :user="scorer")
 
         .top-scorer-list-item-score(v-if="scorer.score")
           span.top-scorer-list-item-score__value

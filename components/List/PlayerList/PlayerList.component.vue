@@ -5,7 +5,7 @@
       template(#title)
         .player-list-item-user
           strong.player-list-item-user__username
-            PlayerAvatar(with-username :size="20" :user="item")
+            PlayerAvatar(with-username open-player-dialog-on-click :size="20" :user="item")
 
         .player-list-item-time(v-if="item.time")
           AppIcon.player-list-item-time__icon(name="tabler:clock" :width="16" :height="16")

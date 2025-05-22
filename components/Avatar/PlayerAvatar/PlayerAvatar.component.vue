@@ -1,5 +1,5 @@
 <template lang="pug">
-.player-avatar
+.player-avatar(:class="{ 'player-avatar--clickable': openPlayerDialogOnClick }" @click="handleClickPlayerAvatar")
   slot(name="prepend")
 
   .player-avatar-badge(v-if="isVisitor")
@@ -11,12 +11,14 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useStore } from '@nuxtjs/composition-api'
 import Avatar from 'vue2-boring-avatars'
+import { Notify } from 'vant'
 
 export default defineComponent({
   components: {
-    Avatar
+    Avatar,
+    Notify
   },
   props: {
     size: {
@@ -43,9 +45,41 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false
+    },
+    openPlayerDialogOnClick: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
-  setup() {}
+  setup(props) {
+    const store = useStore()
+
+    const openPlayerDialog = async () => {
+      store.commit('user/SET_PLAYER_DIALOG_IS_OPEN', true)
+
+      const result = await store.dispatch('user/fetchUser', { id: props.user.id })
+
+      if (result.success) {
+        store.commit('user/SET_USER', result.data.user)
+      } else {
+        Notify({
+          message: `Oyuncu bilgileri getirilemedi`,
+          color: 'var(--color-text-04)',
+          background: 'var(--color-danger-01)',
+          duration: 3000
+        })
+      }
+    }
+
+    const handleClickPlayerAvatar = async () => {
+      if (props.openPlayerDialogOnClick) {
+        await openPlayerDialog()
+      }
+    }
+
+    return { handleClickPlayerAvatar }
+  }
 })
 </script>
 

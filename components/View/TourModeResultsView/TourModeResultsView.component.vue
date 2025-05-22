@@ -84,9 +84,7 @@ export default defineComponent({
       destroyConfettiCanvas()
     })
 
-    const scorers = computed(() => {
-      return props.tour.roundScores
-    })
+    const scorers = computed(() => props.tour.roundScores)
 
     return {
       rootRef,

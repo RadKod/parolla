@@ -35,7 +35,8 @@ export default {
     sort: 'Sırala',
     ad: 'Reklam',
     send: 'Gönder',
-    playNow: 'Hemen Oyna'
+    playNow: 'Hemen Oyna',
+    joined: 'Katıldı'
   },
   auth: {
     google: {
@@ -235,6 +236,10 @@ export default {
       title: 'Giriş yap',
       login: 'Giriş yap',
       register: 'Kayıt ol'
+    },
+    player: {
+      title: 'Profil',
+      loading: 'Oyuncu bilgileri getiriliyor'
     }
   },
   clipboard: {

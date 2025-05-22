@@ -24,7 +24,7 @@
                 template(#label)
                   label.best-score-label {{ $t('introScene.modeList.tour.todaysBestScoreLabel') }}
                 template(#by)
-                  PlayerAvatar.top-scorer__avatar(with-username :user="{ username: todaysTourBestScorer.username }" :size="22")
+                  PlayerAvatar.top-scorer__avatar(with-username open-player-dialog-on-click :user="todaysTourBestScorer" :size="22")
                 template(#byLabel)
                   label.by-label {{ $t('introScene.modeList.tour.todaysBestScoreByLabel') }}
                 template(#score)
