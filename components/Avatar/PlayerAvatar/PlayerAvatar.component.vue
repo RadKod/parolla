@@ -2,16 +2,26 @@
 .player-avatar(:class="{ 'player-avatar--clickable': openPlayerDialogOnClick }" @click="handleClickPlayerAvatar")
   slot(name="prepend")
 
-  .player-avatar-badge(v-if="isVisitor")
-    AppIcon.player-avatar-badge__icon(name="hugeicons:anonymous" color="#fff" :width="16" :height="16")
-  Avatar.player-avatar__avatar(variant="beam" :name="name || user.username" :size="size")
-  span.player-avatar__username(v-if="withUsername") {{ user.username }}
+  .player-avatar__avatarWrapper(:style="{ width: `${size}px`, height: `${size}px` }")
+    // Visitor Badge
+    .player-avatar-badge(v-if="isVisitor")
+      AppIcon.player-avatar-badge__icon(name="hugeicons:anonymous" color="#fff" :width="16" :height="16")
+
+    // GM Badge
+    .player-avatar-badge.player-avatar-badge--gm(v-if="isGm")
+      AppIcon.player-avatar-badge__icon(name="tabler:crown" color="#fff" :width="16" :height="16")
+
+    Avatar.player-avatar__avatar(variant="beam" :name="name || user.username" :size="size")
+
+  span.player-avatar__username(v-if="withUsername")
+    | {{ user.username }}
+    span.gm-username-extra(v-if="isGm") &nbsp;(GM)
 
   slot(name="append")
 </template>
 
 <script>
-import { defineComponent, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, computed } from '@nuxtjs/composition-api'
 import Avatar from 'vue2-boring-avatars'
 import { Notify } from 'vant'
 
@@ -78,7 +88,15 @@ export default defineComponent({
       }
     }
 
-    return { handleClickPlayerAvatar }
+    const isGm = computed(() => {
+      if (props.user?.id === 257116 || props.user?.id === 258270 || props.user?.id === 262467) {
+        return true
+      }
+
+      return false
+    })
+
+    return { handleClickPlayerAvatar, isGm }
   }
 })
 </script>

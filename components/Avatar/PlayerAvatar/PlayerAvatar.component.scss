@@ -16,6 +16,8 @@
   }
 
   &-badge {
+    $player-avatar-badge: '.player-avatar-badge';
+
     position: absolute;
     top: -6px;
     right: -6px;
@@ -23,6 +25,33 @@
     padding: 2px 4px;
     background: linear-gradient(to top, #000, #444);
     border-radius: var(--border-radius-01);
+
+    &--gm {
+      top: -10px;
+      right: unset;
+      left: -10px;
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+      background: linear-gradient(to top, #e4ca1e, #967c09);
+
+      #{$player-avatar-badge} {
+        &__value {
+          color: #fff;
+          margin-inline-start: 4px;
+          font-size: 12px;
+
+          @include font-weight-bold;
+        }
+      }
+    }
+  }
+
+  &__avatarWrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__avatar {
@@ -31,5 +60,9 @@
 
   &__username {
     margin-inline-start: $spacer * 2;
+  }
+
+  .gm-username-extra {
+    color: #e4ca1e;
   }
 }
