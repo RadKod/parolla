@@ -15,9 +15,25 @@ export const actions = {
         }
       }
 
-      // TODO: Remove this after tour mode socket channel is implemented
-      await dispatch('app/initWs')
-      await dispatch('tour/listenWs', { ws: getters['app/ws'] })
+      const connectWs = async () => {
+        // TODO: Remove this after tour mode socket channel is implemented
+        await dispatch('app/initWs')
+        await dispatch('tour/listenWs', { ws: getters['app/ws'] })
+      }
+
+      await connectWs()
+
+      document.addEventListener('visibilitychange', async () => {
+        if (document.visibilityState === 'visible') {
+          console.info('The page has become visible')
+
+          if (getters['app/ws'].readyState !== WebSocket.OPEN) {
+            console.info('The page has become visible, reconnecting...')
+
+            await connectWs()
+          }
+        }
+      })
     }
   }
 }
