@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.parolla",
+      "sha256_cert_fingerprints": [
+        "95:23:BC:04:B2:A2:3C:10:29:F6:C6:BE:E7:12:BE:FD:0C:5C:0A:3D:37:70:9D:BE:4C:17:8D:A6:D8:B8:71:5B"
+      ]
+    }
+  }
+]
