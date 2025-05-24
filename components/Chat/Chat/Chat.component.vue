@@ -108,6 +108,10 @@ export default defineComponent({
     onMounted(() => {
       if (ws) {
         ws.addEventListener('message', handleWsMessage)
+
+        setTimeout(() => {
+          scrollToBottom()
+        }, 0)
       }
     })
 
