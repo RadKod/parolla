@@ -427,6 +427,8 @@ export default defineComponent({
         }
         rootRef.value?.removeEventListener('touchend', event => handleDontHideKeyboard(event, tourModeHandlers))
       }
+
+      Toast.clear()
     })
 
     const isTourModeOnlineDialogOpen = computed(() => store.getters['tour/dialog'].tourModeOnline.isOpen)
