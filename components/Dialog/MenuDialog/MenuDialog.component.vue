@@ -41,7 +41,7 @@ Dialog.dialog.menu-dialog(
       @click.native="$emit('clickedHowToPlay')"
     )
     Cell.menu-dialog-nav__item(
-      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.CREATOR"
       icon="bar-chart-o"
       size="large"
       is-link

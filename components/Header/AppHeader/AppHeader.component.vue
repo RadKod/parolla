@@ -21,7 +21,7 @@
       AppIcon(name="tabler:info-circle")
 
     li.app-header-nav__item.app-header-nav__item--stats(
-      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.UNLIMITED || activeGameMode === gameModeKeyEnum.CREATOR"
+      v-if="activeGameMode === gameModeKeyEnum.DAILY || activeGameMode === gameModeKeyEnum.CREATOR"
       @click="toggleStatsDialog"
     )
       AppIcon(name="tabler:chart-bar")
@@ -111,16 +111,11 @@ export default defineComponent({
     })
 
     const dailyDialog = computed(() => store.getters['daily/dialog'])
-    const unlimitedDialog = computed(() => store.getters['unlimited/dialog'])
     const creatorDialog = computed(() => store.getters['creator/dialog'])
 
     const toggleStatsDialog = () => {
       if (activeGameMode.value === gameModeKeyEnum.DAILY) {
         store.commit('daily/SET_IS_OPEN_STATS_DIALOG', !dailyDialog.value.stats.isOpen)
-      }
-
-      if (activeGameMode.value === gameModeKeyEnum.UNLIMITED) {
-        store.commit('unlimited/SET_IS_OPEN_STATS_DIALOG', !unlimitedDialog.value.stats.isOpen)
       }
 
       if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
@@ -131,7 +126,6 @@ export default defineComponent({
     const isVisibleHowToPlay = computed(() => {
       return (
         activeGameMode.value === gameModeKeyEnum.DAILY ||
-        activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
         activeGameMode.value === gameModeKeyEnum.CREATOR ||
         activeGameMode.value === gameModeKeyEnum.TOUR
       )
@@ -215,7 +209,6 @@ export default defineComponent({
     const isVisibleBackButton = computed(() => {
       if (
         activeGameMode.value === gameModeKeyEnum.DAILY ||
-        activeGameMode.value === gameModeKeyEnum.UNLIMITED ||
         activeGameMode.value === gameModeKeyEnum.CREATOR ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeIntro' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
