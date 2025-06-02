@@ -44,6 +44,11 @@ Dialog.dialog.player-dialog(
               td.tour-scores-table-item-score {{ user.tourScores.monthly.score }}
               td.tour-scores-table-item-rank {{ user.tourScores.monthly.rank }}
 
+            tr.tour-scores-table-item
+              td.tour-scores-table-item-title Tüm zamanlar
+              td.tour-scores-table-item-score {{ user.tourScores.allTime.score }}
+              td.tour-scores-table-item-rank {{ user.tourScores.allTime.rank }}
+
   template(v-else)
     Loading(color="var(--color-brand-02)") {{ $t('dialog.player.loading') }}
 </template>

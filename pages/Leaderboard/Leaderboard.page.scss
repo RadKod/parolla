@@ -13,14 +13,14 @@
     display: flex;
     flex-wrap: nowrap;
     gap: $spacer * 4;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-x: auto;
     white-space: nowrap;
     padding-inline: $spacer * 4;
     padding-block: $spacer * 2;
     margin-block-end: $spacer * 4;
 
-    @include media-breakpoint-up(mobile) {
+    @include media-breakpoint-up(mobile-m) {
       justify-content: center;
     }
 

@@ -32,18 +32,22 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
 
     template(v-else)
       p {{ $t('general.noData') }}
+
+  // InfiniteLoading(@infinite="handleInfiniteLoading")
 </template>
 
 <script>
 import { defineComponent, useStore, ref, computed } from '@nuxtjs/composition-api'
 import { Collapse, CollapseItem, Empty, Button } from 'vant'
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default defineComponent({
   components: {
     Collapse,
     CollapseItem,
     Empty,
-    Button
+    Button,
+    InfiniteLoading
   },
   props: {
     items: {
@@ -52,12 +56,16 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup() {
+  setup(props, { emit }) {
     const store = useStore()
 
     const questions = computed(() => store.getters['creator/questions'])
 
     const toggledScoreItem = ref([0])
+
+    const handleInfiniteLoading = async $state => {
+      await emit('on-infinite-loading', $state)
+    }
 
     const getGamerAnswer = ({ item, questionIndex }) => {
       return item.result.gamersAnswers?.filter(answer => answer.index === questionIndex).reverse()[0]
@@ -84,6 +92,7 @@ export default defineComponent({
     return {
       questions,
       toggledScoreItem,
+      handleInfiniteLoading,
       getGamerAnswer,
       getGamerAnswerClasses
     }

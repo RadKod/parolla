@@ -86,7 +86,7 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
         template(v-if="pendingScoreboard")
           Empty(:description="$t('scoreboard.pendingScoreboard')")
         template(v-else)
-          ScoreboardList(:items="scoreboard")
+          ScoreboardList(:items="scoreboard.list" @on-infinite-loading="handleInfiniteLoading")
 
       Tab(name="reviews")
         template(#title)
@@ -252,6 +252,7 @@ export default defineComponent({
     }
 
     const scoreboard = computed(() => store.getters['creator/scoreboard'])
+
     const pendingScoreboard = ref(false)
 
     watch(
@@ -271,6 +272,15 @@ export default defineComponent({
       }
     )
 
+    const handleInfiniteLoading = async $state => {
+      await store.dispatch('creator/fetchScoreboard', {
+        isLoadMore: true,
+        relationId: room.value.relationId
+      })
+
+      $state.loaded()
+    }
+
     return {
       state,
       activeTab,
@@ -285,7 +295,8 @@ export default defineComponent({
       answerClasses,
       myAnswer,
       scoreboard,
-      pendingScoreboard
+      pendingScoreboard,
+      handleInfiniteLoading
     }
   }
 })

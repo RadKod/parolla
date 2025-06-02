@@ -176,13 +176,34 @@ export default {
   },
 
   async fetchScoreboard({ commit, state }, params) {
-    const { relationId } = params
+    const { isLoadMore = false, limit, cursor, relationId } = params
 
-    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics`)
+    const queryDefault = {
+      per_page: 100,
+      cursor: ''
+    }
+
+    const query = {
+      per_page: limit || queryDefault.per_page,
+      cursor: state.scoreboard.pagination.cursor
+    }
+
+    const queryString = new URLSearchParams(query).toString()
+
+    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics?${queryString}`)
     const result = await response.json()
 
     if (result.success) {
-      commit('SET_SCOREBOARD', scoreboardTransformer(result.data))
+      if (isLoadMore) {
+        commit('PUSH_SCOREBOARD', scoreboardTransformer(result.data.statistics))
+      } else {
+        commit('SET_SCOREBOARD', scoreboardTransformer(result.data.statistics))
+      }
+
+      commit('SET_SCOREBOARD_PAGINATION', {
+        pagination: result.data.pagination,
+        total: result.data.total
+      })
     }
 
     return result
