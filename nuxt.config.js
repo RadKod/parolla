@@ -240,6 +240,10 @@ module.exports = {
             tr: '/gunluk',
             en: '/daily'
           },
+          'UnlimitedMode/index': {
+            tr: '/limitsiz',
+            en: '/unlimited'
+          },
           'CreatorMode/CreatorModeIntro/index': {
             tr: '/yaratici/basla',
             en: '/creator/start'

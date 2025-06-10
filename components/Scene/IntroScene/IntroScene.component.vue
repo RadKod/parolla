@@ -61,6 +61,18 @@
             span.ms-1 ({{ $t('introScene.modeList.daily.subtitle') }})
           p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.daily.description') }}
 
+      Button.intro-scene-mode-list-item(
+        v-if="$i18n.locale === $i18n.defaultLocale"
+        size="large"
+        :to="$i18n.locale === $i18n.defaultLocale ? localePath({ name: 'UnlimitedMode' }) : localePath('/')"
+        :class="[{ 'intro-scene-mode-list-item--disabled': $i18n.locale !== $i18n.defaultLocale }]"
+        @click="localeAvailabilityMessage"
+      )
+        .prepend
+          AppIcon.intro-scene-mode-list-item__icon(name="noto:infinity" :width="24" :height="24")
+          span.intro-scene-mode-list-item-title {{ $t('introScene.modeList.unlimited.title') }}
+          p.intro-scene-mode-list-item__description {{ $t('introScene.modeList.unlimited.description') }}
+
       Button.intro-scene-mode-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeIntro' })")
         .prepend
           AppIcon.intro-scene-mode-list-item__icon(name="noto:pencil" :width="24" :height="24")

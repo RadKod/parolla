@@ -69,6 +69,10 @@ export default {
         subtitle: 'REKABETÇİ',
         description: 'Bugünün soru setini oyna'
       },
+      unlimited: {
+        title: 'LİMİTSİZ',
+        description: 'Sınırsız soru seti'
+      },
       creator: {
         title: 'YARATICI',
         description: 'Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz'
@@ -172,6 +176,10 @@ export default {
       daily: {
         extra: '<strong>parolla</strong> oyunu <strong>{questionCount}</strong> türkçe alfabe harfi içerir. Her gün yeni sorular gelir.'
       },
+      unlimited: {
+        extra:
+          '<strong>parolla</strong> oyunu <strong>{questionCount}</strong> türkçe alfabe harfi içerir. <br> Bu modu tekrar tekrar oynayabilirsin. Her defasında farklı sorular gelir'
+      },
       creator: {
         extra:
           'Bu soru cevap seti başka bir oyuncu tarafından hazırlandı <br> {questionCount} soru ve {questionCount} cevap var. Bu modu tekrar tekrar oynayabilirsin.'
@@ -251,6 +259,9 @@ export default {
     },
     dailyModeStats: {
       description: `parolla - Kelime oyunu \n\n{day} \n\n🟩 {correctAnswerCount} Doğru \n🟥 {wrongAnswerCount} Yanlış \n🟨 {passedAnswerCount} Pas \n \nKalan Süre: {remainTime} \n \n{url}`
+    },
+    unlimitedModeStats: {
+      description: `parolla - Kelime oyunu \n\n(Limitsiz oyun modu) \n\n🟩 {correctAnswerCount} Doğru \n🟥 {wrongAnswerCount} Yanlış \n🟨 {passedAnswerCount} Pas \n \nKalan Süre: {remainTime} \n \n{url}`
     },
     creatorModeStats: {
       description: `parolla - Kelime oyunu \n\n"{roomTitle}" odasında {questionCount} soruluk özel soru-cevap setini oynadım \n\n🟩 {correctAnswerCount} Doğru \n🟥 {wrongAnswerCount} Yanlış \n🟨 {passedAnswerCount} Pas \n \nKalan Süre: {remainTime} \n \n{url}`

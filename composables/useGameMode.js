@@ -10,6 +10,10 @@ export default () => {
       return gameModeKeyEnum.DAILY
     }
 
+    if (route.value.path === localePath({ name: 'UnlimitedMode' })) {
+      return gameModeKeyEnum.UNLIMITED
+    }
+
     if (route.value.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })) {
       return gameModeKeyEnum.CREATOR
     }

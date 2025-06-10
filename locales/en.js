@@ -68,6 +68,9 @@ export default {
         title: 'DAILY',
         subtitle: 'COMPETITIVE'
       },
+      unlimited: {
+        title: 'UNLIMITED'
+      },
       creator: {
         title: 'CREATOR',
         description: 'Create your own Q&A set and solve fun questions created by players'
@@ -171,6 +174,10 @@ export default {
         extra:
           '<strong>parolla</strong> game contains <strong>{questionCount}</strong> English alphabet letters. New questions come every day.'
       },
+      unlimited: {
+        extra:
+          '<strong>parolla</strong> game contains <strong>{questionCount}</strong> English alphabet letters. <br> You can play this mod over and over again. Different questions come up every time.'
+      },
       creator: {
         extra:
           'This Q&A set was created by another player <br> There are {questionCount} questions and {questionCount} answers. You can play this mod over and over again.'
@@ -237,6 +244,9 @@ export default {
     },
     dailyModeStats: {
       description: `parolla - Word game \n\n{day} \n\n🟩 {correctAnswerCount} Correct \n🟥 {wrongAnswerCount} Incorrect \n🟨 {passedAnswerCount} Pass \n \nRemain time: {remainTime} \n \n{url}`
+    },
+    unlimitedModeStats: {
+      description: `parolla - Word game \n\n(Unlimited game mode) \n\n🟩 {correctAnswerCount} Correct \n🟥 {wrongAnswerCount} Incorrect \n🟨 {passedAnswerCount} Pass \n \nRemain time: {remainTime} \n \n{url}`
     },
     creatorModeStats: {
       description: `parolla - Word game \n\nI played the player-generated Q&A set of {questionCount} questions in room "{roomTitle}" \n\n🟩 {correctAnswerCount} Correct \n🟥 {wrongAnswerCount} Incorrect \n🟨 {passedAnswerCount} Pass \n \nRemain time: {remainTime} \n \n{url}`

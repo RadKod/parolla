@@ -10,6 +10,7 @@ Dialog.dialog.how-to-play-dialog(
 )
   .how-to-play-dialog__explain
     HowToPlayDailyModeContent(v-if="activeGameMode === gameModeKeyEnum.DAILY")
+    HowToPlayUnlimitedModeContent(v-if="activeGameMode === gameModeKeyEnum.UNLIMITED")
     HowToPlayCreatorModeContent(v-if="activeGameMode === gameModeKeyEnum.CREATOR")
     HowToPlayTourModeContent(v-if="activeGameMode === gameModeKeyEnum.TOUR")
     .how-to-play-dialog__ad
