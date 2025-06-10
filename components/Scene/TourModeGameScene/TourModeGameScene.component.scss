@@ -159,7 +159,15 @@
       padding-block-start: $spacer;
 
       .van-cell {
+        border-bottom: 1px solid light-dark(#ddd, #323232);
+
         &::after {
+          display: none;
+        }
+      }
+
+      &-item-user {
+        &::before {
           display: none;
         }
       }

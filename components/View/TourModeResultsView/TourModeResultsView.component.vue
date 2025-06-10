@@ -9,25 +9,33 @@
 
     .tour-mode-results-view-correct-answer
       span.tour-mode-results-view-correct-answer__title {{ $t('tourMode.results.correctAnswer') }}
-      span.tour-mode-results-view-correct-answer__answer {{ tour.correctAnswer }}
+      span.tour-mode-results-view-correct-answer__answer
+        template(v-if="tour.isTimeUp") {{ tour.correctAnswer }}
+        template(v-else)
+          Loading(type="spinner" color="var(--color-brand-02)")
 
-    Leaderboard(:scorers="scorers")
-      template(#empty)
-        Empty(image="/img/elements/man-think-illustration.svg" :description="$t('tourMode.results.empty.description')")
+    template(v-if="tour.isTimeUp")
+      Leaderboard(:scorers="scorers")
+        template(#empty)
+          Empty(image="/img/elements/man-think-illustration.svg" :description="$t('tourMode.results.empty.description')")
+
+    template(v-else)
+      Loading(type="spinner" color="var(--color-brand-02)")
 
     Button.tour-mode-results-view-waiting(loading :loading-text="`Yeni tur başlamadan önce ${tour.waitingNextSeconds} saniye bekleyiniz.`")
 </template>
 
 <script>
 import { defineComponent, ref, onMounted, onUnmounted, computed } from '@nuxtjs/composition-api'
-import { Button, Empty } from 'vant'
+import { Button, Empty, Loading } from 'vant'
 import confetti from 'canvas-confetti'
 
 export default defineComponent({
   name: 'TourModeResultsView',
   components: {
     Button,
-    Empty
+    Empty,
+    Loading
   },
   props: {
     tour: {
@@ -76,9 +84,7 @@ export default defineComponent({
       destroyConfettiCanvas()
     })
 
-    const scorers = computed(() => {
-      return props.tour.roundScores
-    })
+    const scorers = computed(() => props.tour.roundScores)
 
     return {
       rootRef,

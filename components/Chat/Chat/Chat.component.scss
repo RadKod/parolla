@@ -28,6 +28,7 @@
   }
 
   .player-avatar {
+    z-index: 2;
     display: inline-flex;
     float: left;
     margin-inline-end: 8px;

@@ -93,6 +93,19 @@ export default {
   },
 
   SET_SCOREBOARD(state, scoreboard) {
-    state.scoreboard = scoreboard
+    state.scoreboard.list = scoreboard
+  },
+
+  PUSH_SCOREBOARD(state, scoreboard) {
+    state.scoreboard.list.push(...scoreboard)
+  },
+
+  SET_SCOREBOARD_PAGINATION(state, { pagination, total }) {
+    state.scoreboard.pagination = {
+      cursor: pagination.next_page_url?.split('cursor=')[1] || null,
+      limit: Number(pagination.per_page)
+    }
+
+    state.scoreboard.total = Number(total)
   }
 }

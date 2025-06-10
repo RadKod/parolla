@@ -23,5 +23,9 @@ export default () => ({
       isOpen: false
     }
   },
-  scoreboard: []
+  scoreboard: {
+    list: [],
+    pagination: {},
+    total: null
+  }
 })

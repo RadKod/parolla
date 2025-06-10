@@ -25,6 +25,9 @@
 
   // Auth Dialog
   AuthDialog
+
+  // Player Dialog
+  PlayerDialog
 </template>
 
 <script>

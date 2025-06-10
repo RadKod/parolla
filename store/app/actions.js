@@ -8,18 +8,14 @@ export default {
     // Create WebSocket instance
     const ws = new WebSocket(wsUrl)
 
-    ws.onopen = () => {
-      console.info('Connected to WebSocket server')
-    }
-
-    ws.onclose = () => {
-      console.info('Disconnected from WebSocket server')
-    }
-
-    ws.onerror = error => {
-      console.error('WebSocket error:', error)
-    }
-
     commit('SET_WS', ws)
+  },
+
+  closeWs({ commit, state }) {
+    if (state.ws) {
+      state.ws.close(1000, 'Client disconnecting')
+    }
+
+    commit('SET_WS', null)
   }
 }

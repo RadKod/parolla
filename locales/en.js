@@ -9,7 +9,8 @@ export default {
   error: {
     error: 'Error',
     anErrorOccurred: 'An error occurred',
-    tryAgain: 'Try again'
+    tryAgain: 'Try again',
+    goToHome: 'Go to home'
   },
   general: {
     loading: 'Loading',
@@ -34,7 +35,9 @@ export default {
     filter: 'Filter',
     sort: 'Sort',
     ad: 'Ad',
-    send: 'Send'
+    send: 'Send',
+    playNow: 'Play now',
+    joined: 'Joined'
   },
   auth: {
     google: {

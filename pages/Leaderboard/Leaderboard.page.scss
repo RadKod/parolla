@@ -20,7 +20,7 @@
     padding-block: $spacer * 2;
     margin-block-end: $spacer * 4;
 
-    @include media-breakpoint-up(mobile) {
+    @include media-breakpoint-up(mobile-m) {
       justify-content: center;
     }
 

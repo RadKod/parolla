@@ -13,7 +13,7 @@ Dialog.dialog.menu-dialog(
   // Auth
   UsernameEditForm.mb-base
 
-  Button.menu-dialog__logoutButton(v-if="$auth.loggedIn && $auth.user" @click="$store.dispatch('auth/logout')") Çıkış Yap
+  Button.menu-dialog__logoutButton(v-if="$auth.loggedIn && $auth.user" @click="handleClickLogout") Çıkış Yap
   LoginForm(v-else)
 
   span.menu-dialog__title {{ $t('dialog.menu.title') }}
@@ -124,7 +124,7 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const store = useStore()
-    const { localePath, i18n, $colorMode, $auth } = useContext()
+    const { localePath, i18n, $colorMode } = useContext()
 
     const { activeGameMode } = useGameMode()
 
@@ -228,6 +228,12 @@ export default defineComponent({
       }
     }
 
+    const handleClickLogout = async () => {
+      await store.dispatch('auth/logout')
+
+      window.location.href = '/'
+    }
+
     return {
       gameModeKeyEnum,
       activeGameMode,
@@ -238,7 +244,8 @@ export default defineComponent({
       toggleSoundFx,
       openSuggestQuestion,
       openRoomSharer,
-      openAppSharer
+      openAppSharer,
+      handleClickLogout
     }
   }
 })

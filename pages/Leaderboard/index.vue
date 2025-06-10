@@ -66,7 +66,7 @@ export default defineComponent({
       } else if (activeLeaderboardType.value === 'monthly') {
         return `Bu ay kazanılan puanlar`
       } else if (activeLeaderboardType.value === 'allTime') {
-        return `Tüm zamanlarda kazanılan puanlar`
+        return `Şu ana kadar toplanılan tüm puanlar`
       }
     })
 

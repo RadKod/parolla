@@ -209,23 +209,18 @@ export default defineComponent({
       Toast.clear()
     }
 
-    const onWaitingNext = ({ time }) => {
+    const onWaitingNext = ({ time, correctAnswer, roundScore }) => {
       store.commit('tour/SET_TOUR', {
-        waitingNextSeconds: Math.floor(time.remaining / 1000)
+        isTimeUp: true,
+        waitingNextSeconds: Math.floor(time.remaining / 1000),
+        correctAnswer: tour.value.correctAnswer || correctAnswer,
+        roundScores: tour.value.roundScores?.length > 0 ? tour.value.roundScores : roundScore ? mapRoundScores({ scores: roundScore }) : []
       })
 
       if (time.remaining <= 1000) {
         if (tour.value.isTimeUp) {
           setTimeout(() => {
-            store.commit('tour/SET_TOUR', {
-              isTimeUp: false,
-              isPlayerFinishedTheTour: false,
-              countdown: {
-                seconds: 30,
-                percentage: 0
-              },
-              maxLives: 3
-            })
+            store.commit('tour/CLEAR_FOR_NEW_ROUND')
 
             soundFx.start.play()
           }, 1000)
@@ -324,8 +319,8 @@ export default defineComponent({
 
     const onRecentAnswers = ({ answers }) => {
       const mappedAnswers = answers.map(answer => ({
+        id: answer.playerId,
         username: answer.playerName,
-        globalScore: answer.totalScore,
         isCorrect: answer.isCorrect
       }))
 
@@ -344,17 +339,22 @@ export default defineComponent({
       return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`
     }
 
-    const onRoundScores = ({ scores }) => {
+    const mapRoundScores = ({ scores }) => {
       const mappedScores = scores.map(scorer => ({
         username: scorer.playerName,
+        id: scorer.playerId,
         score: `+${scorer.baseScore}`,
         time: formatTimestamp(scorer.responseTime),
         attemptCount: scorer.attemptCount,
         rank: scorer.rank
       }))
 
+      return mappedScores
+    }
+
+    const onRoundScores = ({ scores }) => {
       store.commit('tour/SET_TOUR', {
-        roundScores: mappedScores
+        roundScores: mapRoundScores({ scores })
       })
     }
 
@@ -412,6 +412,8 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
+      store.commit('tour/CLEAR_FOR_NEW_ROUND')
+
       window.removeEventListener('ws-event', handleWsEvent)
 
       window.removeEventListener('keyup', handleKeyUp)
@@ -425,6 +427,8 @@ export default defineComponent({
         }
         rootRef.value?.removeEventListener('touchend', event => handleDontHideKeyboard(event, tourModeHandlers))
       }
+
+      Toast.clear()
     })
 
     const isTourModeOnlineDialogOpen = computed(() => store.getters['tour/dialog'].tourModeOnline.isOpen)

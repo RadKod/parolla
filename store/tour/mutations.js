@@ -6,12 +6,24 @@ export default {
     }
   },
 
+  CLEAR_FOR_NEW_ROUND(state) {
+    state.tour = {
+      ...state.tour,
+      isTimeUp: false,
+      isPlayerFinishedTheTour: false,
+      countdown: {
+        seconds: 30,
+        percentage: 0
+      },
+      maxLives: 3
+    }
+  },
+
   SET_USER_LIST(state, userList) {
     const mappedPlayers = userList.players.map(player => ({
       id: player.id,
       username: player.name,
       avatarUrl: player.avatarUrl,
-      globalScore: player.apiScore,
       lives: player.lives
     }))
 
