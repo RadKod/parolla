@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.18.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.17.0...v2.18.0)
+
+
+### 🚀 Enhancements
+
+  - Ux improvements ([6e491a0](https://github.com/RadKod/parolla/commit/6e491a0))
+  - Ux improvements ([8bb30d4](https://github.com/RadKod/parolla/commit/8bb30d4))
+  - Ui improvements ([384d5cf](https://github.com/RadKod/parolla/commit/384d5cf))
+  - Ui improvements ([deaa2b3](https://github.com/RadKod/parolla/commit/deaa2b3))
+  - Player dialog ([148d843](https://github.com/RadKod/parolla/commit/148d843))
+  - Add GM badge ([b28c75d](https://github.com/RadKod/parolla/commit/b28c75d))
+  - Ui improvements ([6c0f416](https://github.com/RadKod/parolla/commit/6c0f416))
+  - Ux improvements on chat ([2b92d26](https://github.com/RadKod/parolla/commit/2b92d26))
+  - Ux improvements on tour ([e6704a8](https://github.com/RadKod/parolla/commit/e6704a8))
+  - Ux improvements ([731705b](https://github.com/RadKod/parolla/commit/731705b))
+
+### 💅 Refactors
+
+  - Defensive ws ([c73d151](https://github.com/RadKod/parolla/commit/c73d151))
+  - Defensive ws ([a566856](https://github.com/RadKod/parolla/commit/a566856))
+  - Remove unlimited mode ([b48e93b](https://github.com/RadKod/parolla/commit/b48e93b))
+
+### 🏡 Chore
+
+  - Add assetlinks for mobile app ([edbaed3](https://github.com/RadKod/parolla/commit/edbaed3))
+  - Update env example ([974feb4](https://github.com/RadKod/parolla/commit/974feb4))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.17.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.16.0...v2.17.0)
