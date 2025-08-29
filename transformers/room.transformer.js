@@ -1,16 +1,16 @@
 export default model => {
   return {
-    id: model.room,
-    relationId: model.id,
+    id: model.roomId,
+    relationId: model.documentId,
     title: model.title,
-    isListed: model.is_public,
-    isAnon: model.is_anon,
-    questionCount: model.question_count,
-    viewCount: model.view_count,
-    reviewCount: model.review_count,
+    isListed: model.isPublic,
+    isAnon: model.isAnon,
+    questionCount: model.questionCount,
+    viewCount: model.viewCount,
+    reviewCount: model.reviewsCount,
     rating: model.rating,
     user: model.user,
     alphabet: model.alphabet,
-    questions: model.questions
+    questions: model.qaList
   }
 }

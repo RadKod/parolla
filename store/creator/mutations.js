@@ -15,11 +15,7 @@ export default {
 
   SET_PAGINATION(state, pagination) {
     state.room.pagination = {
-      ...pagination,
-      cursor: {
-        prev: pagination.prev_page_url?.split('cursor=')[1] || null,
-        next: pagination.next_page_url?.split('cursor=')[1] || null
-      }
+      ...pagination
     }
   },
 

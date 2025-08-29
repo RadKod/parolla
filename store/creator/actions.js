@@ -4,78 +4,83 @@ export default {
   async postQaForm({ commit, state }, { form, user, deviceInfo }) {
     const transform = form => {
       return {
-        room_title: form.roomTitle,
-        is_public: form.isListed,
-        qa_list: form.qaList.map(item => {
+        title: form.roomTitle,
+        isPublic: form.isListed,
+        qaList: form.qaList.map(item => {
           return {
             character: item.character,
             question: item.question,
             answer: item.answer
           }
         }),
-        is_anon: form.isAnon,
-        fingerprint: user.fingerprint,
-        device_info: JSON.stringify(deviceInfo)
+        isAnon: form.isAnon
       }
     }
 
-    const response = await fetch(`${process.env.API}/modes/custom`, {
+    const response = await fetch(`${process.env.API_STRAPI}/rooms`, {
       method: 'post',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'Accept-Language': this.$i18n.locale
       },
-      body: JSON.stringify(transform(form))
+      body: JSON.stringify({
+        data: transform(form)
+      })
     })
+
     const result = await response.json()
 
     return result
   },
 
   async fetchRooms({ commit, state }, params) {
-    const { isLoadMore = false, limit, cursor, keyword, locale } = params
+    const { isLoadMore = false, limit, keyword, locale, page } = params
 
     const getSort = _sort => {
       if (_sort === 'oldest') {
-        return 'oldest'
+        return 'createdAt:asc'
       }
 
       if (_sort === 'byViewCount') {
-        return 'most_played'
+        return 'viewCount:desc'
       }
 
-      return 'newest'
+      return 'createdAt:desc'
     }
 
     const queryDefault = {
+      page: 1,
       per_page: 10,
-      cursor: '',
       search: '',
       sort: state.room.sort,
-      locale: this.$i18n.locale
+      locale: this.$i18n.locale,
+      populate: '*'
     }
 
     const query = {
-      per_page: limit || queryDefault.per_page,
-      cursor: cursor || queryDefault.cursor,
-      search: keyword || queryDefault.search,
+      'pagination[page]': page || queryDefault.page,
+      'pagination[pageSize]': limit || queryDefault.per_page,
+      'filters[title][$containsi]': keyword || queryDefault.search,
       sort: getSort(state.room.sort) || queryDefault.sort,
-      lang: locale || queryDefault.locale
+      lang: locale || queryDefault.locale,
+      populate: 'user'
     }
 
-    const queryString = new URLSearchParams(query).toString()
+    const queryString = Object.entries(query)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&')
 
-    const response = await fetch(`${process.env.API}/rooms?${queryString}`, {
-      method: 'get',
+    const response = await fetch(`${process.env.API_STRAPI}/rooms?${queryString}`, {
+      method: 'GET',
       headers: {
         'Accept-Language': this.$i18n.locale
       }
     })
     const result = await response.json()
 
-    if (result.success) {
-      const rooms = result.data.rooms.map(room => roomTransformer(room))
+    if (result?.data) {
+      const rooms = result.data.map(room => roomTransformer(room))
 
       if (isLoadMore) {
         commit('PUSH_ROOMS', rooms)
@@ -83,11 +88,11 @@ export default {
         commit('SET_ROOMS', rooms)
       }
 
-      const pagination = result.data.pagination
+      const pagination = result.meta.pagination
 
       commit('SET_PAGINATION', pagination)
 
-      const roomTotal = result.data.total
+      const roomTotal = result.meta.pagination.total
 
       commit('SET_ROOM_TOTAL', roomTotal)
     }
@@ -96,10 +101,10 @@ export default {
   },
 
   async fetchRoom({ commit }, id) {
-    const response = await fetch(`${process.env.API}/modes/custom?room=${id}`)
+    const response = await fetch(`${process.env.API_STRAPI}/rooms/${id}`)
     const result = await response.json()
 
-    if (result.success) {
+    if (result?.data) {
       const room = roomTransformer(result.data)
 
       commit('SET_ROOM', room)

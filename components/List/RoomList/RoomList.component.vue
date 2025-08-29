@@ -118,19 +118,19 @@ export default defineComponent({
     )
 
     const handleInfiniteLoading = async $state => {
-      if (!pagination.value.cursor.next) {
-        $state.complete()
-
-        return false
-      }
-
-      await store.dispatch('creator/fetchRooms', {
+      const result = await store.dispatch('creator/fetchRooms', {
         isLoadMore: true,
-        cursor: pagination.value.cursor.next,
+        page: pagination.value.page + 1,
         keyword: form.search.keyword
       })
 
       $state.loaded()
+
+      if (result.data.length === 0) {
+        $state.complete()
+
+        return false
+      }
     }
 
     const form = reactive({
