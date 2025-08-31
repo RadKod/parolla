@@ -1,9 +1,38 @@
-export const actions = {
-  async nuxtClientInit({ dispatch, commit, getters }) {
-    if (process.browser) {
-      await dispatch('auth/generateFingerprint')
-      await handleUserAuthentication({ dispatch, commit })
-      await initializeWebSocket({ dispatch, getters })
+const setUser = async ({ $auth, $cookies, dispatch }) => {
+  const logout = async () => {
+    await $auth.setStrategy('local')
+    await $auth.setUserToken('')
+    await $auth.setUser(null)
+    await $auth.logout()
+
+    await $cookies.remove('google_auth_callback_params')
+    await $cookies.remove('google_auth_access_token')
+    await $cookies.remove('google_auth_jwt_token')
+  }
+
+  if ($auth.strategy.name === 'local' && $auth.loggedIn) {
+    const { data, error } = await dispatch('auth/fetchMe')
+
+    if (data) {
+      $auth.setUser(data)
+    }
+
+    if (error) {
+      await logout()
+    }
+  }
+
+  if ($cookies.get('auth._token.google')) {
+    const { data, error } = await dispatch('auth/fetchMe')
+
+    if (data) {
+      await $auth.setStrategy('google')
+      await $auth.setUserToken(`${$cookies.get('auth._token.google')}`)
+      await $auth.setUser(data)
+    }
+
+    if (error) {
+      await logout()
     }
   }
 }
@@ -12,21 +41,6 @@ export const actions = {
 const WS_CONFIG = {
   maxReconnectAttempts: 5,
   reconnectDelay: 1000 // 1 second
-}
-
-// User authentication handling
-async function handleUserAuthentication({ dispatch, commit }) {
-  const fetchMeResult = await dispatch('auth/fetchMe')
-
-  if (fetchMeResult.success) {
-    commit('auth/SET_USER', fetchMeResult.data)
-  } else {
-    const updateUserResult = await dispatch('auth/updateUser')
-
-    if (updateUserResult.success) {
-      commit('auth/SET_USER', updateUserResult.data)
-    }
-  }
 }
 
 // WebSocket management
@@ -103,6 +117,15 @@ async function initializeWebSocket({ dispatch, getters }) {
   // Setup visibility handlers
   document.addEventListener('visibilitychange', handleVisibilityChange)
   document.addEventListener('focus', handleVisibilityChange)
+}
+
+export const actions = {
+  async nuxtClientInit({ dispatch, commit, getters }, { $auth, $cookies }) {
+    if (process.browser) {
+      await setUser({ dispatch, commit, $auth, $cookies })
+      await initializeWebSocket({ dispatch, getters })
+    }
+  }
 }
 
 export const strict = false

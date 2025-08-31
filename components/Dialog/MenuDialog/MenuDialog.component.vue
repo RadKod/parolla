@@ -8,10 +8,9 @@ Dialog.dialog.menu-dialog(
   :close-on-click-overlay="false"
   @closed="$emit('closed')"
 )
-  span.menu-dialog__title Profil
-
-  // Auth
-  UsernameEditForm.mb-base
+  template(v-if="$auth.loggedIn && $auth.user")
+    span.menu-dialog__title Profil
+    UsernameEditForm.mb-base
 
   Button.menu-dialog__logoutButton(v-if="$auth.loggedIn && $auth.user" @click="handleClickLogout") Çıkış Yap
   LoginForm(v-else)

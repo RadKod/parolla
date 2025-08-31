@@ -34,7 +34,11 @@
       AppIcon(v-else name="tabler:message-2")
 
     li.app-header-nav__item.app-header-nav__item--menu(@click="toggleMenuDialog")
-      LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
+      template(v-if="$auth.loggedIn && $auth.user")
+        LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
+
+      template(v-else)
+        AppIcon(name="tabler:user-circle")
 
   // How To Play Dialog
   LazyHowToPlayDialog(

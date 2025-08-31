@@ -1,8 +1,5 @@
 export default () => ({
-  user: {
-    fingerprint: '',
-    username: ''
-  },
+  user: {},
   dialog: {
     auth: {
       isOpen: false

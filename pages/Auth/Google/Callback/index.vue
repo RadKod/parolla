@@ -5,63 +5,46 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useStore, useContext, onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, useRouter, useContext, onMounted } from '@nuxtjs/composition-api'
 import { Notify } from 'vant'
-const { getQuery } = require('ufo')
+const { getQuery, stringifyQuery } = require('ufo')
 
 export default defineComponent({
   name: 'AuthGoogleCallbackPage',
   layout: 'Default/Default.layout',
   setup() {
-    const query = getQuery(window.location.href)
     const context = useContext()
     const store = useStore()
+    const router = useRouter()
 
-    const user = store.getters['auth/user']
+    const fetchUser = async () => {
+      const callbackParams = getQuery(window.location.href)
 
-    const runGoogleRegister = async () => {
-      const result = await store.dispatch('auth/googleRegister', {
-        code: query.code,
-        state: query.state,
-        fingerprint: user.fingerprint
-      })
+      const { data } = await store.dispatch('auth/fetchGoogleUser', stringifyQuery(callbackParams))
 
-      if (result.success) {
-        await setGoogleUser({
-          token: result.data.token,
-          user: result.data.user
-        })
-      } else {
-        console.error(result)
-
-        Notify({
-          message: `${context.i18n.t('auth.error.title')}: ${result.message}`,
-          color: 'var(--color-text-04)',
-          background: 'var(--color-danger-01)',
-          duration: 5000
-        })
-
-        setTimeout(() => {
-          window.location.href = '/'
-        }, 5000)
+      return {
+        data
       }
     }
 
-    const setGoogleUser = async ({ token, user }) => {
-      await context.$auth.setStrategy('google')
-      await context.$auth.setUserToken(token)
+    const setUser = async () => {
+      const callbackParams = getQuery(window.location.href)
 
-      store.commit('auth/SET_USER', user)
+      const { data } = await fetchUser()
+
+      if (data) {
+        await store.dispatch('auth/setGoogleUser', { callbackParams, googleResponse: data })
+      }
+    }
+
+    onMounted(async () => {
+      await Promise.allSettled([fetchUser(), setUser()])
 
       const redirectPath = context.$cookies.get('authNextRedirect')
 
-      setTimeout(() => {
-        window.location.href = redirectPath || '/'
-      }, 1000)
-    }
-
-    onMounted(() => {
-      runGoogleRegister()
+      if (redirectPath) {
+        await router.push(redirectPath)
+      }
     })
   }
 })

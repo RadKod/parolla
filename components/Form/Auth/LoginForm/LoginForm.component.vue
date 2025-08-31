@@ -37,7 +37,7 @@ export default defineComponent({
     const handleGoogleLogin = () => {
       console.log('Google login clicked')
 
-      context.$auth.loginWith('google')
+      window.location.href = `${process.env.API_STRAPI}/connect/google`
     }
 
     const handleAppleLogin = () => {

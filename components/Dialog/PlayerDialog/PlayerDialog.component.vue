@@ -10,16 +10,16 @@ Dialog.dialog.player-dialog(
   @closed="onClosed"
   @opened="$emit('opened')"
 )
-  template(v-if="user && Object.keys(user).length > 0")
+  template(v-if="player && Object.keys(player).length > 0")
     .profile-view
-      PlayerAvatar.profile-view__avatar(with-username :user="user")
+      PlayerAvatar.profile-view__avatar(with-username :user="player")
 
       .profile-view-created-at
         AppIcon.profile-view-created-at__icon(name="tabler:clock" color="var(--color-text-03)" :width="16" :height="16")
-        Timeago.profile-view-created-at__value(:datetime="user.createdAt" :auto-update="60" :locale="$i18n.locale")
+        Timeago.profile-view-created-at__value(:datetime="player.createdAt" :auto-update="60" :locale="$i18n.locale")
         label.profile-view-created-at__label &nbsp;{{ $t('general.joined').toLowerCase() }}
 
-      .tour-scores(v-if="user.tourScores && Object.keys(user.tourScores).length > 0")
+      .tour-scores(v-if="player.tourScores && Object.keys(player.tourScores).length > 0")
         strong.tour-scores__title Tur modu skorları
 
         table.tour-scores-table
@@ -31,23 +31,23 @@ Dialog.dialog.player-dialog(
           tbody
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Günlük
-              td.tour-scores-table-item-score {{ user.tourScores.daily.score }}
-              td.tour-scores-table-item-rank {{ user.tourScores.daily.rank }}
+              td.tour-scores-table-item-score {{ player.tourScores.daily.score }}
+              td.tour-scores-table-item-rank {{ player.tourScores.daily.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Haftalık
-              td.tour-scores-table-item-score {{ user.tourScores.weekly.score }}
-              td.tour-scores-table-item-rank {{ user.tourScores.weekly.rank }}
+              td.tour-scores-table-item-score {{ player.tourScores.weekly.score }}
+              td.tour-scores-table-item-rank {{ player.tourScores.weekly.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Aylık
-              td.tour-scores-table-item-score {{ user.tourScores.monthly.score }}
-              td.tour-scores-table-item-rank {{ user.tourScores.monthly.rank }}
+              td.tour-scores-table-item-score {{ player.tourScores.monthly.score }}
+              td.tour-scores-table-item-rank {{ player.tourScores.monthly.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Tüm zamanlar
-              td.tour-scores-table-item-score {{ user.tourScores.allTime.score }}
-              td.tour-scores-table-item-rank {{ user.tourScores.allTime.rank }}
+              td.tour-scores-table-item-score {{ player.tourScores.allTime.score }}
+              td.tour-scores-table-item-rank {{ player.tourScores.allTime.rank }}
 
   template(v-else)
     Loading(color="var(--color-brand-02)") {{ $t('dialog.player.loading') }}
@@ -72,22 +72,22 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    const isOpenPlayerDialog = computed(() => store.getters['user/isOpenPlayerDialog'])
-    const user = computed(() => store.getters['user/user'])
+    const isOpenPlayerDialog = computed(() => store.getters['profile/isOpenPlayerDialog'])
+    const player = computed(() => store.getters['profile/player'])
 
     const handleDialogInput = value => {
       if (!value) {
-        store.commit('user/SET_PLAYER_DIALOG_IS_OPEN', false)
+        store.commit('profile/SET_PLAYER_DIALOG_IS_OPEN', false)
       }
     }
 
     const onClosed = () => {
-      store.commit('user/CLEAR_USER')
+      store.commit('profile/CLEAR_PLAYER')
     }
 
     return {
       isOpenPlayerDialog,
-      user,
+      player,
       handleDialogInput,
       onClosed
     }

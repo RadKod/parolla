@@ -13,7 +13,7 @@ export default defineComponent({
   setup() {
     const query = getQuery(window.location.href)
 
-    if (query.code) {
+    if (query.access_token) {
       window.history.pushState(null, null, window.location.pathname)
 
       setTimeout(() => {

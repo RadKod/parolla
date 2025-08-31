@@ -66,13 +66,15 @@ export default defineComponent({
     const store = useStore()
 
     const openPlayerDialog = async () => {
-      store.commit('user/SET_PLAYER_DIALOG_IS_OPEN', true)
+      store.commit('profile/SET_PLAYER_DIALOG_IS_OPEN', true)
 
-      const result = await store.dispatch('user/fetchUser', { id: props.user.id })
+      const { data, error } = await store.dispatch('profile/fetchPlayer', { username: 'selimdoyranli' })
 
-      if (result.success) {
-        store.commit('user/SET_USER', result.data.user)
-      } else {
+      if (data) {
+        store.commit('profile/SET_PLAYER', data[0])
+      }
+
+      if (error) {
         Notify({
           message: `Oyuncu bilgileri getirilemedi`,
           color: 'var(--color-text-04)',

@@ -10,3 +10,4 @@ export const ALPHABET_LENGTH = 26
 export const ANSWER_CHAR_LENGTH = 64
 export const GAME_TIME_LIMIT = 60 * 5 * 1000 // 5min
 export const UNSUPPORTED_HEIGHT = 520
+export const USERNAME_REGEX = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/

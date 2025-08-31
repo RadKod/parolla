@@ -1,10 +1,6 @@
 import { userTransformer } from '@/transformers'
 
 export default {
-  SET_FINGERPRINT(state, fingerprint) {
-    state.user.fingerprint = userTransformer({ fingerprint }).fingerprint
-  },
-
   SET_USER(state, user) {
     this.$auth.setUser(user)
 

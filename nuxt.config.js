@@ -27,6 +27,14 @@ module.exports = {
   },
 
   /*
+   ** Public runtime config
+   ** See https://nuxtjs.org/api/configuration-runtime-config
+   */
+  publicRuntimeConfig: {
+    API_STRAPI: process.env.API_STRAPI || 'http://localhost:1337/api'
+  },
+
+  /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
    */
@@ -84,6 +92,7 @@ module.exports = {
    */
   plugins: [
     { src: '~/plugins/auth-control', ssr: false }, // https://www.npmjs.com/package/vuex-persist
+    { src: '~/plugins/app-fetch', ssr: false },
     { src: '~/plugins/vuex-persist', ssr: false }, // https://www.npmjs.com/package/vuex-persist
     { src: '~/plugins/ua-injector', ssr: false },
     { src: '~/plugins/theme-color', ssr: false },
