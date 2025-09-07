@@ -1,11 +1,15 @@
 import { roomTransformer, scoreboardTransformer } from '@/transformers'
 
 export default {
-  async postQaForm({ commit, state }, { form, user, deviceInfo }) {
+  async postRoom({ commit, state }, { form, deviceInfo }) {
+    const token = this.$auth.strategy.token.get()
+
     const transform = form => {
       return {
+        user: this.$auth.user?.id,
         title: form.roomTitle,
         isPublic: form.isListed,
+        isAnon: !this.$auth.loggedIn && !this.$auth.user ? true : form.isAnon,
         qaList: form.qaList.map(item => {
           return {
             character: item.character,
@@ -13,29 +17,83 @@ export default {
             answer: item.answer
           }
         }),
-        isAnon: form.isAnon
+        deviceInfo
       }
     }
 
-    const response = await fetch(`${process.env.API_STRAPI}/rooms`, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Language': this.$i18n.locale
-      },
-      body: JSON.stringify({
+    const { data, error } = await this.$appFetch({
+      path: 'rooms',
+      method: 'POST',
+      data: {
         data: transform(form)
-      })
+      },
+      headers: {
+        Authorization: `${token}`
+      }
     })
 
-    const result = await response.json()
+    return {
+      data,
+      error
+    }
+  },
 
-    return result
+  async editRoom({ commit, state }, { relationId, form, deviceInfo }) {
+    const token = this.$auth.strategy.token.get()
+
+    const transform = form => {
+      return {
+        user: this.$auth.user?.id,
+        title: form.roomTitle,
+        isPublic: form.isListed,
+        isAnon: !this.$auth.loggedIn && !this.$auth.user ? true : form.isAnon,
+        qaList: form.qaList.map(item => {
+          return {
+            character: item.character,
+            question: item.question,
+            answer: item.answer
+          }
+        }),
+        deviceInfo
+      }
+    }
+
+    const { data, error } = await this.$appFetch({
+      path: `rooms/${relationId}`,
+      method: 'PUT',
+      data: {
+        data: transform(form)
+      },
+      headers: {
+        Authorization: `${token}`
+      }
+    })
+
+    return {
+      data,
+      error
+    }
+  },
+
+  async deleteRoom({ commit }, { relationId }) {
+    const token = this.$auth.strategy.token.get()
+
+    const { data, error } = await this.$appFetch({
+      path: `rooms/${relationId}`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `${token}`
+      }
+    })
+
+    return {
+      data,
+      error
+    }
   },
 
   async fetchRooms({ commit, state }, params) {
-    const { isLoadMore = false, limit, keyword, locale, page } = params
+    const { isLoadMore = false, page, limit, keyword, user, locale } = params
 
     const getSort = _sort => {
       if (_sort === 'oldest') {
@@ -53,6 +111,7 @@ export default {
       page: 1,
       per_page: 10,
       search: '',
+      user: null,
       sort: state.room.sort,
       locale: this.$i18n.locale,
       populate: '*'
@@ -67,20 +126,25 @@ export default {
       populate: 'user'
     }
 
-    const queryString = Object.entries(query)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&')
+    // Only add user filter if user is not null
+    if (user) {
+      query['filters[user]'] = user
+    }
 
-    const response = await fetch(`${process.env.API_STRAPI}/rooms?${queryString}`, {
+    const token = this.$auth.strategy.token.get()
+
+    const { data, error } = await this.$appFetch({
       method: 'GET',
+      path: 'rooms',
+      query: query,
       headers: {
-        'Accept-Language': this.$i18n.locale
+        'Accept-Language': this.$i18n.locale,
+        Authorization: `${token}`
       }
     })
-    const result = await response.json()
 
-    if (result?.data) {
-      const rooms = result.data.map(room => roomTransformer(room))
+    if (data) {
+      const rooms = data.data.map(room => roomTransformer(room))
 
       if (isLoadMore) {
         commit('PUSH_ROOMS', rooms)
@@ -88,16 +152,19 @@ export default {
         commit('SET_ROOMS', rooms)
       }
 
-      const pagination = result.meta.pagination
+      const pagination = data.meta.pagination
 
       commit('SET_PAGINATION', pagination)
 
-      const roomTotal = result.meta.pagination.total
+      const roomTotal = data.meta.pagination.total
 
       commit('SET_ROOM_TOTAL', roomTotal)
     }
 
-    return result
+    return {
+      data,
+      error
+    }
   },
 
   async fetchRoom({ commit }, id) {

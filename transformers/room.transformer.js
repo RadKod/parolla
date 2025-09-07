@@ -2,6 +2,9 @@ export default model => {
   return {
     id: model.roomId,
     relationId: model.documentId,
+    createdAt: model.createdAt,
+    updatedAt: model.updatedAt,
+    publishedAt: model.publishedAt,
     title: model.title,
     isListed: model.isPublic,
     isAnon: model.isAnon,

@@ -100,8 +100,6 @@ export default defineComponent({
       fetch()
     }
 
-    const filteredRooms = ref([])
-
     const form = reactive({
       roomUrl: {
         isClear: false,
@@ -152,7 +150,6 @@ export default defineComponent({
       roomTotal,
       filterOptions,
       handleFilterOptionSelect,
-      filteredRooms,
       form,
       validateRoomUrl,
       gotoRoom,

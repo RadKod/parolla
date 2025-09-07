@@ -23,6 +23,7 @@ export default {
     answer: 'Answer',
     remove: 'Remove',
     delete: 'Delete',
+    edit: 'Edit',
     open: 'Open',
     close: 'Close',
     playAgain: 'Play again',
@@ -306,7 +307,15 @@ export default {
   },
   creatorModeMyRooms: {
     title: 'My recently created rooms',
-    description: 'Your recently created rooms are saved in the browser storage, this list will be cleared when the browser data is reset'
+    description: {
+      authed: '',
+      nonAuthed: 'Your recently created rooms are saved in the browser storage, this list will be cleared when the browser data is reset'
+    },
+    delete: {
+      callback: {
+        success: 'Room deleted'
+      }
+    }
   },
   form: {
     isRequired: '{model} is required',
@@ -373,6 +382,10 @@ export default {
       error: {
         couldNotCreate: 'Could not create room, please check and try again'
       }
+    },
+    creatorModeEdit: {
+      title: 'EDIT A ROOM',
+      submit: 'Update and publish'
     },
     roomReview: {
       back: 'Back',

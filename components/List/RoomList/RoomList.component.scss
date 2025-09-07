@@ -162,5 +162,19 @@
         font-size: var(--font-size-text-9);
       }
     }
+
+    &__actions {
+      display: flex;
+      gap: calc(var(--base-m-x) / 2);
+      align-items: center;
+      justify-content: flex-start;
+      margin-block-start: var(--base-m-y);
+
+      .van-button {
+        &:hover {
+          transform: scale(1.02);
+        }
+      }
+    }
   }
 }

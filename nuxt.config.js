@@ -274,6 +274,10 @@ module.exports = {
             tr: '/yaratici/olustur',
             en: '/creator/compose'
           },
+          'CreatorMode/CreatorModeEdit/index': {
+            tr: '/yaratici/duzenle',
+            en: '/creator/edit'
+          },
           'CreatorMode/CreatorModeRoom/index': {
             tr: '/oda',
             en: '/room'

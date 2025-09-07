@@ -1,6 +1,8 @@
 <template lang="pug">
 Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
-  h2.creator-mode-compose-form__title(align="center") {{ $t('form.creatorModeCompose.title') }}
+  h2.creator-mode-compose-.mt-base(align="center")
+    template(v-if="room") {{ $t('form.creatorModeEdit.title') }}
+    template(v-else) {{ $t('form.creatorModeCompose.title') }}
   br
   h3.creator-mode-compose-form__title.mt-1 {{ $t('form.creatorModeCompose.roomInformations') }}
   .creator-mode-compose-form__roomInfo
@@ -13,19 +15,28 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       show-word-limit
       :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.room.roomTitle.label') }) }]"
     )
+
     Cell.creator-mode-compose-form__.creator-mode-compose-form__isListed
       template(#title)
         span {{ $t('form.creatorModeCompose.room.isListed.label') }}
 
       template(#right-icon)
         VanSwitch(v-model="form.isListed" :size="24")
-    Cell.creator-mode-compose-form__isAnon
-      template(#title)
-        span {{ $t('form.creatorModeCompose.room.isAnon.label') }} &nbsp;
-        small(v-if="user") ({{ user.username }})
 
-      template(#right-icon)
-        VanSwitch(v-model="form.isAnon" :size="24")
+    template(v-if="$auth.loggedIn && $auth.user")
+      Cell.creator-mode-compose-form__isAnon
+        template(#title)
+          span {{ $t('form.creatorModeCompose.room.isAnon.label') }} &nbsp;
+          small(v-if="user") ({{ user.username }})
+
+        template(#right-icon)
+          VanSwitch(v-model="form.isAnon" :size="24")
+
+  template(v-if="!$auth.loggedIn && !$auth.user")
+    small.creator-mode-compose-form__anonNotice
+      AppIcon(name="tabler:info-circle" :width="16" :height="16")
+      | Giriş yapmadığın için oluşturacağın odayı tekrar düzenleyemez ya da silemezsin.
+
   h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.qaSet') }}
 
   .compose-qa-list
@@ -123,7 +134,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     ) {{ $t('form.creatorModeCompose.qa.addMoreQuestion') }}
 
     Button(
-      v-if="form.qaList && form.qaList.length > 1"
+      v-if="form.qaList && form.qaList.length > 1 && room === null"
       type="warning"
       plain
       native-type="button"
@@ -147,7 +158,9 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       :loading="form.isBusy"
       :disabled="form.isBusy"
       @click="handleSubmit"
-    ) {{ $t('form.creatorModeCompose.submit') }}
+    )
+      template(v-if="room") {{ $t('form.creatorModeEdit.submit') }}
+      template(v-else) {{ $t('form.creatorModeCompose.submit') }}
 
   CreatorModeCreatedRoomDialog(
     :isOpen="dialog.room.isOpen"
@@ -176,7 +189,14 @@ export default defineComponent({
     Empty,
     Dialog
   },
-  setup() {
+  props: {
+    room: {
+      type: Object,
+      required: false,
+      default: null
+    }
+  },
+  setup(props) {
     const baseClassName = 'creator-mode-compose-form'
 
     const router = useRouter()
@@ -332,11 +352,15 @@ export default defineComponent({
       if (form.isClear) {
         const deviceInfo = await getDeviceInfo()
 
-        const result = await store.dispatch('creator/postQaForm', { form, user: user.value, deviceInfo })
+        const { data, error } = props.room
+          ? await store.dispatch('creator/editRoom', { relationId: props.room.relationId, form, deviceInfo })
+          : await store.dispatch('creator/postRoom', { form, deviceInfo })
 
-        if (result.success) {
-          createdRoom.title = result.data.title
-          createdRoom.id = result.data.room
+        if (data) {
+          const room = data.data
+
+          createdRoom.title = room.title
+          createdRoom.id = room.roomId
           createdRoom.isListed = form.isListed
 
           dialog.room.isOpen = true
@@ -344,11 +368,13 @@ export default defineComponent({
           let storagedMyRooms = JSON.parse(window.localStorage.getItem('myRooms'))
 
           if (storagedMyRooms && storagedMyRooms.length > 0) {
-            window.localStorage.setItem('myRooms', JSON.stringify([...storagedMyRooms, roomTransformer(result.data)]))
+            window.localStorage.setItem('myRooms', JSON.stringify([...storagedMyRooms, roomTransformer(room)]))
           } else {
-            window.localStorage.setItem('myRooms', JSON.stringify([roomTransformer(result.data)]))
+            window.localStorage.setItem('myRooms', JSON.stringify([roomTransformer(room)]))
           }
-        } else {
+        }
+
+        if (error) {
           getErrorNotify()
         }
       } else {
@@ -382,7 +408,7 @@ export default defineComponent({
 
     const storagedForm = JSON.parse(window.localStorage.getItem('creatorFormDraft'))
 
-    if (storagedForm) {
+    if (storagedForm && props.room === null) {
       form.roomTitle = storagedForm.roomTitle
       form.isListed = storagedForm.isListed
       form.isAnon = storagedForm.isAnon
@@ -393,6 +419,21 @@ export default defineComponent({
       window.localStorage.removeItem('creatorFormDraft')
       resetForm()
     }
+
+    const setForm = value => {
+      form.roomTitle = value.title
+      form.isListed = value.isListed
+      form.isAnon = value.isAnon
+      form.qaList = value.questions
+    }
+
+    if (props.room) {
+      setForm(props.room)
+    }
+
+    watch(props.room, value => {
+      setForm(value)
+    })
 
     const handleConfirmRoomDialog = () => {
       router.push(

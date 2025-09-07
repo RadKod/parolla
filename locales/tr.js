@@ -23,6 +23,7 @@ export default {
     answer: 'Cevap',
     remove: 'Kaldır',
     delete: 'Sil',
+    edit: 'Düzenle',
     open: 'Aç',
     close: 'Kapat',
     playAgain: 'Baştan oyna',
@@ -321,7 +322,15 @@ export default {
   },
   creatorModeMyRooms: {
     title: 'Son oluşturduğum odalar',
-    description: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
+    description: {
+      authed: '',
+      nonAuthed: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
+    },
+    delete: {
+      callback: {
+        success: 'Oda silindi'
+      }
+    }
   },
   form: {
     isRequired: '{model} gereklidir',
@@ -336,7 +345,7 @@ export default {
           placeholder: 'Oda başlığı yaz'
         },
         isListed: {
-          label: 'Odan odalar listesinde görünsün mü?'
+          label: 'Odalar listesinde görünsün mü?'
         },
         isAnon: {
           label: 'Oluşturan oyuncu adın gizlensin mi?'
@@ -388,6 +397,10 @@ export default {
       error: {
         couldNotCreate: 'Oda oluşturulamadı, lütfen kontrol edip tekrar dene'
       }
+    },
+    creatorModeEdit: {
+      title: 'ODA DÜZENLE',
+      submit: 'Güncelle ve yayınla'
     },
     roomReview: {
       back: 'Geri dön',

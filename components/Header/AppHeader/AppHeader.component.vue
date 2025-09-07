@@ -182,6 +182,8 @@ export default defineComponent({
           route.value.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })
         ) {
           router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
+        } else if (route.value.path === localePath({ name: 'CreatorMode-CreatorModeEdit' })) {
+          router.replace(localePath({ name: 'CreatorMode-CreatorModeMyRooms' }))
         } else {
           router.replace(localePath({ name: 'Main' }))
         }
@@ -225,6 +227,7 @@ export default defineComponent({
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeEdit' }) ||
         route.value.path === localePath({ name: 'TourMode-TourModeGame' })
       ) {
         return true

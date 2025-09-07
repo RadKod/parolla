@@ -1,8 +1,12 @@
 <template lang="pug">
 .page.creator-mode-my-rooms-page
   .page.creator-mode-my-rooms-page__inner
-    h2.creator-mode-my-rooms-page__title(align="center") {{ $t('creatorModeMyRooms.title') }}
-    p.creator-mode-my-rooms-page__description {{ $t('creatorModeMyRooms.description') }}
+    h2.creator-mode-my-rooms-page__title(align="center") {{ $t('creatorModeMyRooms.title') }} ({{ roomsTotal }})
+    p.creator-mode-my-rooms-page__description
+      template(v-if="$auth.loggedIn && $auth.user")
+        | {{ $t('creatorModeMyRooms.description.authed') }}
+      template(v-else)
+        | {{ $t('creatorModeMyRooms.description.nonAuthed') }}
 
     br
 
@@ -19,17 +23,16 @@
             ) {{ $t('creatorModeRooms.rooms.empty.action') }}
 
         template(v-else)
-          template(v-for="room in myRooms")
-            Cell.room-list-item(is-link :to="localePath({ name: 'CreatorMode-CreatorModeRoom', query: { id: room.id } })")
-              template(#title)
-                span.room-list-item__title {{ room.title }}
-
-              template(#label)
-                span.room-list-item__id ID: {{ room.id }}
+          RoomList(
+            :items="rooms"
+            :user="$auth.user"
+            :isActiveInfiniteLoading="$auth.loggedIn && $auth.user ? true : false"
+            @on-delete-room="handleDeleteRoom"
+          )
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore, useFetch, computed } from '@nuxtjs/composition-api'
 import { Field, Search, Button, Divider, Cell, Empty } from 'vant'
 
 export default defineComponent({
@@ -43,21 +46,61 @@ export default defineComponent({
   },
   layout: 'Default/Default.layout',
   setup() {
-    const storagedMyRooms = JSON.parse(window.localStorage.getItem('myRooms')) || []
+    const context = useContext()
+    const store = useStore()
 
-    const myRooms = computed(() => {
-      return storagedMyRooms
+    // Fetch Rooms
+    const { fetch, fetchState } = useFetch(async () => {
+      if (!context.$auth.loggedIn || !context.$auth.user) {
+        return false
+      }
+
+      await store.dispatch('creator/fetchRooms', {
+        isLoadMore: false,
+        user: context.$auth.user?.id
+      })
+    })
+
+    const usersRooms = computed(() => store.getters['creator/rooms'])
+    const usersRoomTotal = computed(() => store.getters['creator/roomTotal'])
+
+    const parseStoragedMyRooms = JSON.parse(window.localStorage.getItem('myRooms')) || []
+
+    const storagedMyRooms = computed(() => {
+      return parseStoragedMyRooms.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    })
+
+    const rooms = computed(() => {
+      if (context.$auth.loggedIn && context.$auth.user) {
+        return usersRooms.value
+      } else {
+        return storagedMyRooms.value.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      }
+    })
+
+    const roomsTotal = computed(() => {
+      if (context.$auth.loggedIn && context.$auth.user) {
+        return usersRoomTotal.value
+      } else {
+        return storagedMyRooms.value.length
+      }
     })
 
     const isEmptyRoomList = computed(() => {
-      if (myRooms.value && myRooms.value.length <= 0) {
+      if (rooms.value && rooms.value.length <= 0) {
         return true
       }
     })
 
+    const handleDeleteRoom = () => {
+      store.commit('creator/SET_ROOM_TOTAL', usersRoomTotal.value - 1)
+    }
+
     return {
-      myRooms,
-      isEmptyRoomList
+      rooms,
+      roomsTotal,
+      isEmptyRoomList,
+      handleDeleteRoom
     }
   }
 })

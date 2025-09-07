@@ -24,6 +24,10 @@ const appFetch = async ({ $axios, app }, params) => {
       config: {}
     })
 
+    if (method === 'DELETE') {
+      return { data: promise, error: null }
+    }
+
     return { data: promise.data, error: null }
   } catch (error) {
     if (error.response) {
