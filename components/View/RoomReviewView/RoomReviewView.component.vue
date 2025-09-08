@@ -11,7 +11,11 @@
         Button(@click="fetch") {{ $t('dialog.roomReview.error.fetchReviews.action') }}
 
     template(v-else)
-      RoomReviewList.room-review-view__list(:items="review.list" :rating="review.rating" @onClickOpenRoomReviewForm="openRoomReviewForm")
+      RoomReviewList.room-review-view__list(
+        :items="review.list"
+        :rating="String(room.rating)"
+        @onClickOpenRoomReviewForm="openRoomReviewForm"
+      )
         template(#openFormButton)
           Button.room-review-view__openFormButton.room-review-view__openFormButton--desktop(
             v-if="!isOpenRoomReviewForm && review.list && review.list.length > 0"
@@ -49,22 +53,20 @@ export default defineComponent({
 
     const review = reactive({
       rating: null,
-      viewCount: null,
-      room: {},
       list: []
     })
 
     const fetchReviews = async () => {
       if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
-        const result = await store.dispatch('creator/fetchReviews', {
-          relationId: room.value.relationId
+        const { data, error } = await store.dispatch('creator/fetchReviews', {
+          roomId: room.value.id
         })
 
-        if (result.success) {
-          review.rating = result.data.rating
-          review.viewCount = result.data.view_count
-          review.room = roomTransformer(result.data)
-          review.list = result.data.reviews.map(item => roomReviewTransformer(item))
+        if (data) {
+          const reviews = data.data
+
+          review.rating = reviews.rating
+          review.list = reviews.map(review => roomReviewTransformer(review))
         }
       }
     }

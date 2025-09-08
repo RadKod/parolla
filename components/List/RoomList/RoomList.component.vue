@@ -220,12 +220,12 @@ export default defineComponent({
         cancelButtonText: i18n.t('general.cancel'),
         confirmButtonText: i18n.t('general.delete')
       }).then(() => {
-        deleteRoom({ relationId: room.relationId })
+        deleteRoom({ documentId: room.documentId })
       })
     }
 
-    const deleteRoom = async ({ relationId }) => {
-      const { data, error } = await store.dispatch('creator/deleteRoom', { relationId })
+    const deleteRoom = async ({ documentId }) => {
+      const { data, error } = await store.dispatch('creator/deleteRoom', { documentId })
 
       if (data) {
         Notify({
@@ -235,9 +235,9 @@ export default defineComponent({
           duration: 1000
         })
 
-        list.items = list.items.filter(room => room.relationId !== relationId)
+        list.items = list.items.filter(room => room.documentId !== documentId)
 
-        emit('on-delete-room', { relationId })
+        emit('on-delete-room', { documentId })
       }
 
       if (error) {

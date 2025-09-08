@@ -1,7 +1,7 @@
 export default model => {
   return {
     id: model.roomId,
-    relationId: model.documentId,
+    documentId: model.documentId,
     createdAt: model.createdAt,
     updatedAt: model.updatedAt,
     publishedAt: model.publishedAt,

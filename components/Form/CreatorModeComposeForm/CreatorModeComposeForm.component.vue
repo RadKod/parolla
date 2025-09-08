@@ -353,7 +353,7 @@ export default defineComponent({
         const deviceInfo = await getDeviceInfo()
 
         const { data, error } = props.room
-          ? await store.dispatch('creator/editRoom', { relationId: props.room.relationId, form, deviceInfo })
+          ? await store.dispatch('creator/editRoom', { documentId: props.room.documentId, form, deviceInfo })
           : await store.dispatch('creator/postRoom', { form, deviceInfo })
 
         if (data) {

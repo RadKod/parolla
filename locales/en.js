@@ -12,6 +12,9 @@ export default {
     tryAgain: 'Try again',
     goToHome: 'Go to home'
   },
+  success: {
+    success: 'Success'
+  },
   general: {
     loading: 'Loading',
     yes: 'Yes',

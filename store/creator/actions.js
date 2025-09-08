@@ -38,7 +38,7 @@ export default {
     }
   },
 
-  async editRoom({ commit, state }, { relationId, form, deviceInfo }) {
+  async editRoom({ commit, state }, { documentId, form, deviceInfo }) {
     const token = this.$auth.strategy.token.get()
 
     const transform = form => {
@@ -59,7 +59,7 @@ export default {
     }
 
     const { data, error } = await this.$appFetch({
-      path: `rooms/${relationId}`,
+      path: `rooms/${documentId}`,
       method: 'PUT',
       data: {
         data: transform(form)
@@ -75,11 +75,11 @@ export default {
     }
   },
 
-  async deleteRoom({ commit }, { relationId }) {
+  async deleteRoom({ commit }, { documentId }) {
     const token = this.$auth.strategy.token.get()
 
     const { data, error } = await this.$appFetch({
-      path: `rooms/${relationId}`,
+      path: `rooms/${documentId}`,
       method: 'DELETE',
       headers: {
         Authorization: `${token}`
@@ -186,35 +186,45 @@ export default {
     return result
   },
 
-  async fetchReviews({ commit }, { relationId }) {
-    const response = await fetch(`${process.env.API}/rooms/${relationId}/reviews`)
-    const result = await response.json()
+  async fetchReviews({ commit }, { roomId }) {
+    const { data, error } = await this.$appFetch({
+      path: `room-reviews?filters[room][roomId][$eq]=${roomId}&populate=user&sort=createdAt:desc`,
+      method: 'GET'
+    })
 
-    return result
+    return {
+      data,
+      error
+    }
   },
 
-  async postReview({ commit, state }, { relationId, form, user }) {
+  async postReview({ commit, state }, { roomDocumentId, form }) {
+    const token = this.$auth.strategy.token.get()
+
     const transform = form => {
       return {
+        room: roomDocumentId,
         rating: form.rating,
         content: form.comment,
-        fingerprint: user.fingerprint
+        user: this.$auth.user?.id
       }
     }
 
-    const response = await fetch(`${process.env.API}/rooms/${relationId}/reviews`, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Language': this.$i18n.locale
+    const { data, error } = await this.$appFetch({
+      path: `room-reviews`,
+      method: 'POST',
+      data: {
+        data: transform(form)
       },
-      body: JSON.stringify(transform(form))
+      headers: {
+        Authorization: `${token}`
+      }
     })
 
-    const result = await response.json()
-
-    return result
+    return {
+      data,
+      error
+    }
   },
 
   async postStats({ commit, state }, params) {

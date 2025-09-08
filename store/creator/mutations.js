@@ -28,7 +28,7 @@ export default {
   },
 
   INCREMENT_ROOM_REVIEW_COUNT(state) {
-    state.room.reviewCount += 1
+    state.room.room.reviewCount += 1
   },
 
   SET_CURRENT_DATE(state, date) {

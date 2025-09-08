@@ -12,6 +12,9 @@ export default {
     tryAgain: 'Tekrar dene',
     goToHome: 'Ana sayfaya git'
   },
+  success: {
+    success: 'Başarılı'
+  },
   general: {
     loading: 'Yükleniyor',
     yes: 'Evet',
