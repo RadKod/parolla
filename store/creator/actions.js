@@ -168,11 +168,12 @@ export default {
   },
 
   async fetchRoom({ commit }, id) {
-    const response = await fetch(`${process.env.API_STRAPI}/rooms/${id}`)
-    const result = await response.json()
+    const { data, error } = await this.$appFetch({
+      path: `rooms/${id}`
+    })
 
-    if (result?.data) {
-      const room = roomTransformer(result.data)
+    if (data) {
+      const room = roomTransformer(data.data)
 
       commit('SET_ROOM', room)
 
@@ -183,7 +184,10 @@ export default {
       commit('SET_ALPHABET_ITEMS', room.alphabet)
     }
 
-    return result
+    return {
+      data,
+      error
+    }
   },
 
   async fetchReviews({ commit }, { roomId }) {
