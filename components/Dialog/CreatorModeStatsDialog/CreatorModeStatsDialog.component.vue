@@ -263,7 +263,7 @@ export default defineComponent({
             pendingScoreboard.value = true
 
             await store.dispatch('creator/fetchScoreboard', {
-              relationId: room.value.relationId
+              roomId: room.value.id
             })
 
             pendingScoreboard.value = false
@@ -272,13 +272,28 @@ export default defineComponent({
       }
     )
 
+    const pagination = computed(() => store.getters['creator/scoreboardPagination'])
+
     const handleInfiniteLoading = async $state => {
-      await store.dispatch('creator/fetchScoreboard', {
+      const { data, error } = await store.dispatch('creator/fetchScoreboard', {
         isLoadMore: true,
-        relationId: room.value.relationId
+        page: pagination.value.page + 1,
+        roomId: room.value.id
       })
 
       $state.loaded()
+
+      if (data?.data.length === 0) {
+        $state.complete()
+
+        return false
+      }
+
+      if (error) {
+        $state.error()
+
+        return false
+      }
     }
 
     return {

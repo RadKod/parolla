@@ -496,6 +496,8 @@ export default () => {
   }
 
   const endGame = async () => {
+    if (isGameOver.value) return
+
     window.postMessage({ type: 'end-game', data: true })
 
     await nextTick()
@@ -520,9 +522,8 @@ export default () => {
     if (activeGameMode.value === gameModeKeyEnum.CREATOR) {
       const room = computed(() => store.getters['creator/room'])
 
-      store.dispatch('creator/postStats', {
-        relationId: room.value.relationId,
-        user: user.value,
+      await store.dispatch('creator/postStats', {
+        roomDocumentId: room.value.documentId,
         stats: {
           correctAnswers,
           wrongAnswers,

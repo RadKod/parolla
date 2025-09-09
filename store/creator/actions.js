@@ -109,7 +109,7 @@ export default {
 
     const queryDefault = {
       page: 1,
-      per_page: 10,
+      perPage: 10,
       search: '',
       user: null,
       sort: state.room.sort,
@@ -119,7 +119,7 @@ export default {
 
     const query = {
       'pagination[page]': page || queryDefault.page,
-      'pagination[pageSize]': limit || queryDefault.per_page,
+      'pagination[pageSize]': limit || queryDefault.perPage,
       'filters[title][$containsi]': keyword || queryDefault.search,
       sort: getSort(state.room.sort) || queryDefault.sort,
       lang: locale || queryDefault.locale,
@@ -232,66 +232,77 @@ export default {
   },
 
   async postStats({ commit, state }, params) {
-    const { relationId, user, stats } = params
+    const { roomDocumentId, stats } = params
+    const token = this.$auth.strategy.token.get()
 
     const transformBody = model => {
       return {
-        game_result: model.stats,
-        fingerprint: model.user.fingerprint
+        room: model.room,
+        user: model.user,
+        results: model.stats
       }
     }
 
-    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics`, {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Accept-Language': this.$i18n.locale
-      },
-      body: JSON.stringify(
-        transformBody({
-          user,
+    const { data, error } = await this.$appFetch({
+      path: `room-scores`,
+      method: 'POST',
+      data: {
+        data: transformBody({
+          room: roomDocumentId,
+          user: this.$auth.user?.id,
           stats
         })
-      )
+      },
+      headers: {
+        Authorization: `${token}`
+      }
     })
 
-    const result = await response.json()
-
-    return result
+    return {
+      data,
+      error
+    }
   },
 
   async fetchScoreboard({ commit, state }, params) {
-    const { isLoadMore = false, limit, cursor, relationId } = params
+    const { isLoadMore = false, limit, roomId, page, sort } = params
 
     const queryDefault = {
-      per_page: 100,
-      cursor: ''
+      perPage: 50,
+      page: 1,
+      sort: 'createdAt:desc'
     }
 
     const query = {
-      per_page: limit || queryDefault.per_page,
-      cursor: state.scoreboard.pagination.cursor
+      'pagination[pageSize]': limit || queryDefault.perPage,
+      'pagination[page]': page || queryDefault.page,
+      'filters[room][roomId][$eq]': roomId,
+      sort: sort || queryDefault.sort,
+      populate: 'user'
     }
 
-    const queryString = new URLSearchParams(query).toString()
+    const { data, error } = await this.$appFetch({
+      path: `room-scores`,
+      method: 'GET',
+      query: query
+    })
 
-    const response = await fetch(`${process.env.API}/rooms/${relationId}/statistics?${queryString}`)
-    const result = await response.json()
-
-    if (result.success) {
+    if (data) {
       if (isLoadMore) {
-        commit('PUSH_SCOREBOARD', scoreboardTransformer(result.data.statistics))
+        commit('PUSH_SCOREBOARD', scoreboardTransformer(data.data))
       } else {
-        commit('SET_SCOREBOARD', scoreboardTransformer(result.data.statistics))
+        commit('SET_SCOREBOARD', scoreboardTransformer(data.data))
       }
 
       commit('SET_SCOREBOARD_PAGINATION', {
-        pagination: result.data.pagination,
-        total: result.data.total
+        pagination: data.meta.pagination,
+        total: data.meta.pagination.total
       })
     }
 
-    return result
+    return {
+      data,
+      error
+    }
   }
 }
