@@ -19,7 +19,7 @@ Dialog.dialog.player-dialog(
         Timeago.profile-view-created-at__value(:datetime="player.createdAt" :auto-update="60" :locale="$i18n.locale")
         label.profile-view-created-at__label &nbsp;{{ $t('general.joined').toLowerCase() }}
 
-      .tour-scores(v-if="player.tourScores && Object.keys(player.tourScores).length > 0")
+      .tour-scores(v-if="player.tourScore && Object.keys(player.tourScore).length > 0")
         strong.tour-scores__title Tur modu skorları
 
         table.tour-scores-table
@@ -31,23 +31,23 @@ Dialog.dialog.player-dialog(
           tbody
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Günlük
-              td.tour-scores-table-item-score {{ player.tourScores.daily.score }}
-              td.tour-scores-table-item-rank {{ player.tourScores.daily.rank }}
+              td.tour-scores-table-item-score {{ player.tourScore.daily.score }}
+              td.tour-scores-table-item-rank {{ player.tourScore.daily.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Haftalık
-              td.tour-scores-table-item-score {{ player.tourScores.weekly.score }}
-              td.tour-scores-table-item-rank {{ player.tourScores.weekly.rank }}
+              td.tour-scores-table-item-score {{ player.tourScore.weekly.score }}
+              td.tour-scores-table-item-rank {{ player.tourScore.weekly.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Aylık
-              td.tour-scores-table-item-score {{ player.tourScores.monthly.score }}
-              td.tour-scores-table-item-rank {{ player.tourScores.monthly.rank }}
+              td.tour-scores-table-item-score {{ player.tourScore.monthly.score }}
+              td.tour-scores-table-item-rank {{ player.tourScore.monthly.rank }}
 
             tr.tour-scores-table-item
               td.tour-scores-table-item-title Tüm zamanlar
-              td.tour-scores-table-item-score {{ player.tourScores.allTime.score }}
-              td.tour-scores-table-item-rank {{ player.tourScores.allTime.rank }}
+              td.tour-scores-table-item-score {{ player.tourScore.allTime.score }}
+              td.tour-scores-table-item-rank {{ player.tourScore.allTime.rank }}
 
   template(v-else)
     Loading(color="var(--color-brand-02)") {{ $t('dialog.player.loading') }}

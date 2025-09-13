@@ -25,8 +25,8 @@
       Button(@click="fetch") {{ $t('leaderboard.error.action') }}
 
   template(v-else)
-    template(v-if="leaderboard[activeLeaderboardType].length > 0")
-      Leaderboard(:scorers="leaderboard[activeLeaderboardType]")
+    template(v-if="leaderboard.length > 0")
+      Leaderboard(:scorers="leaderboard")
     template(v-else)
       Empty(:description="$t('leaderboard.empty.description')")
 </template>
@@ -55,7 +55,7 @@ export default defineComponent({
     }
 
     const { fetch, fetchState } = useFetch(async () => {
-      await store.dispatch('tour/fetchLeaderboard', { type: activeLeaderboardType.value, limit: 100 })
+      await store.dispatch('tour/fetchLeaderboard', { period: activeLeaderboardType.value, limit: 100 })
     })
 
     const pageDescription = computed(() => {

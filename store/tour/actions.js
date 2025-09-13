@@ -27,19 +27,23 @@ export default {
     }
   },
 
-  async fetchLeaderboard({ commit }, { type = 'allTime', limit = 10 }) {
-    const _type = type === 'allTime' ? 'all_time' : type
-
-    const leaderboardResponse = await fetch(`${process.env.API}/tour/leaderboard?type=${_type}&limit=${limit}`, {
-      method: 'get',
-      headers: {
-        'Accept-Language': this.$i18n.locale
+  async fetchLeaderboard({ commit }, { period = 'allTime', limit = 10 }) {
+    const { data, error } = await this.$appFetch({
+      path: `tour-scores/tour-leaderboard`,
+      query: {
+        period,
+        limit
       }
     })
 
-    const leaderboardResult = await leaderboardResponse.json()
+    if (data) {
+      commit('SET_LEADERBOARD', data.data)
+    }
 
-    commit('SET_LEADERBOARD', leaderboardResult.data)
+    return {
+      data,
+      error
+    }
   },
 
   emitWebSocketEvent({ commit }, { type, data }) {

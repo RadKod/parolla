@@ -34,17 +34,14 @@ export default {
 
   SET_LEADERBOARD(state, leaderboard) {
     const mappedLeaderboard = leaderboard => {
-      return leaderboard?.map(player => ({
-        id: player.user_id,
-        username: player.username,
-        score: player.score
+      return leaderboard?.map(scorer => ({
+        id: scorer.user.id,
+        username: scorer.user.username,
+        score: scorer.score
       }))
     }
 
-    state.leaderboard.daily = mappedLeaderboard(leaderboard.daily)
-    state.leaderboard.weekly = mappedLeaderboard(leaderboard.weekly)
-    state.leaderboard.monthly = mappedLeaderboard(leaderboard.monthly)
-    state.leaderboard.allTime = mappedLeaderboard(leaderboard['all_time'])
+    state.leaderboard = mappedLeaderboard(leaderboard)
   },
 
   SET_CHAT_MESSAGES(state, messages) {

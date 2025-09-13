@@ -22,12 +22,7 @@ export default () => ({
     totalPlayers: 0,
     totalViewers: 0
   },
-  leaderboard: {
-    daily: [],
-    weekly: [],
-    monthly: [],
-    allTime: []
-  },
+  leaderboard: [],
   chat: {
     messages: []
   },

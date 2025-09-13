@@ -68,10 +68,10 @@ export default defineComponent({
     const openPlayerDialog = async () => {
       store.commit('profile/SET_PLAYER_DIALOG_IS_OPEN', true)
 
-      const { data, error } = await store.dispatch('profile/fetchPlayer', { username: 'selimdoyranli' })
+      const { data, error } = await store.dispatch('profile/fetchPlayer', { id: props.user.id })
 
       if (data) {
-        store.commit('profile/SET_PLAYER', data[0])
+        store.commit('profile/SET_PLAYER', data)
       }
 
       if (error) {

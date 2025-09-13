@@ -1,7 +1,7 @@
 export default {
-  async fetchPlayer({ commit }, { username }) {
+  async fetchPlayer({ commit }, { id }) {
     const { data, error } = await this.$appFetch({
-      path: `users?filters[username][$eq]=${username}`
+      path: `users/${id}`
     })
 
     return {
