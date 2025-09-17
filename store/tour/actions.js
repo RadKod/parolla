@@ -27,12 +27,13 @@ export default {
     }
   },
 
-  async fetchLeaderboard({ commit }, { period = 'allTime', limit = 10 }) {
+  async fetchLeaderboard({ commit }, { period = 'allTime', limit = 10, page = 1 }) {
     const { data, error } = await this.$appFetch({
       path: `tour-scores/tour-leaderboard`,
       query: {
         period,
-        limit
+        'pagination[pageSize]': limit,
+        'pagination[page]': page
       }
     })
 
