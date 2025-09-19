@@ -23,6 +23,9 @@ export default {
 
     const { data, error } = await this.$appFetch({
       path: 'rooms',
+      query: {
+        locale: this.$i18n.locale
+      },
       method: 'POST',
       data: {
         data: transform(form)
@@ -61,6 +64,9 @@ export default {
     const { data, error } = await this.$appFetch({
       path: `rooms/${documentId}`,
       method: 'PUT',
+      query: {
+        locale: this.$i18n.locale
+      },
       data: {
         data: transform(form)
       },
@@ -81,6 +87,9 @@ export default {
     const { data, error } = await this.$appFetch({
       path: `rooms/${documentId}`,
       method: 'DELETE',
+      query: {
+        locale: this.$i18n.locale
+      },
       headers: {
         Authorization: `${token}`
       }
@@ -113,8 +122,8 @@ export default {
       search: '',
       user: null,
       sort: state.room.sort,
-      locale: this.$i18n.locale,
-      populate: '*'
+      populate: '*',
+      locale: this.$i18n.locale
     }
 
     const query = {
@@ -122,8 +131,8 @@ export default {
       'pagination[pageSize]': limit || queryDefault.perPage,
       'filters[title][$containsi]': keyword || queryDefault.search,
       sort: getSort(state.room.sort) || queryDefault.sort,
-      lang: locale || queryDefault.locale,
-      populate: 'user'
+      populate: 'user',
+      locale: locale || queryDefault.locale
     }
 
     // Only add user filter if user is not null
@@ -138,7 +147,6 @@ export default {
       path: 'rooms',
       query: query,
       headers: {
-        'Accept-Language': this.$i18n.locale,
         Authorization: `${token}`
       }
     })
@@ -169,7 +177,10 @@ export default {
 
   async fetchRoom({ commit }, id) {
     const { data, error } = await this.$appFetch({
-      path: `rooms/${id}`
+      path: `rooms/${id}`,
+      query: {
+        locale: this.$i18n.locale
+      }
     })
 
     if (data) {
@@ -250,6 +261,9 @@ export default {
     const { data, error } = await this.$appFetch({
       path: `room-scores`,
       method: 'POST',
+      query: {
+        locale: this.$i18n.locale
+      },
       data: {
         data: transformBody({
           room: roomDocumentId,
@@ -269,12 +283,13 @@ export default {
   },
 
   async fetchScoreboard({ commit, state }, params) {
-    const { isLoadMore = false, limit, roomId, page, sort } = params
+    const { isLoadMore = false, limit, roomId, page, sort, locale } = params
 
     const queryDefault = {
       perPage: 50,
       page: 1,
-      sort: 'createdAt:desc'
+      sort: 'createdAt:desc',
+      locale: this.$i18n.locale
     }
 
     const query = {
@@ -282,7 +297,8 @@ export default {
       'pagination[page]': page || queryDefault.page,
       'filters[room][roomId][$eq]': roomId,
       sort: sort || queryDefault.sort,
-      populate: 'user'
+      populate: 'user',
+      locale: locale || queryDefault.locale
     }
 
     const { data, error } = await this.$appFetch({

@@ -1,6 +1,19 @@
 const appFetch = async ({ $axios, app }, params) => {
   const { method = 'GET', url, path, query, data, cache, headers } = params
 
+  const transformLocale = locale => {
+    if (locale === 'tr') {
+      return 'tr-TR'
+    }
+
+    return locale
+  }
+
+  const transformedQuery = {
+    ...query,
+    ...(query?.locale ? { locale: transformLocale(query.locale) } : {})
+  }
+
   $axios.onRequest(config => {
     config.headers = config.headers || {}
     config.headers.common = config.headers.common || {}
@@ -8,15 +21,13 @@ const appFetch = async ({ $axios, app }, params) => {
     if (config.headers.common['Content-Type']) {
       config.headers.common['Content-Type'] = 'application/json'
     }
-
-    config.headers.common['Accept-Language'] = app.i18n.locale
   })
 
   try {
     const promise = await $axios({
       method,
       url: url || `${app.$config.API_STRAPI}/${path}`,
-      params: { ...query },
+      params: { ...transformedQuery },
       data,
       cache,
       headers,

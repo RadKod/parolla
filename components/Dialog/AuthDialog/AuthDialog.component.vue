@@ -12,16 +12,19 @@ Dialog.dialog.auth-dialog(
   @opened="$emit('opened')"
 )
   ul.auth-dialog-list
-    strong.auth-dialog-list__title Giriş yaparak
+    strong.auth-dialog-list__title {{ $t('auth.dialog.list.title') }}
 
     li.auth-dialog-list-item
-      span.auth-dialog-list-item__title Tur modunu oyna
+      span.auth-dialog-list-item__title {{ $t('auth.dialog.list.item1.title') }}
     li.auth-dialog-list-item
-      span.auth-dialog-list-item__title Liderlik tablosunda yer al
+      span.auth-dialog-list-item__title {{ $t('auth.dialog.list.item2.title') }}
     li.auth-dialog-list-item
-      span.auth-dialog-list-item__title Kalıcı oyuncu adı al
-    li.auth-dialog-list-item
-      span.auth-dialog-list-item__title Sohbete katıl
+      span.auth-dialog-list-item__title {{ $t('auth.dialog.list.item3.title') }}
+    template(v-if="$i18n.locale === $i18n.defaultLocale")
+      li.auth-dialog-list-item
+        span.auth-dialog-list-item__title {{ $t('auth.dialog.list.item4.title') }}
+      li.auth-dialog-list-item
+        span.auth-dialog-list-item__title {{ $t('auth.dialog.list.item5.title') }}
 
   LoginForm(variant="full")
 </template>

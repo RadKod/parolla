@@ -10,7 +10,9 @@ export default {
     error: 'Hata',
     anErrorOccurred: 'Bir hata oluştu',
     tryAgain: 'Tekrar dene',
-    goToHome: 'Ana sayfaya git'
+    goToHome: 'Ana sayfaya git',
+    unAuthorized: 'Yetkisiz erişim',
+    loginRequired: 'Giriş yapınız'
   },
   success: {
     success: 'Başarılı'
@@ -41,7 +43,8 @@ export default {
     ad: 'Reklam',
     send: 'Gönder',
     playNow: 'Hemen Oyna',
-    joined: 'Katıldı'
+    joined: 'Katıldı',
+    anon: 'anonim'
   },
   auth: {
     google: {
@@ -52,6 +55,26 @@ export default {
     },
     error: {
       title: 'Giriş yapılamadı, tekrar dene'
+    },
+    dialog: {
+      list: {
+        title: 'Giriş yaparak',
+        item1: {
+          title: 'Oda oluştur'
+        },
+        item2: {
+          title: 'Odaları değerlendir'
+        },
+        item3: {
+          title: 'Skor tablosunda yer al'
+        },
+        item4: {
+          title: 'Tur modunu oyna'
+        },
+        item5: {
+          title: 'Sohbete katıl'
+        }
+      }
     }
   },
   introScene: {
@@ -226,6 +249,7 @@ export default {
     roomReview: {
       title: 'Oda değerlendirmeleri',
       review: 'Değerlendir',
+      loginToReview: 'Değerlendirmek için <u>giriş yapın</u>',
       pendingReviews: 'Yorumlar getiriliyor',
       error: {
         fetchReviews: {
@@ -240,7 +264,8 @@ export default {
     auth: {
       title: 'Giriş yap',
       login: 'Giriş yap',
-      register: 'Kayıt ol'
+      register: 'Kayıt ol',
+      loginWithGoogle: 'Google ile Giriş Yap'
     },
     player: {
       title: 'Profil',
@@ -445,7 +470,9 @@ export default {
   },
   scoreboard: {
     scoreboard: 'Skor tablosu',
-    pendingScoreboard: 'Skorlar getiriliyor'
+    pendingScoreboard: 'Skorlar getiriliyor',
+    loginToBeInScoreboard: '<u>Giriş yaptıktan</u> sonra oynarsan odaya ait skor tablosunda yer alırsın',
+    loginToBeInScoreboardExtra: 'Giriş yapmadan oynarsan skorunu sadece sen görebilirsin'
   },
   chat: {
     chat: 'Sohbet',

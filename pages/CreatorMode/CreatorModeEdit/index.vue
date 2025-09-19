@@ -21,6 +21,7 @@ export default defineComponent({
     Empty
   },
   layout: 'Default/Default.layout',
+  middleware: ['auth-control'],
   setup() {
     const route = useRoute()
     const store = useStore()

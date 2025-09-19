@@ -45,6 +45,7 @@ export default defineComponent({
     Empty
   },
   layout: 'Default/Default.layout',
+  middleware: ['auth-control'],
   setup() {
     const context = useContext()
     const store = useStore()

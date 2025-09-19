@@ -10,7 +10,9 @@ export default {
     error: 'Error',
     anErrorOccurred: 'An error occurred',
     tryAgain: 'Try again',
-    goToHome: 'Go to home'
+    goToHome: 'Go to home',
+    unAuthorized: 'Unauthorized access',
+    loginRequired: 'Login required'
   },
   success: {
     success: 'Success'
@@ -41,7 +43,8 @@ export default {
     ad: 'Ad',
     send: 'Send',
     playNow: 'Play now',
-    joined: 'Joined'
+    joined: 'Joined',
+    anon: 'anonym'
   },
   auth: {
     google: {
@@ -52,6 +55,26 @@ export default {
     },
     error: {
       title: 'Login failed, try again'
+    },
+    dialog: {
+      list: {
+        title: 'By logging in',
+        item1: {
+          title: 'Create a room'
+        },
+        item2: {
+          title: 'Review rooms'
+        },
+        item3: {
+          title: 'Be in the scoreboard'
+        },
+        item4: {
+          title: 'Play the tour mode'
+        },
+        item5: {
+          title: 'Join the chat'
+        }
+      }
     }
   },
   introScene: {
@@ -223,6 +246,7 @@ export default {
     roomReview: {
       title: 'Room reviews',
       review: 'Review',
+      loginToReview: '<u>Login</u> to review',
       pendingReviews: 'Fetching reviews',
       error: {
         fetchReviews: {
@@ -230,6 +254,19 @@ export default {
           action: 'Try again'
         }
       }
+    },
+    tourModeOnline: {
+      title: 'Tour'
+    },
+    auth: {
+      title: 'Login',
+      login: 'Login',
+      register: 'Register',
+      loginWithGoogle: 'Login with Google'
+    },
+    player: {
+      title: 'Profile',
+      loading: 'Fetching player information'
     }
   },
   clipboard: {
@@ -430,7 +467,9 @@ export default {
   },
   scoreboard: {
     scoreboard: 'Scoreboard',
-    pendingScoreboard: 'Fetching scores'
+    pendingScoreboard: 'Fetching scores',
+    loginToBeInScoreboard: 'If you play after <u>logging in</u>, you will be in the room scoreboard',
+    loginToBeInScoreboardExtra: 'If you play without logging in, you will only see your score'
   },
   chat: {
     chat: 'Sohbet',

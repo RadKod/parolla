@@ -11,10 +11,12 @@
     .player-avatar-badge.player-avatar-badge--gm(v-if="isGm")
       AppIcon.player-avatar-badge__icon(name="tabler:crown" color="#fff" :width="16" :height="16")
 
-    Avatar.player-avatar__avatar(variant="beam" :name="name || user.username" :size="size")
+    Avatar.player-avatar__avatar(v-if="user" variant="beam" :name="name || user.username" :size="size")
+    Avatar.player-avatar__avatar.player-avatar__avatar--anon(v-else variant="beam" :name="name || $t('general.anon')" :size="size")
 
   span.player-avatar__username(v-if="withUsername")
-    | {{ user.username }}
+    template(v-if="user") {{ user.username }}
+    template(v-else) {{ $t('general.anon') }}
     span.gm-username-extra(v-if="isGm") &nbsp;(GM)
 
   slot(name="append")

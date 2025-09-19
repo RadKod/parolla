@@ -1,14 +1,14 @@
 <template lang="pug">
 .login-form(:class="[loginFormVariantClass]")
   template(v-if="variant === 'default'")
-    span.login-form__title Giriş Yap
+    span.login-form__title(role="button" @click="handleGoogleLogin") {{ $t('dialog.auth.login') }}
 
     hr.login-form__separator
 
   .login-form__social-buttons
     Button.login-form__social-button.login-form__social-button--google(native-type="button" @click="handleGoogleLogin")
       AppIcon.login-form__social-button-icon(name="devicon:google" :width="20" :height="20")
-      span.login-form__social-button-text Google ile Giriş Yap
+      span.login-form__social-button-text {{ $t('dialog.auth.loginWithGoogle') }}
 
     // Apple login button
       Button.login-form__social-button.login-form__social-button--apple(native-type="button" @click="handleAppleLogin")

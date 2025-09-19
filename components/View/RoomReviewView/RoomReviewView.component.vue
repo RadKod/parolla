@@ -11,6 +11,9 @@
         Button(@click="fetch") {{ $t('dialog.roomReview.error.fetchReviews.action') }}
 
     template(v-else)
+      NoticeBar.mb-2.mt-2.cursor-pointer(v-if="!$auth.loggedIn && !$auth.user" auth-control wrapable)
+        small(v-html="$t('dialog.roomReview.loginToReview')")
+
       RoomReviewList.room-review-view__list(
         :items="review.list"
         :rating="String(room.rating)"
@@ -20,6 +23,7 @@
           Button.room-review-view__openFormButton.room-review-view__openFormButton--desktop(
             v-if="!isOpenRoomReviewForm && review.list && review.list.length > 0"
             icon="smile-comment-o"
+            auth-control
             @click="openRoomReviewForm"
           ) {{ $t('dialog.roomReview.review') }}
 
@@ -27,6 +31,7 @@
             v-if="!isOpenRoomReviewForm && review.list && review.list.length > 0"
             icon="plus"
             size="small"
+            auth-control
             @click="openRoomReviewForm"
           )
 </template>
@@ -34,13 +39,14 @@
 <script>
 import { defineComponent, useStore, useFetch, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { gameModeKeyEnum } from '@/enums'
-import { roomTransformer, roomReviewTransformer } from '@/transformers'
-import { Button, Empty } from 'vant'
+import { roomReviewTransformer } from '@/transformers'
+import { Button, Empty, NoticeBar } from 'vant'
 
 export default defineComponent({
   components: {
     Button,
-    Empty
+    Empty,
+    NoticeBar
   },
   setup() {
     const store = useStore()

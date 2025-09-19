@@ -32,14 +32,18 @@
               span.room-list-item__title {{ room.title }}
 
             template(#label)
-              .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none(v-if="room.user")
+              .room-list-item-badge.room-list-item-badge--user.d-flex.d-mobile-none
                 PlayerAvatar(:size="16" :user="room.user")
-                span.room-list-item-badge__value {{ room.user.username }}
+                span.room-list-item-badge__value
+                  template(v-if="room.user") {{ room.user.username }}
+                  template(v-else) {{ $t('general.anon') }}
 
               .room-list-item__badges
-                .room-list-item-badge.room-list-item-badge--user(v-if="room.user")
+                .room-list-item-badge.room-list-item-badge--user
                   PlayerAvatar(:size="16" :user="room.user")
-                  span.room-list-item-badge__value {{ room.user.username }}
+                  span.room-list-item-badge__value
+                    template(v-if="room.user") {{ room.user.username }}
+                    template(v-else) {{ $t('general.anon') }}
 
                 .room-list-item-badge(v-if="room.questionCount")
                   AppIcon.room-list-item-badge__icon(name="tabler:help-circle" color="var(--color-text-03)" :width="16" :height="16")
