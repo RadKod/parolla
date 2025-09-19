@@ -232,6 +232,10 @@ export default {
   },
 
   async postStats({ commit, state }, params) {
+    if (!this.$auth.loggedIn && !this.$auth.user) {
+      return
+    }
+
     const { roomDocumentId, stats } = params
     const token = this.$auth.strategy.token.get()
 
