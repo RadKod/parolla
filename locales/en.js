@@ -374,6 +374,10 @@ export default {
         },
         isAnon: {
           label: 'Hide creator player name?'
+        },
+        tag: {
+          label: 'Tags',
+          placeholder: 'Type a tag'
         }
       },
       qa: {

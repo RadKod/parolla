@@ -12,6 +12,23 @@
     border-radius: var(--border-radius-01);
   }
 
+  .creator-mode-compose-form-tags {
+    &__tag {
+      margin-inline-end: calc(var(--base-m-x) / 2);
+
+      &::before {
+        position: relative;
+        content: '#';
+      }
+
+      .van-icon {
+        color: #fff;
+        background-color: var(--color-danger-01);
+        margin-inline-start: 4px;
+      }
+    }
+  }
+
   &__anonNotice {
     display: inline-flex;
     align-items: center;

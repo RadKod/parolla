@@ -64,6 +64,11 @@
                     :star-size="14"
                   )
                   label {{ String(formatRating(room.rating)) }}
+
+              .room-list-item__tags(v-if="room.tags && room.tags.length > 0")
+                template(v-for="tag in room.tags")
+                  Tag.room-list-item__tag(:key="tag.id" type="primary") {{ tag.title }}
+
               span.room-list-item__id ID: {{ room.id }}
 
               // Actions
@@ -100,7 +105,7 @@
 <script>
 import { defineComponent, useContext, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { useDebounceFn } from '@vueuse/core'
-import { Search, List, Cell, Button, Empty, Loading, Dialog, Notify } from 'vant'
+import { Search, List, Cell, Button, Empty, Loading, Dialog, Notify, Tag } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'
 import StarRating from 'vue-star-rating'
 
@@ -115,7 +120,8 @@ export default defineComponent({
     Loading,
     StarRating,
     Dialog,
-    Notify
+    Notify,
+    Tag
   },
   props: {
     items: {
@@ -135,7 +141,7 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const { i18n } = useContext()
+    const { i18n, route } = useContext()
     const store = useStore()
     const { isOwner } = useAuth()
 
@@ -161,6 +167,7 @@ export default defineComponent({
         isLoadMore: true,
         page: pagination.value.page + 1,
         keyword: form.search.keyword,
+        tags: route.value.query.tags ? route.value.query.tags.split(',') : [],
         user: props.user?.id
       })
 

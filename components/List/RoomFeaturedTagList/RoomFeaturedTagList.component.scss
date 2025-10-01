@@ -1,0 +1,28 @@
+.room-featured-tag-list {
+  position: relative;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-block-end: var(--base-p-y);
+
+  &-tag {
+    padding: calc(var(--base-p-y) / 2) calc(var(--base-p-x) / 2);
+    background-color: transparent;
+    border: 1px solid light-dark(#ddd, #333);
+    border-radius: var(--border-radius-01);
+    margin-inline-end: calc(var(--base-m-x) / 2);
+
+    &--active {
+      background-color: var(--color-ui-02);
+      border-color: var(--color-border-02);
+    }
+
+    &__icon {
+      margin-right: 4px;
+    }
+
+    &__title {
+      color: var(--color-text-02);
+      font-size: var(--font-size-text-10);
+    }
+  }
+}

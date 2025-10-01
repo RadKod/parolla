@@ -42,11 +42,12 @@
           Button(@click="fetch") {{ $t('creatorModeRooms.error.rooms.fetch.action') }}
 
       template(v-else)
+        RoomFeaturedTagList(@on-tag-click="handleFeaturedTagClick")
         RoomList(:items="rooms")
 </template>
 
 <script>
-import { defineComponent, useFetch, useRouter, useContext, useStore, ref, reactive, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useRouter, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
 import { Field, Button, Divider, Empty, Notify } from 'vant'
 
@@ -61,12 +62,13 @@ export default defineComponent({
   layout: 'Default/Default.layout',
   setup() {
     const router = useRouter()
-    const { localePath, i18n } = useContext()
+    const { localePath, i18n, route } = useContext()
     const store = useStore()
 
     // Fetch Rooms
     const { fetch, fetchState } = useFetch(async () => {
       await store.dispatch('creator/fetchRooms', {
+        tags: route.value.query.tags ? route.value.query.tags.split(',') : [],
         isLoadMore: false
       })
     })
@@ -136,6 +138,49 @@ export default defineComponent({
       }
     }
 
+    const handleFeaturedTagClick = async value => {
+      let _tags = []
+
+      if (value.title === 'Tümü') {
+        router.push(localePath({ name: 'CreatorMode-CreatorModeRooms' }))
+      }
+
+      if (value.title === 'Dizi-Film') {
+        _tags = ['dizi', 'film']
+      } else if (value.title === 'Dil Öğren') {
+        _tags = ['ingilizce', 'ispanyolca', 'fransızca', 'almanca', 'italyanca', 'portekizce', 'japonca', 'çince']
+      } else if (value.title === 'Müzik') {
+        _tags = ['müzik']
+      } else if (value.title === 'Oyun') {
+        _tags = ['oyun', 'video oyunları', 'video oyunu']
+      } else if (value.title === 'Futbol') {
+        _tags = ['futbol']
+      } else if (value.title === 'Basketbol') {
+        _tags = ['basketbol']
+      } else if (value.title === 'Genel Kültür') {
+        _tags = ['genel kültür']
+      } else if (value.title === 'Bilim') {
+        _tags = ['bilim']
+      } else if (value.title === 'Coğrafya') {
+        _tags = ['coğrafya']
+      } else if (value.title === 'Tarih') {
+        _tags = ['atatürk', 'osmanlı', 'islam', 'askeri', 'savaş', 'medeniyetler']
+      } else if (value.title === 'Otomobil') {
+        _tags = ['otomobil', 'araba', 'arabalar']
+      } else if (value.title === 'Bayrak Bilmece') {
+        _tags = ['bayrak', 'bayraklar', 'ülke bayrakları', 'bayrak bilmece']
+      }
+
+      if (_tags.length > 0) {
+        router.push(localePath({ name: 'CreatorMode-CreatorModeRooms', query: { tags: _tags.join(',') } }))
+      }
+
+      await store.dispatch('creator/fetchRooms', {
+        tags: _tags,
+        isLoadMore: false
+      })
+    }
+
     const isEmptyRoomList = computed(() => {
       if (rooms.value.length <= 0) {
         return true
@@ -153,6 +198,7 @@ export default defineComponent({
       form,
       validateRoomUrl,
       gotoRoom,
+      handleFeaturedTagClick,
       isEmptyRoomList
     }
   }

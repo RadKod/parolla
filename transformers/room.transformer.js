@@ -14,6 +14,18 @@ export default model => {
     rating: model.rating,
     user: model.user,
     alphabet: model.alphabet,
-    questions: model.qaList
+    questions: model.qaList,
+    tags: model.roomTags
+      ? model.roomTags.map(tag => {
+          return {
+            id: tag.id,
+            createdAt: tag.createdAt,
+            updatedAt: tag.updatedAt,
+            publishedAt: tag.publishedAt,
+            title: tag.title,
+            isFeatured: tag.isFeatured
+          }
+        })
+      : []
   }
 }

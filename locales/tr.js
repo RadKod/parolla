@@ -377,6 +377,10 @@ export default {
         },
         isAnon: {
           label: 'Oluşturan oyuncu adın gizlensin mi?'
+        },
+        tag: {
+          label: 'Etiketler',
+          placeholder: 'Etiket yaz'
         }
       },
       qa: {

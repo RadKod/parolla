@@ -10,6 +10,7 @@ export default {
         title: form.roomTitle,
         isPublic: form.isListed,
         isAnon: !this.$auth.loggedIn && !this.$auth.user ? true : form.isAnon,
+        roomTags: form.tags,
         qaList: form.qaList.map(item => {
           return {
             character: item.character,
@@ -50,6 +51,7 @@ export default {
         title: form.roomTitle,
         isPublic: form.isListed,
         isAnon: !this.$auth.loggedIn && !this.$auth.user ? true : form.isAnon,
+        roomTags: form.tags,
         qaList: form.qaList.map(item => {
           return {
             character: item.character,
@@ -102,7 +104,7 @@ export default {
   },
 
   async fetchRooms({ commit, state }, params) {
-    const { isLoadMore = false, page, limit, keyword, user, locale } = params
+    const { isLoadMore = false, page, limit, keyword, tags, user, locale } = params
 
     const getSort = _sort => {
       if (_sort === 'oldest') {
@@ -120,6 +122,7 @@ export default {
       page: 1,
       perPage: 10,
       search: '',
+      tags: [],
       user: null,
       sort: state.room.sort,
       populate: '*',
@@ -131,13 +134,19 @@ export default {
       'pagination[pageSize]': limit || queryDefault.perPage,
       'filters[title][$containsi]': keyword || queryDefault.search,
       sort: getSort(state.room.sort) || queryDefault.sort,
-      populate: 'user',
+      populate: '*',
       locale: locale || queryDefault.locale
     }
 
     // Only add user filter if user is not null
     if (user) {
       query['filters[user]'] = user
+    }
+
+    if (tags?.length > 0) {
+      tags.forEach((tag, index) => {
+        query[`filters[roomTags][title][$in][${index}]`] = tag
+      })
     }
 
     const token = this.$auth.strategy.token.get()

@@ -32,6 +32,32 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
         template(#right-icon)
           VanSwitch(v-model="form.isAnon" :size="24")
 
+    Field.creator-mode-compose-form__roomTag(
+      v-model="form.tag"
+      name="roomTag"
+      :label="$t('form.creatorModeCompose.room.tag.label')"
+      :placeholder="$t('form.creatorModeCompose.room.tag.placeholder')"
+      maxlength="64"
+      show-word-limit
+      @input="handleInputTag"
+      @keydown.enter.prevent="addTag"
+    )
+      template(#button)
+        Button(
+          type="info"
+          native-type="button"
+          round
+          size="small"
+          :disabled="form.tag.length <= 0 || form.tags.length >= 5"
+          @click="addTag"
+        )
+          | +
+
+    Cell.creator-mode-compose-form-tags(v-if="form.tags && form.tags.length > 0")
+      .creator-mode-compose-form-tags__tags
+        template(v-for="tag in form.tags")
+          Tag.creator-mode-compose-form-tags__tag(type="primary" closeable @close="removeTag(tag)") {{ tag }}
+
   template(v-if="!$auth.loggedIn && !$auth.user")
     small.creator-mode-compose-form__anonNotice
       AppIcon(name="tabler:info-circle" :width="16" :height="16")
@@ -177,7 +203,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
 import { roomTransformer } from '@/transformers'
-import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
+import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog, Tag } from 'vant'
 
 export default defineComponent({
   components: {
@@ -187,7 +213,8 @@ export default defineComponent({
     VanSwitch: Switch,
     Button,
     Empty,
-    Dialog
+    Dialog,
+    Tag
   },
   props: {
     room: {
@@ -213,6 +240,8 @@ export default defineComponent({
       roomTitle: '',
       isListed: false,
       isAnon: false,
+      tag: '',
+      tags: [],
       qaList: []
     })
 
@@ -227,6 +256,27 @@ export default defineComponent({
         isOpen: false
       }
     })
+
+    const handleInputTag = value => {
+      // Keep letters (any language), numbers, and spaces
+      const cleaned = value.replace(/[^\p{L}\p{N}\s]/gu, '')
+      form.tag = cleaned.toLocaleLowerCase(i18n.locale)
+    }
+
+    const addTag = () => {
+      // Trim whitespace from beginning and end
+      const trimmedTag = form.tag.trim()
+
+      // Check if tag is not empty after trimming, not already in list, and list is not full
+      if (trimmedTag.length > 0 && form.tags.length < 5 && !form.tags.includes(trimmedTag)) {
+        form.tags.push(trimmedTag)
+        form.tag = ''
+      }
+    }
+
+    const removeTag = tag => {
+      form.tags = form.tags.filter(t => t !== tag)
+    }
 
     const addItem = () => {
       form.qaList.push({
@@ -274,7 +324,8 @@ export default defineComponent({
           const char = answer.substring(0, 1)
 
           if (
-            char.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') === firstAnswerChar.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+            char.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '') ===
+            firstAnswerChar.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '')
           ) {
             return true
           } else {
@@ -283,7 +334,7 @@ export default defineComponent({
         })
 
         if (isMatched) {
-          form.qaList[index].character = firstAnswerChar.toLocaleUpperCase('tr')
+          form.qaList[index].character = firstAnswerChar.toLocaleUpperCase(i18n.locale)
         }
       } else {
         form.qaList[index].character = ''
@@ -302,7 +353,7 @@ export default defineComponent({
         const answers = value.split(',')
 
         const isMatched = answers.every(answer => {
-          if (answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase('tr'))) {
+          if (answer.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase(i18n.locale))) {
             return true
           } else {
             return false
@@ -389,6 +440,7 @@ export default defineComponent({
       form.isListed = false
       form.isAnon = false
       form.qaList = []
+      form.tags = []
     }
 
     const handleClickDeleteDraft = () => {
@@ -413,6 +465,7 @@ export default defineComponent({
       form.isListed = storagedForm.isListed
       form.isAnon = storagedForm.isAnon
       form.qaList = storagedForm.qaList
+      form.tags = storagedForm.tags
     }
 
     const deleteDraft = () => {
@@ -425,9 +478,11 @@ export default defineComponent({
       form.isListed = value.isListed
       form.isAnon = value.isAnon
       form.qaList = value.questions
+      form.tags = value.tags.map(tag => tag.title)
     }
 
     if (props.room) {
+      console.log(props.room)
       setForm(props.room)
     }
 
@@ -457,6 +512,9 @@ export default defineComponent({
     return {
       user,
       form,
+      handleInputTag,
+      addTag,
+      removeTag,
       addItem,
       removeItem,
       moveUp,

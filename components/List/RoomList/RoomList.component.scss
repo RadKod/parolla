@@ -143,6 +143,21 @@
       }
     }
 
+    &__tags {
+      margin-block-end: 8px;
+    }
+
+    &__tag {
+      position: relative;
+      color: light-dark(#888, #888);
+      background-color: transparent;
+      border: 1px solid var(--color-border-02);
+
+      &::before {
+        content: '#';
+      }
+    }
+
     &__id {
       display: block;
     }
