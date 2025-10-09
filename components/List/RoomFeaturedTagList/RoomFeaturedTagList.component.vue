@@ -22,7 +22,7 @@ export default defineComponent({
     Tag
   },
   setup(props, { emit }) {
-    const { route } = useContext()
+    const { route, i18n } = useContext()
 
     const rootRef = ref(null)
 
@@ -31,7 +31,7 @@ export default defineComponent({
     }
 
     const getTagActiveClass = tag => {
-      const currentTags = route.value.query.tags
+      const currentTags = route.value.query.tags?.toLocaleLowerCase(i18n.locale)
 
       // If there are no tags in the query or it's null, "Tümü" should be active
       if (!currentTags && tag.tagsFilter === null) {
@@ -39,7 +39,7 @@ export default defineComponent({
       }
 
       // If there are tags in the query, make the matching one active
-      if (currentTags === tag.tagsFilter) {
+      if (currentTags === tag.tagsFilter?.toLocaleLowerCase(i18n.locale)) {
         return 'room-featured-tag-list-tag--active'
       }
     }
@@ -54,7 +54,7 @@ export default defineComponent({
         },
         {
           title: 'Genel Kültür',
-          tagsFilter: 'genel kültür',
+          tagsFilter: 'GenelKültür',
           icon: 'fluent-emoji-flat:books'
         },
         {
@@ -69,7 +69,7 @@ export default defineComponent({
         },
         {
           title: 'Oyun',
-          tagsFilter: 'oyun,video oyunları,video oyunu',
+          tagsFilter: 'oyun,VideoOyunları,VideoOyunu',
           icon: 'fluent-emoji-flat:video-game'
         },
         {
@@ -109,7 +109,7 @@ export default defineComponent({
         },
         {
           title: 'Bayrak Bilmece',
-          tagsFilter: 'bayrak,bayraklar,ülke bayrakları,bayrak bilmece',
+          tagsFilter: 'bayrak,bayraklar,ülkebayrakları,bayrakbilmece',
           icon: 'flag:tr-4x3'
         }
       ],

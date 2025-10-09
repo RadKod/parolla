@@ -482,7 +482,6 @@ export default defineComponent({
     }
 
     if (props.room) {
-      console.log(props.room)
       setForm(props.room)
     }
 

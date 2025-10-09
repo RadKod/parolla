@@ -328,7 +328,12 @@ export default {
       },
       refresh: 'REFRESH',
       searchField: {
-        placeholder: 'Search room'
+        searchRoom: {
+          placeholder: 'Search room'
+        },
+        searchRoomOrTag: {
+          placeholder: 'Search room or #tag'
+        }
       },
       empty: {
         description: 'No rooms found, create your own question-answer set!',

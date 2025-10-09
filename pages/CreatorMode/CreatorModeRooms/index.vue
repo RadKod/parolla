@@ -152,13 +152,13 @@ export default defineComponent({
       } else if (value.title === 'Müzik') {
         _tags = ['müzik']
       } else if (value.title === 'Oyun') {
-        _tags = ['oyun', 'video oyunları', 'video oyunu']
+        _tags = ['oyun', 'VideoOyunları', 'VideoOyunu']
       } else if (value.title === 'Futbol') {
         _tags = ['futbol']
       } else if (value.title === 'Basketbol') {
         _tags = ['basketbol']
       } else if (value.title === 'Genel Kültür') {
-        _tags = ['genel kültür']
+        _tags = ['GenelKültür']
       } else if (value.title === 'Bilim') {
         _tags = ['bilim']
       } else if (value.title === 'Coğrafya') {
@@ -168,7 +168,7 @@ export default defineComponent({
       } else if (value.title === 'Otomobil') {
         _tags = ['otomobil', 'araba', 'arabalar']
       } else if (value.title === 'Bayrak Bilmece') {
-        _tags = ['bayrak', 'bayraklar', 'ülke bayrakları', 'bayrak bilmece']
+        _tags = ['bayrak', 'bayraklar', 'ülkebayrakları', 'bayrakbilmece']
       }
 
       if (_tags.length > 0) {

@@ -132,10 +132,17 @@ export default {
     const query = {
       'pagination[page]': page || queryDefault.page,
       'pagination[pageSize]': limit || queryDefault.perPage,
-      'filters[title][$containsi]': keyword || queryDefault.search,
       sort: getSort(state.room.sort) || queryDefault.sort,
       populate: '*',
       locale: locale || queryDefault.locale
+    }
+
+    // Check if keyword contains # to search in roomTags instead of title
+    if (keyword && keyword.includes('#')) {
+      const cleanedKeyword = keyword.replace('#', '')
+      query['filters[roomTags][title][$in]'] = cleanedKeyword
+    } else if (keyword) {
+      query['filters[title][$containsi]'] = keyword
     }
 
     // Only add user filter if user is not null

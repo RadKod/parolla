@@ -331,7 +331,12 @@ export default {
       },
       refresh: 'TAZELE',
       searchField: {
-        placeholder: 'Oda ara'
+        searchRoom: {
+          placeholder: 'Oda ara'
+        },
+        searchRoomOrTag: {
+          placeholder: 'Oda ya da #etiket ara'
+        }
       },
       empty: {
         description: 'Oda bulunamadı, kendi soru-cevap setini oluşturmak için hemen oda kur!',

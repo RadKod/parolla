@@ -2,7 +2,7 @@
 .room-list
   Search.room-list__searchField(
     v-model="form.search.keyword"
-    :placeholder="$t('creatorModeRooms.rooms.searchField.placeholder')"
+    :placeholder="searchFieldPlaceholder"
     :clearable="false"
     @input="handleSearchRoom"
   )
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useRouter, useStore, reactive, computed, watch } from '@nuxtjs/composition-api'
 import { useDebounceFn } from '@vueuse/core'
 import { Search, List, Cell, Button, Empty, Loading, Dialog, Notify, Tag } from 'vant'
 import InfiniteLoading from 'vue-infinite-loading'
@@ -141,7 +141,8 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const { i18n, route } = useContext()
+    const { i18n, localePath, route } = useContext()
+    const router = useRouter()
     const store = useStore()
     const { isOwner } = useAuth()
 
@@ -193,9 +194,35 @@ export default defineComponent({
       }
     })
 
+    const resetKeyword = () => {
+      form.search.keyword = ''
+    }
+
+    watch(
+      () => route.value.query.tags,
+      value => {
+        if (!value) {
+          resetKeyword()
+        }
+      }
+    )
+
     const fetchRooms = useDebounceFn(
       async () => {
         if (props.isActiveInfiniteLoading) {
+          if (!props.user) {
+            if (form.search.keyword.includes('#')) {
+              const tag = form.search.keyword.replace('#', '')
+              router.push(localePath({ name: 'CreatorMode-CreatorModeRooms', query: { tags: tag } }))
+            }
+
+            if (form.search.keyword.length === 0) {
+              if (route.value.query.tags) {
+                router.push(localePath({ name: 'CreatorMode-CreatorModeRooms' }))
+              }
+            }
+          }
+
           await store.dispatch('creator/fetchRooms', {
             keyword: form.search.keyword,
             user: props.user?.id
@@ -261,6 +288,14 @@ export default defineComponent({
       }
     }
 
+    const searchFieldPlaceholder = computed(() => {
+      if (props.user) {
+        return i18n.t('creatorModeRooms.rooms.searchField.searchRoom.placeholder')
+      }
+
+      return i18n.t('creatorModeRooms.rooms.searchField.searchRoomOrTag.placeholder')
+    })
+
     return {
       isOwner,
       formatRating,
@@ -269,7 +304,8 @@ export default defineComponent({
       handleInfiniteLoading,
       form,
       handleSearchRoom,
-      handleDeleteRoom
+      handleDeleteRoom,
+      searchFieldPlaceholder
     }
   }
 })
