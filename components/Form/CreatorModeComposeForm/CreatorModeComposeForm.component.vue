@@ -258,9 +258,9 @@ export default defineComponent({
     })
 
     const handleInputTag = value => {
-      // Keep letters (any language), numbers, and spaces
-      const cleaned = value.replace(/[^\p{L}\p{N}\s]/gu, '')
-      form.tag = cleaned.toLocaleLowerCase(i18n.locale)
+      // Keep letters (any language) and numbers, remove spaces and special characters
+      const cleaned = value.replace(/[^\p{L}\p{N}]/gu, '')
+      form.tag = cleaned
     }
 
     const addTag = () => {
@@ -268,14 +268,14 @@ export default defineComponent({
       const trimmedTag = form.tag.trim()
 
       // Check if tag is not empty after trimming, not already in list, and list is not full
-      if (trimmedTag.length > 0 && form.tags.length < 5 && !form.tags.includes(trimmedTag)) {
+      if (trimmedTag.length > 0 && form.tags.length < 5 && !form.tags.map(t => t.toLowerCase()).includes(trimmedTag.toLowerCase())) {
         form.tags.push(trimmedTag)
         form.tag = ''
       }
     }
 
     const removeTag = tag => {
-      form.tags = form.tags.filter(t => t !== tag)
+      form.tags = form.tags.filter(t => t.toLowerCase() !== tag.toLowerCase())
     }
 
     const addItem = () => {
