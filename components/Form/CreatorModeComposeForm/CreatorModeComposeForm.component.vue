@@ -202,6 +202,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
+import { ROOM_TAG_REGEX } from '@/system/constant'
 import { roomTransformer } from '@/transformers'
 import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog, Tag } from 'vant'
 
@@ -259,7 +260,7 @@ export default defineComponent({
 
     const handleInputTag = value => {
       // Keep letters (any language) and numbers, remove spaces and special characters
-      const cleaned = value.replace(/[^\p{L}\p{N}]/gu, '')
+      const cleaned = value.replace(ROOM_TAG_REGEX, '')
       form.tag = cleaned
     }
 
