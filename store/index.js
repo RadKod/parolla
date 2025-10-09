@@ -1,6 +1,5 @@
 const setUser = async ({ $auth, $cookies, dispatch }) => {
   const logout = async () => {
-    await $auth.setStrategy('local')
     await $auth.setUserToken('')
     await $auth.setUser(null)
     await $auth.logout()
