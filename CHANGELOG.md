@@ -1,5 +1,41 @@
 # Changelog
 
+## v2.19.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.18.0...v2.19.0)
+
+
+### 🚀 Enhancements
+
+  - Room tags ([4ed40fd](https://github.com/RadKod/parolla/commit/4ed40fd))
+  - Room tag search ([d5e385e](https://github.com/RadKod/parolla/commit/d5e385e))
+
+### 💅 Refactors
+
+  - Update api for unlimited ([c23b30f](https://github.com/RadKod/parolla/commit/c23b30f))
+  - Update daily mode api ([bb8c055](https://github.com/RadKod/parolla/commit/bb8c055))
+  - Room list & detail api updates ([6f782c8](https://github.com/RadKod/parolla/commit/6f782c8))
+  - Update auth api ([a305a57](https://github.com/RadKod/parolla/commit/a305a57))
+  - Room update & delete api updates ([119aabf](https://github.com/RadKod/parolla/commit/119aabf))
+  - Room review api updates ([9b8e7a6](https://github.com/RadKod/parolla/commit/9b8e7a6))
+  - Fetch room api updates ([9bc0ee1](https://github.com/RadKod/parolla/commit/9bc0ee1))
+  - Clean code ([c772ea8](https://github.com/RadKod/parolla/commit/c772ea8))
+  - Room scoreboard api updates ([153347e](https://github.com/RadKod/parolla/commit/153347e))
+  - Leaderboard api updates ([a332c52](https://github.com/RadKod/parolla/commit/a332c52))
+  - Leaderboard logic improvements ([0c2f168](https://github.com/RadKod/parolla/commit/0c2f168))
+  - Defensive code on post room stats ([d71327f](https://github.com/RadKod/parolla/commit/d71327f))
+  - Ui updates & i18n ([b3b7636](https://github.com/RadKod/parolla/commit/b3b7636))
+  - Update room tag regex ([cdffffa](https://github.com/RadKod/parolla/commit/cdffffa))
+  - Clean code ([7a2ce65](https://github.com/RadKod/parolla/commit/7a2ce65))
+
+### 🏡 Chore
+
+  - Add apple app site association ([2ea3df9](https://github.com/RadKod/parolla/commit/2ea3df9))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.18.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.17.0...v2.18.0)
