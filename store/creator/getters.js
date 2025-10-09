@@ -49,5 +49,9 @@ export default {
 
   scoreboard(state) {
     return state.scoreboard
+  },
+
+  scoreboardPagination(state) {
+    return state.scoreboard.pagination
   }
 }

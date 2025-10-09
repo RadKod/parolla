@@ -15,6 +15,7 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
         maxlength="28"
         autocomplete="off"
         :disabled="form.isBusy"
+        @input="handleInput"
       )
       Button.username-edit-form-submit-button(
         native-type="button"
@@ -29,6 +30,7 @@ Form.username-edit-form(@keypress.enter.prevent @failed="handleFailed")
 <script>
 import { defineComponent, useContext, useStore, reactive, computed } from '@nuxtjs/composition-api'
 import { Form, Button, Field, Notify, Badge } from 'vant'
+import { USERNAME_REGEX } from '@/system/constant'
 
 export default defineComponent({
   components: {
@@ -53,10 +55,12 @@ export default defineComponent({
       return form.username !== user.value.username
     })
 
-    const validateUsername = username => {
-      const regex = /^.{0,27}\S.+$/
+    const handleInput = () => {
+      form.username = form.username.replace(/\s/g, '').toLowerCase()
+    }
 
-      return regex.test(username)
+    const validateUsername = username => {
+      return USERNAME_REGEX.test(username)
     }
 
     const handleFailed = errorInfo => {
@@ -82,25 +86,27 @@ export default defineComponent({
         return
       }
 
-      const result = await store.dispatch('auth/updateUser', { username: form.username })
+      const { data, error } = await store.dispatch('auth/updateUser', { username: form.username })
 
-      if (result.success) {
+      if (data) {
         store.commit('auth/SET_USER', {
-          ...result.data
+          ...data
         })
 
         Notify({
           message: i18n.t('form.usernameEdit.callback.success'),
           color: 'var(--color-text-04)',
           background: 'var(--color-success-01)',
-          duration: 1000
+          duration: 3000
         })
-      } else {
+      }
+
+      if (error) {
         Notify({
-          message: result.data.error,
+          message: error.message,
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
-          duration: 1000
+          duration: 3000
         })
       }
 
@@ -110,6 +116,7 @@ export default defineComponent({
     return {
       user,
       form,
+      handleInput,
       isUsernameChanged,
       handleFailed,
       handleSubmit

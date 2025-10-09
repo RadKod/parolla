@@ -15,11 +15,7 @@ export default {
 
   SET_PAGINATION(state, pagination) {
     state.room.pagination = {
-      ...pagination,
-      cursor: {
-        prev: pagination.prev_page_url?.split('cursor=')[1] || null,
-        next: pagination.next_page_url?.split('cursor=')[1] || null
-      }
+      ...pagination
     }
   },
 
@@ -32,7 +28,7 @@ export default {
   },
 
   INCREMENT_ROOM_REVIEW_COUNT(state) {
-    state.room.reviewCount += 1
+    state.room.room.reviewCount += 1
   },
 
   SET_CURRENT_DATE(state, date) {

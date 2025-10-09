@@ -34,7 +34,11 @@
       AppIcon(v-else name="tabler:message-2")
 
     li.app-header-nav__item.app-header-nav__item--menu(@click="toggleMenuDialog")
-      LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
+      template(v-if="$auth.loggedIn && $auth.user")
+        LazyPlayerAvatar(:user="user" :is-visitor="!$auth.loggedIn")
+
+      template(v-else)
+        AppIcon(name="tabler:user-circle")
 
   // How To Play Dialog
   LazyHowToPlayDialog(
@@ -178,6 +182,8 @@ export default defineComponent({
           route.value.path === localePath({ name: 'CreatorMode-CreatorModeRoom' })
         ) {
           router.replace(localePath({ name: 'CreatorMode-CreatorModeIntro' }))
+        } else if (route.value.path === localePath({ name: 'CreatorMode-CreatorModeEdit' })) {
+          router.replace(localePath({ name: 'CreatorMode-CreatorModeMyRooms' }))
         } else {
           router.replace(localePath({ name: 'Main' }))
         }
@@ -221,6 +227,7 @@ export default defineComponent({
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeMyRooms' }) ||
         route.value.path === localePath({ name: 'CreatorMode-CreatorModeCompose' }) ||
+        route.value.path === localePath({ name: 'CreatorMode-CreatorModeEdit' }) ||
         route.value.path === localePath({ name: 'TourMode-TourModeGame' })
       ) {
         return true

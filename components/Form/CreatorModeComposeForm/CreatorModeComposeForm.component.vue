@@ -1,6 +1,8 @@
 <template lang="pug">
 Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
-  h2.creator-mode-compose-form__title(align="center") {{ $t('form.creatorModeCompose.title') }}
+  h2.creator-mode-compose-.mt-base(align="center")
+    template(v-if="room") {{ $t('form.creatorModeEdit.title') }}
+    template(v-else) {{ $t('form.creatorModeCompose.title') }}
   br
   h3.creator-mode-compose-form__title.mt-1 {{ $t('form.creatorModeCompose.roomInformations') }}
   .creator-mode-compose-form__roomInfo
@@ -13,19 +15,54 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       show-word-limit
       :rules="[{ required: true, message: $t('form.isRequired', { model: $t('form.creatorModeCompose.room.roomTitle.label') }) }]"
     )
+
     Cell.creator-mode-compose-form__.creator-mode-compose-form__isListed
       template(#title)
         span {{ $t('form.creatorModeCompose.room.isListed.label') }}
 
       template(#right-icon)
         VanSwitch(v-model="form.isListed" :size="24")
-    Cell.creator-mode-compose-form__isAnon
-      template(#title)
-        span {{ $t('form.creatorModeCompose.room.isAnon.label') }} &nbsp;
-        small(v-if="user") ({{ user.username }})
 
-      template(#right-icon)
-        VanSwitch(v-model="form.isAnon" :size="24")
+    template(v-if="$auth.loggedIn && $auth.user")
+      Cell.creator-mode-compose-form__isAnon
+        template(#title)
+          span {{ $t('form.creatorModeCompose.room.isAnon.label') }} &nbsp;
+          small(v-if="user") ({{ user.username }})
+
+        template(#right-icon)
+          VanSwitch(v-model="form.isAnon" :size="24")
+
+    Field.creator-mode-compose-form__roomTag(
+      v-model="form.tag"
+      name="roomTag"
+      :label="$t('form.creatorModeCompose.room.tag.label')"
+      :placeholder="$t('form.creatorModeCompose.room.tag.placeholder')"
+      maxlength="64"
+      show-word-limit
+      @input="handleInputTag"
+      @keydown.enter.prevent="addTag"
+    )
+      template(#button)
+        Button(
+          type="info"
+          native-type="button"
+          round
+          size="small"
+          :disabled="form.tag.length <= 0 || form.tags.length >= 5"
+          @click="addTag"
+        )
+          | +
+
+    Cell.creator-mode-compose-form-tags(v-if="form.tags && form.tags.length > 0")
+      .creator-mode-compose-form-tags__tags
+        template(v-for="tag in form.tags")
+          Tag.creator-mode-compose-form-tags__tag(type="primary" closeable @close="removeTag(tag)") {{ tag }}
+
+  template(v-if="!$auth.loggedIn && !$auth.user")
+    small.creator-mode-compose-form__anonNotice
+      AppIcon(name="tabler:info-circle" :width="16" :height="16")
+      | Giriş yapmadığın için oluşturacağın odayı tekrar düzenleyemez ya da silemezsin.
+
   h3.creator-mode-compose-form__title {{ $t('form.creatorModeCompose.qaSet') }}
 
   .compose-qa-list
@@ -123,7 +160,7 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
     ) {{ $t('form.creatorModeCompose.qa.addMoreQuestion') }}
 
     Button(
-      v-if="form.qaList && form.qaList.length > 1"
+      v-if="form.qaList && form.qaList.length > 1 && room === null"
       type="warning"
       plain
       native-type="button"
@@ -147,7 +184,9 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
       :loading="form.isBusy"
       :disabled="form.isBusy"
       @click="handleSubmit"
-    ) {{ $t('form.creatorModeCompose.submit') }}
+    )
+      template(v-if="room") {{ $t('form.creatorModeEdit.submit') }}
+      template(v-else) {{ $t('form.creatorModeCompose.submit') }}
 
   CreatorModeCreatedRoomDialog(
     :isOpen="dialog.room.isOpen"
@@ -163,8 +202,9 @@ Form.creator-mode-compose-form(@keypress.enter.prevent @failed="handleFailed")
 
 <script>
 import { defineComponent, useRouter, useContext, useStore, reactive, set, watch, computed } from '@nuxtjs/composition-api'
+import { ROOM_TAG_REGEX } from '@/system/constant'
 import { roomTransformer } from '@/transformers'
-import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog } from 'vant'
+import { Form, Field, Cell, Switch, Button, Empty, Notify, Dialog, Tag } from 'vant'
 
 export default defineComponent({
   components: {
@@ -174,9 +214,17 @@ export default defineComponent({
     VanSwitch: Switch,
     Button,
     Empty,
-    Dialog
+    Dialog,
+    Tag
   },
-  setup() {
+  props: {
+    room: {
+      type: Object,
+      required: false,
+      default: null
+    }
+  },
+  setup(props) {
     const baseClassName = 'creator-mode-compose-form'
 
     const router = useRouter()
@@ -193,6 +241,8 @@ export default defineComponent({
       roomTitle: '',
       isListed: false,
       isAnon: false,
+      tag: '',
+      tags: [],
       qaList: []
     })
 
@@ -207,6 +257,27 @@ export default defineComponent({
         isOpen: false
       }
     })
+
+    const handleInputTag = value => {
+      // Keep letters (any language) and numbers, remove spaces and special characters
+      const cleaned = value.replace(ROOM_TAG_REGEX, '')
+      form.tag = cleaned
+    }
+
+    const addTag = () => {
+      // Trim whitespace from beginning and end
+      const trimmedTag = form.tag.trim()
+
+      // Check if tag is not empty after trimming, not already in list, and list is not full
+      if (trimmedTag.length > 0 && form.tags.length < 5 && !form.tags.map(t => t.toLowerCase()).includes(trimmedTag.toLowerCase())) {
+        form.tags.push(trimmedTag)
+        form.tag = ''
+      }
+    }
+
+    const removeTag = tag => {
+      form.tags = form.tags.filter(t => t.toLowerCase() !== tag.toLowerCase())
+    }
 
     const addItem = () => {
       form.qaList.push({
@@ -254,7 +325,8 @@ export default defineComponent({
           const char = answer.substring(0, 1)
 
           if (
-            char.toLocaleLowerCase('tr').trim().replace(/\s+/g, '') === firstAnswerChar.toLocaleLowerCase('tr').trim().replace(/\s+/g, '')
+            char.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '') ===
+            firstAnswerChar.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '')
           ) {
             return true
           } else {
@@ -263,7 +335,7 @@ export default defineComponent({
         })
 
         if (isMatched) {
-          form.qaList[index].character = firstAnswerChar.toLocaleUpperCase('tr')
+          form.qaList[index].character = firstAnswerChar.toLocaleUpperCase(i18n.locale)
         }
       } else {
         form.qaList[index].character = ''
@@ -282,7 +354,7 @@ export default defineComponent({
         const answers = value.split(',')
 
         const isMatched = answers.every(answer => {
-          if (answer.toLocaleLowerCase('tr').trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase('tr'))) {
+          if (answer.toLocaleLowerCase(i18n.locale).trim().replace(/\s+/g, '').startsWith(item.character.toLocaleLowerCase(i18n.locale))) {
             return true
           } else {
             return false
@@ -332,11 +404,15 @@ export default defineComponent({
       if (form.isClear) {
         const deviceInfo = await getDeviceInfo()
 
-        const result = await store.dispatch('creator/postQaForm', { form, user: user.value, deviceInfo })
+        const { data, error } = props.room
+          ? await store.dispatch('creator/editRoom', { documentId: props.room.documentId, form, deviceInfo })
+          : await store.dispatch('creator/postRoom', { form, deviceInfo })
 
-        if (result.success) {
-          createdRoom.title = result.data.title
-          createdRoom.id = result.data.room
+        if (data) {
+          const room = data.data
+
+          createdRoom.title = room.title
+          createdRoom.id = room.roomId
           createdRoom.isListed = form.isListed
 
           dialog.room.isOpen = true
@@ -344,11 +420,13 @@ export default defineComponent({
           let storagedMyRooms = JSON.parse(window.localStorage.getItem('myRooms'))
 
           if (storagedMyRooms && storagedMyRooms.length > 0) {
-            window.localStorage.setItem('myRooms', JSON.stringify([...storagedMyRooms, roomTransformer(result.data)]))
+            window.localStorage.setItem('myRooms', JSON.stringify([...storagedMyRooms, roomTransformer(room)]))
           } else {
-            window.localStorage.setItem('myRooms', JSON.stringify([roomTransformer(result.data)]))
+            window.localStorage.setItem('myRooms', JSON.stringify([roomTransformer(room)]))
           }
-        } else {
+        }
+
+        if (error) {
           getErrorNotify()
         }
       } else {
@@ -363,6 +441,7 @@ export default defineComponent({
       form.isListed = false
       form.isAnon = false
       form.qaList = []
+      form.tags = []
     }
 
     const handleClickDeleteDraft = () => {
@@ -382,17 +461,34 @@ export default defineComponent({
 
     const storagedForm = JSON.parse(window.localStorage.getItem('creatorFormDraft'))
 
-    if (storagedForm) {
+    if (storagedForm && props.room === null) {
       form.roomTitle = storagedForm.roomTitle
       form.isListed = storagedForm.isListed
       form.isAnon = storagedForm.isAnon
       form.qaList = storagedForm.qaList
+      form.tags = storagedForm.tags
     }
 
     const deleteDraft = () => {
       window.localStorage.removeItem('creatorFormDraft')
       resetForm()
     }
+
+    const setForm = value => {
+      form.roomTitle = value.title
+      form.isListed = value.isListed
+      form.isAnon = value.isAnon
+      form.qaList = value.questions
+      form.tags = value.tags.map(tag => tag.title)
+    }
+
+    if (props.room) {
+      setForm(props.room)
+    }
+
+    watch(props.room, value => {
+      setForm(value)
+    })
 
     const handleConfirmRoomDialog = () => {
       router.push(
@@ -416,6 +512,9 @@ export default defineComponent({
     return {
       user,
       form,
+      handleInputTag,
+      addTag,
+      removeTag,
       addItem,
       removeItem,
       moveUp,

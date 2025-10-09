@@ -8,9 +8,40 @@
   }
 
   &__roomInfo {
-    margin-bottom: calc(var(--base-m-y) * 2);
     overflow: hidden;
     border-radius: var(--border-radius-01);
+  }
+
+  .creator-mode-compose-form-tags {
+    &__tag {
+      margin-inline-end: calc(var(--base-m-x) / 2);
+
+      &::before {
+        position: relative;
+        content: '#';
+      }
+
+      .van-icon {
+        color: #fff;
+        background-color: var(--color-danger-01);
+        margin-inline-start: 4px;
+      }
+    }
+  }
+
+  &__anonNotice {
+    display: inline-flex;
+    align-items: center;
+    margin-block-start: var(--base-m-y);
+    margin-inline: var(--base-m-x);
+    color: var(--color-text-03);
+    font-size: var(--font-size-text-10);
+    text-align: left;
+    text-wrap: balance;
+
+    .app-icon {
+      margin-inline-end: calc(var(--base-m-x) / 2);
+    }
   }
 
   .compose-qa-list {
@@ -63,6 +94,5 @@
     color: var(--color-text-03);
     font-size: var(--font-size-text-9);
     text-align: justify;
-    text-wrap: balance;
   }
 }

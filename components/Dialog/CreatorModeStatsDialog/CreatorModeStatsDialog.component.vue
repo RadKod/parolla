@@ -86,6 +86,9 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
         template(v-if="pendingScoreboard")
           Empty(:description="$t('scoreboard.pendingScoreboard')")
         template(v-else)
+          NoticeBar.mb-2.mt-2.cursor-pointer(v-if="!$auth.loggedIn && !$auth.user" auth-control wrapable)
+            small(v-html="$t('scoreboard.loginToBeInScoreboard')")
+
           ScoreboardList(:items="scoreboard.list" @on-infinite-loading="handleInfiniteLoading")
 
       Tab(name="reviews")
@@ -113,7 +116,7 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
 <script>
 import { defineComponent, useRoute, useContext, useStore, ref, reactive, watch, computed } from '@nuxtjs/composition-api'
 import { APP_URL } from '@/system/constant'
-import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty } from 'vant'
+import { Dialog, Tabs, Tab, CountDown, Button, Toast, Collapse, CollapseItem, Empty, NoticeBar } from 'vant'
 
 export default defineComponent({
   components: {
@@ -124,7 +127,8 @@ export default defineComponent({
     Button,
     Collapse,
     CollapseItem,
-    Empty
+    Empty,
+    NoticeBar
   },
   props: {
     isOpen: {
@@ -263,7 +267,7 @@ export default defineComponent({
             pendingScoreboard.value = true
 
             await store.dispatch('creator/fetchScoreboard', {
-              relationId: room.value.relationId
+              roomId: room.value.id
             })
 
             pendingScoreboard.value = false
@@ -272,13 +276,28 @@ export default defineComponent({
       }
     )
 
+    const pagination = computed(() => store.getters['creator/scoreboardPagination'])
+
     const handleInfiniteLoading = async $state => {
-      await store.dispatch('creator/fetchScoreboard', {
+      const { data, error } = await store.dispatch('creator/fetchScoreboard', {
         isLoadMore: true,
-        relationId: room.value.relationId
+        page: pagination.value.page + 1,
+        roomId: room.value.id
       })
 
       $state.loaded()
+
+      if (data?.data.length === 0) {
+        $state.complete()
+
+        return false
+      }
+
+      if (error) {
+        $state.error()
+
+        return false
+      }
     }
 
     return {

@@ -1,16 +1,31 @@
 export default model => {
   return {
-    id: model.room,
-    relationId: model.id,
+    id: model.roomId,
+    documentId: model.documentId,
+    createdAt: model.createdAt,
+    updatedAt: model.updatedAt,
+    publishedAt: model.publishedAt,
     title: model.title,
-    isListed: model.is_public,
-    isAnon: model.is_anon,
-    questionCount: model.question_count,
-    viewCount: model.view_count,
-    reviewCount: model.review_count,
+    isListed: model.isPublic,
+    isAnon: model.isAnon,
+    questionCount: model.questionCount,
+    viewCount: model.viewCount,
+    reviewCount: model.reviewsCount,
     rating: model.rating,
     user: model.user,
     alphabet: model.alphabet,
-    questions: model.questions
+    questions: model.qaList,
+    tags: model.roomTags
+      ? model.roomTags.map(tag => {
+          return {
+            id: tag.id,
+            createdAt: tag.createdAt,
+            updatedAt: tag.updatedAt,
+            publishedAt: tag.publishedAt,
+            title: tag.title,
+            isFeatured: tag.isFeatured
+          }
+        })
+      : []
   }
 }

@@ -122,19 +122,20 @@ export default defineComponent({
 
         return false
       } else {
-        const result = await store.dispatch('creator/postReview', {
-          relationId: room.value.relationId,
-          form,
-          user: user.value
+        const { data, error } = await store.dispatch('creator/postReview', {
+          roomDocumentId: room.value.documentId,
+          form
         })
 
-        if (result.success) {
-          getSuccessNotify(result.message)
+        if (data) {
+          getSuccessNotify(i18n.t('success.success'))
           await store.commit('creator/INCREMENT_ROOM_REVIEW_COUNT')
           resetForm()
           emit('onSuccess')
-        } else {
-          getErrorNotify(result.message)
+        }
+
+        if (error) {
+          getErrorNotify(error.message)
         }
       }
 

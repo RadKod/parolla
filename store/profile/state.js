@@ -1,5 +1,5 @@
 export default () => ({
-  user: {},
+  player: {},
   dialog: {
     player: {
       isOpen: false

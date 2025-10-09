@@ -6,10 +6,10 @@
       Button.choose-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeRooms' })")
         span.choose-list-item__icon 📢
         | {{ $t('creatorModeIntro.list.rooms.title') }}
-      Button.choose-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeCompose' })")
+      Button.choose-list-item(auth-control size="large" :to="localePath({ name: 'CreatorMode-CreatorModeCompose' })")
         span.choose-list-item__icon ➕
         | {{ $t('creatorModeIntro.list.compose.title') }}
-      Button.choose-list-item(size="large" :to="localePath({ name: 'CreatorMode-CreatorModeMyRooms' })")
+      Button.choose-list-item(auth-control size="large" :to="localePath({ name: 'CreatorMode-CreatorModeMyRooms' })")
         span.choose-list-item__icon 📌
         | {{ $t('creatorModeIntro.list.myRooms.title') }}
 </template>

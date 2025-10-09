@@ -27,7 +27,7 @@
               span {{ item.user.username }}
             small &nbsp; (
               AppIcon(name="tabler:star-filled" color="var(--color-text-03)" :width="10" :height="10")
-              | {{ String(formatRating(item.rating)) }}
+              | {{ formatRating(item.rating).toString() }}
               | )
 
         .room-review-list-item__body

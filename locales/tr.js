@@ -10,7 +10,12 @@ export default {
     error: 'Hata',
     anErrorOccurred: 'Bir hata oluştu',
     tryAgain: 'Tekrar dene',
-    goToHome: 'Ana sayfaya git'
+    goToHome: 'Ana sayfaya git',
+    unAuthorized: 'Yetkisiz erişim',
+    loginRequired: 'Giriş yapınız'
+  },
+  success: {
+    success: 'Başarılı'
   },
   general: {
     loading: 'Yükleniyor',
@@ -23,6 +28,7 @@ export default {
     answer: 'Cevap',
     remove: 'Kaldır',
     delete: 'Sil',
+    edit: 'Düzenle',
     open: 'Aç',
     close: 'Kapat',
     playAgain: 'Baştan oyna',
@@ -37,7 +43,8 @@ export default {
     ad: 'Reklam',
     send: 'Gönder',
     playNow: 'Hemen Oyna',
-    joined: 'Katıldı'
+    joined: 'Katıldı',
+    anon: 'anonim'
   },
   auth: {
     google: {
@@ -48,6 +55,26 @@ export default {
     },
     error: {
       title: 'Giriş yapılamadı, tekrar dene'
+    },
+    dialog: {
+      list: {
+        title: 'Giriş yaparak',
+        item1: {
+          title: 'Oda oluştur'
+        },
+        item2: {
+          title: 'Odaları değerlendir'
+        },
+        item3: {
+          title: 'Skor tablosunda yer al'
+        },
+        item4: {
+          title: 'Tur modunu oyna'
+        },
+        item5: {
+          title: 'Sohbete katıl'
+        }
+      }
     }
   },
   introScene: {
@@ -222,6 +249,7 @@ export default {
     roomReview: {
       title: 'Oda değerlendirmeleri',
       review: 'Değerlendir',
+      loginToReview: 'Değerlendirmek için <u>giriş yapın</u>',
       pendingReviews: 'Yorumlar getiriliyor',
       error: {
         fetchReviews: {
@@ -236,7 +264,8 @@ export default {
     auth: {
       title: 'Giriş yap',
       login: 'Giriş yap',
-      register: 'Kayıt ol'
+      register: 'Kayıt ol',
+      loginWithGoogle: 'Google ile Giriş Yap'
     },
     player: {
       title: 'Profil',
@@ -302,7 +331,12 @@ export default {
       },
       refresh: 'TAZELE',
       searchField: {
-        placeholder: 'Oda ara'
+        searchRoom: {
+          placeholder: 'Oda ara'
+        },
+        searchRoomOrTag: {
+          placeholder: 'Oda ya da #etiket ara'
+        }
       },
       empty: {
         description: 'Oda bulunamadı, kendi soru-cevap setini oluşturmak için hemen oda kur!',
@@ -321,7 +355,15 @@ export default {
   },
   creatorModeMyRooms: {
     title: 'Son oluşturduğum odalar',
-    description: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
+    description: {
+      authed: '',
+      nonAuthed: '* Son oluşturduğun odalar tarayıcı belleğine kaydedilir, tarayıcı verileri sıfırlandığında bu liste temizlenir'
+    },
+    delete: {
+      callback: {
+        success: 'Oda silindi'
+      }
+    }
   },
   form: {
     isRequired: '{model} gereklidir',
@@ -336,10 +378,14 @@ export default {
           placeholder: 'Oda başlığı yaz'
         },
         isListed: {
-          label: 'Odan odalar listesinde görünsün mü?'
+          label: 'Odalar listesinde görünsün mü?'
         },
         isAnon: {
           label: 'Oluşturan oyuncu adın gizlensin mi?'
+        },
+        tag: {
+          label: 'Etiketler',
+          placeholder: 'Etiket yaz'
         }
       },
       qa: {
@@ -389,6 +435,10 @@ export default {
         couldNotCreate: 'Oda oluşturulamadı, lütfen kontrol edip tekrar dene'
       }
     },
+    creatorModeEdit: {
+      title: 'ODA DÜZENLE',
+      submit: 'Güncelle ve yayınla'
+    },
     roomReview: {
       back: 'Geri dön',
       comment: {
@@ -429,7 +479,9 @@ export default {
   },
   scoreboard: {
     scoreboard: 'Skor tablosu',
-    pendingScoreboard: 'Skorlar getiriliyor'
+    pendingScoreboard: 'Skorlar getiriliyor',
+    loginToBeInScoreboard: '<u>Giriş yaptıktan</u> sonra oynarsan odaya ait skor tablosunda yer alırsın',
+    loginToBeInScoreboardExtra: 'Giriş yapmadan oynarsan skorunu sadece sen görebilirsin'
   },
   chat: {
     chat: 'Sohbet',

@@ -1,7 +1,7 @@
 export default ({ app }) => {
   const extendedApp = app
 
-  const headFile = require(`@/system/head/main/${extendedApp.i18n.locale || 'tr'}.js`)
+  const headFile = require(`@/system/head/main/${extendedApp.i18n.locale || extendedApp.i18n.defaultLocale}.js`)
 
   if (extendedApp.head) {
     extendedApp.head.htmlAttrs.lang = extendedApp.i18n.locale

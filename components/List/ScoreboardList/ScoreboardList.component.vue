@@ -1,6 +1,6 @@
 <template lang="pug">
 Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
-  CollapseItem.scoreboard-list-item(v-for="(item, index) in items" :key="index" :disabled="!item.result.gamersAnswers")
+  CollapseItem.scoreboard-list-item(v-for="(item, index) in items" :key="index" :disabled="!item.results.gamersAnswers")
     template(#title)
       .scoreboard-list-item-user
         strong.scoreboard-list-item-user__username
@@ -9,14 +9,14 @@ Collapse.list.scoreboard-list(v-model="toggledScoreItem" accordion)
 
       .scoreboard-list-item-result
         strong.scoreboard-list-item-result__item
-          template {{ item.result.remainTime.minutes }}:{{ item.result.remainTime.seconds }}
-            sup .{{ item.result.remainTime.milliseconds }}
-        strong.scoreboard-list-item-result__item 🟩 {{ item.result.correctAnswers.length }}
-        strong.scoreboard-list-item-result__item 🟥 {{ item.result.wrongAnswers.length }}
-        strong.scoreboard-list-item-result__item 🟨 {{ item.result.passedAnswers.length }}
+          template {{ item.results.remainTime.minutes }}:{{ item.results.remainTime.seconds }}
+            sup .{{ item.results.remainTime.milliseconds }}
+        strong.scoreboard-list-item-result__item 🟩 {{ item.results.correctAnswers.length }}
+        strong.scoreboard-list-item-result__item 🟥 {{ item.results.wrongAnswers.length }}
+        strong.scoreboard-list-item-result__item 🟨 {{ item.results.passedAnswers.length }}
 
     // Gamer answers
-    ul.scoreboard-list-gamerAnswers(v-if="item.result.gamersAnswers")
+    ul.scoreboard-list-gamerAnswers(v-if="item.results.gamersAnswers")
       li.scoreboard-list-gamerAnswers-item(
         v-for="(question, questionIndex) in questions"
         :key="questionIndex"
@@ -68,7 +68,7 @@ export default defineComponent({
     }
 
     const getGamerAnswer = ({ item, questionIndex }) => {
-      return item.result.gamersAnswers?.filter(answer => answer.index === questionIndex).reverse()[0]
+      return item.results.gamersAnswers?.filter(answer => answer.index === questionIndex).reverse()[0]
     }
 
     const getGamerAnswerClasses = answer => {

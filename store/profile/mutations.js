@@ -1,12 +1,14 @@
 import { userTransformer } from '@/transformers'
 
 export default {
-  SET_USER(state, user) {
-    state.user = userTransformer(user)
+  SET_PLAYER(state, player) {
+    if (player) {
+      state.player = userTransformer(player)
+    }
   },
 
-  CLEAR_USER(state) {
-    state.user = {}
+  CLEAR_PLAYER(state) {
+    state.player = {}
   },
 
   SET_PLAYER_DIALOG_IS_OPEN(state, isOpen) {

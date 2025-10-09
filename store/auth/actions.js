@@ -1,86 +1,74 @@
 import { RADKOD_API_URL } from '@/system/constant'
-import getBrowserFingerprint from 'get-browser-fingerprint'
-
-const fingerprint = getBrowserFingerprint()
 
 export default {
-  async generateFingerprint({ commit, state }) {
-    commit('SET_FINGERPRINT', String(fingerprint))
-  },
-
   async fetchMe({ commit, state }) {
-    const headers = {
-      'Accept-Language': this.$i18n.locale
-    }
-
     const token = this.$auth.strategy.token.get()
 
-    if (token) {
-      headers.Authorization = token
-    }
-
-    const response = await fetch(`${process.env.API}/auth/me?fingerprint=${state.user.fingerprint}`, {
-      method: 'get',
-      headers
-    })
-
-    const result = response.json()
-
-    return result
-  },
-
-  async googleRegister({ commit, state }, params) {
-    const { code, state: stateParam, fingerprint } = params
-
-    const response = await fetch(`${process.env.API}/auth/google/callback`, {
-      method: 'post',
+    const { data, error } = await this.$appFetch({
+      path: 'users/me',
       headers: {
-        'Accept-Language': this.$i18n.locale,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        code,
-        state: stateParam,
-        fingerprint
-      })
+        Authorization: `${token}`
+      }
     })
 
-    const result = response.json()
+    if (data) {
+      commit('SET_USER', data)
+    }
 
-    return result
+    return {
+      data,
+      error
+    }
   },
 
-  async updateUser({ commit, state }, user) {
-    const username = user?.username
+  async fetchGoogleUser({ commit, state }, callbackParams) {
+    const { data, error } = await this.$appFetch({
+      path: `auth/google/callback?${callbackParams}`,
+      headers: {
+        Authorization: `${callbackParams}`
+      }
+    })
 
-    const headers = {
-      'Accept-Language': this.$i18n.locale,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+    return {
+      data,
+      error
     }
+  },
+
+  /**
+   * Set Google user
+   * @param {SetGoogleUserTypes} params
+   */
+  async setGoogleUser({ commit, state }, params) {
+    const { googleResponse } = params
+
+    await this.$auth.setStrategy('google')
+    await this.$auth.setUserToken(googleResponse.jwt)
+    await this.$auth.setUser(googleResponse.user)
+
+    await commit('SET_USER', googleResponse.user)
+  },
+
+  async updateUser({ commit, state }, params) {
+    const { username } = params
 
     const token = this.$auth.strategy.token.get()
 
-    if (token) {
-      headers.Authorization = token
-    }
-
-    const response = await fetch(`${process.env.API}/auth/me`, {
-      method: 'put',
-      headers: headers,
-      body: username
-        ? JSON.stringify({
-            fingerprint: state.user.fingerprint,
-            username
-          })
-        : JSON.stringify({
-            fingerprint: state.user.fingerprint
-          })
+    const { data, error } = await this.$appFetch({
+      path: 'users/me',
+      headers: {
+        Authorization: `${token}`
+      },
+      method: 'PUT',
+      data: {
+        username
+      }
     })
 
-    const result = response.json()
-
-    return result
+    return {
+      data,
+      error
+    }
   },
 
   async logout({ commit, state }) {

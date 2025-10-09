@@ -10,7 +10,12 @@ export default {
     error: 'Error',
     anErrorOccurred: 'An error occurred',
     tryAgain: 'Try again',
-    goToHome: 'Go to home'
+    goToHome: 'Go to home',
+    unAuthorized: 'Unauthorized access',
+    loginRequired: 'Login required'
+  },
+  success: {
+    success: 'Success'
   },
   general: {
     loading: 'Loading',
@@ -23,6 +28,7 @@ export default {
     answer: 'Answer',
     remove: 'Remove',
     delete: 'Delete',
+    edit: 'Edit',
     open: 'Open',
     close: 'Close',
     playAgain: 'Play again',
@@ -37,7 +43,8 @@ export default {
     ad: 'Ad',
     send: 'Send',
     playNow: 'Play now',
-    joined: 'Joined'
+    joined: 'Joined',
+    anon: 'anonym'
   },
   auth: {
     google: {
@@ -48,6 +55,26 @@ export default {
     },
     error: {
       title: 'Login failed, try again'
+    },
+    dialog: {
+      list: {
+        title: 'By logging in',
+        item1: {
+          title: 'Create a room'
+        },
+        item2: {
+          title: 'Review rooms'
+        },
+        item3: {
+          title: 'Be in the scoreboard'
+        },
+        item4: {
+          title: 'Play the tour mode'
+        },
+        item5: {
+          title: 'Join the chat'
+        }
+      }
     }
   },
   introScene: {
@@ -219,6 +246,7 @@ export default {
     roomReview: {
       title: 'Room reviews',
       review: 'Review',
+      loginToReview: '<u>Login</u> to review',
       pendingReviews: 'Fetching reviews',
       error: {
         fetchReviews: {
@@ -226,6 +254,19 @@ export default {
           action: 'Try again'
         }
       }
+    },
+    tourModeOnline: {
+      title: 'Tour'
+    },
+    auth: {
+      title: 'Login',
+      login: 'Login',
+      register: 'Register',
+      loginWithGoogle: 'Login with Google'
+    },
+    player: {
+      title: 'Profile',
+      loading: 'Fetching player information'
     }
   },
   clipboard: {
@@ -287,7 +328,12 @@ export default {
       },
       refresh: 'REFRESH',
       searchField: {
-        placeholder: 'Search room'
+        searchRoom: {
+          placeholder: 'Search room'
+        },
+        searchRoomOrTag: {
+          placeholder: 'Search room or #tag'
+        }
       },
       empty: {
         description: 'No rooms found, create your own question-answer set!',
@@ -306,7 +352,15 @@ export default {
   },
   creatorModeMyRooms: {
     title: 'My recently created rooms',
-    description: 'Your recently created rooms are saved in the browser storage, this list will be cleared when the browser data is reset'
+    description: {
+      authed: '',
+      nonAuthed: 'Your recently created rooms are saved in the browser storage, this list will be cleared when the browser data is reset'
+    },
+    delete: {
+      callback: {
+        success: 'Room deleted'
+      }
+    }
   },
   form: {
     isRequired: '{model} is required',
@@ -325,6 +379,10 @@ export default {
         },
         isAnon: {
           label: 'Hide creator player name?'
+        },
+        tag: {
+          label: 'Tags',
+          placeholder: 'Type a tag'
         }
       },
       qa: {
@@ -374,6 +432,10 @@ export default {
         couldNotCreate: 'Could not create room, please check and try again'
       }
     },
+    creatorModeEdit: {
+      title: 'EDIT A ROOM',
+      submit: 'Update and publish'
+    },
     roomReview: {
       back: 'Back',
       comment: {
@@ -414,7 +476,9 @@ export default {
   },
   scoreboard: {
     scoreboard: 'Scoreboard',
-    pendingScoreboard: 'Fetching scores'
+    pendingScoreboard: 'Fetching scores',
+    loginToBeInScoreboard: 'If you play after <u>logging in</u>, you will be in the room scoreboard',
+    loginToBeInScoreboardExtra: 'If you play without logging in, you will only see your score'
   },
   chat: {
     chat: 'Sohbet',

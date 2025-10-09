@@ -1,15 +1,14 @@
 import { userTransformer } from '@/transformers'
 
-const transformScoreItem = model => {
+const transformScore = model => {
   return {
     id: model.id,
-    fingerprint: model.fingerprint,
-    roomId: model.room_id,
-    result: model.game_result,
-    user: model.user ? userTransformer(model.user) : null
+    roomId: model.roomId,
+    results: model.results,
+    user: userTransformer(model.user)
   }
 }
 
 export default model => {
-  return model.map(item => transformScoreItem(item))
+  return model.map(item => transformScore(item))
 }

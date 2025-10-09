@@ -113,7 +113,7 @@ export default defineComponent({
     const todaysTourBestScorer = computed(() => store.getters['tour/todaysBestScorer'])
 
     onMounted(async () => {
-      await store.dispatch('tour/fetchLeaderboard', { type: 'daily', limit: 10 })
+      await store.dispatch('tour/fetchLeaderboard', { period: 'daily', limit: 10 })
     })
 
     return {

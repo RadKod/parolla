@@ -140,15 +140,16 @@ export default defineComponent({
 
     // Fetch Room
     const { fetch, fetchState } = useFetch(async () => {
-      const result = await store.dispatch('creator/fetchRoom', route.value.query.id)
+      const { data, error } = await store.dispatch('creator/fetchRoom', route.value.query.id)
 
-      if (!result.success) {
+      if (error) {
         Notify({
-          message: result.data[0],
+          message: error.message,
           color: 'var(--color-text-04)',
           background: 'var(--color-danger-01)',
           duration: 3000
         })
+
         setTimeout(() => {
           redirect(localePath({ name: 'CreatorMode-CreatorModeRooms' }))
         }, 1000)
