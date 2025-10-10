@@ -1,5 +1,30 @@
 # Changelog
 
+## v2.20.0
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.19.0...v2.20.0)
+
+
+### 🚀 Enhancements
+
+  - Ux improvements on daily mode ([03ab858](https://github.com/RadKod/parolla/commit/03ab858))
+
+### 🩹 Fixes
+
+  - Update letter model on tour ([c1784d5](https://github.com/RadKod/parolla/commit/c1784d5))
+  - Update letter model on tour ([b4760f8](https://github.com/RadKod/parolla/commit/b4760f8))
+
+### 💅 Refactors
+
+  - Defensive code ([a928fc6](https://github.com/RadKod/parolla/commit/a928fc6))
+  - Update user transformer ([09bab39](https://github.com/RadKod/parolla/commit/09bab39))
+  - Update config ([06d041f](https://github.com/RadKod/parolla/commit/06d041f))
+  - Update app fetch ([6b6420a](https://github.com/RadKod/parolla/commit/6b6420a))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.19.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.18.0...v2.19.0)
