@@ -20,7 +20,7 @@ module.exports = {
    */
   env: {
     API: process.env.API || 'https://api.radkod.com/parolla/api/v1',
-    API_STRAPI: process.env.API_STRAPI || 'http://localhost:1337/api',
+    API_STRAPI: process.env.API_STRAPI || 'https://strapi.parolla.app/api',
     WS_URL: process.env.WS_URL,
     GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
     GOOGLE_AUTH_REDIRECT_URI: process.env.GOOGLE_AUTH_REDIRECT_URI
@@ -31,7 +31,7 @@ module.exports = {
    ** See https://nuxtjs.org/api/configuration-runtime-config
    */
   publicRuntimeConfig: {
-    API_STRAPI: process.env.API_STRAPI || 'http://localhost:1337/api'
+    API_STRAPI: process.env.API_STRAPI || 'https://strapi.parolla.app/api'
   },
 
   /*
