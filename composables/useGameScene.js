@@ -167,18 +167,6 @@ export default () => {
     return encodeEnglish(value.toLocaleLowerCase('tr').trim().replace(/\s+/g, ''))
   }
 
-  const handleRadKodKeyword = () => {
-    Notify({
-      message: i18n.t('gameScene.radkodNotify'),
-      color: 'var(--color-text-04)',
-      background: 'var(--color-brand-radkod)'
-    })
-
-    radkodEasterEggSoundFx.play()
-
-    return false
-  }
-
   const handleNotStartsWithActiveChar = ({ activeChar }) => {
     Notify({
       message: i18n.t('gameScene.error.notStartsWithActiveChar', { activeChar }),
@@ -205,7 +193,6 @@ export default () => {
 
     const passKeywords = ['pas', 'pass']
     const endGameKeywords = ['bitir', 'finish']
-    const radkodKeyword = 'radkod'
 
     if (activeGameMode.value !== gameModeKeyEnum.TOUR) {
       if (passKeywords.includes(answerField)) {
@@ -216,12 +203,6 @@ export default () => {
 
       if (endGameKeywords.includes(answerField)) {
         endGame()
-
-        return false
-      }
-
-      if (answerField === radkodKeyword) {
-        handleRadKodKeyword()
 
         return false
       }
@@ -355,7 +336,6 @@ export default () => {
         halfTimeSoundFx.mute(false)
         hurryUpSoundFx.mute(false)
         countdownFinishSoundFx.mute(false)
-        radkodEasterEggSoundFx.mute(false)
       } else {
         startSoundFx.mute(true)
         correctSoundFx.mute(true)
@@ -364,7 +344,6 @@ export default () => {
         halfTimeSoundFx.mute(true)
         hurryUpSoundFx.mute(true)
         countdownFinishSoundFx.mute(true)
-        radkodEasterEggSoundFx.mute(true)
       }
     }
   )
@@ -376,8 +355,7 @@ export default () => {
     pass: null,
     halfTime: null,
     hurryUp: null,
-    countdownFinish: null,
-    radkodEasterEgg: null
+    countdownFinish: null
   })
 
   const startSoundFx = new Howl({
@@ -416,11 +394,6 @@ export default () => {
     mute: isActiveSoundFx.value ? false : true
   })
 
-  const radkodEasterEggSoundFx = new Howl({
-    src: [`${WEB_CDN}/assets/sound/fx/radkod-easter-egg.mp3`],
-    mute: isActiveSoundFx.value ? false : true
-  })
-
   soundFx.start = startSoundFx
   soundFx.correct = correctSoundFx
   soundFx.wrong = wrongSoundFx
@@ -428,7 +401,6 @@ export default () => {
   soundFx.halfTime = halfTimeSoundFx
   soundFx.hurryUp = hurryUpSoundFx
   soundFx.countdownFinish = countdownFinishSoundFx
-  soundFx.radkodEasterEgg = radkodEasterEggSoundFx
 
   const startGame = async () => {
     await nextTick()
@@ -714,7 +686,6 @@ export default () => {
     nextLetter,
     handleAnswer,
     handleAnswerField,
-    handleRadKodKeyword,
     handleNotStartsWithActiveChar,
     wrongAnimateAnswerField,
     formatAnswer,

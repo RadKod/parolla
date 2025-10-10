@@ -19,7 +19,6 @@ module.exports = {
    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-env
    */
   env: {
-    API: process.env.API || 'https://api.radkod.com/parolla/api/v1',
     API_STRAPI: process.env.API_STRAPI || 'https://strapi.parolla.app/api',
     WS_URL: process.env.WS_URL,
     GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,

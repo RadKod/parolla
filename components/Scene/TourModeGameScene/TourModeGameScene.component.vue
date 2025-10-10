@@ -116,7 +116,6 @@ export default defineComponent({
       handleTabKey,
       checkUnsupportedHeight,
       formatAnswer,
-      handleRadKodKeyword,
       handleNotStartsWithActiveChar,
       wrongAnimateAnswerField,
       focusToAnswerFieldInput,
@@ -297,12 +296,6 @@ export default defineComponent({
       const answerField = formatAnswer(answer.field)
 
       resetAnswerField()
-
-      if (answerField === 'radkod') {
-        handleRadKodKeyword()
-
-        return false
-      }
 
       if (!answerField.startsWith(formatAnswer(tour.value.question.letter))) {
         handleNotStartsWithActiveChar({ activeChar: tour.value.question.letter })

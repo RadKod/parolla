@@ -20,7 +20,7 @@ Dialog.dialog.how-to-play-dialog(
   footer.how-to-play-dialog__footer
     i18n.d-flex(path="app.copyright")
       template(#logo)
-        RadKodLogo(:width="80" height="auto")
+        SelimDoyranliLogo
       template(#spacer)
         span &nbsp;
       template(#text)

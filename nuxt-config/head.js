@@ -9,7 +9,7 @@ module.exports = {
     { rel: 'icon', type: 'image/x-icon', href: '/meta/icon/favicon.ico' },
     { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
     { rel: 'dns-prefetch', href: '//fonts.gstatic.com' },
-    { rel: 'dns-prefetch', href: '//api.radkod.com' },
+    { rel: 'dns-prefetch', href: '//strapi.parolla.app' },
     { rel: 'dns-prefetch', href: '//pagead2.googlesyndication.com' },
     { rel: 'dns-prefetch', href: '//googleads.g.doubleclick.net' },
     { rel: 'dns-prefetch', href: '//www.googletagmanager.com' },
@@ -30,7 +30,7 @@ module.exports = {
     {
       hid: 'Publisher',
       property: 'Publisher',
-      content: 'RadKod'
+      content: 'Selim Doyranlı'
     },
     {
       hid: 'apple-mobile-web-app-capable',

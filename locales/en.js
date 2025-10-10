@@ -3,7 +3,7 @@ export default {
     name: 'parolla',
     domain: 'parolla.app',
     description: 'Solve daily questions and join the competition. Create your own Q&A set and solve fun questions created by players',
-    publisher: 'RadKod',
+    publisher: 'Selim Doyranlı',
     copyright: '{text} {spacer} {logo}'
   },
   error: {
@@ -123,7 +123,6 @@ export default {
     halfTime: 'Half of the time is up',
     timeOver: 'Time is over',
     allQuestionsSeen: `If you can't think of an answer, you don't have to wait for the time, you can also type finish and finish it.`,
-    radkodNotify: `Could we be the answer you're looking for? - RadKod.com`,
     unsupportedHeight: 'You should play on a bigger screen for a better experience',
     toast: {
       startGame: {
@@ -165,12 +164,12 @@ export default {
     credits: {
       title: 'Credits',
       description:
-        'parolla is an open source project. Check the <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> link. <label>Project and UI <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Back-end and Database <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobile App <a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
+        'parolla is an open source project. Check the <a href="https://github.com/selimdoyranli/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> link. Creators: <label><a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label><a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label><a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
     },
     contact: {
       title: 'Contact',
       description:
-        'For suggestions, complaint, collaborations; <br><br> <a href="mailto:info@radkod.com?subject=parolla_contact">info@radkod.com</a> <br> or <br> <a href="https://twitter.com/parollaapp" target="_blank">@parollaapp</a> <br> You can reach us on our twitter account.'
+        'For suggestions, complaint, collaborations; <br><br> <a href="mailto:parollaapp@gmail.com?subject=parolla_contact">parollaapp@gmail.com</a> <br> or <br> <a href="https://twitter.com/parollaapp" target="_blank">@parollaapp</a> <br> You can reach us on our twitter account.'
     },
     createdRoom: {
       title: 'Room created',

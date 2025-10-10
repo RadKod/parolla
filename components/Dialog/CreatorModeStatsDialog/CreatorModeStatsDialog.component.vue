@@ -102,7 +102,7 @@ Dialog.dialog.stats-dialog.creator-mode-stats-dialog(
     footer.stats-dialog__footer
       i18n.d-flex(path="app.copyright")
         template(#logo)
-          RadKodLogo(:width="80" height="auto")
+          SelimDoyranliLogo
         template(#spacer)
           span &nbsp;
         template(#text)

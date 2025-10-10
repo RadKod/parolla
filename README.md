@@ -48,14 +48,14 @@
 <p align="center">
   <p align="center"><sub>Created by<sub></p>
     <p align="center">
-	    <a href="https://radkod.com" target="_blank">
-			  <img src='/static/meta/radkod-signature.png' width="128" />
+	    <a href="https://selimdoyranli.com" target="_blank">
+			  <kbd>Selim Doyranlı</kbd>
 		  </a>
     </p>
 </p>
 
 <p align="center">
-<a href="https://github.com/RadKod/parolla" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/RadKod/parolla?style=social"></a>
+<a href="https://github.com/selimdoyranli/parolla" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/selimdoyranli/parolla?style=social"></a>
 </p>
 
 <p align="center">
@@ -63,7 +63,7 @@
 </p>
 
 <div align="center">
-<sub>Buy me a coffee - <a href="https://www.buymeacoffee.com/RadKod">Sponsorship 💖</a></sub><br>
+<sub>Buy me a coffee - <a href="https://www.buymeacoffee.com/selimdoyranli">Sponsorship 💖</a></sub><br>
 </div>
 
 ## Getting Started
@@ -86,7 +86,7 @@
 ### Clone project
 
 ```bash
-git clone https://github.com/RadKod/parolla.git
+git clone https://github.com/selimdoyranli/parolla.git
 ```
 
 ### Development
@@ -136,6 +136,7 @@ yarn prettier
 ```
 
 #### Git
+
 Using [Conventional Commits](https://www.conventionalcommits.org), commitizen, commitizen cli
 
 ```bash
@@ -150,6 +151,7 @@ git push
 ```
 
 #### Release & Changelog
+
 Using [changelogen](https://github.com/unjs/changelogen) for release & changelog management, arguments are the same as changelogen
 
 ```bash
@@ -159,36 +161,25 @@ yarn changelog
 
 ---
 
-Back-End development repository:
-[https://github.com/RadKod/parolla-backend](https://github.com/RadKod/parolla-backend)
-
----
-
 ## Sponsorship
 
 You can sponsor us for the continuity of our projects:
 
 <p align="left">
-  <a href="https://buymeacoffee.com/RadKod">
+  <a href="https://buymeacoffee.com/selimdoyranli">
     <img src='https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png'/>
   </a>
 </p>
 
 ## License
 
-[MIT License](./LICENSE)
+[CC BY‑NC 4.0](./LICENSE)
 
-Copyright (c) RadKod <info@radkod.com>
-
-<p align="left">
-  <a href="https://radkod.com">
-    <img src='/static/meta/radkod-signature.png'/>
-  </a>
-</p>
+Copyright (c) Selim Doyranlı <selimdoyranli@gmail.com>
 
 <!-- Badges -->
+
 [changelog-src]: https://img.shields.io/static/v1?label=%F0%9F%93%96&message=Release%20Notes%20|%20CHANGELOG&color=blue
 [changelog-href]: ./CHANGELOG.md
-
-[license-src]: https://img.shields.io/badge/License-MIT-blue.svg
+[license-src]: https://img.shields.io/badge/License-CC%20BY‑NC%204.0-blue.svg
 [license-href]: ./LICENSE

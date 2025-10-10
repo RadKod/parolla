@@ -20,9 +20,9 @@
   "homepage": "https://parolla.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RadKod/parolla"
+    "url": "https://github.com/selimdoyranli/parolla"
   },
-  "license": "MIT",
+  "license": "CC BY‑NC 4.0",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

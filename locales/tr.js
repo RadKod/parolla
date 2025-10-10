@@ -3,7 +3,7 @@ export default {
     name: 'parolla',
     domain: 'parolla.app',
     description: 'Günlük soruları çöz ve rekabete katıl. Kendi soru-cevap setini oluştur, oyuncuların oluşturduğu eğlenceli soruları çöz',
-    publisher: 'RadKod',
+    publisher: 'Selim Doyranlı',
     copyright: '{logo} {spacer} {text}'
   },
   error: {
@@ -125,7 +125,6 @@ export default {
     halfTime: 'Sürenin yarısı doldu',
     timeOver: 'Süre doldu',
     allQuestionsSeen: 'Aklına bir cevap gelmezse süreyi beklemene gerek yok, bitir yazıp bitirebilirsin de',
-    radkodNotify: 'Aradığın cevap biz olabilir miyiz? - RadKod.com',
     unsupportedHeight: 'Daha iyi bir deneyim için daha büyük bir ekranda oynamalısın',
     toast: {
       startGame: {
@@ -167,12 +166,12 @@ export default {
     credits: {
       title: 'Yapımcılar',
       description:
-        'parolla açık kaynak bir projedir. <a href="https://github.com/RadKod/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> bağlantısından ulaşabilirsin. <label>Proje ve Arayüz <a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label>Arkaplan ve Veritabanı <a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label>Mobil Uygulama <a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
+        'parolla açık kaynak bir projedir. <a href="https://github.com/selimdoyranli/parolla" rel="nofollow,noopener" target="_blank">GitHub</a> bağlantısından ulaşabilirsin. Yapımcılar: <label><a href="https://twitter.com/selimdoyranli" target="_blank">@selimdoyranli</a></label> <label><a href="https://twitter.com/apo_bozdag" target="_blank">@apo_bozdag</a></label> <label><a href="https://twitter.com/muratozakcill" target="_blank">@muratozakcill</a></label>'
     },
     contact: {
       title: 'Bize ulaşın',
       description:
-        'Öneri, şikayet ya da işbirliği için; <br><br> <a href="mailto:info@radkod.com?subject=parolla_contact">info@radkod.com</a> <br> veya <br> <a href="https://twitter.com/parollaapp" target="_blank">@parollaapp</a> <br> twitter hesabımızdan ulaşabilirsin.'
+        'Öneri, şikayet ya da işbirliği için; <br><br> <a href="mailto:parollaapp@gmail.com?subject=parolla_contact">parollaapp@gmail.com</a> <br> veya <br> <a href="https://twitter.com/parollaapp" target="_blank">@parollaapp</a> <br> twitter hesabımızdan ulaşabilirsin.'
     },
     createdRoom: {
       title: 'Oda oluşturuldu',
