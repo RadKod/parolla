@@ -169,6 +169,7 @@ export default defineComponent({
       // Check game over
       if (isGameOver.value) {
         endGame()
+        store.commit('daily/SET_IS_OPEN_STATS_DIALOG', true)
       }
 
       window.addEventListener('keyup', event => handleTabKey(event))
