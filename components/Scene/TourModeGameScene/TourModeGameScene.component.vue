@@ -13,7 +13,7 @@
     template(v-if="tour.question")
       // Letter
       .letter
-        .letter__value {{ tour.question.letter }}
+        .letter__value {{ tour.question.letter.name }}
 
       // Questions
       .questions
@@ -164,7 +164,7 @@ export default defineComponent({
     const onQuestionGot = ({ question }) => {
       store.commit('tour/SET_TOUR', {
         question: {
-          letter: question.letter,
+          letter: question.letter.name,
           question: question.question
         }
       })
@@ -304,8 +304,8 @@ export default defineComponent({
         return false
       }
 
-      if (!answerField.startsWith(formatAnswer(tour.value.question.letter))) {
-        handleNotStartsWithActiveChar({ activeChar: tour.value.question.letter })
+      if (!answerField.startsWith(formatAnswer(tour.value.question.letter.name))) {
+        handleNotStartsWithActiveChar({ activeChar: tour.value.question.letter.name })
 
         return false
       }
