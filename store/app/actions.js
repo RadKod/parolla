@@ -1,14 +1,33 @@
 import WebSocket from 'isomorphic-ws'
 
 export default {
-  initWs({ commit }) {
-    const token = this.$auth.strategy.token.get()
-    const wsUrl = `${process.env.WS_URL}?token=${token}`
+  initWs({ commit, rootState, state }) {
+    // Check if WebSocket already exists and is connecting or open
+    if (state.ws) {
+      const readyState = state.ws.readyState
+
+      if (readyState === WebSocket.CONNECTING || readyState === WebSocket.OPEN) {
+        console.log('WebSocket already exists, skipping initialization')
+
+        return state.ws
+      }
+    }
+
+    // Try to get token from multiple sources
+    const token =
+      this.$auth.strategy.token.get() || this.$cookies.get('auth._token.google') || (rootState.nuxtAuth && rootState.nuxtAuth.token)
+
+    console.log('Initializing WebSocket with token:', token ? 'Token found' : 'No token (viewer mode)')
+
+    // Build WebSocket URL with token if available
+    const wsUrl = token ? `${process.env.WS_URL}?token=${token}` : process.env.WS_URL
 
     // Create WebSocket instance
     const ws = new WebSocket(wsUrl)
 
     commit('SET_WS', ws)
+
+    return ws
   },
 
   closeWs({ commit, state }) {

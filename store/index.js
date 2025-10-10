@@ -43,7 +43,7 @@ const WS_CONFIG = {
 }
 
 // WebSocket management
-async function initializeWebSocket({ dispatch, getters }) {
+async function initializeWebSocket({ dispatch, getters }, context) {
   let reconnectAttempts = 0
   const getWs = () => getters['app/ws']
 
@@ -101,7 +101,9 @@ async function initializeWebSocket({ dispatch, getters }) {
     if (document.visibilityState === 'visible') {
       console.info(`Page became visible, checking WebSocket connection...`)
 
-      if (getWs().readyState !== WebSocket.OPEN) {
+      const ws = getWs()
+
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
         console.info('WebSocket not connected, attempting to reconnect...')
         reconnectAttempts = 0
         await connectWs()
@@ -111,7 +113,12 @@ async function initializeWebSocket({ dispatch, getters }) {
 
   // Initialize connection
   await connectWs()
-  setupWebSocketEventHandlers(getWs())
+
+  const ws = getWs()
+
+  if (ws) {
+    setupWebSocketEventHandlers(ws)
+  }
 
   // Setup visibility handlers
   document.addEventListener('visibilitychange', handleVisibilityChange)
@@ -122,7 +129,15 @@ export const actions = {
   async nuxtClientInit({ dispatch, commit, getters }, { $auth, $cookies }) {
     if (process.browser) {
       await setUser({ dispatch, commit, $auth, $cookies })
-      await initializeWebSocket({ dispatch, getters })
+
+      // Only initialize WebSocket if it doesn't exist yet
+      const existingWs = getters['app/ws']
+
+      if (!existingWs) {
+        await initializeWebSocket({ dispatch, getters })
+      } else {
+        console.info('WebSocket already initialized, skipping nuxtClientInit WebSocket setup')
+      }
     }
   }
 }
