@@ -1,5 +1,18 @@
 # Changelog
 
+## v2.20.1
+
+[compare changes](https://github.com/RadKod/parolla/compare/v2.20.0...v2.20.1)
+
+
+### 🩹 Fixes
+
+  - Auto ws connect when redirect from google callback ([a15b969](https://github.com/RadKod/parolla/commit/a15b969))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.20.0
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.19.0...v2.20.0)
