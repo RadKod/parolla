@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.20.2
+
+[compare changes](https://github.com/selimdoyranli/parolla/compare/v2.20.1...v2.20.2)
+
+
+### 📖 Documentation
+
+  - **license:** Update license ([d57bcdf](https://github.com/selimdoyranli/parolla/commit/d57bcdf))
+
+### 🏡 Chore
+
+  - **release:** V2.20.1 ([2482db0](https://github.com/selimdoyranli/parolla/commit/2482db0))
+
+### ❤️  Contributors
+
+- Selimdoyranli ([@selimdoyranli](http://github.com/selimdoyranli))
+
 ## v2.20.1
 
 [compare changes](https://github.com/RadKod/parolla/compare/v2.20.0...v2.20.1)
